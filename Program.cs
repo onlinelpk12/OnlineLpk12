@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using OnlineLpk12.Data.Context;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+//builder.Services.AddDbContext<OnlineLPK12Context>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("OnlineLPK12")));
 
 var app = builder.Build();
 

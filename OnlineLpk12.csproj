@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Entities\**" />
+    <Content Remove="Data\Entities\**" />
+    <EmbeddedResource Remove="Data\Entities\**" />
+    <None Remove="Data\Entities\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.3">
       <PrivateAssets>all</PrivateAssets>
@@ -21,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Entities\" />
     <Folder Include="Services\Interface\" />
     <Folder Include="Services\Implementation\" />
   </ItemGroup>
