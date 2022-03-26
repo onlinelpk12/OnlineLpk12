@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineLpk12.Data.Context;
+using OnlineLpk12.Services.Interface;
+using System.Linq;
+using System.Net;
 
 namespace OnlineLpk12.Controllers
 {
@@ -8,26 +11,74 @@ namespace OnlineLpk12.Controllers
     [ApiController]
     public class StudentProgressController : ControllerBase
     {
-        //private readonly OnlineLPK12Context context;
-
-        //public StudentProgressController(OnlineLPK12Context context)
-        //{
-        //    this.context = context;
-        //}
-
-        [HttpGet]
-        public IActionResult GetStatuses()
+        private readonly IStudentProgressService _studentProgressService;
+        public StudentProgressController(IStudentProgressService studentProgressService)
         {
-            var data = new List<Data.Models.Progress>()
-            {
-                new Data.Models.Progress(){ Id = 0, Status = "Not Started"},
-                new Data.Models.Progress(){ Id = 1, Status = "In Progress"},
-                new Data.Models.Progress(){ Id = 2, Status = "Completed"}
-            };
-            
-            return Ok(data);
+            _studentProgressService = studentProgressService;
+        }
 
+        [HttpGet("status")]
+        public async Task<IActionResult> GetStatuses()
+        {
+            try
+            {
+                var result = await _studentProgressService.GetStatus();
+                if (result != null && result.Any())
+                {
+                    return Ok(result);
+                }
+                return NotFound("No Statuses found.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Error occurred while fetching the data.");
+            }
             //return Ok(context.Progresses.ToArray());
         }
+
+        [HttpGet("lessons/{studentId}")]
+        public async Task<IActionResult> GetLessons(int studentId)
+        {
+            try
+            {
+                if (studentId < 0)
+                {
+                    return BadRequest("Enter valid Student Id.");
+                }
+                var result = await _studentProgressService.GetLessons(studentId);
+                if (result != null && result.Any())
+                {
+                    return Ok(result);
+                }
+                return NotFound("No Lessons found.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Error occurred while fetching the data.");
+            }
+        }
+
+        [HttpGet("content/{lessonId}")]
+        public async Task<IActionResult> GetContent(int lessonId)
+        {
+            try
+            {
+                if (lessonId < 0)
+                {
+                    return BadRequest("Enter valid Lesson Id.");
+                }
+                var result = await _studentProgressService.GetContent(lessonId);
+                if (result != null && result.Contents.Any())
+                {
+                    return Ok(result);
+                }
+                return NotFound("Content Not found for the given lesson");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Error occurred while fetching the data.");
+            }
+        }
+
     }
 }

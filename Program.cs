@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineLpk12.Data.Context;
+using OnlineLpk12.Services.Implementation;
+using OnlineLpk12.Services.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //builder.Services.AddDbContext<OnlineLPK12Context>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("OnlineLPK12")));
-
+builder.Services.AddTransient<IStudentProgressService, StudentProgressService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
