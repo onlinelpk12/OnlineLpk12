@@ -11,7 +11,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//builder.Services.AddDbContext<OnlineLPK12Context>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("OnlineLPK12")));
+string connectionString = builder.Configuration.GetConnectionString("OnlineLPK12");
+builder.Services.AddDbContext<OnlineLpk12DbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 builder.Services.AddTransient<IStudentProgressService, StudentProgressService>();
 var app = builder.Build();
 

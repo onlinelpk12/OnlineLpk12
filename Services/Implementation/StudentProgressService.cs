@@ -7,19 +7,20 @@ namespace OnlineLpk12.Services.Implementation
 {
     public class StudentProgressService : IStudentProgressService
     {
-        private readonly OnlineLPK12Context _context;
-        public StudentProgressService(/*OnlineLPK12Context context*/)
+        private readonly OnlineLpk12DbContext  _context;
+        public StudentProgressService(OnlineLpk12DbContext context)
         {
-            //_context = context;
+            _context = context;
         }
         public async Task<List<Progress>> GetStatus()
         {
             var data = new List<Progress>();
             try
             {
-                data.Add(new Data.Models.Progress() { Id = 0, Status = "Not Started" });
-                data.Add(new Data.Models.Progress() { Id = 1, Status = "In Progress" });
-                data.Add(new Data.Models.Progress() { Id = 2, Status = "Completed" });
+                return _context.Progresses.ToList();
+                //data.Add(new Progress() { Id = 0, ProgressStatus = "Not Started" });
+                //data.Add(new Progress() { Id = 1, ProgressStatus = "In Progress" });
+                //data.Add(new Progress() { Id = 2, ProgressStatus = "Completed" });
             }
             catch (Exception ex)
             {

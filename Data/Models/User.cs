@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace OnlineLpk12.Data.Models
+﻿namespace OnlineLpk12.Data.Models
 {
     public partial class User
     {
@@ -11,6 +8,6 @@ namespace OnlineLpk12.Data.Models
         public string FirstName { get; set; } = null!;
         public string? LastName { get; set; }
         public string? EmailId { get; set; }
-        public string UserType { get; set; } = null!;
+        public string UserTypeId { get; set; } = null!;
     }
 }

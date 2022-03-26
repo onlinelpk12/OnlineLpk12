@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using OnlineLpk12.Data.Context;
+﻿using Microsoft.AspNetCore.Mvc;
 using OnlineLpk12.Services.Interface;
-using System.Linq;
 using System.Net;
 
 namespace OnlineLpk12.Controllers
