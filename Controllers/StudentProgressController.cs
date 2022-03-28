@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineLpk12.Services.Interface;
 using System.Net;
+using OnlineLpk12.Data.Entities;
 
 namespace OnlineLpk12.Controllers
 {
@@ -56,7 +57,7 @@ namespace OnlineLpk12.Controllers
         }
 
         [HttpGet("content/{lessonId}")]
-        public async Task<IActionResult> GetContent(int lessonId)
+        public async Task<IActionResult> GetContentByLesson(int lessonId)
         {
             try
             {
@@ -72,6 +73,59 @@ namespace OnlineLpk12.Controllers
                 return NotFound("Content Not found for the given lesson");
             }
             catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Error occurred while fetching the data.");
+            }
+        }
+
+        [HttpGet("quiz/{lessonId}")]
+        public async Task<IActionResult> GetQuizByLesson(int lessonId)
+        {
+            try
+            {
+                if (lessonId < 0)
+                {
+                    return BadRequest("Enter valid Lesson Id.");
+                }
+                var result = await _studentProgressService.GetQuiz(lessonId);
+                if (result != null && result.Questions.Any())
+                {
+                    return Ok(result);
+                }
+                return NotFound("Quiz not found for the given lesson");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Error occurred while fetching the data.");
+            }
+
+        }
+
+        [HttpPost("quiz/{quizId}")]
+        public async Task<IActionResult> SubmitQuiz(int quizId, [FromBody]Quiz quiz)
+        {
+            try
+            {
+                if(quiz == null)
+                {
+                    return BadRequest("Quiz is invalid");
+                }
+                if(quiz.QuizId < 0)
+                {
+                    return BadRequest("Enter valid quiz id");
+                }
+                if (!quiz.Questions.Any())
+                {
+                    return BadRequest("Questions are invalid");
+                }
+                var result = await _studentProgressService.SubmitQuiz(quiz);
+                if(result != null)
+                {
+                    return Ok(result);
+                }
+                return Ok(result);
+            }
+            catch(Exception ex)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, "Error occurred while fetching the data.");
             }

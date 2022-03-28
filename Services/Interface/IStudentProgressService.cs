@@ -1,5 +1,5 @@
 ﻿using OnlineLpk12.Data.Entities;
-using OnlineLpk12.Data.Models;
+//using OnlineLpk12.Data.Models;
 
 namespace OnlineLpk12.Services.Interface
 {
@@ -8,5 +8,7 @@ namespace OnlineLpk12.Services.Interface
         Task<List<Progress>> GetStatus();
         Task<List<Lessons>> GetLessons(int studentId);
         Task<Lessons> GetContent(int lessonId);
+        Task<Quiz> GetQuiz(int lessonId);
+        Task<Quiz> SubmitQuiz(Quiz quiz);
     }
 }
