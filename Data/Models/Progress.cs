@@ -1,4 +1,7 @@
-﻿namespace OnlineLpk12.Data.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace OnlineLpk12.Data.Models
 {
     public partial class Progress
     {

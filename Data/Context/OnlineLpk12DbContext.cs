@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using OnlineLpk12.Data.Models;
 
 namespace OnlineLpk12.Data.Context
@@ -15,20 +18,18 @@ namespace OnlineLpk12.Data.Context
         }
 
         public virtual DbSet<Content> Contents { get; set; } = null!;
-        public virtual DbSet<ContentType> ContentTypes { get; set; } = null!;
         public virtual DbSet<Lesson> Lessons { get; set; } = null!;
         public virtual DbSet<Progress> Progresses { get; set; } = null!;
         public virtual DbSet<Quiz> Quizzes { get; set; } = null!;
         public virtual DbSet<StudentProgress> StudentProgresses { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
-        public virtual DbSet<UserType> UserTypes { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySql("server=localhost;database=onlinelpk12;user=admin;password=Admin@1234", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.28-mysql"));
+                //optionsBuilder.UseMySql("server=localhost;database=onlinelpk12;user=admin;password=AdminPassword", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.28-mysql"));
             }
         }
 
@@ -43,27 +44,15 @@ namespace OnlineLpk12.Data.Context
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.ContentTypeId).HasColumnName("content_type_id");
+                entity.Property(e => e.ContentType)
+                    .HasMaxLength(50)
+                    .HasColumnName("content_type");
 
                 entity.Property(e => e.ContentUrl)
                     .HasMaxLength(200)
                     .HasColumnName("content_url");
 
                 entity.Property(e => e.LessonId).HasColumnName("lesson_id");
-            });
-
-            modelBuilder.Entity<ContentType>(entity =>
-            {
-                entity.ToTable("content_type");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.ContentType1)
-                    .HasMaxLength(50)
-                    .HasColumnName("content_type")
-                    .IsFixedLength()
-                    .UseCollation("utf8_general_ci")
-                    .HasCharSet("utf8");
             });
 
             modelBuilder.Entity<Lesson>(entity =>
@@ -151,6 +140,8 @@ namespace OnlineLpk12.Data.Context
                     .HasMaxLength(50)
                     .HasColumnName("first_name");
 
+                entity.Property(e => e.IsActive).HasColumnName("is_active");
+
                 entity.Property(e => e.LastName)
                     .HasMaxLength(50)
                     .HasColumnName("last_name");
@@ -159,22 +150,7 @@ namespace OnlineLpk12.Data.Context
                     .HasMaxLength(50)
                     .HasColumnName("password");
 
-                entity.Property(e => e.UserName)
-                    .HasMaxLength(50)
-                    .HasColumnName("user_name");
-
-                entity.Property(e => e.UserTypeId)
-                    .HasMaxLength(50)
-                    .HasColumnName("user_type_id");
-            });
-
-            modelBuilder.Entity<UserType>(entity =>
-            {
-                entity.ToTable("user_type");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.UserType1)
+                entity.Property(e => e.UserType)
                     .HasMaxLength(50)
                     .HasColumnName("user_type");
             });
