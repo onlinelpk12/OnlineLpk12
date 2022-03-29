@@ -19,8 +19,10 @@ namespace OnlineLpk12.Data.Context
 
         public virtual DbSet<Content> Contents { get; set; } = null!;
         public virtual DbSet<Lesson> Lessons { get; set; } = null!;
-        public virtual DbSet<Progress> Progresses { get; set; } = null!;
+        public virtual DbSet<ProgressStatus> ProgressStatuses { get; set; } = null!;
         public virtual DbSet<Quiz> Quizzes { get; set; } = null!;
+        public virtual DbSet<QuizOption> QuizOptions { get; set; } = null!;
+        public virtual DbSet<QuizStatus> QuizStatuses { get; set; } = null!;
         public virtual DbSet<StudentProgress> StudentProgresses { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
@@ -29,7 +31,7 @@ namespace OnlineLpk12.Data.Context
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                //optionsBuilder.UseMySql("server=localhost;database=onlinelpk12;user=admin;password=AdminPassword", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.28-mysql"));
+                optionsBuilder.UseMySql("server=localhost;database=onlinelpk12;user=admin;password=Admin@1234", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.28-mysql"));
             }
         }
 
@@ -70,15 +72,15 @@ namespace OnlineLpk12.Data.Context
                     .HasColumnName("lesson_number");
             });
 
-            modelBuilder.Entity<Progress>(entity =>
+            modelBuilder.Entity<ProgressStatus>(entity =>
             {
-                entity.ToTable("progress");
+                entity.ToTable("progress_status");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.ProgressStatus)
+                entity.Property(e => e.ProgressStatusDesc)
                     .HasMaxLength(50)
-                    .HasColumnName("progress_status")
+                    .HasColumnName("progress_status_desc")
                     .IsFixedLength()
                     .UseCollation("utf8_general_ci")
                     .HasCharSet("utf8");
@@ -90,21 +92,39 @@ namespace OnlineLpk12.Data.Context
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Answer)
-                    .HasMaxLength(1000)
-                    .HasColumnName("answer");
+                entity.Property(e => e.Answer).HasColumnName("answer");
 
                 entity.Property(e => e.LessonId).HasColumnName("lesson_id");
-
-                entity.Property(e => e.Options)
-                    .HasColumnType("text")
-                    .HasColumnName("options");
 
                 entity.Property(e => e.Question)
                     .HasColumnType("text")
                     .HasColumnName("question");
 
                 entity.Property(e => e.QuestionId).HasColumnName("question_id");
+            });
+
+            modelBuilder.Entity<QuizOption>(entity =>
+            {
+                entity.ToTable("quiz_options");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.OptionDesc)
+                    .HasMaxLength(100)
+                    .HasColumnName("option_desc");
+
+                entity.Property(e => e.QuestionId).HasColumnName("question_id");
+            });
+
+            modelBuilder.Entity<QuizStatus>(entity =>
+            {
+                entity.ToTable("quiz_status");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Status)
+                    .HasMaxLength(45)
+                    .HasColumnName("status");
             });
 
             modelBuilder.Entity<StudentProgress>(entity =>
@@ -140,7 +160,9 @@ namespace OnlineLpk12.Data.Context
                     .HasMaxLength(50)
                     .HasColumnName("first_name");
 
-                entity.Property(e => e.IsActive).HasColumnName("is_active");
+                entity.Property(e => e.IsActive)
+                    .HasColumnType("bit(1)")
+                    .HasColumnName("is_active");
 
                 entity.Property(e => e.LastName)
                     .HasMaxLength(50)

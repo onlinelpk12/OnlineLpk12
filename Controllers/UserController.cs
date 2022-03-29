@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineLpk12.Data.Entities;
+using OnlineLpk12.Services.Interface;
 using System.Net;
 using System.Net.Mail;
 
@@ -10,12 +11,14 @@ namespace OnlineLpk12.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        public UserController()
-        {
+        private readonly IUserService _userService;
 
+        public UserController(IUserService userService)
+        {
+            this._userService = userService;
         }
 
-        [HttpPost("register")]
+        [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] User user)
         {
             try
@@ -32,7 +35,7 @@ namespace OnlineLpk12.Controllers
                 {
                     return BadRequest("Enter valid Last Name");
                 }
-                if (string.IsNullOrEmpty(user.EmailId) && !IsValidEmail(user.EmailId))
+                if (string.IsNullOrEmpty(user.EmailId) || !IsValidEmail(user.EmailId))
                 {
                     return BadRequest("Enter valid Email Id");
                 }
@@ -47,7 +50,7 @@ namespace OnlineLpk12.Controllers
 
                 var result = new Result()
                 {
-                    Success = true,
+                    Success = _userService.RegisterUser(user),
                     ErrorMessage = ""
                 };
                 if (result.Success)
@@ -115,6 +118,10 @@ namespace OnlineLpk12.Controllers
                 return true;
             }
             catch(FormatException ex)
+            {
+                return false;
+            }
+            catch(Exception ex)
             {
                 return false;
             }
