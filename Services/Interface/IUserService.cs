@@ -4,6 +4,7 @@ namespace OnlineLpk12.Services.Interface
 {
     public interface IUserService
     {
-        public bool RegisterUser(Data.Entities.User user);
+        Task<bool> RegisterUser(User user);
+        Task<bool> Login(User user);
     }
 }

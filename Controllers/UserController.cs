@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineLpk12.Data.Entities;
+using OnlineLpk12.Helpers;
 using OnlineLpk12.Services.Interface;
 using System.Net;
-using System.Net.Mail;
 
 namespace OnlineLpk12.Controllers
 {
@@ -23,34 +23,15 @@ namespace OnlineLpk12.Controllers
         {
             try
             {
-                if (user == null)
+                var validationMessage = Helper.ValidateUserWhileRegistering(user);
+                if (!string.IsNullOrEmpty(validationMessage))
                 {
-                    return BadRequest("Enter valid user details");
-                }
-                if (string.IsNullOrEmpty(user.FirstName))
-                {
-                    return BadRequest("Enter valid First Name");
-                }
-                if (string.IsNullOrEmpty(user.LastName))
-                {
-                    return BadRequest("Enter valid Last Name");
-                }
-                if (string.IsNullOrEmpty(user.EmailId) || !IsValidEmail(user.EmailId))
-                {
-                    return BadRequest("Enter valid Email Id");
-                }
-                if (string.IsNullOrEmpty(user.Password))
-                {
-                    return BadRequest("Enter valid Password");
-                }
-                if(user.Password.Length < 8)
-                {
-                    return BadRequest("Enter password with minimum 8 characters");
+                    return BadRequest(validationMessage);
                 }
 
                 var result = new Result()
                 {
-                    Success = _userService.RegisterUser(user),
+                    Success = await _userService.RegisterUser(user),
                     ErrorMessage = ""
                 };
                 if (result.Success)
@@ -110,21 +91,6 @@ namespace OnlineLpk12.Controllers
             }
         }
 
-        private bool IsValidEmail(string mail)
-        {
-            try
-            {
-                MailAddress email = new MailAddress(mail);
-                return true;
-            }
-            catch(FormatException ex)
-            {
-                return false;
-            }
-            catch(Exception ex)
-            {
-                return false;
-            }
-        }
+        
     }
 }
