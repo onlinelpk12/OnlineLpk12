@@ -14,53 +14,69 @@ namespace OnlineLpk12.Services.Implementation
             this._context = context;
         }
 
-        public async Task<bool> Login(User user)
+        public async Task<Result> Login(LoginUser user)
         {
-            try{
-                //_context.Users.Find(x => x.EmailId == user.EmailId && x.Password == user.Password);
-                return true;
+            Result result = new Result();
+            try
+            {
+                var response = await Task.FromResult(_context.Users.Any(x => x.Username == user.UserName && x.Password == user.Password));
+                result.Success = response;
+                result.Message = response ? "User validation success." : "User validation failed.";
             }
             catch (Exception ex)
             {
-                return false;
+                result.Success = false;
+                result.Message = ex.Message;
             }
+            return result;
         }
 
-        public async Task<bool> RegisterUser(User inputUser)
+        public async Task<Result> RegisterUser(RegistrationUser inputUser)
         {
+            Result result = new Result();
             try
             {
-                GetUser(inputUser.EmailId);
                 Data.Models.User DbUser = new Data.Models.User()
                 {
                     FirstName = inputUser.FirstName,
                     LastName = inputUser.LastName,
                     Password = inputUser.Password,
                     EmailId = inputUser.EmailId,
+                    Username = inputUser.UserName,
                     UserType = Helper.GetUserType(inputUser.IsStudent),
                     IsActive = (ulong)(inputUser.IsStudent ? 1 : 0)
                 };
                 await _context.Users.AddAsync(DbUser);
                 await _context.SaveChangesAsync();
-                return true;
+
+                result.Success = true;
+                result.Message = "User registered successfully.";
             }
             catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+        public async Task<bool> IsEmailIdExists(string emailId)
+        {
+            try
+            {
+                return await Task.FromResult(_context.Users.Any(x => x.EmailId == emailId));
+            }
+            catch
             {
                 return false;
             }
         }
-        public bool GetUser(string emailId)
+        public async Task<bool> IsUserNameExists(string username)
         {
             try
             {
-                var user = _context.Users.Select(x => x.EmailId == emailId).First();
-                if(user == null || !user)
-                {
-                    return false;
-                }
-                return true;
+                return await Task.FromResult(_context.Users.Any(x => x.Username == username));
             }
-            catch(Exception ex)
+            catch
             {
                 return false;
             }

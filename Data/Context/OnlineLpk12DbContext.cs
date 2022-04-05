@@ -26,14 +26,14 @@ namespace OnlineLpk12.Data.Context
         public virtual DbSet<StudentProgress> StudentProgresses { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySql("server=localhost;database=onlinelpk12;user=admin;password=Admin@1234", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.28-mysql"));
-            }
-        }
+//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//        {
+//            if (!optionsBuilder.IsConfigured)
+//            {
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+//                optionsBuilder.UseMySql("server=localhost;database=onlinelpk12;user=admin;password=AdminPassword", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.28-mysql"));
+//            }
+//        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -150,6 +150,12 @@ namespace OnlineLpk12.Data.Context
             {
                 entity.ToTable("user");
 
+                entity.HasIndex(e => e.EmailId, "email_id_UNIQUE")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.Username, "username_UNIQUE")
+                    .IsUnique();
+
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.EmailId)
@@ -175,6 +181,10 @@ namespace OnlineLpk12.Data.Context
                 entity.Property(e => e.UserType)
                     .HasMaxLength(50)
                     .HasColumnName("user_type");
+
+                entity.Property(e => e.Username)
+                    .HasMaxLength(50)
+                    .HasColumnName("username");
             });
 
             OnModelCreatingPartial(modelBuilder);

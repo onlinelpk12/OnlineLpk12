@@ -4,6 +4,7 @@ using OnlineLpk12.Data.Entities;
 using OnlineLpk12.Helpers;
 using OnlineLpk12.Services.Interface;
 using System.Net;
+using System.Text;
 
 namespace OnlineLpk12.Controllers
 {
@@ -19,28 +20,42 @@ namespace OnlineLpk12.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> Register([FromBody] User user)
+        public async Task<IActionResult> Register([FromBody] RegistrationUser user)
         {
+            ResultObject result = new ResultObject();
             try
             {
-                var validationMessage = Helper.ValidateUserWhileRegistering(user);
-                if (!string.IsNullOrEmpty(validationMessage))
+                var validationMessages = new Dictionary<string, string>();
+                var isUsernameExists = await _userService.IsUserNameExists(user.UserName);
+                var isEmailIdExists = await _userService.IsEmailIdExists(user.EmailId);
+                if (isUsernameExists)
                 {
-                    return BadRequest(validationMessage);
+                    validationMessages.Add("UserName", "UserName already exists.");
+                }
+                if (isEmailIdExists)
+                {
+                    validationMessages.Add("EmailId", "Email Id already exists.");
+                }
+                if (validationMessages.Any())
+                {
+                    result.Status = 400;
+                    result.Errors = validationMessages;
+                    result.Title = "One or more validation errors occurred.";
+                    return BadRequest(result);
                 }
 
-                var result = new Result()
+                var response = await _userService.RegisterUser(user);
+                if (response.Success)
                 {
-                    Success = await _userService.RegisterUser(user),
-                    ErrorMessage = ""
-                };
-                if (result.Success)
-                {
-                    return Ok("User registered successfully");
+                    result.Status = 200;
+                    result.Title = response.Message;
+                    return Ok(result);
                 }
                 else
                 {
-                    return Ok(result.ErrorMessage);
+                    result.Status = 200;
+                    result.Title = response.Message;
+                    return Ok(result);
                 }
             }
             catch (Exception ex)
@@ -49,40 +64,24 @@ namespace OnlineLpk12.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Login([FromBody] User user)
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromBody] LoginUser user)
         {
+            ResultObject result = new ResultObject();
             try
             {
-                if (user == null)
+                var response = await _userService.Login(user);
+                if (response.Success)
                 {
-                    return BadRequest("Enter valid user details");
-                }
-                if (string.IsNullOrEmpty(user.EmailId) && !IsValidEmail(user.EmailId))
-                {
-                    return BadRequest("Enter valid Email Id");
-                }
-                if (string.IsNullOrEmpty(user.Password))
-                {
-                    return BadRequest("Enter valid Password");
-                }
-                if (user.Password.Length < 8)
-                {
-                    return BadRequest("Enter password with minimum 8 characters");
-                }
-
-                var result = new Result()
-                {
-                    Success = true,
-                    ErrorMessage = ""
-                };
-                if (result.Success)
-                {
-                    return Ok("User logged in successfully");
+                    result.Status = 200;
+                    result.Title = response.Message;
+                    return Ok(result);
                 }
                 else
                 {
-                    return Ok(result.ErrorMessage);
+                    result.Status = 200;
+                    result.Title = response.Message;
+                    return Ok(result);
                 }
             }
             catch (Exception ex)
@@ -91,6 +90,6 @@ namespace OnlineLpk12.Controllers
             }
         }
 
-        
+
     }
 }

@@ -12,5 +12,6 @@ namespace OnlineLpk12.Data.Models
         public string EmailId { get; set; } = null!;
         public string UserType { get; set; } = null!;
         public ulong IsActive { get; set; }
+        public string Username { get; set; } = null!;
     }
 }

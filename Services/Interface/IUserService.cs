@@ -4,7 +4,9 @@ namespace OnlineLpk12.Services.Interface
 {
     public interface IUserService
     {
-        Task<bool> RegisterUser(User user);
-        Task<bool> Login(User user);
+        Task<Result> RegisterUser(RegistrationUser user);
+        Task<Result> Login(LoginUser user);
+        Task<bool> IsEmailIdExists(string emailId);
+        Task<bool> IsUserNameExists(string userName);
     }
 }

@@ -9,9 +9,9 @@ namespace OnlineLpk12.Services.Implementation
     public class StudentProgressService : IStudentProgressService
     {
         private readonly OnlineLpk12DbContext  _context;
-        public StudentProgressService(/*OnlineLpk12DbContext context*/)
+        public StudentProgressService(OnlineLpk12DbContext context)
         {
-           // _context = context;
+            _context = context;
         }
         public async Task<List<Data.Entities.Progress>> GetStatus()
         {
