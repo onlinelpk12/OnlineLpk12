@@ -22,71 +22,82 @@ namespace OnlineLpk12.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] RegistrationUser user)
         {
-            ResultObject result = new ResultObject();
+            Response response = new Response();
             try
             {
-                var validationMessages = new Dictionary<string, string>();
+                var validationMessages = Helper.ValidateUserWhileRegistering(user);
+                if (validationMessages.Any())
+                {
+                    response.Status = (int)HttpStatusCode.BadRequest;
+                    response.Errors = validationMessages;
+                    response.Message = "One or more validation errors occurred.";
+                    return BadRequest(response);
+                }
                 var isUsernameExists = await _userService.IsUserNameExists(user.UserName);
                 var isEmailIdExists = await _userService.IsEmailIdExists(user.EmailId);
                 if (isUsernameExists)
                 {
-                    validationMessages.Add("UserName", "UserName already exists.");
+                    validationMessages.Add("UserName already exists.");
                 }
                 if (isEmailIdExists)
                 {
-                    validationMessages.Add("EmailId", "Email Id already exists.");
+                    validationMessages.Add("Email Address already exists.");
                 }
                 if (validationMessages.Any())
                 {
-                    result.Status = 400;
-                    result.Errors = validationMessages;
-                    result.Title = "One or more validation errors occurred.";
-                    return BadRequest(result);
+                    response.Status = (int)HttpStatusCode.BadRequest;
+                    response.Errors = validationMessages;
+                    response.Message = "One or more validation errors occurred.";
+                    return BadRequest(response);
                 }
 
-                var response = await _userService.RegisterUser(user);
-                if (response.Success)
-                {
-                    result.Status = 200;
-                    result.Title = response.Message;
-                    return Ok(result);
-                }
-                else
-                {
-                    result.Status = 200;
-                    result.Title = response.Message;
-                    return Ok(result);
-                }
+                var result = await _userService.RegisterUser(user);
+                response.Status = (int)HttpStatusCode.OK;
+                response.Message = result.Message;
+                return Ok(response);
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, "Error occurred while fetching the data.");
+                response.Status = (int)HttpStatusCode.InternalServerError;
+                response.Errors.Add("Error occurred while fetching the data.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }
 
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] LoginUser user)
         {
-            ResultObject result = new ResultObject();
+            Response response = new Response();
             try
             {
-                var response = await _userService.Login(user);
-                if (response.Success)
+                var validationMessages = Helper.ValidateUserWhileLogin(user);
+                if (validationMessages.Any())
                 {
-                    result.Status = 200;
-                    result.Title = response.Message;
-                    return Ok(result);
+                    response.Status = (int)HttpStatusCode.BadRequest;
+                    response.Errors = validationMessages;
+                    response.Message = "One or more validation errors occurred.";
+                    return BadRequest(response);
+                }
+                var result = await _userService.Login(user);
+                if (result.Success)
+                {
+                    response.Status = 200;
+                    response.Message = response.Message;
+                    return Ok(response);
                 }
                 else
                 {
-                    result.Status = 200;
-                    result.Title = response.Message;
-                    return Ok(result);
+                    response.Status = 400;
+                    response.Message = response.Message;
+                    response.Errors.Add(response.Message);
+                    return BadRequest(response);
                 }
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, "Error occurred while fetching the data.");
+                response.Status = (int)HttpStatusCode.InternalServerError;
+                response.Errors.Add("Error occurred while fetching the data.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }
 

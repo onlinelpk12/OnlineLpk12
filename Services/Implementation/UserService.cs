@@ -19,14 +19,29 @@ namespace OnlineLpk12.Services.Implementation
             Result result = new Result();
             try
             {
-                var response = await Task.FromResult(_context.Users.Any(x => x.Username == user.UserName && x.Password == user.Password));
-                result.Success = response;
-                result.Message = response ? "User validation success." : "User validation failed.";
+                var userFromDb = await Task.FromResult(_context.Users.FirstOrDefault(x => x.Username == user.UserName && x.Password == user.Password));
+                if (userFromDb != null)
+                {
+                    if (userFromDb.IsActive == 0)
+                    {
+                        result.Success = false;
+                        result.Message = "User is inactive. Contact support for activation.";
+                    }
+                    else
+                    {
+                        result.Success = true;
+                        result.Message = "User validation success.";
+                    }
+                }
+                else
+                {
+                    result.Success = false;
+                    result.Message = "Invalid Credentials.";
+                }
             }
             catch (Exception ex)
             {
-                result.Success = false;
-                result.Message = ex.Message;
+                throw;
             }
             return result;
         }
@@ -54,8 +69,7 @@ namespace OnlineLpk12.Services.Implementation
             }
             catch (Exception ex)
             {
-                result.Success = false;
-                result.Message = ex.Message;
+                throw;
             }
             return result;
         }
