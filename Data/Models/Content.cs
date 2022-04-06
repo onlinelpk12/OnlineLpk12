@@ -7,7 +7,7 @@ namespace OnlineLpk12.Data.Models
     {
         public int Id { get; set; }
         public string ContentType { get; set; } = null!;
-        public string? ContentUrl { get; set; }
+        public string ContentUrl { get; set; } = null!;
         public int LessonId { get; set; }
     }
 }

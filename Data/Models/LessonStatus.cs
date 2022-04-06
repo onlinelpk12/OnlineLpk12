@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace OnlineLpk12.Data.Models
 {
-    public partial class ProgressStatus
+    public partial class LessonStatus
     {
         public int Id { get; set; }
-        public string ProgressStatusDesc { get; set; } = null!;
+        public string Status { get; set; } = null!;
     }
 }

@@ -19,7 +19,7 @@ namespace OnlineLpk12.Data.Context
 
         public virtual DbSet<Content> Contents { get; set; } = null!;
         public virtual DbSet<Lesson> Lessons { get; set; } = null!;
-        public virtual DbSet<ProgressStatus> ProgressStatuses { get; set; } = null!;
+        public virtual DbSet<LessonStatus> LessonStatuses { get; set; } = null!;
         public virtual DbSet<Quiz> Quizzes { get; set; } = null!;
         public virtual DbSet<QuizOption> QuizOptions { get; set; } = null!;
         public virtual DbSet<QuizStatus> QuizStatuses { get; set; } = null!;
@@ -51,7 +51,7 @@ namespace OnlineLpk12.Data.Context
                     .HasColumnName("content_type");
 
                 entity.Property(e => e.ContentUrl)
-                    .HasMaxLength(200)
+                    .HasMaxLength(2500)
                     .HasColumnName("content_url");
 
                 entity.Property(e => e.LessonId).HasColumnName("lesson_id");
@@ -61,27 +61,27 @@ namespace OnlineLpk12.Data.Context
             {
                 entity.ToTable("lesson");
 
+                entity.HasIndex(e => e.LessonNumber, "lesson_number_UNIQUE")
+                    .IsUnique();
+
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.LessonName)
                     .HasMaxLength(50)
                     .HasColumnName("lesson_name");
 
-                entity.Property(e => e.LessonNumber)
-                    .HasMaxLength(50)
-                    .HasColumnName("lesson_number");
+                entity.Property(e => e.LessonNumber).HasColumnName("lesson_number");
             });
 
-            modelBuilder.Entity<ProgressStatus>(entity =>
+            modelBuilder.Entity<LessonStatus>(entity =>
             {
-                entity.ToTable("progress_status");
+                entity.ToTable("lesson_status");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.ProgressStatusDesc)
+                entity.Property(e => e.Status)
                     .HasMaxLength(50)
-                    .HasColumnName("progress_status_desc")
-                    .IsFixedLength()
+                    .HasColumnName("status")
                     .UseCollation("utf8_general_ci")
                     .HasCharSet("utf8");
             });
@@ -101,6 +101,8 @@ namespace OnlineLpk12.Data.Context
                     .HasColumnName("question");
 
                 entity.Property(e => e.QuestionId).HasColumnName("question_id");
+
+                entity.Property(e => e.QuestionOrder).HasColumnName("question_order");
             });
 
             modelBuilder.Entity<QuizOption>(entity =>
@@ -123,7 +125,7 @@ namespace OnlineLpk12.Data.Context
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Status)
-                    .HasMaxLength(45)
+                    .HasMaxLength(50)
                     .HasColumnName("status");
             });
 
@@ -135,7 +137,9 @@ namespace OnlineLpk12.Data.Context
 
                 entity.Property(e => e.LessonId).HasColumnName("lesson_id");
 
-                entity.Property(e => e.LessonProgressStatusId).HasColumnName("lesson_progress_status_id");
+                entity.Property(e => e.LessonStatusId).HasColumnName("lesson_status_id");
+
+                entity.Property(e => e.QuizId).HasColumnName("quiz_id");
 
                 entity.Property(e => e.QuizScore)
                     .HasPrecision(18)

@@ -7,8 +7,9 @@ namespace OnlineLpk12.Data.Models
     {
         public int Id { get; set; }
         public int LessonId { get; set; }
-        public int QuestionId { get; set; }
+        public int QuestionOrder { get; set; }
         public string Question { get; set; } = null!;
         public int Answer { get; set; }
+        public int QuestionId { get; set; }
     }
 }
