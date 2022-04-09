@@ -22,13 +22,12 @@ namespace OnlineLpk12.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] RegistrationUser user)
         {
-            Response response = new Response();
+            Response<RegistrationUser> response = new();
             try
             {
                 var validationMessages = Helper.ValidateUserWhileRegistering(user);
                 if (validationMessages.Any())
                 {
-                    response.Status = (int)HttpStatusCode.BadRequest;
                     response.Errors = validationMessages;
                     response.Message = "One or more validation errors occurred.";
                     return BadRequest(response);
@@ -45,20 +44,17 @@ namespace OnlineLpk12.Controllers
                 }
                 if (validationMessages.Any())
                 {
-                    response.Status = (int)HttpStatusCode.BadRequest;
                     response.Errors = validationMessages;
                     response.Message = "One or more validation errors occurred.";
                     return BadRequest(response);
                 }
 
                 var result = await _userService.RegisterUser(user);
-                response.Status = (int)HttpStatusCode.OK;
                 response.Message = result.Message;
                 return Ok(response);
             }
             catch (Exception ex)
             {
-                response.Status = (int)HttpStatusCode.InternalServerError;
                 response.Errors.Add("Error occurred while fetching the data.");
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
@@ -67,13 +63,12 @@ namespace OnlineLpk12.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] LoginUser user)
         {
-            Response response = new Response();
+            Response<LoginResponse> response = new();
             try
             {
                 var validationMessages = Helper.ValidateUserWhileLogin(user);
                 if (validationMessages.Any())
                 {
-                    response.Status = (int)HttpStatusCode.BadRequest;
                     response.Errors = validationMessages;
                     response.Message = "One or more validation errors occurred.";
                     return BadRequest(response);
@@ -81,13 +76,12 @@ namespace OnlineLpk12.Controllers
                 var result = await _userService.Login(user);
                 if (result.Success)
                 {
-                    response.Status = 200;
                     response.Message = result.Message;
+                    response.Content = result.Content;
                     return Ok(response);
                 }
                 else
                 {
-                    response.Status = 400;
                     response.Message = "One or more validation errors occurred.";
                     response.Errors.Add(result.Message);
                     return BadRequest(response);
@@ -95,7 +89,7 @@ namespace OnlineLpk12.Controllers
             }
             catch (Exception ex)
             {
-                response.Status = (int)HttpStatusCode.InternalServerError;
+                response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }

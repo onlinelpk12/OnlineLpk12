@@ -14,9 +14,9 @@ namespace OnlineLpk12.Services.Implementation
             this._context = context;
         }
 
-        public async Task<Result> Login(LoginUser user)
+        public async Task<Result<LoginResponse>> Login(LoginUser user)
         {
-            Result result = new Result();
+            Result<LoginResponse> result = new Result<LoginResponse>();
             try
             {
                 var userFromDb = await Task.FromResult(_context.Users.FirstOrDefault(x => x.Username == user.UserName && x.Password == user.Password));
@@ -31,6 +31,12 @@ namespace OnlineLpk12.Services.Implementation
                     {
                         result.Success = true;
                         result.Message = "User validation success.";
+                        result.Content = new LoginResponse()
+                        {
+                            UserName = userFromDb.Username,
+                            FirstName = userFromDb.FirstName,
+                            LastName = userFromDb.LastName
+                        };
                     }
                 }
                 else
@@ -46,9 +52,9 @@ namespace OnlineLpk12.Services.Implementation
             return result;
         }
 
-        public async Task<Result> RegisterUser(RegistrationUser inputUser)
+        public async Task<Result<RegistrationUser>> RegisterUser(RegistrationUser inputUser)
         {
-            Result result = new Result();
+            Result<RegistrationUser> result = new Result<RegistrationUser>();
             try
             {
                 Data.Models.User DbUser = new Data.Models.User()
