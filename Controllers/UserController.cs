@@ -20,9 +20,10 @@ namespace OnlineLpk12.Controllers
         }
 
         [HttpPost("Register")]
+        [ProducesDefaultResponseType(typeof(Response<EmptyResult>))]
         public async Task<IActionResult> Register([FromBody] RegistrationUser user)
         {
-            Response<RegistrationUser> response = new();
+            Response<EmptyResult> response = new();
             try
             {
                 var validationMessages = Helper.ValidateUserWhileRegistering(user);
@@ -60,7 +61,10 @@ namespace OnlineLpk12.Controllers
             }
         }
 
+        
         [HttpPost("Login")]
+        [ProducesResponseType(typeof(Response<LoginResponse>), (int)HttpStatusCode.OK)]
+        [ProducesErrorResponseType(typeof(Response<EmptyResult>))]
         public async Task<IActionResult> Login([FromBody] LoginUser user)
         {
             Response<LoginResponse> response = new();

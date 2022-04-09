@@ -2,6 +2,7 @@
 using OnlineLpk12.Services.Interface;
 using OnlineLpk12.Helpers;
 using OnlineLpk12.Data.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace OnlineLpk12.Services.Implementation
 {
@@ -52,9 +53,9 @@ namespace OnlineLpk12.Services.Implementation
             return result;
         }
 
-        public async Task<Result<RegistrationUser>> RegisterUser(RegistrationUser inputUser)
+        public async Task<Result<EmptyResult>> RegisterUser(RegistrationUser inputUser)
         {
-            Result<RegistrationUser> result = new Result<RegistrationUser>();
+            Result<EmptyResult> result = new Result<EmptyResult>();
             try
             {
                 Data.Models.User DbUser = new Data.Models.User()
