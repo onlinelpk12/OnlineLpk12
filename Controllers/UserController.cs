@@ -82,14 +82,14 @@ namespace OnlineLpk12.Controllers
                 if (result.Success)
                 {
                     response.Status = 200;
-                    response.Message = response.Message;
+                    response.Message = result.Message;
                     return Ok(response);
                 }
                 else
                 {
                     response.Status = 400;
-                    response.Message = response.Message;
-                    response.Errors.Add(response.Message);
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add(result.Message);
                     return BadRequest(response);
                 }
             }
