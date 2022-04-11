@@ -35,20 +35,20 @@ namespace OnlineLpk12.Controllers
         }
 
         [HttpGet("lessons/{studentId}")]
-        public async Task<IActionResult> GetLessons(int studentId)
+        public async Task<IActionResult> GetLessons(string studentId)
         {
             try
             {
-                if (studentId < 0)
+                if (string.IsNullOrWhiteSpace(studentId))
                 {
                     return BadRequest("Enter valid Student Id.");
                 }
-                var result = await _studentProgressService.GetLessons(studentId);
-                if (result != null && result.Any())
+                var result = _studentProgressService.GetLessonsAndQuizProgress(studentId);
+                if (result.LessonAndQuizStatus != null && result.LessonAndQuizStatus.Any())
                 {
                     return Ok(result);
                 }
-                return NotFound("No Lessons found.");
+                return NotFound("No Lessons found for this student.");
             }
             catch (Exception ex)
             {
@@ -66,7 +66,7 @@ namespace OnlineLpk12.Controllers
                     return BadRequest("Enter valid Lesson Id.");
                 }
                 var result = await _studentProgressService.GetContent(lessonId);
-                if (result != null && result.Contents.Any())
+                if (result != null)
                 {
                     return Ok(result);
                 }

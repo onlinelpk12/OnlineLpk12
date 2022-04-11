@@ -2,6 +2,7 @@
 using OnlineLpk12.Services.Interface;
 using OnlineLpk12.Helpers;
 using OnlineLpk12.Data.Entities;
+using OnlineLpk12.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace OnlineLpk12.Services.Implementation
@@ -80,6 +81,20 @@ namespace OnlineLpk12.Services.Implementation
             }
             return result;
         }
+
+        public User GetUserDetailsByUserName(string username)
+        {
+            try
+            {
+                return _context.Users.FirstOrDefault(x => x.Username == username);
+
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
+        }
+
         public async Task<bool> IsEmailIdExists(string emailId)
         {
             try

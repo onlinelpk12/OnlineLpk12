@@ -13,10 +13,16 @@ namespace OnlineLpk12.Services.Implementation
     public class StudentProgressService : IStudentProgressService
     {
         private readonly OnlineLpk12DbContext _context;
-        public StudentProgressService(OnlineLpk12DbContext context)
+        private readonly IUserService _userService;
+
+        public StudentProgressService(OnlineLpk12DbContext context, IUserService userService)
         {
             _context = context;
+            this._userService = userService;
         }
+
+
+
         public async Task<List<Data.Entities.Progress>> GetStatus()
         {
             var data = new List<Data.Entities.Progress>();
@@ -34,75 +40,94 @@ namespace OnlineLpk12.Services.Implementation
             return data;
         }
 
-        public async Task<List<Lessons>> GetLessons(int studentId)
+        public LessonAndQuizProgressResponse GetLessonsAndQuizProgress(string username)
         {
-            var lessons = new List<Lessons>();
-            try
+            var studentDetails = _userService.GetUserDetailsByUserName(username);
+            var lesonDetails = _context.Lessons.ToList();
+
+
+            var queryResult = (from users in _context.Users
+                               join studentProgress in _context.StudentProgresses
+                               on users.Id equals studentProgress.StudentId
+                               join lesson in _context.Lessons
+                               on studentProgress.LessonId equals lesson.LessonNumber
+                               join lessonStatus in _context.LessonStatuses
+                               on studentProgress.LessonStatusId equals lessonStatus.Id
+                               join quizStatus in _context.QuizStatuses
+                               on studentProgress.QuizStatusId equals quizStatus.Id
+                               where users.Username == username
+                               select new
+                               {
+                                   lessonId = studentProgress.LessonId,
+                                   lessonNumber = lesson.LessonNumber,
+                                   lessonName = lesson.LessonName,
+                                   lessonStatus = lessonStatus.Status,
+                                   quizStatus = quizStatus.Status
+                               });
+
+            var lessonAndQuizReponse = new LessonAndQuizProgressResponse();
+            lessonAndQuizReponse.StudentId = studentDetails.Id;
+            lessonAndQuizReponse.Username = studentDetails.Username;
+            lessonAndQuizReponse.FirstName = studentDetails.FirstName;
+            lessonAndQuizReponse.LastName = studentDetails.LastName;
+
+            var lessonQuizStatuses = new List<LessonAndQuizStatus>();
+
+            foreach (var data in queryResult)
             {
-                lessons.Add(new Lessons()
+                lessonQuizStatuses.Add(new LessonAndQuizStatus()
                 {
-                    StudentId = studentId,
-                    LessonId = 1,
-                    LessonNumber = "1",
-                    LessonName = "Lesson One",
-                    LessonProgressStatus = "Completed",
-                    QuizStatus = "Completed"
-                });
-                lessons.Add(new Lessons()
-                {
-                    StudentId = studentId,
-                    LessonId = 2,
-                    LessonNumber = "2",
-                    LessonName = "Lesson Two",
-                    LessonProgressStatus = "In Progress",
-                    QuizStatus = "In Progress"
-                });
-                lessons.Add(new Lessons()
-                {
-                    StudentId = studentId,
-                    LessonId = 3,
-                    LessonNumber = "3",
-                    LessonName = "Lesson Three",
-                    LessonProgressStatus = "Not Started",
-                    QuizStatus = "Not Started"
+                    LessonId = data.lessonId,
+                    LessonName = data.lessonName,
+                    LessonNumber = data.lessonNumber,
+                    LessonStatus = string.IsNullOrWhiteSpace(data.lessonStatus) ? "NOT STARTED" : data.lessonStatus,
+                    QuizStatus = string.IsNullOrWhiteSpace(data.quizStatus) ? "NOT TAKEN" : data.quizStatus
                 });
             }
-            catch (Exception ex)
+
+            var lessonsNotStarted = lesonDetails.Where(x => !lessonQuizStatuses.Any(y => y.LessonId == x.Id));
+            foreach (var lesson in lessonsNotStarted)
             {
-                throw;
+                lessonQuizStatuses.Add(new LessonAndQuizStatus()
+                {
+                    LessonId = lesson.Id,
+                    LessonNumber = lesson.LessonNumber,
+                    LessonName = lesson.LessonName,
+                    LessonStatus = "NOT STARTED",
+                    QuizStatus = "NOT TAKEN"
+                });
             }
-            return lessons;
+
+            lessonQuizStatuses.OrderBy(x => x.LessonId);
+            lessonAndQuizReponse.LessonAndQuizStatus = lessonQuizStatuses;
+
+            return lessonAndQuizReponse;
         }
 
-        public async Task<Lessons> GetContent(int lessonId)
+        public async Task<LessonDetails> GetContent(int lessonId)
         {
-            var lesson = new Lessons()
+            var info = (from lessons in _context.Lessons
+            join content in _context.Contents
+            on lessons.Id equals content.LessonId
+            where lessons.Id == lessonId
+            select new { lessons.Id, lessons.LessonNumber, lessons.LessonName, content.ContentType, content.ContentUrl });
+
+            var details = info.FirstOrDefault();
+            if(details == null)
             {
-                LessonId = lessonId,
-                LessonName = "Lesson One",
-                LessonNumber = "1",
-                Contents = new List<LessonContent>()
+                return null;
+            }
+
+            var lessonDetails = new LessonDetails()
+            {
+                LessonId = details.Id,
+                LessonNumber = details.LessonNumber,
+                LessonName = details.LessonName,
+                ContentType = details.ContentType,
+                ContentUrl = details.ContentUrl,
             };
-            try
-            {
-                lesson.Contents.Add(new LessonContent()
-                {
-                    ContentId = 1,
-                    ContentType = "Powerpoint",
-                    ContentUrl = "Url"
-                });
-                lesson.Contents.Add(new LessonContent()
-                {
-                    ContentId = 2,
-                    ContentType = "Video",
-                    ContentUrl = "Url"
-                });
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return lesson;
+
+            return lessonDetails;
         }
 
         public async Task<Data.Entities.Quiz> GetQuiz(int? lessonId, int? quizId, int? studentId)

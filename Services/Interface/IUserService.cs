@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineLpk12.Data.Entities;
+using OnlineLpk12.Data.Models;
 
 namespace OnlineLpk12.Services.Interface
 {
@@ -7,6 +8,7 @@ namespace OnlineLpk12.Services.Interface
     {
         Task<Result<EmptyResult>> RegisterUser(RegistrationUser user);
         Task<Result<LoginResponse>> Login(LoginUser user);
+        public User GetUserDetailsByUserName(string username);
         Task<bool> IsEmailIdExists(string emailId);
         Task<bool> IsUserNameExists(string userName);
     }
