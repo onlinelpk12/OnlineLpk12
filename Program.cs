@@ -20,6 +20,19 @@ string connectionString = builder.Configuration.GetConnectionString("OnlineLPK12
 builder.Services.AddDbContext<OnlineLpk12DbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 builder.Services.AddTransient<IStudentProgressService, StudentProgressService>();
 builder.Services.AddTransient<IUserService, UserService>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+                      builder =>
+                      {
+                          builder.WithOrigins("http://localhost:8080")
+                                    .AllowAnyMethod()
+                                    .AllowAnyHeader();
+                      });
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,7 +41,7 @@ var app = builder.Build();
     app.UseSwagger();
     app.UseSwaggerUI();
 //}
-
+app.UseCors();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
