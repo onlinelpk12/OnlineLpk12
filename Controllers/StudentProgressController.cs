@@ -2,6 +2,7 @@
 using OnlineLpk12.Services.Interface;
 using System.Net;
 using OnlineLpk12.Data.Entities;
+using OnlineLpk12.Helpers;
 
 namespace OnlineLpk12.Controllers
 {
@@ -31,7 +32,6 @@ namespace OnlineLpk12.Controllers
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, "Error occurred while fetching the data.");
             }
-            //return Ok(context.Progresses.ToArray());
         }
 
         [HttpGet("lessons/{studentId}")]
@@ -78,54 +78,60 @@ namespace OnlineLpk12.Controllers
             }
         }
 
-        [HttpGet("quiz/{lessonId}")]
-        public async Task<IActionResult> GetQuizByLesson(int lessonId)
+        [HttpGet("quiz")]
+        [ProducesResponseType(typeof(Response<Quiz>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetQuiz([FromQuery] int? lessonId, [FromQuery] int? quizId, [FromQuery] int? studentId)
         {
+            Response<Quiz> response = new();
             try
             {
-                if (lessonId < 0)
+                if ((lessonId == null && quizId == null) || (lessonId != null && lessonId < 1 && quizId != null && quizId < 1))
                 {
-                    return BadRequest("Enter valid Lesson Id.");
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Enter valid Lesson Id or Quiz Id.");
+                    return BadRequest(response);
                 }
-                var result = await _studentProgressService.GetQuiz(lessonId);
+                var result = await _studentProgressService.GetQuiz(lessonId, quizId, studentId);
                 if (result != null && result.Questions.Any())
                 {
+                    response.Content = result;
                     return Ok(result);
                 }
-                return NotFound("Quiz not found for the given lesson");
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("Quiz not found for the given lesson.");
+                return NotFound(response);
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, "Error occurred while fetching the data.");
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("Error occurred while fetching the data.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
 
         }
 
         [HttpPost("quiz/{quizId}")]
-        public async Task<IActionResult> SubmitQuiz(int quizId, [FromBody]Quiz quiz)
+        public async Task<IActionResult> SubmitQuiz(int quizId, [FromBody] SubmitQuiz quiz)
         {
+            Response<Quiz> response = new Response<Quiz>();
             try
             {
-                if(quiz == null)
+                var validationMessages = Helper.ValidateQuiz(quiz);
+                if (validationMessages.Any())
                 {
-                    return BadRequest("Quiz is invalid");
+                    response.Errors = validationMessages;
+                    response.Message = "One or more validation errors occurred.";
+                    return BadRequest(response);
                 }
-                if(quiz.QuizId < 0)
-                {
-                    return BadRequest("Enter valid quiz id");
-                }
-                if (!quiz.Questions.Any())
-                {
-                    return BadRequest("Questions are invalid");
-                }
+
                 var result = await _studentProgressService.SubmitQuiz(quiz);
-                if(result != null)
+                if (result != null)
                 {
                     return Ok(result);
                 }
                 return Ok(result);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, "Error occurred while fetching the data.");
             }

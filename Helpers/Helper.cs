@@ -14,6 +14,42 @@ namespace OnlineLpk12.Helpers
             return isStudent ? UserType_Student : UserType_Teacher;
         }
 
+        public static QuizStatus ComputeQuizStatus(int score, int totalScore)
+        {
+            if ((double)score / totalScore >= 0.7)
+            {
+                return QuizStatus.Pass; //Pass
+            }
+            else
+            {
+                return QuizStatus.Fail;
+            }
+        }
+
+        public static int GetQuizStatusId(QuizStatus status)
+        {
+            switch (status)
+            {
+                case QuizStatus.NotTaken:
+                    return 1;
+                case QuizStatus.Pass:
+                    return 2;
+                case QuizStatus.Fail:
+                    return 3;
+            }
+            return 1;
+        }
+        public static QuizStatus GetQuizStatus(int statusId)
+        {
+            switch (statusId)
+            {
+                case 1: return QuizStatus.NotTaken;
+                case 2: return QuizStatus.Pass;
+                case 3: return QuizStatus.Fail;
+            }
+            return QuizStatus.NotTaken;
+        }
+
         public static List<string> ValidateUserWhileRegistering(RegistrationUser user)
         {
             List<string> errors = new List<string>();
@@ -57,7 +93,7 @@ namespace OnlineLpk12.Helpers
                 errors.Add("Enter valid user details.");
                 return errors;
             }
-            
+
             if (string.IsNullOrEmpty(user.UserName))
             {
                 errors.Add("Username should not be empty.");
@@ -66,6 +102,27 @@ namespace OnlineLpk12.Helpers
             {
                 errors.Add("Password should not be empty.");
             }
+            return errors;
+        }
+
+        public static List<string> ValidateQuiz(SubmitQuiz quiz)
+        {
+            List<string> errors = new List<string>();
+            if (quiz == null)
+            {
+                errors.Add("Quiz is invalid.");
+                return errors;
+            }
+
+            if (quiz.LessonId < 1)
+            {
+                errors.Add("Lesson Id is invalid.");
+            }
+            if (!quiz.Questions.Any())
+            {
+                errors.Add("Questions are invalid.");
+            }
+
             return errors;
         }
 

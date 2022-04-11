@@ -11,5 +11,6 @@ namespace OnlineLpk12.Data.Models
         public string Question { get; set; } = null!;
         public int Answer { get; set; }
         public int QuestionId { get; set; }
+        public int QuizId { get; set; }
     }
 }
