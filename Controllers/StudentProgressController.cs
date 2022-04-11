@@ -34,47 +34,77 @@ namespace OnlineLpk12.Controllers
             }
         }
 
-        [HttpGet("lessons/{studentId}")]
-        public async Task<IActionResult> GetLessons(string studentId)
+        [HttpGet("lessons/{userId}")]
+        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(Response<LessonAndQuizProgressResponse>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetLessons(int userId)
         {
+            Response<LessonAndQuizProgressResponse> response = new();
+
             try
             {
-                if (string.IsNullOrWhiteSpace(studentId))
+                if (userId <= 0)
                 {
-                    return BadRequest("Enter valid Student Id.");
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Enter valid Student Id.");
+                    return BadRequest(response);
                 }
-                var result = _studentProgressService.GetLessonsAndQuizProgress(studentId);
+                var result = _studentProgressService.GetLessonsAndQuizProgress(userId);
+                if(result == null)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Student does not exist.");
+                    return NotFound(response);
+                }
                 if (result.LessonAndQuizStatus != null && result.LessonAndQuizStatus.Any())
                 {
-                    return Ok(result);
+                    response.Content = result;
+                    return Ok(response);
                 }
-                return NotFound("No Lessons found for this student.");
+                
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("No Lessons found for this student.");
+                return NotFound(response);
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, "Error occurred while fetching the data.");
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("Error occurred while fetching the data.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }
 
         [HttpGet("content/{lessonId}")]
+        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(Response<LessonAndQuizProgressResponse>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetContentByLesson(int lessonId)
         {
+            Response<LessonDetails> response = new();
             try
             {
-                if (lessonId < 0)
+                if (lessonId < 1)
                 {
-                    return BadRequest("Enter valid Lesson Id.");
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Enter valid Lesson Id.");
+                    return BadRequest(response);
                 }
                 var result = await _studentProgressService.GetContent(lessonId);
                 if (result != null)
                 {
-                    return Ok(result);
+                    response.Content = result;
+                    return Ok(response);
                 }
-                return NotFound("Content Not found for the given lesson");
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("Content Not found for the given lesson");
+                return NotFound(response);
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, "Error occurred while fetching the data.");
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("Error occurred while fetching the data.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }
 

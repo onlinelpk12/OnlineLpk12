@@ -6,7 +6,7 @@ namespace OnlineLpk12.Services.Interface
     public interface IStudentProgressService
     {
         Task<List<Progress>> GetStatus();
-        LessonAndQuizProgressResponse GetLessonsAndQuizProgress(string username);
+        LessonAndQuizProgressResponse? GetLessonsAndQuizProgress(int userId);
         Task<LessonDetails> GetContent(int lessonId);
 
         Task<Quiz> GetQuiz(int? lessonId, int? quizId, int? studentId);

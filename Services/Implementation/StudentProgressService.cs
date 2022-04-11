@@ -40,9 +40,13 @@ namespace OnlineLpk12.Services.Implementation
             return data;
         }
 
-        public LessonAndQuizProgressResponse GetLessonsAndQuizProgress(string username)
+        public LessonAndQuizProgressResponse? GetLessonsAndQuizProgress(int userId)
         {
-            var studentDetails = _userService.GetUserDetailsByUserName(username);
+            var studentDetails = _context.Users.Find(userId);
+            if(studentDetails == null)
+            {
+                return null;
+            }
             var lesonDetails = _context.Lessons.ToList();
 
 
@@ -55,7 +59,7 @@ namespace OnlineLpk12.Services.Implementation
                                on studentProgress.LessonStatusId equals lessonStatus.Id
                                join quizStatus in _context.QuizStatuses
                                on studentProgress.QuizStatusId equals quizStatus.Id
-                               where users.Username == username
+                               where users.Id == userId
                                select new
                                {
                                    lessonId = studentProgress.LessonId,
