@@ -110,6 +110,7 @@ namespace OnlineLpk12.Controllers
 
         [HttpGet("quiz")]
         [ProducesResponseType(typeof(Response<Quiz>), (int)HttpStatusCode.OK)]
+        [ProducesErrorResponseType(typeof(Response<EmptyResult>))]
         public async Task<IActionResult> GetQuiz([FromQuery] int? lessonId, [FromQuery] int? quizId, [FromQuery] int? studentId)
         {
             Response<Quiz> response = new();
@@ -125,7 +126,7 @@ namespace OnlineLpk12.Controllers
                 if (result != null && result.Questions.Any())
                 {
                     response.Content = result;
-                    return Ok(result);
+                    return Ok(response);
                 }
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Quiz not found for the given lesson.");
@@ -133,7 +134,7 @@ namespace OnlineLpk12.Controllers
             }
             catch (Exception ex)
             {
-                response.Message = "One or more validation errors occurred.";
+                response.Message = "One or more errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
@@ -141,9 +142,11 @@ namespace OnlineLpk12.Controllers
         }
 
         [HttpPost("quiz/{quizId}")]
+        [ProducesResponseType(typeof(Response<SubmitQuiz>), (int)HttpStatusCode.OK)]
+        [ProducesErrorResponseType(typeof(Response<EmptyResult>))]
         public async Task<IActionResult> SubmitQuiz(int quizId, [FromBody] SubmitQuiz quiz)
         {
-            Response<Quiz> response = new Response<Quiz>();
+            Response<SubmitQuiz> response = new Response<SubmitQuiz>();
             try
             {
                 var validationMessages = Helper.ValidateQuiz(quiz);
@@ -157,13 +160,18 @@ namespace OnlineLpk12.Controllers
                 var result = await _studentProgressService.SubmitQuiz(quiz);
                 if (result != null)
                 {
-                    return Ok(result);
+                    response.Content = result;
+                    return Ok(response);
                 }
-                return Ok(result);
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("Failed submitting Quiz");
+                return BadRequest(response);
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, "Error occurred while fetching the data.");
+                response.Message = "One or more errors occurred.";
+                response.Errors.Add("Error occurred while fetching the data.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }
 

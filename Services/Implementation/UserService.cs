@@ -37,7 +37,10 @@ namespace OnlineLpk12.Services.Implementation
                         {
                             UserName = userFromDb.Username,
                             FirstName = userFromDb.FirstName,
-                            LastName = userFromDb.LastName
+                            LastName = userFromDb.LastName,
+                            UserType = userFromDb.UserType,
+                            UserId = userFromDb.Id
+
                         };
                     }
                 }

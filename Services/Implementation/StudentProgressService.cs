@@ -111,13 +111,13 @@ namespace OnlineLpk12.Services.Implementation
         public async Task<LessonDetails> GetContent(int lessonId)
         {
             var info = (from lessons in _context.Lessons
-            join content in _context.Contents
-            on lessons.Id equals content.LessonId
-            where lessons.Id == lessonId
-            select new { lessons.Id, lessons.LessonNumber, lessons.LessonName, content.ContentType, content.ContentUrl });
+                        join content in _context.Contents
+                        on lessons.Id equals content.LessonId
+                        where lessons.Id == lessonId
+                        select new { lessons.Id, lessons.LessonNumber, lessons.LessonName, content.ContentType, content.ContentUrl });
 
             var details = info.FirstOrDefault();
-            if(details == null)
+            if (details == null)
             {
                 return null;
             }
@@ -134,7 +134,7 @@ namespace OnlineLpk12.Services.Implementation
             return lessonDetails;
         }
 
-        public async Task<Data.Entities.Quiz> GetQuiz(int? lessonId, int? quizId, int? studentId)
+        public async Task<Data.Entities.Quiz> GetQuiz(int? lessonId, int? quizId, int? userId)
         {
             var quiz = new Data.Entities.Quiz();
             try
@@ -142,7 +142,7 @@ namespace OnlineLpk12.Services.Implementation
                 var data = await (from qz in _context.Quizzes
                                   join opt in _context.QuizOptions
                                   on qz.QuestionId equals opt.QuestionId
-                                  where (lessonId != null && qz.LessonId == lessonId) ||(quizId != null && qz.QuizId == quizId)
+                                  where (lessonId != null && qz.LessonId == lessonId) || (quizId != null && qz.QuizId == quizId)
                                   select new
                                   {
                                       LessonId = qz.LessonId,
@@ -156,8 +156,9 @@ namespace OnlineLpk12.Services.Implementation
 
                 if (data.Any())
                 {
-                    quiz.LessonId = data.First().LessonId;
-                    quiz.QuizId = data.First().QuizId;
+                    quiz.LessonId = data.FirstOrDefault().LessonId;
+                    quiz.LessonName = _context.Lessons.FirstOrDefault(x => x.Id == quiz.LessonId).LessonName;
+                    quiz.QuizId = data.FirstOrDefault().QuizId;
                     quiz.Questions = new List<Question>();
                 }
                 foreach (var item in data)
@@ -172,29 +173,29 @@ namespace OnlineLpk12.Services.Implementation
                             QuestionDescription = item.QuestionDesc
                         });
                     }
-                    var question = quiz.Questions.Where(x => x.Id == item.QuestionId).First();
+                    var question = quiz.Questions.Where(x => x.Id == item.QuestionId).FirstOrDefault();
                     if (question != null)
                     {
                         question.Options.Add(item.OptionId, item.OptionDesc);
                     }
                 }
-                if(studentId != null)
+                if (userId != null)
                 {
-                    var d = _context.StudentProgresses.FirstOrDefault(x => x.LessonId == quiz.LessonId
+                    var d = await _context.StudentProgresses.FirstOrDefaultAsync(x => x.LessonId == quiz.LessonId
                                                                         && x.QuizId == quiz.QuizId
-                                                                        && x.StudentId == studentId);
+                                                                        && x.StudentId == userId);
                     if (d != null)
                     {
                         quiz.StudentId = d.StudentId;
                         quiz.Status = Helper.GetQuizStatus(d.QuizStatusId);
                         quiz.Score = Convert.ToInt32(d.QuizScore);
 
-                        var studentQuiz = _context.StudentQuizzes.Where(x => x.LessonId == quiz.LessonId
+                        var studentQuiz = await _context.StudentQuizzes.Where(x => x.LessonId == quiz.LessonId
                                                                           && x.QuizId == quiz.QuizId
-                                                                          && x.StudentId == studentId).ToList();
+                                                                          && x.StudentId == userId).ToListAsync();
                         foreach (var item in quiz.Questions)
                         {
-                            var studentQuizRecord = studentQuiz.Where(k => k.QuestionId == item.Id).First();
+                            var studentQuizRecord = studentQuiz.Where(k => k.QuestionId == item.Id).FirstOrDefault();
                             item.AnswerOption = studentQuizRecord.AnswerOptionId;
                             item.SelectedOption = studentQuizRecord.SelectedOptionId;
                         }
@@ -230,8 +231,8 @@ namespace OnlineLpk12.Services.Implementation
         {
             try
             {
-                var data = await _context.Quizzes.Where(x => x.LessonId == quiz.LessonId && x.QuizId == quiz.QuizId).ToListAsync();
-                quiz.Questions.ForEach(k => k.AnswerOption = data.Where(x => x.QuestionId == k.Id).First().Answer);
+                var data = await _context.Quizzes.Where(x => x.QuizId == quiz.QuizId).ToListAsync();
+                quiz.Questions.ForEach(k => k.AnswerOption = data.Where(x => x.QuestionId == k.Id).FirstOrDefault().Answer);
             }
             catch (Exception ex)
             {
@@ -243,7 +244,7 @@ namespace OnlineLpk12.Services.Implementation
         {
             try
             {
-                var data = await _context.StudentQuizzes.Where(x => x.StudentId == quiz.StudentId
+                var data = await _context.StudentQuizzes.Where(x => x.StudentId == quiz.UserId
                                                                  && x.QuizId == quiz.QuizId).ToListAsync();
                 foreach (var item in quiz.Questions)
                 {
@@ -257,7 +258,7 @@ namespace OnlineLpk12.Services.Implementation
                         await _context.StudentQuizzes.AddAsync(new StudentQuiz()
                         {
                             LessonId = quiz.LessonId,
-                            StudentId = quiz.StudentId,
+                            StudentId = quiz.UserId,
                             SelectedOptionId = item.SelectedOption,
                             QuestionId = item.Id,
                             QuizId = quiz.QuizId,
@@ -278,7 +279,7 @@ namespace OnlineLpk12.Services.Implementation
         {
             try
             {
-                var data = await _context.StudentProgresses.FirstOrDefaultAsync(x => x.StudentId == quiz.StudentId
+                var data = await _context.StudentProgresses.FirstOrDefaultAsync(x => x.StudentId == quiz.UserId
                                                                                   && x.QuizId == quiz.QuizId);
                 if (data != null)
                 {
@@ -294,7 +295,7 @@ namespace OnlineLpk12.Services.Implementation
                         LessonStatusId = 1,
                         QuizScore = quiz.Score,
                         QuizStatusId = Helper.GetQuizStatusId(quiz.Status),
-                        StudentId = quiz.StudentId
+                        StudentId = quiz.UserId
                     });
                 }
                 await _context.SaveChangesAsync();

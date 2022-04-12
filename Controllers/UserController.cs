@@ -20,7 +20,9 @@ namespace OnlineLpk12.Controllers
         }
 
         [HttpPost("Register")]
-        [ProducesDefaultResponseType(typeof(Response<EmptyResult>))]
+        [ProducesResponseType(typeof(Response<EmptyResult>),(int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Response<EmptyResult>),(int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> Register([FromBody] RegistrationUser user)
         {
             Response<EmptyResult> response = new();
@@ -57,6 +59,7 @@ namespace OnlineLpk12.Controllers
             catch (Exception ex)
             {
                 response.Errors.Add("Error occurred while fetching the data.");
+                response.Message = "One or more errors occurred.";
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }
@@ -64,7 +67,8 @@ namespace OnlineLpk12.Controllers
         
         [HttpPost("Login")]
         [ProducesResponseType(typeof(Response<LoginResponse>), (int)HttpStatusCode.OK)]
-        [ProducesErrorResponseType(typeof(Response<EmptyResult>))]
+        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> Login([FromBody] LoginUser user)
         {
             Response<LoginResponse> response = new();
