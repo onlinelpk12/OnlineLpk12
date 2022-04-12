@@ -176,7 +176,7 @@ namespace OnlineLpk12.Services.Implementation
                     var question = quiz.Questions.Where(x => x.Id == item.QuestionId).FirstOrDefault();
                     if (question != null)
                     {
-                        question.Options.Add(item.OptionId, item.OptionDesc);
+                        question.Options.Add(new { OptionId = item.OptionId, OptionDescription = item.OptionDesc });
                     }
                 }
                 if (userId != null)
