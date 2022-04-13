@@ -176,7 +176,7 @@ namespace OnlineLpk12.Controllers
             }
         }
 
-        [HttpGet("studentDetails/{userId}")]
+        [HttpGet("allStudentDetails/{userId}")]
         [ProducesResponseType(typeof(Response<List<StudentDetails>>), (int)HttpStatusCode.OK)]
         [ProducesErrorResponseType(typeof(Response<EmptyResult>))]
         public async Task<IActionResult> GetAllStudentsDetails(int userId)
