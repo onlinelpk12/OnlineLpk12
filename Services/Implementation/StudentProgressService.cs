@@ -306,5 +306,27 @@ namespace OnlineLpk12.Services.Implementation
             }
         }
 
+        public async Task<bool> IsUserTeacher(int userId)
+        {
+            bool isTeacher = await _context.Users.AnyAsync(x => x.Id == userId && x.UserType == "TEACHER");
+            return isTeacher;
+        }
+        public async Task<List<StudentDetails>> GetAllStudentDetails()
+        {
+            var students = await _context.Users.Where(x => x.UserType == "STUDENT").ToListAsync();
+            var StudentDetails = new List<StudentDetails>();
+            foreach(var student in students)
+            {
+                var newStudent = new StudentDetails()
+                {
+                    UserId = student.Id,
+                    UserName = student.Username,
+                    FirstName = student.FirstName,
+                    LastName = student.LastName,
+                };
+                StudentDetails.Add(newStudent);
+            }
+            return StudentDetails;
+        }
     }
 }

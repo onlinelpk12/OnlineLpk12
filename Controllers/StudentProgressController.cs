@@ -51,7 +51,7 @@ namespace OnlineLpk12.Controllers
                     return BadRequest(response);
                 }
                 var result = _studentProgressService.GetLessonsAndQuizProgress(userId);
-                if(result == null)
+                if (result == null)
                 {
                     response.Message = "One or more validation errors occurred.";
                     response.Errors.Add("Student does not exist.");
@@ -62,7 +62,7 @@ namespace OnlineLpk12.Controllers
                     response.Content = result;
                     return Ok(response);
                 }
-                
+
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("No Lessons found for this student.");
                 return NotFound(response);
@@ -109,8 +109,9 @@ namespace OnlineLpk12.Controllers
         }
 
         [HttpGet("quiz")]
+        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(Response<Quiz>), (int)HttpStatusCode.OK)]
-        [ProducesErrorResponseType(typeof(Response<EmptyResult>))]
         public async Task<IActionResult> GetQuiz([FromQuery] int? lessonId, [FromQuery] int? quizId, [FromQuery] int? studentId)
         {
             Response<Quiz> response = new();
@@ -175,5 +176,39 @@ namespace OnlineLpk12.Controllers
             }
         }
 
+        [HttpGet("studentDetails/{userId}")]
+        [ProducesResponseType(typeof(Response<List<StudentDetails>>), (int)HttpStatusCode.OK)]
+        [ProducesErrorResponseType(typeof(Response<EmptyResult>))]
+        public async Task<IActionResult> GetAllStudentsDetails(int userId)
+        {
+            var response = new Response<List<StudentDetails>>();
+
+            try
+            {
+                var isTeacher = await _studentProgressService.IsUserTeacher(userId);
+                if (!isTeacher)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Invalid teacher details.");
+                    return BadRequest(response);
+                }
+
+                var result = await _studentProgressService.GetAllStudentDetails();
+                if (result == null || !result.Any())
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("No student details found.");
+                    return NotFound(response);
+                }
+                response.Content = result;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response.Message = "One or more errors occurred.";
+                response.Errors.Add("Error occurred while fetching the data.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
+            }
+        }
     }
 }

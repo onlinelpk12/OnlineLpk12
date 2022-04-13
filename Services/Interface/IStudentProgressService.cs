@@ -11,5 +11,8 @@ namespace OnlineLpk12.Services.Interface
 
         Task<Quiz> GetQuiz(int? lessonId, int? quizId, int? studentId);
         Task<SubmitQuiz> SubmitQuiz(SubmitQuiz quiz);
+
+        Task<bool> IsUserTeacher(int userId);
+        Task<List<StudentDetails>> GetAllStudentDetails();
     }
 }
