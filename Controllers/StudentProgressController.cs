@@ -124,7 +124,7 @@ namespace OnlineLpk12.Controllers
                     return BadRequest(response);
                 }
                 var result = await _studentProgressService.GetQuiz(lessonId, quizId, studentId);
-                if (result != null && result.Questions.Any())
+                if (result != null && result.Questions != null && result.Questions.Any())
                 {
                     response.Content = result;
                     return Ok(response);
