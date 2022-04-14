@@ -84,7 +84,6 @@ namespace OnlineLpk12.Services.Implementation
                     LessonId = data.lessonId,
                     LessonName = data.lessonName,
                     LessonNumber = data.lessonNumber,
-                    LessonStatus = string.IsNullOrWhiteSpace(data.lessonStatus) ? "NOT STARTED" : data.lessonStatus,
                     QuizStatus = string.IsNullOrWhiteSpace(data.quizStatus) ? "NOT TAKEN" : data.quizStatus
                 });
             }
@@ -97,7 +96,6 @@ namespace OnlineLpk12.Services.Implementation
                     LessonId = lesson.Id,
                     LessonNumber = lesson.LessonNumber,
                     LessonName = lesson.LessonName,
-                    LessonStatus = "NOT STARTED",
                     QuizStatus = "NOT TAKEN"
                 });
             }
