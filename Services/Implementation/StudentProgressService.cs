@@ -22,23 +22,6 @@ namespace OnlineLpk12.Services.Implementation
             this._userService = userService;
         }
 
-        public async Task<List<Progress>> GetStatus()
-        {
-            var data = new List<Data.Entities.Progress>();
-            try
-            {
-                //return _context.Progresses.ToList();
-                data.Add(new Data.Entities.Progress() { Id = 0, ProgressStatus = "Not Started" });
-                data.Add(new Data.Entities.Progress() { Id = 1, ProgressStatus = "In Progress" });
-                data.Add(new Data.Entities.Progress() { Id = 2, ProgressStatus = "Completed" });
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return data;
-        }
-
         /// <summary>
         /// Update lesson status for the given user and lesson
         /// </summary>
@@ -57,14 +40,14 @@ namespace OnlineLpk12.Services.Implementation
                     {
                         LessonId = lessonId,
                         QuizId = lessonId,
-                        LessonStatusId = 2,
+                        LessonStatusId = (int)Data.Entities.LessonStatus.InProgress,
                         StudentId = userId,
-                        QuizStatusId = 1
+                        QuizStatusId = (int)Data.Entities.QuizStatus.NotStarted
                     });
                 }
                 else
                 {
-                    data.LessonStatusId = 2;
+                    data.LessonStatusId = (int)Data.Entities.LessonStatus.InProgress;
                 }
                 //Save changes
                 await _context.SaveChangesAsync();
@@ -104,11 +87,13 @@ namespace OnlineLpk12.Services.Implementation
                                    quizStatus = quizStatus.Status
                                });
 
-            var lessonAndQuizReponse = new LessonAndQuizProgressResponse();
-            lessonAndQuizReponse.StudentId = studentDetails.Id;
-            lessonAndQuizReponse.Username = studentDetails.Username;
-            lessonAndQuizReponse.FirstName = studentDetails.FirstName;
-            lessonAndQuizReponse.LastName = studentDetails.LastName;
+            var lessonAndQuizReponse = new LessonAndQuizProgressResponse
+            {
+                StudentId = studentDetails.Id,
+                Username = studentDetails.Username,
+                FirstName = studentDetails.FirstName,
+                LastName = studentDetails.LastName
+            };
 
             var lessonQuizStatuses = new List<LessonAndQuizStatus>();
 
@@ -192,7 +177,7 @@ namespace OnlineLpk12.Services.Implementation
         /// <returns>user type or error message</returns>
         public async Task<Result<Data.Entities.User>> IsValidUser(int userId)
         {
-            Result<Data.Entities.User> result = new Result<Data.Entities.User>();
+            Result<Data.Entities.User> result = new();
             if (userId == 0)
             {
                 result.Success = false;
@@ -282,8 +267,10 @@ namespace OnlineLpk12.Services.Implementation
                         //quiz.StudentId = d.StudentId;
                         quiz.UserId = d.StudentId;
                         quiz.IsTeacher = false;
-                        quiz.Status = Helper.GetQuizStatus(d.QuizStatusId).ToString();
+                        //quiz.Status = Helper.GetQuizStatus(d.QuizStatusId).ToString();
+                        quiz.Status = Helper.GetQuizStatus(d.QuizStatusId);
                         quiz.Score = Convert.ToInt32(d.QuizScore);
+                        quiz.QuizScore = Helper.ComputeQuizScore(Convert.ToInt32(quiz.Score), quiz.Questions.Count);
 
                         if (d.QuizStatusId == 2)    //Show selected answers only when the quiz status is pass.
                         {
@@ -305,8 +292,10 @@ namespace OnlineLpk12.Services.Implementation
                         //quiz.StudentId = userId;
                         quiz.UserId = userId;
                         quiz.IsTeacher= false;
-                        quiz.Status = Data.Entities.QuizStatus.NotStarted.ToString();
+                        //quiz.Status = Data.Entities.QuizStatus.NotStarted.ToString();
+                        quiz.Status = Data.Entities.QuizStatus.NotStarted;
                         quiz.Score = 0;
+                        quiz.QuizScore= 0;
                     }
                 }
                 result.Success = true;
@@ -481,8 +470,10 @@ namespace OnlineLpk12.Services.Implementation
                 //Calculate score by checking the correct answers
                 quiz.Score = quiz.Questions.Count(x => x.SelectedOption == x.AnswerOption);
 
+                quiz.QuizScore = Helper.ComputeQuizScore(quiz.Score, quiz.Questions.Count);
+
                 //Compute the quiz status.
-                quiz.Status = Helper.ComputeQuizStatus(quiz.Score, quiz.Questions.Count).ToString();
+                quiz.Status = Helper.ComputeQuizStatus(quiz.QuizScore).ToString();
 
                 //Save quiz Score
                 await SaveQuizScore(quiz);

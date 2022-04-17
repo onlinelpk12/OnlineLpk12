@@ -2,13 +2,13 @@
 
 namespace OnlineLpk12.Data.Entities
 {
-    public enum QuizStatus
+    public enum LessonStatus
     {
         [Description("Not Started")]
         NotStarted = 1,
-        [Description("Pass")]
-        Pass = 2,
-        [Description("Fail")]
-        Fail = 3
+        [Description("In Progress")]
+        InProgress = 2,
+        [Description("Completed")]
+        Completed=3
     }
 }

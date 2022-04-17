@@ -14,11 +14,16 @@ namespace OnlineLpk12.Helpers
             return isStudent ? UserType_Student : UserType_Teacher;
         }
 
-        public static QuizStatus ComputeQuizStatus(int score, int totalScore)
+        public static double ComputeQuizScore(int score, int totalScore)
         {
-            if ((double)score / totalScore >= 0.7)
+            return (double)score / totalScore;
+        }
+
+        public static QuizStatus ComputeQuizStatus(double quizScore)
+        {
+            if (quizScore >= 0.7) //Pass
             {
-                return QuizStatus.Pass; //Pass
+                return QuizStatus.Pass; 
             }
             else
             {
@@ -39,6 +44,21 @@ namespace OnlineLpk12.Helpers
             }
             return 1;
         }
+
+        public static int GetQuizStatusIdByEnum(QuizStatus status)
+        {
+            switch (status)
+            {
+                case QuizStatus.NotStarted:
+                    return 1;
+                case QuizStatus.Pass:
+                    return 2;
+                case QuizStatus.Fail:
+                    return 3;
+            }
+            return 1;
+        }
+
         public static QuizStatus GetQuizStatus(int statusId)
         {
             switch (statusId)

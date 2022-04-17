@@ -8,7 +8,8 @@
         public int? UserId { get; set; }
         public bool IsTeacher { get; set; }
         public int? Score { get; set; }
-        public string Status { get; set; }
+        public double? QuizScore { get; set; }
+        public QuizStatus Status { get; set; }
         public List<Question> Questions { get; set; } 
     }
 }
