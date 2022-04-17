@@ -7,7 +7,7 @@
         public int UserId { get; set; }
         public int Score { get; set; }
         public double QuizScore { get; set; }
-        public string Status { get; set; }
+        public QuizStatus Status { get; set; }
         public List<SubmitQuestion> Questions { get; set; }
     }
 }

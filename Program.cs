@@ -3,12 +3,16 @@ using Microsoft.EntityFrameworkCore;
 using OnlineLpk12.Data.Context;
 using OnlineLpk12.Services.Implementation;
 using OnlineLpk12.Services.Interface;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
     options.SuppressModelStateInvalidFilter = true;
@@ -24,12 +28,12 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(
-                      builder =>
-                      {
-                          builder.WithOrigins("http://localhost:8080", "http://localhost:8081", "http://localhost:8082", "http://localhost:8083", "http://localhost:8084", "http://localhost:8085", "http://localhost:8086")
-                                    .AllowAnyMethod()
-                                    .AllowAnyHeader();
-                      });
+            builder =>
+            {
+                builder.WithOrigins("http://localhost:8080", "http://localhost:8081", "http://localhost:8082", "http://localhost:8083", "http://localhost:8084", "http://localhost:8085", "http://localhost:8086")
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
+            });
 });
 
 

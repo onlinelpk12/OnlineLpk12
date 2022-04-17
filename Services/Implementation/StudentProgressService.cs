@@ -262,15 +262,13 @@ namespace OnlineLpk12.Services.Implementation
                                                                                    && x.StudentId == userId);
                     if (d != null)
                     {
-                        //quiz.StudentId = d.StudentId;
                         quiz.UserId = d.StudentId;
                         quiz.IsTeacher = false;
-                        //quiz.Status = Helper.GetQuizStatus(d.QuizStatusId).ToString();
                         quiz.Status = Helper.GetQuizStatus(d.QuizStatusId);
                         quiz.Score = Convert.ToInt32(d.QuizScore);
                         quiz.QuizScore = Helper.ComputeQuizScore(Convert.ToInt32(quiz.Score), quiz.Questions.Count);
 
-                        if (d.QuizStatusId == 2)    //Show selected answers only when the quiz status is pass.
+                        if (quiz.Status == Data.Entities.QuizStatus.Pass)    //Show selected answers only when the quiz status is pass.
                         {
                             var studentQuiz = await _context.StudentQuizzes.Where(x => x.QuizId == quiz.QuizId
                                                                                     && x.StudentId == userId).ToListAsync();
@@ -287,10 +285,8 @@ namespace OnlineLpk12.Services.Implementation
                     }
                     else
                     {
-                        //quiz.StudentId = userId;
                         quiz.UserId = userId;
                         quiz.IsTeacher= false;
-                        //quiz.Status = Data.Entities.QuizStatus.NotStarted.ToString();
                         quiz.Status = Data.Entities.QuizStatus.NotStarted;
                         quiz.Score = 0;
                         quiz.QuizScore= 0;
@@ -315,7 +311,7 @@ namespace OnlineLpk12.Services.Implementation
         /// <returns>quiz</returns>
         public async Task<Result<Data.Entities.Quiz>> GetQuizForTeacher(int quizId, int? userId)
         {
-            Result<Data.Entities.Quiz> result = new Result<Data.Entities.Quiz>();
+            Result<Data.Entities.Quiz> result = new();
             try
             {
                 var quiz = await GetQuizQuestionsAndOptions(quizId);
@@ -467,11 +463,12 @@ namespace OnlineLpk12.Services.Implementation
 
                 //Calculate score by checking the correct answers
                 quiz.Score = quiz.Questions.Count(x => x.SelectedOption == x.AnswerOption);
-
+                
+                //Calculate Quiz Score percentage
                 quiz.QuizScore = Helper.ComputeQuizScore(quiz.Score, quiz.Questions.Count);
 
                 //Compute the quiz status.
-                quiz.Status = Helper.ComputeQuizStatus(quiz.QuizScore).ToString();
+                quiz.Status = Helper.ComputeQuizStatus(quiz.QuizScore);
 
                 //Save quiz Score
                 await SaveQuizScore(quiz);
@@ -580,7 +577,8 @@ namespace OnlineLpk12.Services.Implementation
                     {
                         LessonId = quiz.LessonId,
                         QuizId = quiz.QuizId,
-                        LessonStatusId = (quiz.Status.ToUpper() == "PASS" ? 3 : 1),
+                        LessonStatusId = (quiz.Status == Data.Entities.QuizStatus.Pass ? (int)Data.Entities.LessonStatus.Completed 
+                                                                                       : (int)Data.Entities.LessonStatus.NotStarted),
                         QuizScore = quiz.Score,
                         QuizStatusId = Helper.GetQuizStatusId(quiz.Status),
                         StudentId = quiz.UserId

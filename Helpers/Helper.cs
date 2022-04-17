@@ -31,21 +31,7 @@ namespace OnlineLpk12.Helpers
             }
         }
 
-        public static int GetQuizStatusId(string status)
-        {
-            switch (status.ToUpper())
-            {
-                case "NOT STARTED":
-                    return 1;
-                case "PASS":
-                    return 2;
-                case "FAIL":
-                    return 3;
-            }
-            return 1;
-        }
-
-        public static int GetQuizStatusIdByEnum(QuizStatus status)
+        public static int GetQuizStatusId(QuizStatus status)
         {
             switch (status)
             {

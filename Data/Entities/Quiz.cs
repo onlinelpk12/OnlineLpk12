@@ -1,4 +1,6 @@
-﻿namespace OnlineLpk12.Data.Entities
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+
+namespace OnlineLpk12.Data.Entities
 {
     public class Quiz
     {
@@ -9,7 +11,8 @@
         public bool IsTeacher { get; set; }
         public int? Score { get; set; }
         public double? QuizScore { get; set; }
-        public QuizStatus Status { get; set; }
+
+        public QuizStatus? Status { get; set; }
         public List<Question> Questions { get; set; } 
     }
 }
