@@ -112,25 +112,61 @@ namespace OnlineLpk12.Controllers
         [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(Response<Quiz>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetQuiz([FromQuery] int? lessonId, [FromQuery] int? quizId, [FromQuery] int? studentId)
+        public async Task<IActionResult> GetQuiz([FromQuery] int lessonId, [FromQuery] int? userId)
         {
             Response<Quiz> response = new();
+            bool isStudent = true;
+            Result<Quiz> result;
             try
             {
-                if ((lessonId == null && quizId == null) || (lessonId != null && lessonId < 1 && quizId != null && quizId < 1))
+                //If Lesson Id is less than 1. Return 'Invalid Lesson Id'
+                if (lessonId < 1)
                 {
                     response.Message = "One or more validation errors occurred.";
-                    response.Errors.Add("Enter valid Lesson Id or Quiz Id.");
+                    response.Errors.Add("Enter valid Lesson Id.");
                     return BadRequest(response);
                 }
-                var result = await _studentProgressService.GetQuiz(lessonId, quizId, studentId);
-                if (result != null && result.Questions != null && result.Questions.Any())
+
+                //If User Id is passed, check if the User Id is valid/active or not.
+                //Get if the user is student or teacher
+                if (userId != null)
                 {
-                    response.Content = result;
+                    var res = await _studentProgressService.IsValidUser(Convert.ToInt32(userId));
+                    if (!res.Success)
+                    {
+                        response.Message = "One or more validation errors occurred.";
+                        response.Errors.Add(res.Message);
+                        return BadRequest(response);
+                    }
+                    isStudent = res.Content.UserType.ToUpper() == "STUDENT";
+                }
+
+                //Get Quiz Id by Lesson Id. Return No quiz found if not exists.
+                int quizId = await _studentProgressService.GetQuizIdByLessonId(lessonId);
+                if (quizId < 1)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Quiz not found for the given Lesson Id.");
+                    return NotFound(response);
+                }
+
+                //If user is student or if user id is not passed, get quiz questions, options and scores, selected answers(if any)  
+                if (isStudent)
+                {
+                    result = await _studentProgressService.GetQuizForStudent(quizId, userId);
+                }
+                else //If user is teacher, get quiz questions, options and correct answers.
+                {
+                    result = await _studentProgressService.GetQuizForTeacher(quizId, userId);
+                }
+
+                if (result.Success && result.Content.Questions != null && result.Content.Questions.Any())
+                {
+                    response.Content = result.Content;
                     return Ok(response);
                 }
                 response.Message = "One or more validation errors occurred.";
-                response.Errors.Add("Quiz not found for the given lesson.");
+                response.Errors.Add(!string.IsNullOrEmpty(result.Message) ? result.Message : "Quiz not found for the given lesson.");
                 return NotFound(response);
             }
             catch (Exception ex)
@@ -148,9 +184,38 @@ namespace OnlineLpk12.Controllers
         public async Task<IActionResult> SubmitQuiz(int quizId, [FromBody] SubmitQuiz quiz)
         {
             Response<SubmitQuiz> response = new Response<SubmitQuiz>();
+            List<string> validationMessages = new List<string>();
             try
             {
-                var validationMessages = Helper.ValidateQuiz(quiz);
+                //Validate quiz - Check if quiz is null/ lesson id is valid/ user id is valid/ questions are present
+                validationMessages = Helper.ValidateQuiz(quiz);
+
+                //If there are no validaiton messages returned from above method, check questions data with db
+                if (!validationMessages.Any())
+                {
+                    var message = await _studentProgressService.ValidateSubmittedQuiz(quiz);
+                    if (!string.IsNullOrEmpty(message))
+                    {
+                        validationMessages.Add(message);
+                    }
+
+                    //Check if the user is valid student 
+                    if (!validationMessages.Any())
+                    {
+                        var res = await _studentProgressService.IsValidUser(quiz.UserId);
+                        if (!res.Success)
+                        {
+                            validationMessages.Add(res.Message);
+                        }
+                        else
+                        {
+                            if (res.Content.UserType.ToUpper() != "STUDENT")
+                                validationMessages.Add("User is not a student.");
+                        }
+                    }
+                }
+
+                //If there is any validation message, return bad request
                 if (validationMessages.Any())
                 {
                     response.Errors = validationMessages;

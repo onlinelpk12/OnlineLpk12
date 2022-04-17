@@ -99,11 +99,14 @@ namespace OnlineLpk12.Data.Context
 
             modelBuilder.Entity<Quiz>(entity =>
             {
+                entity.HasKey(e => e.QuestionId)
+                    .HasName("PRIMARY");
+
                 entity.ToTable("quiz");
 
-                entity.Property(e => e.Id)
+                entity.Property(e => e.QuestionId)
                     .HasColumnType("int(11)")
-                    .HasColumnName("id");
+                    .HasColumnName("question_id");
 
                 entity.Property(e => e.Answer)
                     .HasColumnType("int(11)")
@@ -116,10 +119,6 @@ namespace OnlineLpk12.Data.Context
                 entity.Property(e => e.Question)
                     .HasColumnType("text")
                     .HasColumnName("question");
-
-                entity.Property(e => e.QuestionId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("question_id");
 
                 entity.Property(e => e.QuestionOrder)
                     .HasColumnType("int(11)")
@@ -141,6 +140,10 @@ namespace OnlineLpk12.Data.Context
                 entity.Property(e => e.OptionDesc)
                     .HasMaxLength(100)
                     .HasColumnName("option_desc");
+
+                entity.Property(e => e.OptionNumber)
+                    .HasColumnType("int(2)")
+                    .HasColumnName("option_number");
 
                 entity.Property(e => e.QuestionId)
                     .HasColumnType("int(11)")

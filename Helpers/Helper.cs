@@ -26,15 +26,15 @@ namespace OnlineLpk12.Helpers
             }
         }
 
-        public static int GetQuizStatusId(QuizStatus status)
+        public static int GetQuizStatusId(string status)
         {
             switch (status)
             {
-                case QuizStatus.NotTaken:
+                case "NOT TAKEN":
                     return 1;
-                case QuizStatus.Pass:
+                case "PASS":
                     return 2;
-                case QuizStatus.Fail:
+                case "FAIL":
                     return 3;
             }
             return 1;
@@ -118,11 +118,15 @@ namespace OnlineLpk12.Helpers
             {
                 errors.Add("Lesson Id is invalid.");
             }
-            if (!quiz.Questions.Any())
+            if (quiz.Questions == null || !quiz.Questions.Any())
             {
                 errors.Add("Questions are invalid.");
             }
-
+            
+            if(quiz.UserId < 1)
+            {
+                errors.Add("User Id is Invalid.");
+            }
             return errors;
         }
 

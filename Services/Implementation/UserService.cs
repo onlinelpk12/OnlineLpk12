@@ -85,7 +85,7 @@ namespace OnlineLpk12.Services.Implementation
             return result;
         }
 
-        public User GetUserDetailsByUserName(string username)
+        public Data.Models.User GetUserDetailsByUserName(string username)
         {
             try
             {

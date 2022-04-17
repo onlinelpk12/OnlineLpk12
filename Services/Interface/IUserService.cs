@@ -8,7 +8,7 @@ namespace OnlineLpk12.Services.Interface
     {
         Task<Result<EmptyResult>> RegisterUser(RegistrationUser user);
         Task<Result<LoginResponse>> Login(LoginUser user);
-        public User GetUserDetailsByUserName(string username);
+        public Data.Models.User GetUserDetailsByUserName(string username);
         Task<bool> IsEmailIdExists(string emailId);
         Task<bool> IsUserNameExists(string userName);
     }
