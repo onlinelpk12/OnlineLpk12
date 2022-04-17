@@ -39,6 +39,42 @@ namespace OnlineLpk12.Services.Implementation
             return data;
         }
 
+        /// <summary>
+        /// Update lesson status for the given user and lesson
+        /// </summary>
+        /// <param name="lessonId">lesson id</param>
+        /// <param name="userId">user id</param>
+        /// <returns></returns>
+        public async Task UpdateLessonStatus(int lessonId, int userId)
+        {
+            try
+            {
+                var data = await _context.StudentProgresses.FirstOrDefaultAsync(x => x.LessonId == lessonId 
+                                                                                  && x.StudentId == userId);
+                if (data == null)
+                {
+                    await _context.StudentProgresses.AddAsync(new StudentProgress()
+                    {
+                        LessonId = lessonId,
+                        QuizId = lessonId,
+                        LessonStatusId = 2,
+                        StudentId = userId,
+                        QuizStatusId = 1
+                    });
+                }
+                else
+                {
+                    data.LessonStatusId = 2;
+                }
+                //Save changes
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public LessonAndQuizProgressResponse? GetLessonsAndQuizProgress(int userId)
         {
             var studentDetails = _context.Users.Find(userId);
@@ -186,6 +222,31 @@ namespace OnlineLpk12.Services.Implementation
         }
 
         /// <summary>
+        /// Is Valid User Id
+        /// Check if the user is present and return user status. Return concerned error message if not present
+        /// </summary>
+        /// <param name="userId">user id</param>
+        /// <returns>user type or error message</returns>
+        public async Task<Result<EmptyResult>> IsValidLesson(int lessonId)
+        {
+            Result<EmptyResult> result = new();
+            if (lessonId == 0)
+            {
+                result.Success = false;
+                result.Message = "Invalid Lesson.";
+                return result;
+            }
+            bool isValidLesson = await _context.Lessons.AnyAsync(x => x.Id == lessonId);
+            if (isValidLesson)
+            {
+                result.Success = isValidLesson;
+            }
+            result.Success = isValidLesson;
+            result.Message = "Invalid Lesson.";
+            return result;
+        }
+
+        /// <summary>
         /// Get Quiz for Student
         /// Get Questions and options if student id is not passed.
         /// Get Questions, options, selected option, score and quiz status if student id passed
@@ -221,17 +282,26 @@ namespace OnlineLpk12.Services.Implementation
                         quiz.Status = Helper.GetQuizStatus(d.QuizStatusId).ToString();
                         quiz.Score = Convert.ToInt32(d.QuizScore);
 
-                        var studentQuiz = await _context.StudentQuizzes.Where(x => x.QuizId == quiz.QuizId
-                                                                                && x.StudentId == userId).ToListAsync();
-                        foreach (var item in quiz.Questions)
+                        if (d.QuizStatusId == 2)    //Show selected answers only when the quiz status is pass.
                         {
-                            var studentQuizRecord = studentQuiz.Where(k => k.QuestionId == item.Id).FirstOrDefault();
-                            if(studentQuizRecord != null)
+                            var studentQuiz = await _context.StudentQuizzes.Where(x => x.QuizId == quiz.QuizId
+                                                                                    && x.StudentId == userId).ToListAsync();
+                            foreach (var item in quiz.Questions)
                             {
-                                item.AnswerOption = studentQuizRecord.AnswerOptionId;
-                                item.SelectedOption = studentQuizRecord.SelectedOptionId;
+                                var studentQuizRecord = studentQuiz.Where(k => k.QuestionId == item.Id).FirstOrDefault();
+                                if (studentQuizRecord != null)
+                                {
+                                    item.AnswerOption = studentQuizRecord.AnswerOptionId;
+                                    item.SelectedOption = studentQuizRecord.SelectedOptionId;
+                                }
                             }
                         }
+                    }
+                    else
+                    {
+                        quiz.StudentId = userId;
+                        quiz.Status = Data.Entities.QuizStatus.NotTaken.ToString();
+                        quiz.Score = 0;
                     }
                 }
                 result.Success = true;
@@ -503,6 +573,10 @@ namespace OnlineLpk12.Services.Implementation
                 {
                     data.QuizScore = quiz.Score;
                     data.QuizStatusId = Helper.GetQuizStatusId(quiz.Status);
+                    if(data.QuizStatusId == 2)
+                    {
+                        data.LessonStatusId = 3;
+                    }
                 }
                 else //If there is no record in Db, insert a new record into Db.
                 {
@@ -510,7 +584,7 @@ namespace OnlineLpk12.Services.Implementation
                     {
                         LessonId = quiz.LessonId,
                         QuizId = quiz.QuizId,
-                        LessonStatusId = 1,
+                        LessonStatusId = (quiz.Status.ToUpper() == "PASS" ? 3 : 1),
                         QuizScore = quiz.Score,
                         QuizStatusId = Helper.GetQuizStatusId(quiz.Status),
                         StudentId = quiz.UserId

@@ -28,7 +28,7 @@ namespace OnlineLpk12.Helpers
 
         public static int GetQuizStatusId(string status)
         {
-            switch (status)
+            switch (status.ToUpper())
             {
                 case "NOT TAKEN":
                     return 1;
@@ -107,7 +107,7 @@ namespace OnlineLpk12.Helpers
 
         public static List<string> ValidateQuiz(SubmitQuiz quiz)
         {
-            List<string> errors = new List<string>();
+            List<string> errors = new();
             if (quiz == null)
             {
                 errors.Add("Quiz is invalid.");
