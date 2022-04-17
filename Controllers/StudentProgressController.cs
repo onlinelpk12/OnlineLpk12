@@ -84,24 +84,6 @@ namespace OnlineLpk12.Controllers
             }
         }
 
-        [HttpGet("status")]
-        public async Task<IActionResult> GetStatuses()
-        {
-            try
-            {
-                var result = await _studentProgressService.GetStatus();
-                if (result != null && result.Any())
-                {
-                    return Ok(result);
-                }
-                return NotFound("No Statuses found.");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, "Error occurred while fetching the data.");
-            }
-        }
-
         [HttpGet("lessons/{userId}")]
         [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.NotFound)]
