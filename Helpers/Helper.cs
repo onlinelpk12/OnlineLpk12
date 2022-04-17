@@ -30,7 +30,7 @@ namespace OnlineLpk12.Helpers
         {
             switch (status.ToUpper())
             {
-                case "NOT TAKEN":
+                case "NOT STARTED":
                     return 1;
                 case "PASS":
                     return 2;
@@ -43,11 +43,11 @@ namespace OnlineLpk12.Helpers
         {
             switch (statusId)
             {
-                case 1: return QuizStatus.NotTaken;
+                case 1: return QuizStatus.NotStarted;
                 case 2: return QuizStatus.Pass;
                 case 3: return QuizStatus.Fail;
             }
-            return QuizStatus.NotTaken;
+            return QuizStatus.NotStarted;
         }
 
         public static List<string> ValidateUserWhileRegistering(RegistrationUser user)

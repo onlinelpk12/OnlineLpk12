@@ -2,7 +2,7 @@
 {
     public enum QuizStatus
     {
-        NotTaken = 1,
+        NotStarted = 1,
         Pass = 2,
         Fail = 3
     }

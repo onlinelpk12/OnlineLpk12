@@ -279,7 +279,9 @@ namespace OnlineLpk12.Services.Implementation
                                                                                    && x.StudentId == userId);
                     if (d != null)
                     {
-                        quiz.StudentId = d.StudentId;
+                        //quiz.StudentId = d.StudentId;
+                        quiz.UserId = d.StudentId;
+                        quiz.IsTeacher = false;
                         quiz.Status = Helper.GetQuizStatus(d.QuizStatusId).ToString();
                         quiz.Score = Convert.ToInt32(d.QuizScore);
 
@@ -300,8 +302,10 @@ namespace OnlineLpk12.Services.Implementation
                     }
                     else
                     {
-                        quiz.StudentId = userId;
-                        quiz.Status = Data.Entities.QuizStatus.NotTaken.ToString();
+                        //quiz.StudentId = userId;
+                        quiz.UserId = userId;
+                        quiz.IsTeacher= false;
+                        quiz.Status = Data.Entities.QuizStatus.NotStarted.ToString();
                         quiz.Score = 0;
                     }
                 }
@@ -340,6 +344,8 @@ namespace OnlineLpk12.Services.Implementation
                 {
                     await SetQuizAnswers(quiz);
                 }
+                quiz.UserId=userId;
+                quiz.IsTeacher = true;
                 result.Success=true;
                 result.Content = quiz;
                 return result;
