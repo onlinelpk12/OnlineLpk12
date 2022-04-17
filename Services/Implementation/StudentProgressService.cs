@@ -120,7 +120,7 @@ namespace OnlineLpk12.Services.Implementation
                     LessonName = data.lessonName,
                     LessonNumber = data.lessonNumber,
                     LessonStatus = string.IsNullOrWhiteSpace(data.lessonStatus) ? "Not Started" : data.lessonStatus,
-                    QuizStatus = string.IsNullOrWhiteSpace(data.quizStatus) ? "Not Taken" : data.quizStatus
+                    QuizStatus = string.IsNullOrWhiteSpace(data.quizStatus) ? "Not Started" : data.quizStatus
                 });
             }
 
@@ -132,13 +132,11 @@ namespace OnlineLpk12.Services.Implementation
                     LessonId = lesson.Id,
                     LessonNumber = lesson.LessonNumber,
                     LessonName = lesson.LessonName,
-                    QuizStatus = "Not taken"
-                });
+                    LessonStatus = "Not Started",
+                    QuizStatus = "Not Started"
+                }) ;
             }
-
-            lessonQuizStatuses.OrderBy(x => x.LessonId);
-            lessonAndQuizReponse.LessonAndQuizStatus = lessonQuizStatuses;
-
+            lessonAndQuizReponse.LessonAndQuizStatus =  lessonQuizStatuses.OrderBy(x => x.LessonNumber).ToList();
             return lessonAndQuizReponse;
         }
 
