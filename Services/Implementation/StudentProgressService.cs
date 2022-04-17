@@ -75,14 +75,14 @@ namespace OnlineLpk12.Services.Implementation
             }
         }
 
-        public LessonAndQuizProgressResponse? GetLessonsAndQuizProgress(int userId)
+        public async Task<LessonAndQuizProgressResponse?> GetLessonsAndQuizProgress(int userId)
         {
-            var studentDetails = _context.Users.Find(userId);
+            var studentDetails = await _context.Users.FindAsync(userId);
             if (studentDetails == null)
             {
                 return null;
             }
-            var lesonDetails = _context.Lessons.ToList();
+            var lesonDetails = await _context.Lessons.ToListAsync();
 
 
             var queryResult = (from users in _context.Users
