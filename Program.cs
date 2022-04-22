@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using OnlineLpk12.Data.Context;
 using OnlineLpk12.Services.Implementation;
 using OnlineLpk12.Services.Interface;
+using System.Net.Http.Headers;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +25,7 @@ string connectionString = builder.Configuration.GetConnectionString("OnlineLPK12
 builder.Services.AddDbContext<OnlineLpk12DbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 builder.Services.AddTransient<IStudentProgressService, StudentProgressService>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<ISparcService, SparcService>();
 
 builder.Services.AddCors(options =>
 {
@@ -36,6 +38,13 @@ builder.Services.AddCors(options =>
             });
 });
 
+builder.Services.AddHttpClient("Sparc", httpClient =>
+{
+    httpClient.BaseAddress = new Uri("http://wave.ttu.edu/ajax.php");
+    httpClient.DefaultRequestHeaders.Clear();
+    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
+    httpClient.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
+});
 
 var app = builder.Build();
 

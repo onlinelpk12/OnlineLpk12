@@ -56,6 +56,21 @@ namespace OnlineLpk12.Helpers
             return QuizStatus.NotStarted;
         }
 
+        public static List<string> ValidateSparcRequest(Sparc sparc)
+        {
+            List<string> errors = new List<string>();
+            if (sparc == null)
+            {
+                errors.Add("Invalid request.");
+                return errors;
+            }
+            if (string.IsNullOrEmpty(sparc.Action))
+            {
+                errors.Add("Invalid action.");
+            }
+            return errors; 
+        }
+
         public static List<string> ValidateUserWhileRegistering(RegistrationUser user)
         {
             List<string> errors = new List<string>();

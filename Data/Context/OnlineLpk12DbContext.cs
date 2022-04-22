@@ -23,6 +23,8 @@ namespace OnlineLpk12.Data.Context
         public virtual DbSet<Quiz> Quizzes { get; set; } = null!;
         public virtual DbSet<QuizOption> QuizOptions { get; set; } = null!;
         public virtual DbSet<QuizStatus> QuizStatuses { get; set; } = null!;
+        public virtual DbSet<SparcProgram> SparcPrograms { get; set; } = null!;
+        public virtual DbSet<SparcQuery> SparcQueries { get; set; } = null!;
         public virtual DbSet<StudentProgress> StudentProgresses { get; set; } = null!;
         public virtual DbSet<StudentQuiz> StudentQuizzes { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
@@ -161,6 +163,40 @@ namespace OnlineLpk12.Data.Context
                 entity.Property(e => e.Status)
                     .HasMaxLength(50)
                     .HasColumnName("status");
+            });
+
+            modelBuilder.Entity<SparcProgram>(entity =>
+            {
+                entity.ToTable("sparc_program");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.Program)
+                    .HasColumnType("blob")
+                    .HasColumnName("program");
+
+                entity.Property(e => e.UserId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("user_id");
+            });
+
+            modelBuilder.Entity<SparcQuery>(entity =>
+            {
+                entity.ToTable("sparc_query");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.Query)
+                    .HasColumnType("blob")
+                    .HasColumnName("query");
+
+                entity.Property(e => e.UserId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("user_id");
             });
 
             modelBuilder.Entity<StudentProgress>(entity =>
