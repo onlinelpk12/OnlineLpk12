@@ -45,6 +45,33 @@ namespace OnlineLpk12.Controllers
         }
 
 
+        [HttpGet("query/{userId}")]
+        public async Task<IActionResult> GetQuery(int userId)
+        {
+            Response<object> response = new();
+            try
+            {
+                if (userId < 1)
+                {
+                    return BadRequest();
+                }
+                var result = await _sparcService.GetQuery(userId);
+                if (result.Success)
+                {
+                    response.Content = result.Content;
+                    return Ok(response);
+                }
+                response.Message = "Not Found";
+                return NotFound(response);
+            }
+            catch (Exception ex)
+            {
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("Error occurred while fetching the data.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
+            }
+        }
+
         [HttpPost("execute")]
         [Consumes("application/x-www-form-urlencoded")]
         public async Task<IActionResult> ExecuteSparc([FromForm] Sparc request)

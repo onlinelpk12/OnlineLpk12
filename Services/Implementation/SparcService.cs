@@ -1,7 +1,9 @@
-﻿using OnlineLpk12.Data.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineLpk12.Data.Context;
 using OnlineLpk12.Data.Entities;
 using OnlineLpk12.Services.Interface;
 using System.Net.Http.Headers;
+using System.Text;
 
 namespace OnlineLpk12.Services.Implementation
 {
@@ -16,27 +18,51 @@ namespace OnlineLpk12.Services.Implementation
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<Result<Object>> GetProgram(int userId)
+        public async Task<Result<SparcProgram>> GetProgram(int userId)
         {
-            Result<object> result = new Result<object>();
+            Result<SparcProgram> result = new Result<SparcProgram>();
             try
             {
-                var program = _context.SparcPrograms.FirstOrDefault(x => x.UserId == userId);
+                var program = await _context.SparcPrograms.FirstOrDefaultAsync(x => x.UserId == userId);
                 if (program == null)
                 {
                     result.Success = false;
                     return result;
                 }
                 result.Success = true;
-                result.Content = new
+                result.Content = new SparcProgram()
                 {
                     Id = program.Id,
                     UserId = program.UserId,
-                    Program = program.Program.ToString()
+                    Program = Encoding.Default.GetString(program.Program)
                 };
-                result.Content = program;
                 return result;
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
+        public async Task<Result<SparcQuery>> GetQuery(int userId)
+        {
+            Result<SparcQuery> result = new Result<SparcQuery>();
+            try
+            {
+                var query = await _context.SparcQueries.FirstOrDefaultAsync(x => x.UserId == userId);
+                if (query == null)
+                {
+                    result.Success = false;
+                    return result;
+                }
+                result.Success = true;
+                result.Content = new SparcQuery()
+                {
+                    Id = query.Id,
+                    UserId = query.UserId,
+                    Query = Encoding.Default.GetString(query.Query)
+                };
+                return result;
             }
             catch
             {
@@ -52,11 +78,21 @@ namespace OnlineLpk12.Services.Implementation
             {
                 var data = new Dictionary<string, string>();
                 data.Add("action", sparcRequest.Action);
-                data.Add("editor", !string.IsNullOrEmpty(sparcRequest.Editor) ? sparcRequest.Editor : "");
-                if (sparcRequest.Action == "getQuery")
+                if (sparcRequest.Action == "getFileContent")
                 {
+                    data.Add("fileurl", !string.IsNullOrEmpty(sparcRequest.FileUrl) ? sparcRequest.FileUrl : "");
+                }
+                else if (sparcRequest.Action == "getAnswerSets" || sparcRequest.Action == "getAnimation")
+                {
+                    data.Add("editor", !string.IsNullOrEmpty(sparcRequest.Editor) ? sparcRequest.Editor : "");
+
+                }
+                else if (sparcRequest.Action == "getQuery")
+                {
+                    data.Add("editor", !string.IsNullOrEmpty(sparcRequest.Editor) ? sparcRequest.Editor : "");
                     data.Add("query", !string.IsNullOrEmpty(sparcRequest.Query) ? sparcRequest.Query : "");
                 }
+
                 var httpClient = _httpClientFactory.CreateClient("Sparc");
                 var response = await httpClient.PostAsync("", new FormUrlEncodedContent(data));
                 if (response.IsSuccessStatusCode)
@@ -74,6 +110,6 @@ namespace OnlineLpk12.Services.Implementation
                 throw;
             }
         }
-        
+
     }
 }
