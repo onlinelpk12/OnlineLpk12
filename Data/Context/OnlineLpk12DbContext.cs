@@ -17,14 +17,14 @@ namespace OnlineLpk12.Data.Context
         {
         }
 
+        public virtual DbSet<ActivityLog> ActivityLogs { get; set; } = null!;
         public virtual DbSet<Content> Contents { get; set; } = null!;
         public virtual DbSet<Lesson> Lessons { get; set; } = null!;
         public virtual DbSet<LessonStatus> LessonStatuses { get; set; } = null!;
         public virtual DbSet<Quiz> Quizzes { get; set; } = null!;
         public virtual DbSet<QuizOption> QuizOptions { get; set; } = null!;
         public virtual DbSet<QuizStatus> QuizStatuses { get; set; } = null!;
-        public virtual DbSet<SparcProgram> SparcPrograms { get; set; } = null!;
-        public virtual DbSet<SparcQuery> SparcQueries { get; set; } = null!;
+        public virtual DbSet<Sparc> Sparcs { get; set; } = null!;
         public virtual DbSet<StudentProgress> StudentProgresses { get; set; } = null!;
         public virtual DbSet<StudentQuiz> StudentQuizzes { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
@@ -42,6 +42,46 @@ namespace OnlineLpk12.Data.Context
         {
             modelBuilder.UseCollation("latin1_swedish_ci")
                 .HasCharSet("latin1");
+
+            modelBuilder.Entity<ActivityLog>(entity =>
+            {
+                entity.HasKey(e => e.EventId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("activity_log");
+
+                entity.Property(e => e.EventId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("event_id");
+
+                entity.Property(e => e.ActivityTimeStamp)
+                    .HasColumnType("datetime")
+                    .HasColumnName("activity_time_stamp");
+
+                entity.Property(e => e.Exception)
+                    .HasColumnType("text")
+                    .HasColumnName("exception");
+
+                entity.Property(e => e.FileName)
+                    .HasMaxLength(45)
+                    .HasColumnName("file_name");
+
+                entity.Property(e => e.LogLevelType)
+                    .HasMaxLength(45)
+                    .HasColumnName("log_level_type");
+
+                entity.Property(e => e.Message)
+                    .HasColumnType("text")
+                    .HasColumnName("message");
+
+                entity.Property(e => e.MethodName)
+                    .HasMaxLength(45)
+                    .HasColumnName("method_name");
+
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(45)
+                    .HasColumnName("user_id");
+            });
 
             modelBuilder.Entity<Content>(entity =>
             {
@@ -165,34 +205,41 @@ namespace OnlineLpk12.Data.Context
                     .HasColumnName("status");
             });
 
-            modelBuilder.Entity<SparcProgram>(entity =>
+            modelBuilder.Entity<Sparc>(entity =>
             {
-                entity.ToTable("sparc_program");
+                entity.ToTable("sparc");
 
                 entity.Property(e => e.Id)
                     .HasColumnType("int(11)")
                     .HasColumnName("id");
+
+                entity.Property(e => e.ActivityTimeStamp)
+                    .HasColumnType("datetime")
+                    .HasColumnName("activity_time_stamp");
+
+                entity.Property(e => e.LessonId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("lesson_id");
 
                 entity.Property(e => e.Program)
                     .HasColumnType("blob")
                     .HasColumnName("program");
 
-                entity.Property(e => e.UserId)
+                entity.Property(e => e.ProgrammingTaskId)
                     .HasColumnType("int(11)")
-                    .HasColumnName("user_id");
-            });
-
-            modelBuilder.Entity<SparcQuery>(entity =>
-            {
-                entity.ToTable("sparc_query");
-
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("id");
+                    .HasColumnName("programming_task_id");
 
                 entity.Property(e => e.Query)
-                    .HasColumnType("blob")
+                    .HasColumnType("text")
                     .HasColumnName("query");
+
+                entity.Property(e => e.QuizId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("quiz_id");
+
+                entity.Property(e => e.Results)
+                    .HasColumnType("blob")
+                    .HasColumnName("results");
 
                 entity.Property(e => e.UserId)
                     .HasColumnType("int(11)")

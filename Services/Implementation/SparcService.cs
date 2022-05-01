@@ -23,19 +23,19 @@ namespace OnlineLpk12.Services.Implementation
             Result<SparcProgram> result = new Result<SparcProgram>();
             try
             {
-                var program = await _context.SparcPrograms.FirstOrDefaultAsync(x => x.UserId == userId);
-                if (program == null)
-                {
-                    result.Success = false;
-                    return result;
-                }
-                result.Success = true;
-                result.Content = new SparcProgram()
-                {
-                    Id = program.Id,
-                    UserId = program.UserId,
-                    Program = Encoding.Default.GetString(program.Program)
-                };
+                //var program = await _context.SparcPrograms.FirstOrDefaultAsync(x => x.UserId == userId);
+                //if (program == null)
+                //{
+                //    result.Success = false;
+                //    return result;
+                //}
+                //result.Success = true;
+                //result.Content = new SparcProgram()
+                //{
+                //    Id = program.Id,
+                //    UserId = program.UserId,
+                //    Program = Encoding.Default.GetString(program.Program)
+                //};
                 return result;
             }
             catch
@@ -49,19 +49,19 @@ namespace OnlineLpk12.Services.Implementation
             Result<SparcQuery> result = new Result<SparcQuery>();
             try
             {
-                var query = await _context.SparcQueries.FirstOrDefaultAsync(x => x.UserId == userId);
-                if (query == null)
-                {
-                    result.Success = false;
-                    return result;
-                }
-                result.Success = true;
-                result.Content = new SparcQuery()
-                {
-                    Id = query.Id,
-                    UserId = query.UserId,
-                    Query = Encoding.Default.GetString(query.Query)
-                };
+                //var query = await _context.SparcQueries.FirstOrDefaultAsync(x => x.UserId == userId);
+                //if (query == null)
+                //{
+                //    result.Success = false;
+                //    return result;
+                //}
+                //result.Success = true;
+                //result.Content = new SparcQuery()
+                //{
+                //    Id = query.Id,
+                //    UserId = query.UserId,
+                //    Query = Encoding.Default.GetString(query.Query)
+                //};
                 return result;
             }
             catch
@@ -99,11 +99,42 @@ namespace OnlineLpk12.Services.Implementation
                 {
                     result.Success = true;
                     result.Content = response.Content.ReadAsStringAsync().Result;
+                    if (sparcRequest.Action == "getQuery" || sparcRequest.Action == "getAnswerSets" || sparcRequest.Action == "getAnimation")
+                    {
+                        await SaveSparcData(sparcRequest, result.Content);
+                    }
                 }
                 else
                     result.Success = false;
 
                 return result;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        private async Task SaveSparcData(Sparc sparcRequest, string response)
+        {
+            try
+            {
+
+                var data = new Data.Models.Sparc()
+                {
+                    //LessonId = 1,
+                    //ProgrammingTaskId = 1,
+                    //QuizId = 1,
+                    UserId = sparcRequest.UserId,
+                    Program = Encoding.Default.GetBytes(sparcRequest.Editor),
+                    Query = sparcRequest.Query,
+                    Results = Encoding.Default.GetBytes(sparcRequest.Action == "getQuery" ? response : ""),
+                    ActivityTimeStamp = DateTime.Now
+                };
+                await _context.Sparcs.AddAsync(data);
+                await _context.SaveChangesAsync();
+
+                
             }
             catch (Exception ex)
             {
