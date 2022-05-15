@@ -2,9 +2,6 @@
 using OnlineLpk12.Services.Interface;
 using OnlineLpk12.Data.Models;
 using OnlineLpk12.Data.Entities;
-using OnlineLpk12.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using OnlineLpk12.Helpers;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +12,13 @@ namespace OnlineLpk12.Services.Implementation
     {
         private readonly OnlineLpk12DbContext _context;
         private readonly IUserService _userService;
+        private readonly ILogService _logService;
 
-        public StudentProgressService(OnlineLpk12DbContext context, IUserService userService)
+        public StudentProgressService(OnlineLpk12DbContext context, IUserService userService, ILogService logService)
         {
             _context = context;
             this._userService = userService;
+            this._logService = logService;
         }
 
         /// <summary>
@@ -32,7 +31,7 @@ namespace OnlineLpk12.Services.Implementation
         {
             try
             {
-                var data = await _context.StudentProgresses.FirstOrDefaultAsync(x => x.LessonId == lessonId 
+                var data = await _context.StudentProgresses.FirstOrDefaultAsync(x => x.LessonId == lessonId
                                                                                   && x.StudentId == userId);
                 if (data == null)
                 {
@@ -52,103 +51,121 @@ namespace OnlineLpk12.Services.Implementation
                 //Save changes
                 await _context.SaveChangesAsync();
             }
-            catch
+            catch (Exception ex)
             {
+                _logService.LogError(userId, "UpdateLessonStatus", "StudentProgressService", ex.Message, ex);
                 throw;
             }
         }
 
         public async Task<LessonAndQuizProgressResponse?> GetLessonsAndQuizProgress(int userId)
         {
-            var studentDetails = await _context.Users.FindAsync(userId);
-            if (studentDetails == null)
+            try
             {
-                return null;
-            }
-            var lesonDetails = await _context.Lessons.ToListAsync();
-
-
-            var queryResult = (from users in _context.Users
-                               join studentProgress in _context.StudentProgresses
-                               on users.Id equals studentProgress.StudentId
-                               join lesson in _context.Lessons
-                               on studentProgress.LessonId equals lesson.LessonNumber
-                               join lessonStatus in _context.LessonStatuses
-                               on studentProgress.LessonStatusId equals lessonStatus.Id
-                               join quizStatus in _context.QuizStatuses
-                               on studentProgress.QuizStatusId equals quizStatus.Id
-                               where users.Id == userId
-                               select new
-                               {
-                                   lessonId = studentProgress.LessonId,
-                                   lessonNumber = lesson.LessonNumber,
-                                   lessonName = lesson.LessonName,
-                                   lessonStatus = lessonStatus.Status,
-                                   quizStatus = quizStatus.Status
-                               });
-
-            var lessonAndQuizReponse = new LessonAndQuizProgressResponse
-            {
-                StudentId = studentDetails.Id,
-                Username = studentDetails.Username,
-                FirstName = studentDetails.FirstName,
-                LastName = studentDetails.LastName
-            };
-
-            var lessonQuizStatuses = new List<LessonAndQuizStatus>();
-
-            foreach (var data in queryResult)
-            {
-                lessonQuizStatuses.Add(new LessonAndQuizStatus()
+                var studentDetails = await _context.Users.FindAsync(userId);
+                if (studentDetails == null)
                 {
-                    LessonId = data.lessonId,
-                    LessonName = data.lessonName,
-                    LessonNumber = data.lessonNumber,
-                    LessonStatus = string.IsNullOrWhiteSpace(data.lessonStatus) ? "Not Started" : data.lessonStatus,
-                    QuizStatus = string.IsNullOrWhiteSpace(data.quizStatus) ? "Not Started" : data.quizStatus
-                });
-            }
+                    return null;
+                }
+                var lesonDetails = await _context.Lessons.ToListAsync();
 
-            var lessonsNotStarted = lesonDetails.Where(x => !lessonQuizStatuses.Any(y => y.LessonId == x.Id));
-            foreach (var lesson in lessonsNotStarted)
-            {
-                lessonQuizStatuses.Add(new LessonAndQuizStatus()
+
+                var queryResult = (from users in _context.Users
+                                   join studentProgress in _context.StudentProgresses
+                                   on users.Id equals studentProgress.StudentId
+                                   join lesson in _context.Lessons
+                                   on studentProgress.LessonId equals lesson.LessonNumber
+                                   join lessonStatus in _context.LessonStatuses
+                                   on studentProgress.LessonStatusId equals lessonStatus.Id
+                                   join quizStatus in _context.QuizStatuses
+                                   on studentProgress.QuizStatusId equals quizStatus.Id
+                                   where users.Id == userId
+                                   select new
+                                   {
+                                       lessonId = studentProgress.LessonId,
+                                       lessonNumber = lesson.LessonNumber,
+                                       lessonName = lesson.LessonName,
+                                       lessonStatus = lessonStatus.Status,
+                                       quizStatus = quizStatus.Status
+                                   });
+
+                var lessonAndQuizReponse = new LessonAndQuizProgressResponse
                 {
-                    LessonId = lesson.Id,
-                    LessonNumber = lesson.LessonNumber,
-                    LessonName = lesson.LessonName,
-                    LessonStatus = "Not Started",
-                    QuizStatus = "Not Started"
-                }) ;
+                    StudentId = studentDetails.Id,
+                    Username = studentDetails.Username,
+                    FirstName = studentDetails.FirstName,
+                    LastName = studentDetails.LastName
+                };
+
+                var lessonQuizStatuses = new List<LessonAndQuizStatus>();
+
+                foreach (var data in queryResult)
+                {
+                    lessonQuizStatuses.Add(new LessonAndQuizStatus()
+                    {
+                        LessonId = data.lessonId,
+                        LessonName = data.lessonName,
+                        LessonNumber = data.lessonNumber,
+                        LessonStatus = string.IsNullOrWhiteSpace(data.lessonStatus) ? "Not Started" : data.lessonStatus,
+                        QuizStatus = string.IsNullOrWhiteSpace(data.quizStatus) ? "Not Started" : data.quizStatus
+                    });
+                }
+
+                var lessonsNotStarted = lesonDetails.Where(x => !lessonQuizStatuses.Any(y => y.LessonId == x.Id));
+                foreach (var lesson in lessonsNotStarted)
+                {
+                    lessonQuizStatuses.Add(new LessonAndQuizStatus()
+                    {
+                        LessonId = lesson.Id,
+                        LessonNumber = lesson.LessonNumber,
+                        LessonName = lesson.LessonName,
+                        LessonStatus = "Not Started",
+                        QuizStatus = "Not Started"
+                    });
+                }
+                lessonAndQuizReponse.LessonAndQuizStatus = lessonQuizStatuses.OrderBy(x => x.LessonNumber).ToList();
+                return lessonAndQuizReponse;
             }
-            lessonAndQuizReponse.LessonAndQuizStatus =  lessonQuizStatuses.OrderBy(x => x.LessonNumber).ToList();
-            return lessonAndQuizReponse;
+            catch (Exception ex)
+            {
+                _logService.LogError(userId, "GetLessonsAndQuizProgress", "StudentProgressService", ex.Message, ex);
+                throw;
+            }
         }
 
         public async Task<LessonDetails> GetContent(int lessonId)
         {
-            var info = (from lessons in _context.Lessons
-                        join content in _context.Contents
-                        on lessons.Id equals content.LessonId
-                        where lessons.Id == lessonId
-                        select new { lessons.Id, lessons.LessonNumber, lessons.LessonName, content.ContentType, content.ContentUrl });
-
-            var details = info.FirstOrDefault();
-            if (details == null)
+            try
             {
-                return null;
+
+                var info = (from lessons in _context.Lessons
+                            join content in _context.Contents
+                            on lessons.Id equals content.LessonId
+                            where lessons.Id == lessonId
+                            select new { lessons.Id, lessons.LessonNumber, lessons.LessonName, content.ContentType, content.ContentUrl });
+
+                var details = info.FirstOrDefault();
+                if (details == null)
+                {
+                    return null;
+                }
+
+                var lessonDetails = new LessonDetails()
+                {
+                    LessonId = details.Id,
+                    LessonNumber = details.LessonNumber,
+                    LessonName = details.LessonName,
+                    ContentType = details.ContentType,
+                    ContentUrl = details.ContentUrl,
+                };
+
+                return lessonDetails;
             }
-
-            var lessonDetails = new LessonDetails()
+            catch (Exception ex)
             {
-                LessonId = details.Id,
-                LessonNumber = details.LessonNumber,
-                LessonName = details.LessonName,
-                ContentType = details.ContentType,
-                ContentUrl = details.ContentUrl,
-            };
-
-            return lessonDetails;
+                _logService.LogError(0, "GetContent", "StudentProgressService", ex.Message, ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -159,12 +176,20 @@ namespace OnlineLpk12.Services.Implementation
         /// <returns>Quiz Id</returns>
         public async Task<int> GetQuizIdByLessonId(int lessonId)
         {
-            var quiz = await _context.Quizzes.FirstOrDefaultAsync(x => x.LessonId == lessonId);
-            if (quiz != null)
+            try
             {
-                return quiz.QuizId;
+                var quiz = await _context.Quizzes.FirstOrDefaultAsync(x => x.LessonId == lessonId);
+                if (quiz != null)
+                {
+                    return quiz.QuizId;
+                }
+                return 0;
             }
-            return 0;
+            catch (Exception ex)
+            {
+                _logService.LogError(0, "GetQuizIdByLessonId", "StudentProgressService", ex.Message, ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -175,34 +200,43 @@ namespace OnlineLpk12.Services.Implementation
         /// <returns>user type or error message</returns>
         public async Task<Result<Data.Entities.User>> IsValidUser(int userId)
         {
-            Result<Data.Entities.User> result = new();
-            if (userId == 0)
+            try
             {
-                result.Success = false;
-                result.Message = "Invalid User Id.";
+
+                Result<Data.Entities.User> result = new();
+                if (userId == 0)
+                {
+                    result.Success = false;
+                    result.Message = "Invalid User Id.";
+                    return result;
+                }
+                var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+                if (user == null)
+                {
+                    result.Success = false;
+                    result.Message = "Invalid User Id.";
+                    return result;
+                }
+                if (user.IsActive == 0)
+                {
+                    result.Success = false;
+                    result.Message = "User is Inactive.";
+                    return result;
+                }
+                result.Success = true;
+                result.Message = "User is valid.";
+                result.Content = new Data.Entities.User()
+                {
+                    UserId = userId,
+                    UserType = user.UserType
+                };
                 return result;
             }
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
-            if (user == null)
+            catch (Exception ex)
             {
-                result.Success = false;
-                result.Message = "Invalid User Id.";
-                return result;
+                _logService.LogError(userId, "IsValidUser", "StudentProgressService", ex.Message, ex);
+                throw;
             }
-            if (user.IsActive == 0)
-            {
-                result.Success = false;
-                result.Message = "User is Inactive.";
-                return result;
-            }
-            result.Success = true;
-            result.Message = "User is valid.";
-            result.Content = new Data.Entities.User()
-            {
-                UserId = userId,
-                UserType = user.UserType
-            };
-            return result;
         }
 
         /// <summary>
@@ -213,21 +247,29 @@ namespace OnlineLpk12.Services.Implementation
         /// <returns>user type or error message</returns>
         public async Task<Result<EmptyResult>> IsValidLesson(int lessonId)
         {
-            Result<EmptyResult> result = new();
-            if (lessonId == 0)
+            try
             {
-                result.Success = false;
+                Result<EmptyResult> result = new();
+                if (lessonId == 0)
+                {
+                    result.Success = false;
+                    result.Message = "Invalid Lesson.";
+                    return result;
+                }
+                bool isValidLesson = await _context.Lessons.AnyAsync(x => x.Id == lessonId);
+                if (isValidLesson)
+                {
+                    result.Success = isValidLesson;
+                }
+                result.Success = isValidLesson;
                 result.Message = "Invalid Lesson.";
                 return result;
             }
-            bool isValidLesson = await _context.Lessons.AnyAsync(x => x.Id == lessonId);
-            if (isValidLesson)
+            catch (Exception ex)
             {
-                result.Success = isValidLesson;
+                _logService.LogError(0, "IsValidLesson", "StudentProgressService", ex.Message, ex);
+                throw;
             }
-            result.Success = isValidLesson;
-            result.Message = "Invalid Lesson.";
-            return result;
         }
 
         /// <summary>
@@ -286,17 +328,18 @@ namespace OnlineLpk12.Services.Implementation
                     else
                     {
                         quiz.UserId = userId;
-                        quiz.IsTeacher= false;
+                        quiz.IsTeacher = false;
                         quiz.Status = Data.Entities.QuizStatus.NotStarted;
                         quiz.Score = 0;
-                        quiz.QuizScore= 0;
+                        quiz.QuizScore = 0;
                     }
                 }
                 result.Success = true;
                 result.Content = quiz;
             }
-            catch
+            catch (Exception ex)
             {
+                _logService.LogError(userId ?? 0, "GetQuizForStudent", "StudentProgressService", ex.Message, ex);
                 throw;
             }
             return result;
@@ -327,14 +370,15 @@ namespace OnlineLpk12.Services.Implementation
                 {
                     await SetQuizAnswers(quiz);
                 }
-                quiz.UserId=userId;
+                quiz.UserId = userId;
                 quiz.IsTeacher = true;
-                result.Success=true;
+                result.Success = true;
                 result.Content = quiz;
                 return result;
             }
-            catch
+            catch (Exception ex)
             {
+                _logService.LogError(userId ?? 0, "GetQuizForTeacher", "StudentProgressService", ex.Message, ex);
                 throw;
             }
         }
@@ -394,8 +438,9 @@ namespace OnlineLpk12.Services.Implementation
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                _logService.LogError(0, "GetQuizQuestionsAndOptions", "StudentProgressService", ex.Message, ex);
                 throw;
             }
             return quiz;
@@ -408,11 +453,20 @@ namespace OnlineLpk12.Services.Implementation
         /// <returns>quiz</returns>
         private async Task SetQuizAnswers(Data.Entities.Quiz quiz)
         {
-            var data = await _context.Quizzes.Where(x => x.QuizId == quiz.QuizId).ToListAsync();
-            if (data.Count > 0)
+            try
             {
-                quiz.Questions.ForEach(k => k.AnswerOption = data.Where(x => x.QuestionId == k.Id).FirstOrDefault()?.Answer);
+                var data = await _context.Quizzes.Where(x => x.QuizId == quiz.QuizId).ToListAsync();
+                if (data.Count > 0)
+                {
+                    quiz.Questions.ForEach(k => k.AnswerOption = data.Where(x => x.QuestionId == k.Id).FirstOrDefault()?.Answer);
+                }
             }
+            catch (Exception ex)
+            {
+                _logService.LogError(quiz.UserId ?? 0, "SetQuizAnswers", "StudentProgressService", ex.Message, ex);
+                throw;
+            }
+
         }
 
         /// <summary>
@@ -422,27 +476,35 @@ namespace OnlineLpk12.Services.Implementation
         /// <returns>error messages</returns>
         public async Task<string> ValidateSubmittedQuiz(SubmitQuiz quiz)
         {
-            var quizData = await GetQuizQuestionsAndOptions(quiz.QuizId);
-
-            if (quizData.Questions.Count != quiz.Questions.Count)
+            try
             {
-                return "Questions count is mismatching.";
-            }
+                var quizData = await GetQuizQuestionsAndOptions(quiz.QuizId);
 
-            foreach (var item in quiz.Questions)
-            {
-                var question = quizData.Questions.Where(x => x.Id == item.Id).FirstOrDefault();
-                if (question == null)
+                if (quizData.Questions.Count != quiz.Questions.Count)
                 {
-                    return "Submitted question is not present in the database.";
+                    return "Questions count is mismatching.";
                 }
-                //if (!question.Options.Contains(item.SelectedOption))
-                if(!question.Options.Any(x => x.OptionId == item.SelectedOption))
+
+                foreach (var item in quiz.Questions)
                 {
-                    return "Selected option is not present in the database.";
+                    var question = quizData.Questions.Where(x => x.Id == item.Id).FirstOrDefault();
+                    if (question == null)
+                    {
+                        return "Submitted question is not present in the database.";
+                    }
+                    //if (!question.Options.Contains(item.SelectedOption))
+                    if (!question.Options.Any(x => x.OptionId == item.SelectedOption))
+                    {
+                        return "Selected option is not present in the database.";
+                    }
                 }
+                return "";
             }
-            return "";
+            catch (Exception ex)
+            {
+                _logService.LogError(quiz.UserId, "ValidateSubmittedQuiz", "StudentProgressService", ex.Message, ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -463,7 +525,7 @@ namespace OnlineLpk12.Services.Implementation
 
                 //Calculate score by checking the correct answers
                 quiz.Score = quiz.Questions.Count(x => x.SelectedOption == x.AnswerOption);
-                
+
                 //Calculate Quiz Score percentage
                 quiz.QuizScore = Helper.ComputeQuizScore(quiz.Score, quiz.Questions.Count);
 
@@ -473,8 +535,9 @@ namespace OnlineLpk12.Services.Implementation
                 //Save quiz Score
                 await SaveQuizScore(quiz);
             }
-            catch
+            catch (Exception ex)
             {
+                _logService.LogError(quiz.UserId, "SubmitQuiz", "StudentProgressService", ex.Message, ex);
                 throw;
             }
             return quiz;
@@ -492,7 +555,8 @@ namespace OnlineLpk12.Services.Implementation
                 var data = await _context.Quizzes.Where(x => x.QuizId == quiz.QuizId).ToListAsync();
                 if (data.Count > 0)
                 {
-                    quiz.Questions.ForEach(k => {
+                    quiz.Questions.ForEach(k =>
+                    {
                         var ans = data.Where(x => x.QuestionId == k.Id).FirstOrDefault();
                         if (ans != null)
                             k.AnswerOption = ans.Answer;
@@ -501,8 +565,9 @@ namespace OnlineLpk12.Services.Implementation
                     });
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                _logService.LogError(quiz.UserId, "GetQuizAnswers", "StudentProgressService", ex.Message, ex);
                 throw;
             }
         }
@@ -542,8 +607,9 @@ namespace OnlineLpk12.Services.Implementation
                 }
                 await _context.SaveChangesAsync();
             }
-            catch
+            catch (Exception ex)
             {
+                _logService.LogError(quiz.UserId, "SaveQuizAnswers", "StudentProgressService", ex.Message, ex);
                 throw;
             }
         }
@@ -561,12 +627,12 @@ namespace OnlineLpk12.Services.Implementation
                 //Get the record for student and quiz from Db
                 var data = await _context.StudentProgresses.FirstOrDefaultAsync(x => x.StudentId == quiz.UserId
                                                                                   && x.QuizId == quiz.QuizId);
-                
+
                 if (data != null) //If there is any record in Db, update the quiz score and quiz status
                 {
                     data.QuizScore = quiz.Score;
                     data.QuizStatusId = Helper.GetQuizStatusId(quiz.Status);
-                    if(data.QuizStatusId == 2)
+                    if (data.QuizStatusId == 2)
                     {
                         data.LessonStatusId = 3;
                     }
@@ -577,7 +643,7 @@ namespace OnlineLpk12.Services.Implementation
                     {
                         LessonId = quiz.LessonId,
                         QuizId = quiz.QuizId,
-                        LessonStatusId = (quiz.Status == Data.Entities.QuizStatus.Pass ? (int)Data.Entities.LessonStatus.Completed 
+                        LessonStatusId = (quiz.Status == Data.Entities.QuizStatus.Pass ? (int)Data.Entities.LessonStatus.Completed
                                                                                        : (int)Data.Entities.LessonStatus.NotStarted),
                         QuizScore = quiz.Score,
                         QuizStatusId = Helper.GetQuizStatusId(quiz.Status),
@@ -587,8 +653,9 @@ namespace OnlineLpk12.Services.Implementation
                 //Save changes
                 await _context.SaveChangesAsync();
             }
-            catch
+            catch (Exception ex)
             {
+                _logService.LogError(quiz.UserId, "SaveQuizScore", "StudentProgressService", ex.Message, ex);
                 throw;
             }
         }
@@ -600,8 +667,16 @@ namespace OnlineLpk12.Services.Implementation
         /// <returns>if user is teacher or not</returns>
         public async Task<bool> IsUserTeacher(int userId)
         {
-            bool isTeacher = await _context.Users.AnyAsync(x => x.Id == userId && x.UserType == "TEACHER");
-            return isTeacher;
+            try
+            {
+                bool isTeacher = await _context.Users.AnyAsync(x => x.Id == userId && x.UserType == "TEACHER");
+                return isTeacher;
+            }
+            catch (Exception ex)
+            {
+                _logService.LogError(userId, "IsUserTeacher", "StudentProgressService", ex.Message, ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -610,20 +685,29 @@ namespace OnlineLpk12.Services.Implementation
         /// <returns>list of student details</returns>
         public async Task<List<StudentDetails>> GetAllStudentDetails()
         {
-            var students = await _context.Users.Where(x => x.UserType == "STUDENT").ToListAsync();
-            var StudentDetails = new List<StudentDetails>();
-            foreach (var student in students)
+            try
             {
-                var newStudent = new StudentDetails()
+                var students = await _context.Users.Where(x => x.UserType == "STUDENT").ToListAsync();
+                var StudentDetails = new List<StudentDetails>();
+                foreach (var student in students)
                 {
-                    UserId = student.Id,
-                    UserName = student.Username,
-                    FirstName = student.FirstName,
-                    LastName = student.LastName,
-                };
-                StudentDetails.Add(newStudent);
+                    var newStudent = new StudentDetails()
+                    {
+                        UserId = student.Id,
+                        UserName = student.Username,
+                        FirstName = student.FirstName,
+                        LastName = student.LastName,
+                    };
+                    StudentDetails.Add(newStudent);
+                }
+                return StudentDetails;
             }
-            return StudentDetails;
+            catch (Exception ex)
+            {
+                _logService.LogError(0, "GetAllStudentDetails", "StudentProgressService", ex.Message, ex);
+                throw;
+            }
+
         }
     }
 }
