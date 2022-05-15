@@ -8,6 +8,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="../js/verifytoken.js" type="text/javascript">  </script>
+<script type="text/javascript">
+window.onload = function(){
+verifytoken();
+}
+</script>
+
+
     <link rel="stylesheet" href="../styles/style.css">
     <script src="../js/lessonDataStructureJSON.js"></script>
     <script src="../js/script.js"></script>
