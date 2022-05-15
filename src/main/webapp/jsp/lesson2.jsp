@@ -10,9 +10,9 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script src="../js/verifytoken.js" type="text/javascript">  </script>
 <script type="text/javascript">
-window.onload = function(){
-verifytoken();
-}
+$(function(){
+    verifytoken();
+});
 </script>
 
 
