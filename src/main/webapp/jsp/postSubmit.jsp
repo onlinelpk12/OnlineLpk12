@@ -11,6 +11,12 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script src="../js/lessonDataStructureJSON.js"></script>
     <script src="../js/script.js"></script>
+     <script src="../js/verifytoken.js" type="text/javascript"></script>
+  <script>
+    window.onload = function(){
+    verifytoken();
+}
+  </script>
     <%@ include file = "header.jsp" %>
 </head>
 
