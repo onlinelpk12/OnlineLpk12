@@ -189,7 +189,7 @@ namespace OnlineLpk12.Services.Implementation
                 result.Message = "Invalid User Id.";
                 return result;
             }
-            if (user.IsActive == 0)
+            if (!Convert.ToBoolean(user.IsActive))
             {
                 result.Success = false;
                 result.Message = "User is Inactive.";

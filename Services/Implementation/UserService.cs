@@ -27,7 +27,7 @@ namespace OnlineLpk12.Services.Implementation
                 var userFromDb = await Task.FromResult(_context.Users.FirstOrDefault(x => x.Username == user.UserName && x.Password == user.Password));
                 if (userFromDb != null)
                 {
-                    if (userFromDb.IsActive == 0)
+                    if (Convert.ToBoolean(userFromDb.IsActive))
                     {
                         result.Success = false;
                         result.Message = "User is inactive. Contact support for activation.";
@@ -73,7 +73,7 @@ namespace OnlineLpk12.Services.Implementation
                     EmailId = inputUser.EmailId,
                     Username = inputUser.UserName,
                     UserType = Helper.GetUserType(inputUser.IsStudent),
-                    IsActive = (ulong)(inputUser.IsStudent ? 1 : 0)
+                    IsActive = inputUser.IsStudent
                 };
                 await _context.Users.AddAsync(DbUser);
                 await _context.SaveChangesAsync();

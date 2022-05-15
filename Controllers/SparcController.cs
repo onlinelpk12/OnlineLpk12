@@ -19,60 +19,60 @@ namespace OnlineLpk12.Controllers
             _logService = logService;
         }
 
-        [HttpGet("program/{userId}")]
-        public async Task<IActionResult> GetProgram(int userId)
-        {
-            Response<object> response = new();
-            try
-            {
-                if (userId < 1)
-                {
-                    return BadRequest();
-                }
-                var result = await _sparcService.GetProgram(userId);
-                if (result.Success)
-                {
-                    response.Content = result.Content;
-                    return Ok(response);
-                }
-                response.Message = "Not Found";
-                return NotFound(response);
-            }
-            catch (Exception ex)
-            {
-                response.Message = "One or more validation errors occurred.";
-                response.Errors.Add("Error occurred while fetching the data.");
-                return StatusCode((int)HttpStatusCode.InternalServerError, response);
-            }
-        }
+        //[HttpGet("program/{userId}")]
+        //public async Task<IActionResult> GetProgram(int userId)
+        //{
+        //    Response<object> response = new();
+        //    try
+        //    {
+        //        if (userId < 1)
+        //        {
+        //            return BadRequest();
+        //        }
+        //        var result = await _sparcService.GetProgram(userId);
+        //        if (result.Success)
+        //        {
+        //            response.Content = result.Content;
+        //            return Ok(response);
+        //        }
+        //        response.Message = "Not Found";
+        //        return NotFound(response);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.Message = "One or more validation errors occurred.";
+        //        response.Errors.Add("Error occurred while fetching the data.");
+        //        return StatusCode((int)HttpStatusCode.InternalServerError, response);
+        //    }
+        //}
 
 
-        [HttpGet("query/{userId}")]
-        public async Task<IActionResult> GetQuery(int userId)
-        {
-            Response<object> response = new();
-            try
-            {
-                if (userId < 1)
-                {
-                    return BadRequest();
-                }
-                var result = await _sparcService.GetQuery(userId);
-                if (result.Success)
-                {
-                    response.Content = result.Content;
-                    return Ok(response);
-                }
-                response.Message = "Not Found";
-                return NotFound(response);
-            }
-            catch (Exception ex)
-            {
-                response.Message = "One or more validation errors occurred.";
-                response.Errors.Add("Error occurred while fetching the data.");
-                return StatusCode((int)HttpStatusCode.InternalServerError, response);
-            }
-        }
+        //[HttpGet("query/{userId}")]
+        //public async Task<IActionResult> GetQuery(int userId)
+        //{
+        //    Response<object> response = new();
+        //    try
+        //    {
+        //        if (userId < 1)
+        //        {
+        //            return BadRequest();
+        //        }
+        //        var result = await _sparcService.GetQuery(userId);
+        //        if (result.Success)
+        //        {
+        //            response.Content = result.Content;
+        //            return Ok(response);
+        //        }
+        //        response.Message = "Not Found";
+        //        return NotFound(response);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.Message = "One or more validation errors occurred.";
+        //        response.Errors.Add("Error occurred while fetching the data.");
+        //        return StatusCode((int)HttpStatusCode.InternalServerError, response);
+        //    }
+        //}
 
         [HttpPost("execute")]
         [Consumes("application/x-www-form-urlencoded")]
@@ -98,6 +98,34 @@ namespace OnlineLpk12.Controllers
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
                 _logService.LogError(request.UserId, "ExecuteSparc", "SparcController", ex.Message, ex);
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
+            }
+        }
+
+        [HttpPost("save")]
+        [Consumes("application/x-www-form-urlencoded")]
+        public async Task<IActionResult> SaveSparcProgram([FromForm] Sparc request)
+        {
+            Response<string> response = new();
+            try
+            {
+                if(request == null)
+                {
+                    response.Errors = new List<string>() { "Request is invalid." };
+                    response.Message = "One or more validation errors occurred.";
+                    _logService.LogInfo(request.UserId, "SaveSparcProgram", "SparcController", $"{response.Message} - {String.Join(", ", response.Errors.ToArray())}");
+                    return BadRequest(response);
+                }
+                
+                var result = await _sparcService.SaveSparcProgram(request);
+                response.Content = result.Message;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("Error occurred while fetching the data.");
+                _logService.LogError(request.UserId, "SaveSparcProgram", "SparcController", ex.Message, ex);
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }
