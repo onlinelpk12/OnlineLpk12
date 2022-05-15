@@ -218,9 +218,6 @@
         
         <button class="btn btn-primary" onclick="gotoPrevious('part-14','part-13');"> Previous </button>
     </section>
+        <%@ include file = "footer.jsp" %>
  <body>
-        <div class="footer">
-          <h4>Online LPK12 Course</h4>
-        </div>
-        </body>
         </html>
