@@ -35,7 +35,6 @@ headerRow += "<th>" + "Teacher ID" + "</th>";
 headerRow += "<th>" + "Semester" + "</th>";
 headerRow += "<th>" + "Term" + "</th>";
 headerRow += "<th>" + "Course" + "</th>";
-headerRow += "<th>" + "Course ID" + "</th>";
 headerRow += "<th>" + "Link to access Students under course" + "</th>";
 
 
@@ -48,7 +47,6 @@ row += '<td>' + '20'+ '</td>';
 row += '<td>' + i + '</td>';
 row += '<td>' + '2022-2023' + '</td>';
 row += '<td>' + 'Course-2' + '</td>';
-row += '<td>' +  i + '</td>';
 row+='<td>' + ' <a href="teacher1.jsp"> ' + 'Click here to view Students Progress enrolled in this course </a>' +'</td>'; 
 row += '</tr>';
 htmlTable += row;
