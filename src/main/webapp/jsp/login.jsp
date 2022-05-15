@@ -12,7 +12,7 @@
 
         <link href="https://fonts.googleapis.com/css?family=ZCOOL+XiaoWei" rel="stylesheet">
 
-        <link href="../styles/style-login-register.css" rel="stylesheet" type="text/css"/>
+        <link href="../styles/style.css" rel="stylesheet" type="text/css"/>
 
     </head>
 
@@ -135,37 +135,27 @@ form.addEventListener('submit',function(e){
             resp.then((data)=>{
 
              
-
+				
                 sessionStorage.setItem("username",data.username)
 
                 sessionStorage.setItem("userId",data.id)
-
+				sessionStorage.setItem("token",data.accessToken)
+				
                 console.log(sessionStorage.getItem("userId"))
 				
               	if(data.roles=="ROLE_TEACHER"){
+              		sessionStorage.setItem("userRole","Teacher")
               		location.href='hometeacher.jsp'
               	}
               	else if(data.roles=='ROLE_STUDENT'){
+              		sessionStorage.setItem("userRole","Student")
               		location.href='home.jsp'
               	}
 
-               
 
-                
-
-                
-
-                
 
             })
 
-            
-
-        
-
-            
-
-            
 
         }
 
@@ -178,12 +168,6 @@ form.addEventListener('submit',function(e){
                 resp.then((data)=>{
 
                     alert(data.message)
-
-                    
-
-                    
-
-                    
 
                 })
 
@@ -198,30 +182,15 @@ form.addEventListener('submit',function(e){
 
         }
 
-        
-
-    
-
     }).then(function(data){
 
         
 
     });
 
-    
-
-    
-
 })
-
-    
-
 
 
 </script>
-
-
-
-
 
 </html>
