@@ -52,8 +52,6 @@ Password</p>
 
                     <input type="submit"  value="Login" >
 
-                    <a href="forgotPassword.jsp">Forgot Password?</a><br>
-
                     <a href="register.jsp">Create New Account</a>
 
                 </form>
