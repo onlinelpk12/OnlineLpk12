@@ -16,7 +16,7 @@
 
         <link href="https://fonts.googleapis.com/css?family=ZCOOL+XiaoWei" rel="stylesheet">
 
-        <link href="../styles/style-login-register.css" rel="stylesheet" type="text/css"/>
+        <link href="../styles/style.css" rel="stylesheet" type="text/css"/>
 
     </head>
 
@@ -42,7 +42,7 @@ Register Account</h1>
 
 <form id="form" method="post">
 
-<%--<label for="role" required>UserRole:</label>
+<label for="role" required>UserRole:</label>
 
 <select id = "role" name="role" >
 
@@ -55,7 +55,7 @@ Register Account</h1>
 </select> <br>    
 
       &nbsp;
-      --%>
+      
       <p>FirstName</p>
 
           <input type="text" placeholder="FirstName" id="firstname" required>
@@ -77,9 +77,7 @@ Useremail</p>
 <input type="text" placeholder="Useremail" id="email" required>
 
                
-                   <p>Role</p>
-
-        <input type="text" placeholder="userRole" id="role" required>  
+                   
 
     <p>Password</p>
 
@@ -148,7 +146,7 @@ Useremail</p>
 
         //fetch post request
 
-        fetch("https://onlinelpk12node.azurewebsites.net/api/auth/signup",{
+        fetch("http://localhost:8083/api/auth/signup",{
 
             method:'POST',
 
@@ -161,11 +159,15 @@ Useremail</p>
 				"isactive":isactive,
 				"roles":[roles],
                 "password":pwdObj,
+
             }),
+
+            
 
         headers:{
 
             "Content-Type":"application/json"
+
         }
 
         }).then(function(response){
@@ -177,18 +179,12 @@ Useremail</p>
                 
 
                     resp.then((data)=>{
-
-                        
-						
+			
                         console.log(data)
-						location.href="login.jsp"
+			location.href="login.jsp"
                        
 
-                        
-
                     })
-
-                
 
             }
 
@@ -202,11 +198,15 @@ Useremail</p>
                         alert(data.message)
                         location.href="register.jsp"
 
+                        
+
                     })
 
                 }
 
             }
+
+        
 
             return response.json();
 
