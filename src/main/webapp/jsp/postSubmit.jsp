@@ -12,10 +12,10 @@
     <script src="../js/lessonDataStructureJSON.js"></script>
     <script src="../js/script.js"></script>
      <script src="../js/verifytoken.js" type="text/javascript"></script>
-  <script>
-    window.onload = function(){
-    verifytoken();
-}
+ <script type="text/javascript">
+    $(function(){
+      verifytoken();
+    });
   </script>
     <%@ include file = "header.jsp" %>
 </head>
