@@ -146,7 +146,7 @@ Useremail</p>
 
         //fetch post request
 
-        fetch("http://localhost:8083/api/auth/signup",{
+        fetch("https://onlinelpk12node.azurewebsites.net/api/auth/signup",{
 
             method:'POST',
 
