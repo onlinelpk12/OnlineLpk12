@@ -12,7 +12,7 @@ window.onload = function(){
 	usernameEle.innerHTML = sessionStorage.getItem("username");
 	
 	let homepagelink = document.getElementById("homepagelink");
-	homepagelink.href = sessionStorage.getItem("userRole") == "teacher" ? "hometeacher.jsp": "home.jsp";
+	homepagelink.href = sessionStorage.getItem("userRole") == "Teacher" ? "hometeacher.jsp": "home.jsp";
 	
 	}
 	
