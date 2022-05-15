@@ -5,6 +5,8 @@
 <script src="../js/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="../js/mode-sparc.js" type="text/javascript"></script>
 <script src="../js/sparc_programs.js" type="text/javascript"></script>
+	 <script src="../js/verifytoken.js" type="text/javascript"></script>
+  
 
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -109,6 +111,7 @@
 <script src="../js/resizer.js" type="text/javascript"></script>
 <script type="text/javascript">
 window.onload = function(){
+	verifytoken();
 	let response = getSparcProgram(2);
 	console.log(response);
 	editor.setValue(response);
