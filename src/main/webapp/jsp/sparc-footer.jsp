@@ -47,15 +47,15 @@
 function goNext() {
 	let sparcPageValue= sessionStorage.getItem("sparcValue");
 	if(sparcPageValue=="true"){
-	window.location.href="lesson2r.html";
+	window.location.href="../html/lesson2.html";
 	}
 	else{
-		window.location.href="sparc-results.jsp";
+		window.location.href="../jsp/sparc-results.jsp";
 	}
 }
 
 function goPrev() {
-	window.location.href="lesson2r.html";
+	window.location.href="../html/lesson2.html";
 
 }
 

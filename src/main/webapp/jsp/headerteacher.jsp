@@ -15,7 +15,7 @@ String username = request.getParameter("username");
  <div class="col-sm-3">
   <form action="header.jsp">
   	  <a href="#" id="goBackButton" onclick="history.back()" style="margin-top:25px"><img height="30" width="40" src="../images/back.png" style="margin-top:25px" ></a>
-  	  <a href="home.jsp" style="margin-top:25px"><img height="30" width="40" src="../images/home.png" style="margin-top:25px"></a>
+  	  <a href="hometeacher.jsp" style="margin-top:25px"><img height="30" width="40" src="../images/home.png" style="margin-top:25px"></a>
       </form>
   </div>
 
