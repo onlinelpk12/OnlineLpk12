@@ -2,7 +2,6 @@
 
 body {
 
-    /*background-image: url(../img/BACKGROUND.PNG);*/
 
     background: #FFFFFF;
 
@@ -25,7 +24,7 @@ body {
 
 
 .container {
-	top: 50px;
+
     width: 80%;
 
     height: 100%;
@@ -35,16 +34,31 @@ body {
 }
 
 
+.box{
+	 width: 320px;
 
+    height: 550px;
 
+    
 
-/***********************************************
+    margin: 0;
 
-       Account Registartion and Login
+    padding: 40px;
 
-***********************************************/
+    top: 50%;
 
-.box,
+    left: 50%;
+
+    color: #fff;
+
+    border-radius: 15px;
+
+    position: absolute;
+
+    transform: translate(-50%, -50%);
+
+    box-sizing: border-box;
+}
 
 .regbox{
 
@@ -58,7 +72,7 @@ body {
 
     padding: 40px;
 
-    top: 38%;
+    top: 37%;
 
     left: 50%;
 
@@ -73,29 +87,6 @@ body {
     box-sizing: border-box;
 
 }
-
-
-
-.avatar {
-
-    margin: 0;
-
-    padding: 0;
-
-    width: 150px;
-
-    height: 150px;
-
-    top: -22%;
-
-    position: absolute;
-
-    left: calc(50% - 75px);
-
-    border-radius: 50%;
-
-}
-
 
 
 .box h1{
@@ -154,9 +145,9 @@ body {
 
     color:#000000;
 
-    height: 35px;
+    height: 30px;
 
-    font-size: 15px;
+    font-size: 20px;
 
 }
 
@@ -198,7 +189,7 @@ body {
 
     color: #fff;
 
-    font-size: 20px;
+    font-size: 30px;
 
     border-radius: 20px;
 
@@ -216,9 +207,9 @@ body {
 
     color: #000000;
 
-    font-size: 16px;
+    font-size: 20px;
 
-    line-height: 20px;
+    line-height: 15px;
 
 }
 
@@ -226,20 +217,9 @@ body {
 
 .box a:hover {
 
-    color: #000000;
+    color: #eccc68;
 
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 .regbox h1 {
@@ -250,10 +230,9 @@ body {
 
     text-align: center;
 
-    font-size: 30px;
+    font-size: 25px;
 
 }
-
 
 
 .regbox p{
@@ -266,8 +245,6 @@ body {
 
 }
 
-
-
 .regbox input {
 
     width: 100%;
@@ -277,7 +254,6 @@ body {
     border-radius: 5px;
 
 }
-
 
 
 .regbox input[type="text"],
@@ -374,4 +350,42 @@ body {
 
     color: #eccc68;
 
+}
+
+
+section {
+    margin-top: 5%;
+    margin-left: 25%;
+    /* border: 2px solid black; */
+    /* width: fit-content; */
+
+    /* padding-bottom: 20px;*/
+
+    padding: auto !important;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: steelblue;
+    color: white;
+    text-align: center;
+  }
+  
+.portal-card {
+    margin: 24px auto;
+
+
+}
+
+.content {
+    border: 1px solid #dadce0;
+    border-radius: 6px;
+    padding: 10px 36px 40px 36px !important;
+}
+
+input[type="text"] {
+    width: 80%;
 }
