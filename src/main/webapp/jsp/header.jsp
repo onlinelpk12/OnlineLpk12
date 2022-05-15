@@ -6,10 +6,17 @@
 <title>Online LPK12 Course</title>
 </head>
 <body>
-<%
-String username = request.getParameter("username");
-%>
-<div class="container pt-5 my-10 bg-primary text-white" style="width:100%">
+<script type="text/javascript">
+window.onload = function(){
+	sessionStorage.setItem("username","sadhana");
+	let usernameEle = document.getElementById("userName");
+	usernameEle.innerHTML = sessionStorage.getItem("username");
+	
+	}
+	
+</script>
+
+<div class="container pt-5 my-10 bg-primary text-white" style="width:100%; height:10%; margin-bottom:5%">
 
 
  <div class="col-sm-3">
@@ -26,7 +33,7 @@ String username = request.getParameter("username");
 </div>
 
 <div class="col-sm-2" style="margin-top:30px">
-<h4><%= username %> </h4>
+<h4 id="userName"> </h4>
 </div>
 <div class="col-sm-1">
 <a href="logout.jsp" style="margin-top:30px" class="btn btn-warning">Logout</a>

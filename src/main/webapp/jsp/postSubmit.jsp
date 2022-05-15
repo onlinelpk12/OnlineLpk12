@@ -1,5 +1,4 @@
-<!-- @@ -0,0 +1,34 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%> -->
+<%@page contentType="text/html" pageEncoding="UTF-8"%> 
 <!DOCTYPE html>
 <html>
 
@@ -10,11 +9,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-    <script src="scripts/script.js"></script>
+    <script src="../js/script.js"></script>
+    <%@ include file = "header.jsp" %>
 </head>
 
 <body>
-    <jsp:include page="header.jsp" />
+    
 
     <section id="nextbutton" class="container">
         <div class="row">
@@ -74,7 +74,7 @@
 
                 // student passed root assessment, so allow student to go to next lesson
                 if (isAssessmentPassed && currentLearningOutcomeNumber == 0) {
-                    let nextLessonUrl = "lesson" + (currentLessonNumber + 1) + ".html";
+                    let nextLessonUrl = "../html/lesson" + (currentLessonNumber + 1) + ".html";
                     message.innerHTML = "You have passed the root assessment. please click <a href='" + nextLessonUrl + "'> here </a> to go to next lesson";
                 }
                 // passed all learning outcomes in the lesson

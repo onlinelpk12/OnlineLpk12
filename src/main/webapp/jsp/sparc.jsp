@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="ace.js" type="text/javascript" charset="utf-8"></script>
-<script src="mode-sparc.js" type="text/javascript"></script>
+<script src="../js/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/mode-sparc.js" type="text/javascript"></script>
+<script src="../js/sparc_programs.js" type="text/javascript"></script>
 
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -72,6 +73,11 @@
 								</li>
 							</ul>
                 			<ul class="nav navbar-nav navbar-right">
+                				<li> 
+                    				<button type="submit" class="btn btn-default navbar-btn" id="btn_saveSparcProgram" value="saveSparcProgram" onclick="saveSparcProgram()">
+                        				Save Sparc Program
+                    				</button> 
+                    			</li>
                     			<li> 
                     				<button type="submit" class="btn btn-default navbar-btn" id="btn_getAnswerSets" value="getAnswerSets" onclick="answerSets()">
                         				Get Answer Sets
@@ -100,17 +106,16 @@
 	<div id="results"></div>
 </div>
 
-<script src="resizer.js" type="text/javascript"></script>
+<script src="../js/resizer.js" type="text/javascript"></script>
 <script type="text/javascript">
 window.onload = function(){
-	let request = {
-        "action": "getFileContent",
-        "fileurl": "_templates/sparc.sp"
-    };
-	showStaticContent(request);
+	let response = getSparcProgram(2);
+	console.log(response);
+	editor.setValue(response);
+	
 	}
 	
-	const apiBaseUrl = "https://onlinelpk12appservice.azurewebsites.net/api/sparc/execute";
+	const apiBaseUrl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/sparc/";
 	//var input="getAnswerSets";
     var editor = ace.edit("editor");
     editor.session.setMode("ace/mode/sparc");
@@ -134,10 +139,26 @@ window.onload = function(){
 	             "action": "getAnimation",
 	             "editor":  program
 	         };
-		PostSparc(request);
-		//let execreq=buildExecuteRequest();
-		//PostExecute(execreq);
+		PostSparc(request,"execute");
 	}
+	
+	function saveSparcProgram(){
+		let currentLearningOutcomeNumber = sessionStorage.getItem("currentLearningOutcomeNumber");
+		let currentLessonNumber = sessionStorage.getItem("currentLessonNumber");
+		let userId = sessionStorage.getItem("userId");
+		let program = editor.getValue(); 
+		if(program == null || program == '' || program == undefined){
+			return "Please enter valid Sparc program to save";
+		}
+		let request = {
+				 "userid" : userId,
+				 "outcomes":currentLearningOutcomeNumber,
+				 "lesson":  currentLessonNumber,
+	             "editor":  program
+	         };
+		PostSparc(request,"save");
+	}
+	
 	
 	function answerSets(){
 		let program = editor.getValue(); 
@@ -148,9 +169,7 @@ window.onload = function(){
 	             "action": "getAnswerSets",
 	             "editor":  program
 	         };
-		PostSparc(request);
-		//let answersetsreq=buildGetAnswerSetsRequest();
-		//PostGetAnswerSets(answersetsreq);
+		PostSparc(request,"execute");
 	}
 	
 	function submitrequest(){
@@ -167,12 +186,11 @@ window.onload = function(){
 	             "query" : query,
 	             "editor":  program
 	         };
-		PostSparc(request);
-		//let submitreq=buildSubmitQueryRequest();
-		//PostSubmit(submitreq);
+		PostSparc(request,"execute");
 	}
 	
-	function PostSparc(request) {
+	function PostSparc(request,suburl) {
+		let url=suburl;
         let success = false;
         let res="";
         console.log('request: ', request);
@@ -183,7 +201,7 @@ window.onload = function(){
                 res= data;
             },
             type: 'POST',
-            url: apiBaseUrl,
+            url: apiBaseUrl + url,
             success: function(data){
             	console.log('response content: ',data.content);
             	showResults(data.content);
@@ -193,35 +211,8 @@ window.onload = function(){
             	console.log(data);
             }
         });
-        //console.log('response',res);
-        //let response = res.content;
-        //console.log('response content: ',response);
-        //showResults(res);
 	}
-      function showStaticContent(request) {
-        let success = false;
-        let res="";
-        console.log('request: ', request);
-        $.ajax({
-       	 contentType:'application/x-www-form-urlencoded',
-            data: request,
-            success: function (data) {
-                res= data;
-            },
-            type: 'POST',
-            url: apiBaseUrl,
-            success: function(data){
-            	console.log('response content: ',data.content);
-            	editor.setValue(data.content);
-            	
-            },
-            error: function(data){
-            	console.log(data);
-            }
-        });
-        
-       
-      }
+     
 	
 
 

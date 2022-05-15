@@ -22,7 +22,7 @@ a.disabled {
 <h2>Click below links to view the lessons:</h2>
 <ul>
 <p></p>
-<li><a href="../html/lesson2.html">Click here to View Lesson 2!</a></li>
+<li><a href="../jsp/lesson2.jsp">Click here to View Lesson 2!</a></li>
 <p></p>
 <li><a href="lesson2r.html" class="disabled">Click here to View Lesson 3!</a></li>
 <p></p>
