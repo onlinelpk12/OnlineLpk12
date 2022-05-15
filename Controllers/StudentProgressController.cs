@@ -11,9 +11,13 @@ namespace OnlineLpk12.Controllers
     public class StudentProgressController : ControllerBase
     {
         private readonly IStudentProgressService _studentProgressService;
-        public StudentProgressController(IStudentProgressService studentProgressService)
+        private readonly ILogService _logService;
+
+        public StudentProgressController(IStudentProgressService studentProgressService,
+            ILogService logService)
         {
             _studentProgressService = studentProgressService;
+            _logService = logService;
         }
 
         
@@ -50,8 +54,9 @@ namespace OnlineLpk12.Controllers
                 response.Errors.Add("No Lessons found for this student.");
                 return NotFound(response);
             }
-            catch
+            catch(Exception ex)
             {
+                _logService.LogError(userId, "GetLessons", "StudentProgressController", ex.Message, ex);
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
@@ -151,8 +156,9 @@ namespace OnlineLpk12.Controllers
                 response.Content = $"Updated Lesson progress for lesson {lesson.LessonId}, student {lesson.UserId}";
                 return Ok(response);
             }
-            catch
+            catch(Exception ex)
             {
+                _logService.LogError(lesson.UserId, "UpdateLessonStatus", "StudentProgressController", ex.Message, ex);
                 response.Message = "One or more errors occurred. Failed updating lesson status.";
                 response.Errors.Add("Error occurred while fetching the data.");
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
@@ -220,8 +226,9 @@ namespace OnlineLpk12.Controllers
                 response.Errors.Add(!string.IsNullOrEmpty(result.Message) ? result.Message : "Quiz not found for the given lesson.");
                 return NotFound(response);
             }
-            catch
+            catch(Exception ex)
             {
+                _logService.LogError(userId ?? -1, "GetQuiz", "StudentProgressController", ex.Message, ex);
                 response.Message = "One or more errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
@@ -285,8 +292,9 @@ namespace OnlineLpk12.Controllers
                 response.Errors.Add("Failed submitting Quiz");
                 return BadRequest(response);
             }
-            catch
+            catch(Exception ex)
             {
+                _logService.LogError(quiz.UserId, "SubmitQuiz", "StudentProgressController", ex.Message, ex);
                 response.Message = "One or more errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
@@ -320,8 +328,10 @@ namespace OnlineLpk12.Controllers
                 response.Content = result;
                 return Ok(response);
             }
-            catch
+            catch(Exception ex)
             {
+                _logService.LogError(userId, "GetAllStudentsDetails", "StudentProgressController", ex.Message, ex);
+
                 response.Message = "One or more errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
