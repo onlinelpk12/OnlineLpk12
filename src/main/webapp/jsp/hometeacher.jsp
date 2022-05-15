@@ -13,7 +13,7 @@
   </script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<%@ include file = "headerteacher.jsp" %>
+<%@ include file = "header.jsp" %>
 </head>
 <body>
 <div class="container pt-5">
