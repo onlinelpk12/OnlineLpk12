@@ -9,6 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="../js/lessonDataStructureJSON.js"></script>
     <script src="../js/script.js"></script>
     <%@ include file = "header.jsp" %>
 </head>
@@ -58,8 +59,6 @@
             let currentLearningOutcomeNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber));
             let currentLessonDetails = lessonsJson.lessons.filter(lesson => lesson.lessonId == currentLessonNumber)[0];
                 
-
-            // TODO: update with actual page
             // show next step based on binary search
 
             if (isAssessmentPassed && !isSparcPassed) {
@@ -74,16 +73,16 @@
 
                 // student passed root assessment, so allow student to go to next lesson
                 if (isAssessmentPassed && currentLearningOutcomeNumber == 0) {
-                    let nextLessonUrl = "../html/lesson" + (currentLessonNumber + 1) + ".html";
+                    let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber + 1) + ".jsp";
                     message.innerHTML = "You have passed the root assessment. please click <a href='" + nextLessonUrl + "'> here </a> to go to next lesson";
                 }
                 // passed all learning outcomes in the lesson
-                else if (isAssessmentPassed && currentLearningOutcomeNumber == currentLessonDetails[0].totalLearningOutcomes) {
-                    let nextLessonUrl = "lesson" + (currentLessonNumber + 1) + ".html";
+                else if (isAssessmentPassed && currentLearningOutcomeNumber == currentLessonDetails.totalLearningOutcomes) {
+                    let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber + 1) + ".jsp";
                     message.innerHTML = "You have passed all the assessments. please click <a href='" + nextLessonUrl + "'> here </a> to go to next lesson";
                 }
                 else if (isAssessmentPassed && currentLearningOutcomeNumber > 0) {
-                    let nextLessonUrl = "lesson" + (currentLessonNumber) + ".html";
+                    let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber) + ".jsp";
 
 
                     message.innerHTML = "You have passed assessment Please click <a href='" + nextLessonUrl + "'> here </a> to go to next learning outcome";
@@ -95,7 +94,7 @@
                 let nextPageId = nextLearningOutcomeDetails.pages[0].pageId;//getNextLearningOutcomeFirstPageId(currentLessonId, currentLearningOutcomeNumber);
                 sessionStorage.setItem(sessionKeyShowPageId, nextPageId);
 
-                let nextLessonUrl = "lesson" + (currentLessonNumber) + ".html";
+                let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber) + ".jsp";
                 message.innerHTML = "You have not passed the assessment. Please click <a href='" + nextLessonUrl + "'> here </a> to go to next step";
             }
         });

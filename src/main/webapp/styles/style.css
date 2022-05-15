@@ -22,7 +22,15 @@ body {
 
 }
 
+.knowledge-check-input{
 
+    width:80%;
+
+    height:35%;
+
+    border:5px solid black
+
+}
 
 .container {
 

@@ -8,9 +8,11 @@
 <body>
 <script type="text/javascript">
 window.onload = function(){
-	sessionStorage.setItem("username","sadhana");
 	let usernameEle = document.getElementById("userName");
 	usernameEle.innerHTML = sessionStorage.getItem("username");
+	
+	let homepagelink = document.getElementById("homepagelink");
+	homepagelink.href = sessionStorage.getItem("userRole") == "teacher" ? "hometeacher.jsp": "home.jsp";
 	
 	}
 	
@@ -22,7 +24,7 @@ window.onload = function(){
  <div class="col-sm-3">
   <form action="header.jsp">
   	  <a href="#" id="goBackButton" onclick="history.back()" style="margin-top:25px"><img height="30" width="40" src="../images/back.png" style="margin-top:25px" ></a>
-  	  <a href="home.jsp" style="margin-top:25px"><img height="30" width="40" src="../images/home.png" style="margin-top:25px"></a>
+  	  <a id="homepagelink" href="home.jsp" style="margin-top:25px"><img height="30" width="40" src="../images/home.png" style="margin-top:25px"></a>
       </form>
   </div>
 
@@ -36,7 +38,7 @@ window.onload = function(){
 <h4 id="userName"> </h4>
 </div>
 <div class="col-sm-1">
-<a href="logout.jsp" style="margin-top:30px" class="btn btn-warning">Logout</a>
+<a href="login.jsp" style="margin-top:30px" class="btn btn-warning">Logout</a>
 </div>
 </div>
 </body>

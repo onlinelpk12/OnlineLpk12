@@ -26,7 +26,7 @@ const sessionKeyIsAssessmentPassed = "isAssessmentPassed";
 const sessionKeyIsSparcPassed = "isSparcPassed";
 
 
-const nextStepPage = "postSubmit.jsp";
+const nextStepPage = "../jsp/postSubmit.jsp";
 const sparcPage = "sparc.jsp";
 
 
@@ -34,6 +34,7 @@ const sparcPage = "sparc.jsp";
 let quizContent = null;
 
 function gotoNext(currentLessonNumber, currentLearningOutcomeNumber, currentPageId, isNextPageQuiz, nextAssessmentNumber) {
+    // TODO: remove after integration
     sessionStorage.setItem(sessionKeyCurrentLessonNumber, currentLessonNumber.toString());
     sessionStorage.setItem(sessionKeyCurrentLearningOutcomeNumber, currentLearningOutcomeNumber.toString()); 
 
@@ -45,6 +46,12 @@ function gotoNext(currentLessonNumber, currentLearningOutcomeNumber, currentPage
 
     currentPage.hidden = true;
     nextPage.hidden = false;
+
+    // current_lesson_number = currentLessonNumber;
+    // current_assessment_number = nextAssessmentNumber;
+    // if (isNextPageQuiz) {
+    //     gotoAssessment(currentLessonNumber, current_assessment_number);
+    // }
 }
 
 
@@ -60,6 +67,13 @@ function gotoPrevious(currentLessonNumber, currentLearningOutcomeNumber, current
     let previousSection = document.getElementById(previousPageId);
     currentSection.hidden = true;
     previousSection.hidden = false;
+
+    // current_lesson_number = currentLessonNumber;
+    // current_assessment_number = previousAssessmentNumber;
+
+    // if (isPreviousPageQuiz) {
+    //     gotoAssessment(currentLessonNumber, current_assessment_number);
+    // }
 }
 
 function gotoOnlineSparc(currentLessonNumber, learningOutcomeNumber, currentPageId, isNextSectionQuiz, nextAssessmentNumber, sparcPageValue) {
@@ -68,6 +82,9 @@ function gotoOnlineSparc(currentLessonNumber, learningOutcomeNumber, currentPage
 
     let currentSection = document.getElementById(currentPageId);
     currentSection.hidden = true;
+    // sessionStorage.setItem("showSectionId", nextSectionId);
+    // sessionStorage.setItem("sparcValue", sparcPageValue);
+    // window.location.href = "sparc.jsp";
 }
 
 function GetFirstPageIdOfCurrentLessonFromJSON(currentLessonId){
@@ -82,15 +99,12 @@ function getCurrentPageDetailsFromJSON(currentLessonNumber, currentLearningOutco
     if (currentLearningOutcomeNumber == currentLessonDetails.rootLearningOutcome.learningOutcomeId) {
         currentPageDetails = currentLessonDetails.rootLearningOutcome.pages.filter(page => page.pageId == currentPageId)[0];
     }
-    else{
-        let learningOutcomeDetails = currentLessonDetails.rootLearningOutcome.subLearningOutcomes.filter(x=> x.learningOutcomeId == currentLearningOutcomeNumber)[0];
-        currentPageDetails =  learningOutcomeDetails.pages.filter(page => page.pageId == currentPageId)[0];
-    }
     return currentPageDetails;
 }
 
 function submitAssessment(){
-    let isAssessmentPassed = getGrading() == "pass" ? true : false;
+    // TODO:
+    let isAssessmentPassed = true;//getGrading() == "pass" ? true : false;
     sessionStorage.setItem(sessionKeyIsAssessmentPassed, isAssessmentPassed);
     window.open(nextStepPage, "_self");
 }
@@ -408,4 +422,155 @@ function showScoreToUser(score) {
 
 function isNullOrUndefined(input) {
     return input == null || input == undefined;
+}
+
+let lessonsJson = {
+    "lessons": [
+        {
+            "lessonId": 2,
+            "lessonTitle": "Extend the family model",
+            "rootLearningOutcome": {
+                "learningOutcomeId": 0,
+                "pages": [
+                    {
+                        "pageId": "version-1-course-x-lesson-2-page-1",
+                        "previousPageId": null,
+                        "nextPageId": "version-1-course-x-lesson-2-page-2"
+                    },
+                    {
+                        "pageId": "version-1-course-x-lesson-2-page-2",
+                        "previousPageId": "version-1-course-x-lesson-2-page-1",
+                        "nextPageId": "version-1-course-x-lesson-2-page-3"
+                    },
+                    {
+                        "pageId": "version-1-course-x-lesson-2-page-3",
+                        "previousPageId": "version-1-course-x-lesson-2-page-2",
+                        "nextPageId": "version-1-course-x-lesson-2-page-4"
+                    },
+                    {
+                        "pageId": "version-1-course-x-lesson-2-page-4",
+                        "previousPageId": "version-1-course-x-lesson-2-page-3",
+                        "nextPageId": "version-1-course-x-lesson-2-page-5"
+                    },
+                    {
+                        "pageId": "version-1-course-x-lesson-2-page-5",
+                        "previousPageId": "version-1-course-x-lesson-2-page-4",
+                        "nextPageId": "version-1-course-x-lesson-2-page-6"
+                    },
+                    {
+                        "pageId": "version-1-course-x-lesson-2-page-6",
+                        "previousPageId": "version-1-course-x-lesson-2-page-5",
+                        "nextPageId1": "version-1-course-x-lesson-3-page-12",
+                        "nextPageId2": "version-1-course-x-lesson-2-page-1"
+                    }
+                ],
+                "subLearningOutcomes": [
+                    {
+                        "learningOutcomeId": 1,
+                        "pages": [
+                            {
+                                "pageId": "version-1-course-x-lesson-2-page-7",
+                                "previousPageId": "version-1-course-x-lesson-2-page-6",
+                                "nextPageId": "version-1-course-x-lesson-2-page-8",
+                                "isStartPage": true,
+                                "isAssessmentPage": false
+                            },
+                            {
+                                "pageId": "version-1-course-x-lesson-2-page-8",
+                                "previousPageId": "version-1-course-x-lesson-2-page-7",
+                                "nextPageId": "version-1-course-x-lesson-2-page-9",
+                                "isStartPage": false,
+                                "isAssessmentPage": false
+                            },
+                            {
+                                "pageId": "version-1-course-x-lesson-2-page-9",
+                                "previousPageId": "version-1-course-x-lesson-2-page-8",
+                                "nextPageId": "version-1-course-x-lesson-2-page-10"
+                            },
+                            {
+                                "pageId": "version-1-course-x-lesson-2-page-10",
+                                "previousPageId": "version-1-course-x-lesson-2-page-9",
+                                "nextPageId": "version-1-course-x-lesson-2-page-11"
+                            },
+                            {
+                                "pageId": "version-1-course-x-lesson-2-page-11",
+                                "previousPageId": "version-1-course-x-lesson-2-page-10",
+                                "nextPageId1": "version-1-course-x-lesson-2-page-12",
+                                "nextPageId2": "version-1-course-x-lesson-2-page-7"
+                            }
+                        ]
+                    },
+                    {
+                        "learningOutcomeId": 2,
+                        "pages": [
+                            {
+                                "pageId": "version-1-course-x-lesson-2-page-12",
+                                "previousPageId": "version-1-course-x-lesson-2-page-11",
+                                "nextPageId": "version-1-course-x-lesson-2-page-13"
+                            },
+                            {
+                                "pageId": "version-1-course-x-lesson-2-page-13",
+                                "previousPageId": "version-1-course-x-lesson-2-page-12",
+                                "nextPageId": "version-1-course-x-lesson-2-page-14"
+                            },
+                            {
+                                "pageId": "version-1-course-x-lesson-2-page-14",
+                                "previousPageId": "version-1-course-x-lesson-2-page-13",
+                                "nextPageId": "version-1-course-x-lesson-2-page-15"
+                            },
+                            {
+                                "pageId": "version-1-course-x-lesson-2-page-15",
+                                "previousPageId": "version-1-course-x-lesson-2-page-14",
+                                "nextPageId": "version-1-course-x-lesson-2-page-16"
+                            },
+                            {
+                                "pageId": "version-1-course-x-lesson-2-page-16",
+                                "previousPageId": "version-1-course-x-lesson-2-page-15",
+                                "nextPageId1": "version-1-course-x-lesson-2-page-17",
+                                "nextPageId2": "version-1-course-x-lesson-2-page-12",
+                                "nextPageId3": "version-1-course-x-lesson-2-page-7"
+                            }
+                        ]
+                    },
+                    {
+                        "learningOutcomeId": 3,
+                        "pages": [
+                            {
+                                "pageId": "version-1-course-x-lesson-2-page-17",
+                                "previousPageId": "version-1-course-x-lesson-2-page-16",
+                                "nextPageId": "version-1-course-x-lesson-2-page-18"
+                            },
+                            {
+                                "pageId": "version-1-course-x-lesson-2-page-18",
+                                "previousPageId": "version-1-course-x-lesson-2-page-17",
+                                "nextPageId": "version-1-course-x-lesson-2-page-19"
+                            },
+                            {
+                                "pageId": "version-1-course-x-lesson-2-page-19",
+                                "previousPageId": "version-1-course-x-lesson-2-page-18",
+                                "nextPageId": "version-1-course-x-lesson-2-page-20"
+                            },
+                            {
+                                "pageId": "version-1-course-x-lesson-2-page-20",
+                                "previousPageId": "version-1-course-x-lesson-2-page-19",
+                                "nextPageId": "version-1-course-x-lesson-2-page-21"
+                            },
+                            {
+                                "pageId": "version-1-course-x-lesson-2-page-21",
+                                "previousPageId": "version-1-course-x-lesson-2-page-20",
+                                "nextPageId": "version-1-course-x-lesson-2-page-22"
+                            },
+                            {
+                                "pageId": "version-1-course-x-lesson-2-page-22",
+                                "previousPageId": "version-1-course-x-lesson-2-page-21",
+                                "nextPageId1": "version-1-course-x-lesson-3-page-1",
+                                "nextPageId2": "version-1-course-x-lesson-2-page-17",
+                                "nextPageId3": "version-1-course-x-lesson-2-page-12"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
 }
