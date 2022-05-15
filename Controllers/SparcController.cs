@@ -12,9 +12,11 @@ namespace OnlineLpk12.Controllers
     public class SparcController : ControllerBase
     {
         private readonly ISparcService _sparcService;
-        public SparcController(ISparcService sparcService)
+        private readonly ILogService _logService;
+        public SparcController(ISparcService sparcService, ILogService logService)
         {
             _sparcService = sparcService;
+            _logService = logService;
         }
 
         [HttpGet("program/{userId}")]
@@ -84,16 +86,18 @@ namespace OnlineLpk12.Controllers
                 {
                     response.Errors = validationMessages;
                     response.Message = "One or more validation errors occurred.";
+                    _logService.LogInfo(request.UserId, "ExecuteSparc", "SparcController", $"{response.Message} - {String.Join(", ", response.Errors.ToArray())}");
                     return BadRequest(response);
                 }
                 var result = await _sparcService.ExecuteSparcRequest(request);
                 response.Content = result.Success ? result.Content : "";
                 return Ok(response);
             }
-            catch
+            catch (Exception ex)
             {
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
+                _logService.LogError(request.UserId, "ExecuteSparc", "SparcController", ex.Message, ex);
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }

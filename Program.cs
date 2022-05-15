@@ -26,6 +26,7 @@ builder.Services.AddDbContext<OnlineLpk12DbContext>(options => options.UseMySql(
 builder.Services.AddTransient<IStudentProgressService, StudentProgressService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<ISparcService, SparcService>();
+builder.Services.AddTransient<ILogService, LogService>();
 
 builder.Services.AddCors(options =>
 {

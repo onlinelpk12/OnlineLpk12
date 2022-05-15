@@ -12,10 +12,13 @@ namespace OnlineLpk12.Services.Implementation
         private readonly OnlineLpk12DbContext _context;
         private readonly HttpClient client = new HttpClient();
         private readonly IHttpClientFactory _httpClientFactory;
-        public SparcService(OnlineLpk12DbContext context, IHttpClientFactory httpClientFactory)
+        private readonly ILogService _logService;
+
+        public SparcService(OnlineLpk12DbContext context, IHttpClientFactory httpClientFactory, ILogService logService)
         {
             _context = context;
             _httpClientFactory = httpClientFactory;
+            _logService = logService;
         }
 
         public async Task<Result<SparcProgram>> GetProgram(int userId)
@@ -73,11 +76,14 @@ namespace OnlineLpk12.Services.Implementation
 
         public async Task<Result<string>> ExecuteSparcRequest(Sparc sparcRequest)
         {
+            _logService.LogInfo(sparcRequest.UserId,"ExecuteSparcRequest", "SparcService", "Execution of ExecuteSparcRequest method started");
             var result = new Result<string>();
             try
             {
-                var data = new Dictionary<string, string>();
-                data.Add("action", sparcRequest.Action);
+                var data = new Dictionary<string, string>
+                {
+                    { "action", sparcRequest.Action }
+                };
                 if (sparcRequest.Action == "getFileContent")
                 {
                     data.Add("fileurl", !string.IsNullOrEmpty(sparcRequest.FileUrl) ? sparcRequest.FileUrl : "");
@@ -111,7 +117,12 @@ namespace OnlineLpk12.Services.Implementation
             }
             catch (Exception ex)
             {
+                _logService.LogError(sparcRequest.UserId, "ExecuteSparcRequest", "SparcService", ex.Message, ex);
                 throw;
+            }
+            finally
+            {
+               _logService.LogInfo(sparcRequest.UserId,"ExecuteSparcRequest", "SparcService", "Execution of ExecuteSparcRequest method ended");
             }
         }
 
@@ -119,7 +130,6 @@ namespace OnlineLpk12.Services.Implementation
         {
             try
             {
-
                 var data = new Data.Models.Sparc()
                 {
                     //LessonId = 1,
@@ -133,14 +143,15 @@ namespace OnlineLpk12.Services.Implementation
                 };
                 await _context.Sparcs.AddAsync(data);
                 await _context.SaveChangesAsync();
-
-                
             }
             catch (Exception ex)
             {
+                await _logService.LogError(sparcRequest.UserId, "SaveSparcData", "SparcService",ex.Message, ex);
                 throw;
             }
         }
+
+
 
     }
 }

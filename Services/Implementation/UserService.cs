@@ -4,16 +4,19 @@ using OnlineLpk12.Helpers;
 using OnlineLpk12.Data.Entities;
 using OnlineLpk12.Data.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
 
 namespace OnlineLpk12.Services.Implementation
 {
     public class UserService : IUserService
     {
         private readonly OnlineLpk12DbContext _context;
+        private readonly ILogService _logService;
 
-        public UserService(OnlineLpk12DbContext context)
+        public UserService(OnlineLpk12DbContext context, ILogService logService)
         {
-            this._context = context;
+            _context = context;
+            _logService = logService;
         }
 
         public async Task<Result<LoginResponse>> Login(LoginUser user)

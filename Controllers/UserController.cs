@@ -48,7 +48,7 @@ namespace OnlineLpk12.Controllers
                 if (validationMessages.Any())
                 {
                     response.Errors = validationMessages;
-                    response.Message = "One or more validation errors occurred.";
+                    //response.Message = "One or more validation errors occurred.";
                     return BadRequest(response);
                 }
 
