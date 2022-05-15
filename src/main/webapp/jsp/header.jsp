@@ -38,8 +38,15 @@ window.onload = function(){
 <h4 id="userName"> </h4>
 </div>
 <div class="col-sm-1">
-<a href="login.jsp" style="margin-top:30px" class="btn btn-warning">Logout</a>
+<a onclick="sessionclear()" style="margin-top:30px" class="btn btn-warning">Logout</a>
 </div>
 </div>
 </body>
+<script type="text/javascript">
+function sessionclear(){
+	
+	sessionStorage.clear();
+	window.location.href="login.jsp"
+}
+</script>
 </html>
