@@ -68,7 +68,7 @@
             // show next step based on binary search
 
             if (isAssessmentPassed && !isSparcPassed) {
-                message.innerHTML = "You have passed the assessment. Please click here <a href='" + sparcPage + "'> here </a> to to practice programming task."
+                message.innerHTML = "You have passed the assessment. Please click <a href='" + sparcPage + "'> here </a> to to practice programming task."
                 return;
             }
 
