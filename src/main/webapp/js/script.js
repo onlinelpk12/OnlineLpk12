@@ -11,8 +11,6 @@ function disableElement(id) {
 const apiBaseUrl = "https://onlinelpk12appservice.azurewebsites.net/api";
 const lessonsUrl = "/onlineSystem/lessonnumber.jsp"
 
-sessionStorage.setItem("userId", 15);
-
 let userIdFromSession = 0;
 let userId = sessionStorage.getItem("userId");
 if (userId) {
