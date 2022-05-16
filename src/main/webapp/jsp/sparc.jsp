@@ -260,7 +260,7 @@ function SubmitSparc() {
            // message.innerHTML = "You have passed the root assessment. please click <a href='" + nextLessonUrl + "'> here </a> to go to next lesson";
         }
         // passed all learning outcomes in the lesson
-        else if (isAssessmentPassed && currentLearningOutcomeNumber == currentLessonDetails.totalLearningOutcomes) {
+        else if (isAssessmentPassed && currentLearningOutcomeNumber == currentLessonDetails.rootLearningOutcome.subLearningOutcomes.length) {
             let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber + 1) + ".jsp";
 		window.location.href = nextLessonUrl;
             //message.innerHTML = "You have passed all the assessments. please click <a href='" + nextLessonUrl + "'> here </a> to go to next lesson";
