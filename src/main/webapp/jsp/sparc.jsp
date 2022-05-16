@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="../js/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="../js/mode-sparc.js" type="text/javascript"></script>
 <script src="../js/sparc_programs.js" type="text/javascript"></script>
 <script src="../js/script.js" type="text/javascript"></script>
-
-<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<link rel = "stylesheet" href  = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">    
 <title>Online SPARC</title>
 <style type="text/css" media="screen">
     #editor { 
@@ -108,104 +108,94 @@
 
 <script src="../js/resizer.js" type="text/javascript"></script>
 <script type="text/javascript">
+let currentLearningOutcomeNumber = sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber);
+let currentLessonNumber = sessionStorage.getItem(sessionKeyCurrentLessonNumber);
 window.onload = function(){
-	let currentLearningOutcomeNumber = sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber);
-	let currentLessonNumber = sessionStorage.getItem(sessionKeyCurrentLessonNumber);
-	let response = getSparcProgram(2);
+	let response = getSparcProgram(currentLearningOutcomeNumber);
 	console.log(response);
-	editor.setValue(response);
-	
-	}
-	let userId = sessionStorage.getItem("userId");
-	
-	const apiBaseUrl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/sparc/";
-	//var input="getAnswerSets";
-    var editor = ace.edit("editor");
-    editor.session.setMode("ace/mode/sparc");
-	
-    var showResults=function(response){
-		$('#results').html('<center> <button onclick="clearResults()">Clear the Results</button> </center>');
-		$('#results').append(response);
-	}
+	editor.setValue(response);	
+}
+let userId = sessionStorage.getItem("userId");
+const apiBaseUrl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/sparc/";
+//var input="getAnswerSets";
+var editor = ace.edit("editor");
+editor.session.setMode("ace/mode/sparc");	
+var showResults=function(response){
+	$('#results').html('<center> <button onclick="clearResults()">Clear the Results</button> </center>');
+	$('#results').append(response);
+}
     
+var clearResults=function(){
+	$('#results').empty();
+}
 	
-	var clearResults=function(){
-		$('#results').empty();
+function execute(){
+	let program = editor.getValue(); 
+	if(program == null || program == '' || program == undefined){
+		program = '';
 	}
-	
-	function execute(){
-		let program = editor.getValue(); 
-		if(program == null || program == '' || program == undefined){
-			program = '';
-		}
-		let request = {
-				 "userid": userId,
-				 "outcomes":currentLearningOutcomeNumber,
-				 "lesson":  currentLessonNumber,
-	             "action": "getAnimation",
-	             "editor":  program
-	         };
-		PostSparc(request,"execute");
+	let request = {
+		"userid": userId,
+		"learningOutcome":currentLearningOutcomeNumber,
+		"lessonId":  currentLessonNumber,
+	        "action": "getAnimation",
+	        "editor":  program
+	};
+	PostSparc(request,"execute");
+}
+function saveSparcProgram(){
+	let program = editor.getValue(); 
+	if(program == null || program == '' || program == undefined){
+		return "Please enter valid Sparc program to save";
 	}
-	
-	function saveSparcProgram(){
-		let program = editor.getValue(); 
-		if(program == null || program == '' || program == undefined){
-			return "Please enter valid Sparc program to save";
-		}
-		let request = {
-				 "userid" : userId,
-				 "outcomes":currentLearningOutcomeNumber,
-				 "lesson":  currentLessonNumber,
-	             "editor":  program
-	         };
-		PostSparc(request,"save");
+	let request = {
+		"userid" : userId,
+	        "learningOutcome":currentLearningOutcomeNumber,
+		"lessonId":  currentLessonNumber,
+	        "editor":  program
+	};
+	PostSparc(request,"save");
+}
+function answerSets(){
+	let program = editor.getValue(); 	
+	if(program == null || program == '' || program == undefined){
+		program = '';
 	}
-	
-	
-	function answerSets(){
-		let program = editor.getValue(); 
-		
-		if(program == null || program == '' || program == undefined){
-			program = '';
-		}
-		let request = {
-				"userid": userId,
-				 "outcomes":currentLearningOutcomeNumber,
-				 "lesson":  currentLessonNumber,
-	             "action": "getAnswerSets",
-	             "editor":  program
-	         };
-		PostSparc(request,"execute");
+	let request = {
+		"userid": userId,
+		"learningOutcome":currentLearningOutcomeNumber,
+		"lessonId":  currentLessonNumber,
+	        "action": "getAnswerSets",
+	        "editor":  program
+	};
+	PostSparc(request,"execute");
+}	
+function submitrequest(){
+	let program = editor.getValue(); 
+	let query = $('#txt_query').val();
+	if(program == null || program == '' || program == undefined){
+		program = '';
 	}
-	
-	function submitrequest(){
-		let program = editor.getValue(); 
-		let query = $('#txt_query').val();
-		if(program == null || program == '' || program == undefined){
-			program = '';
-		}
-		if(query == null || query == '' || query == undefined){
-			query = '';
-		}
-		let request = {
-				"userid": userId,
-				 "outcomes":currentLearningOutcomeNumber,
-				 "lesson":  currentLessonNumber,
-	             "action": "getQuery",
-	             "query" : query,
-	             "editor":  program
-	         };
-		PostSparc(request,"execute");
+	if(query == null || query == '' || query == undefined){
+		query = '';
 	}
-	
-	function PostSparc(request,suburl) {
-		let url=suburl;
+	let request = {
+		"userid": userId,
+		"learningOutcome":currentLearningOutcomeNumber,
+		"lessonId":  currentLessonNumber,
+	        "action": "getQuery",
+	        "query" : query,
+	        "editor":  program
+	};
+	PostSparc(request,"execute");
+}
+function PostSparc(request,suburl) {
+	let url=suburl;
         let success = false;
         let res="";
         console.log('request: ', request);
         $.ajax({
-       	 contentType:'application/x-www-form-urlencoded',
+       	    contentType:'application/x-www-form-urlencoded',
             data: request,
             success: function (data) {
                 res= data;
@@ -215,17 +205,12 @@ window.onload = function(){
             success: function(data){
             	console.log('response content: ',data.content);
             	showResults(data.content);
-            	
             },
             error: function(data){
             	console.log(data);
             }
         });
-	}
-     
-	
-
-
+}
 </script>
 <%@ include file = "sparc-footer.jsp" %> 
 </body>
