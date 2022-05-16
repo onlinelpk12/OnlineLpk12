@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="../js/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="../js/mode-sparc.js" type="text/javascript"></script>
 <script src="../js/sparc_programs.js" type="text/javascript"></script>
 <script src="../js/script.js" type="text/javascript"></script>
-
-<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<link rel = "stylesheet" href  = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">    
+   
 <title>Online SPARC</title>
 <style type="text/css" media="screen">
     #editor { 
@@ -108,17 +109,18 @@
 
 <script src="../js/resizer.js" type="text/javascript"></script>
 <script type="text/javascript">
+let currentLearningOutcomeNumber = sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber);
+let currentLessonNumber = sessionStorage.getItem(sessionKeyCurrentLessonNumber);
 window.onload = function(){
-	let currentLearningOutcomeNumber = sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber);
-	let currentLessonNumber = sessionStorage.getItem(sessionKeyCurrentLessonNumber);
+	
 	let response = getSparcProgram(currentLearningOutcomeNumber);
 	console.log(response);
 	editor.setValue(response);
 	
 	}
-	let userId = sessionStorage.getItem("userId");
+	let userid = sessionStorage.getItem("userId");
 	
-	const apiBaseUrl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/sparc/";
+	const apiBaseurl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/sparc/";
 	//var input="getAnswerSets";
     var editor = ace.edit("editor");
     editor.session.setMode("ace/mode/sparc");
@@ -211,7 +213,7 @@ window.onload = function(){
                 res= data;
             },
             type: 'POST',
-            url: apiBaseUrl + url,
+            url: apiBaseurl + url,
             success: function(data){
             	console.log('response content: ',data.content);
             	showResults(data.content);

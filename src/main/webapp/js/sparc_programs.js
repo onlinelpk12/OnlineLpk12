@@ -1,4 +1,3 @@
-	
 	function getSparcProgram(id) {
        if(id=="0" || id=="3"){
        
@@ -16,7 +15,6 @@
        }
        
        else if(id=="1"){
-       
        return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		%% Template for a SPARC file
 		%% Author: 
@@ -32,7 +30,6 @@
        }
        
        else if(id=="2"){
-       
        return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	   %% Template for a SPARC file
 	   %% Author: 
