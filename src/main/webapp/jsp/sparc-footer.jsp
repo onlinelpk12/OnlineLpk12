@@ -31,7 +31,7 @@
  	</div>
  	<div class="col-md-4">
  	  <div id="sparcFooterNextBtn">
- 	     <button class="btn btn-primary pull-right" onclick="SubmitSparc()"> Submit Program </button>
+ 	     <button class="btn btn-primary pull-right" onclick="SubmitSparc()"> Next </button>
  	  </div>
  	</div>
  </div>
