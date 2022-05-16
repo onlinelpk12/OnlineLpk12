@@ -19,7 +19,7 @@ $(function(){
     <link rel="stylesheet" href="../styles/style.css">
     <script src="../js/lessonDataStructureJSON.js"></script>
     <script src="../js/script.js"></script>
-    <%@ include file = "header.jsp" %>
+    
 </head>
 
 <body>
@@ -41,6 +41,9 @@ $(function(){
   		}           
     });    
     </script>
+    
+    <%@ include file = "header.jsp" %>
+    
     <section id="version-1-course-x-lesson-2-page-1" class="container" hidden>
         <div class="row">
             <div class="col-md-8 content" style="margin-left:20rem">
