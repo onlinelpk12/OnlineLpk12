@@ -36,7 +36,7 @@
     <section id="version-1-course-x-lesson-2-page-1" class="container" hidden>
         <div class="row">
             <div class="col-md-8 content" style="margin-left:20rem">
-            <h1> Lesson 2: Extend the family model </h1>
+            <h1 style="text-align:center">  Lesson 2: Extend the family model </h1> <br>
             <a class="btn btn-primary pull-right"
                 onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-1', false, -1)"> Next </a>
             </div>
@@ -98,8 +98,8 @@
     <section id="version-1-course-x-lesson-2-page-4" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <img src="../images/Newimage1.png" alt="Image" width="300" height="300">
-                <img src="../images/Newimage2.png" alt="Image" width="300" height="200">
+                <img src="../images/Newimage1.png" alt="Image" width="300" height="200">
+                <img src="../images/Newimage2.png" alt="Image" width="400" height="100">
                 
                 <br>
                 <a class="btn btn-primary pull-left"
@@ -184,7 +184,7 @@
             </div>
            
             </form>
-          
+          </div>
         </div>  
     </section>
     <!-- onlineSPARC -->
@@ -201,7 +201,7 @@
                         dad of Peter? </li>
                     <li> Extend your model: </li>
                     <ul>
-                        <li> Write knowledge about “dad” relation for the kids </li>
+                        <li> Write knowledge about "Dad" relation for the kids </li>
                         <li> Represent the knowledge into facts </li>
                     </ul>
                 </ul>

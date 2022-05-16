@@ -112,7 +112,7 @@
 let currentLearningOutcomeNumber = sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber);
 let currentLessonNumber = sessionStorage.getItem(sessionKeyCurrentLessonNumber);
 window.onload = function(){
-	
+	document.getElementById("sparc-footer-next-btn").disabled = true;
 	let response = getSparcProgram(currentLearningOutcomeNumber);
 	console.log(response);
 	editor.setValue(response);
@@ -148,6 +148,7 @@ window.onload = function(){
 	             "editor":  program
 	         };
 		PostSparc(request,"execute");
+		document.getElementById("sparc-footer-next-btn").disabled = false;
 	}
 	
 	function saveSparcProgram(){
@@ -179,6 +180,7 @@ window.onload = function(){
 	             "editor":  program
 	         };
 		PostSparc(request,"execute");
+		document.getElementById("sparc-footer-next-btn").disabled = false;
 	}
 	
 	function submitrequest(){
@@ -199,6 +201,7 @@ window.onload = function(){
 	             "editor":  program
 	         };
 		PostSparc(request,"execute");
+		document.getElementById("sparc-footer-next-btn").disabled = false;
 	}
 	
 	function PostSparc(request,suburl) {

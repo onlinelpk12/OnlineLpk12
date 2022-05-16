@@ -50,53 +50,30 @@
         }
 
         $(document).ready(function () {
-            let message = document.getElementById('next-step-link');
-            let isAssessmentPassed = sessionStorage.getItem(sessionKeyIsAssessmentPassed) === 'true';
-            let isSparcPassed = sessionStorage.getItem(sessionKeyIsSparcPassed) === 'true';
-            let nextLessonUrl = "sparc.html";
+        	 let message = document.getElementById('next-step-link');
+             let isAssessmentPassed = sessionStorage.getItem(sessionKeyIsAssessmentPassed) === 'true';
+             let nextLessonUrl = "sparc.html";
 
-            let currentLessonNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber));
-            let currentLearningOutcomeNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber));
-            let currentLessonDetails = lessonsJson.lessons.filter(lesson => lesson.lessonId == currentLessonNumber)[0];
-                
-            // show next step based on binary search
+             let currentLessonNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber));
+             let currentLearningOutcomeNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber));
+             let currentLessonDetails = lessonsJson.lessons.filter(lesson => lesson.lessonId == currentLessonNumber)[0];
+                 
+             // show next step based on binary search
 
-            if (isAssessmentPassed && !isSparcPassed) {
-                message.innerHTML = "You have passed the assessment. Please click here <a href='" + sparcPage + "'> here </a> to to practice programming task."
-                return;
-            }
+             if (isAssessmentPassed) {
+                 message.innerHTML = "You have passed the assessment. Please click <a href='" + sparcPage + "'> here </a> to to practice programming task."
+             }
+             else {
+                 let nextLearningOutcomeNumber = getNextLearningOutcomeIdUsingBinarySearch(currentLessonNumber, currentLearningOutcomeNumber);
+                 let nextLearningOutcomeDetails = currentLessonDetails.rootLearningOutcome.subLearningOutcomes.filter(x => x.learningOutcomeId == nextLearningOutcomeNumber)[0];
+                 let nextPageId = nextLearningOutcomeDetails.pages[0].pageId;//getNextLearningOutcomeFirstPageId(currentLessonId, currentLearningOutcomeNumber);
+                 sessionStorage.setItem(sessionKeyShowPageId, nextPageId);
 
-            if (isAssessmentPassed && isSparcPassed) {
-                //sessionStorage.removeItem(sessionKeyIsAssessmentPassed);
-                //let pageIdToShow = sessionStorage.getItem(sessionKeyShowPageId);
-                //message.innerHTML = "Congratulations on completing the programming task. Please click <a href='" + nextLessonUrl + "'> here </a> to go to next steps."
+                 let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber) + ".jsp";
+                 message.innerHTML = "You have not passed the assessment. Please click <a href='" + nextLessonUrl + "'> here </a> to go to next step";
+             }
+             return;
 
-                // student passed root assessment, so allow student to go to next lesson
-                if (isAssessmentPassed && currentLearningOutcomeNumber == 0) {
-                    let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber + 1) + ".jsp";
-                    message.innerHTML = "You have passed the root assessment. please click <a href='" + nextLessonUrl + "'> here </a> to go to next lesson";
-                }
-                // passed all learning outcomes in the lesson
-                else if (isAssessmentPassed && currentLearningOutcomeNumber == currentLessonDetails.totalLearningOutcomes) {
-                    let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber + 1) + ".jsp";
-                    message.innerHTML = "You have passed all the assessments. please click <a href='" + nextLessonUrl + "'> here </a> to go to next lesson";
-                }
-                else if (isAssessmentPassed && currentLearningOutcomeNumber > 0) {
-                    let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber) + ".jsp";
-
-
-                    message.innerHTML = "You have passed assessment Please click <a href='" + nextLessonUrl + "'> here </a> to go to next learning outcome";
-                }
-            }
-            else {
-                let nextLearningOutcomeNumber = getNextLearningOutcomeIdUsingBinarySearch(currentLessonNumber, currentLearningOutcomeNumber);
-                let nextLearningOutcomeDetails = currentLessonDetails.rootLearningOutcome.subLearningOutcomes.filter(x => x.learningOutcomeId == nextLearningOutcomeNumber)[0];
-                let nextPageId = nextLearningOutcomeDetails.pages[0].pageId;//getNextLearningOutcomeFirstPageId(currentLessonId, currentLearningOutcomeNumber);
-                sessionStorage.setItem(sessionKeyShowPageId, nextPageId);
-
-                let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber) + ".jsp";
-                message.innerHTML = "You have not passed the assessment. Please click <a href='" + nextLessonUrl + "'> here </a> to go to next step";
-            }
         });
     </script>
 </body>
