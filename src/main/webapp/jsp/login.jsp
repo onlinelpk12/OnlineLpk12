@@ -1,71 +1,59 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
-
 <html>
-
-    <head>
-
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <title>Join Us</title>
 
         <link href="https://fonts.googleapis.com/css?family=ZCOOL+XiaoWei" rel="stylesheet">
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		
         <link href="../styles/style-login-register.css" rel="stylesheet" type="text/css"/>
+        <link href="../styles/style.css" rel="stylesheet" type="text/css"/>
 
-    </head>
+</head>
+<body>
+  <%@ include file = "headerlog.jsp" %>
+<h2>Online LPK12</h2>
 
-    
-
-    <body>
-
-    <%@ include file = "headerlog.jsp" %>
-
-        <div class="container">
-
-            <div class="box">
-
-                
-
-                <h1>
+<div class="row" style="margin-top:10rem">
+  <div class="col-md-6 col-md-offset-2">
+     <img src="../images/education.png" alt="Image" width="500" height="600">
+  </div>
+  
+  <div class="col-md-2">
+          <div class="form-group">
+           <h1>
 
 Login Account</h1>
 
-<form id="form" method="post">
-
-                    <p>
-
-Username</p>
-
+<form id="form" method="post" >
+ <label for="login">Username</label>
 <input type="text"  name="userName" placeholder="Username" id="username" required>
 
-
-
-                    <p>
-
-                    
-
-Password</p>
-
+<br>
+ <label for="password">Password</label>
 <input type="password" placeholder="Password" id="password" required>
+ <br>
+<br>
+                    <input type="submit"  value="Login" >  <br>
 
-                    <input type="submit"  value="Login" >
+                    <a href="forgotPassword.jsp">Forgot Password?</a><br>
 
-                    <a href="register.jsp">Create New Account</a>
+                    <a href="register.jsp">Create New Account</a>  <br>
 
                 </form>
-
-
-
+                
+                <br>
 </div>
 
-
-
 </div>
+  </div>
 
 <%@ include file = "footer.jsp" %>
-
 </body>
 
 
@@ -92,7 +80,7 @@ form.addEventListener('submit',function(e){
 
     //fetch post request
 
-    fetch("https://onlinelpk12node.azurewebsites.net/api/auth/signin",{
+     fetch("https://onlinelpk12node.azurewebsites.net/api/auth/signin",{
 
         method:'POST',
 
@@ -133,27 +121,39 @@ form.addEventListener('submit',function(e){
             resp.then((data)=>{
 
              
-				
+
                 sessionStorage.setItem("username",data.username)
 
                 sessionStorage.setItem("userId",data.id)
 				sessionStorage.setItem("token",data.accessToken)
-				
                 console.log(sessionStorage.getItem("userId"))
 				
               	if(data.roles=="ROLE_TEACHER"){
-              		sessionStorage.setItem("userRole","Teacher")
+					sessionStorage.setItem("userRole","Teacher")
               		location.href='hometeacher.jsp'
               	}
               	else if(data.roles=='ROLE_STUDENT'){
-              		sessionStorage.setItem("userRole","Student")
+					sessionStorage.setItem("userRole","Student")
               		location.href='home.jsp'
               	}
 
+               
 
+                
+
+                
+
+                
 
             })
 
+            
+
+        
+
+            
+
+            
 
         }
 
@@ -166,6 +166,12 @@ form.addEventListener('submit',function(e){
                 resp.then((data)=>{
 
                     alert(data.message)
+
+                    
+
+                    
+
+                    
 
                 })
 
@@ -180,15 +186,47 @@ form.addEventListener('submit',function(e){
 
         }
 
+        
+
+    
+
     }).then(function(data){
 
         
 
     });
 
+    
+
+    
+
 })
+
+    
+
 
 
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </html>
