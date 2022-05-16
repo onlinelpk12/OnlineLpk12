@@ -143,12 +143,13 @@ $(function(){
                 <h2>Extent your model for the relation of mom</h2>
                 <form action="">
                     <label for="ques1"> Representing knowledge as comment and fact  </label><br />
-                    <input type="text" id="ques1" name="ques1" class="knowledge-check-input"><br><br>
+                    <textarea id="program0" name="program0" rows="4" cols="50" class="knowledge-check-input"></textarea>
+                    <br><br>
                     <br>
                     <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(2, 0, 'version-1-course-x-lesson-2-page-6', false, -1)"> Previous </a>
                     <div class="text-center">
-                        <a class="btn btn-primary" style="margin-left: -15rem;" onclick="submitAssessment()"> Submit </a>
+                        <a class="btn btn-primary" style="margin-left: -15rem;" onclick="submitAssessment('program0')"> Submit </a>
                     </div>
                 </form>
             </div>
@@ -181,12 +182,12 @@ $(function(){
             <h4> Extend your model by the following </h4>
             <form action="">
                 <label for="ques1"> Representing knowledge as comment and fact </label>
-                <input type="text" id="ques1" name="ques1" class="knowledge-check-input"><br><br>
+                <textarea id="program1" name="program1" rows="4" cols="50" class="knowledge-check-input"></textarea><br><br>
                 <br>
                 <a class="btn btn-primary pull-left"
                 onclick="gotoPrevious(2, 1, 'version-1-course-x-lesson-2-page-11', false, -1)"> Previous </a>
                 <div class="text-center">
-                <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment()"> Submit</a>
+                <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('program1')"> Submit</a>
             </div>
            
             </form>
@@ -228,13 +229,13 @@ $(function(){
             <br>
             <form action="">
                 <label for="ques1"> Representing knowledge as comment and fact </label>
-                <input type="text" id="ques1" name="ques1" class="knowledge-check-input"><br><br>
+                <textarea id="program2" name="program2" rows="4" cols="50" class="knowledge-check-input"></textarea><br><br>
                 <br>
                 <br>
                 <a class="btn btn-primary pull-left"
                 onclick="gotoPrevious(2, 2, 'version-1-course-x-lesson-2-page-16', false, -1)"> Previous </a>
                 <div class="text-center">
-                    <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment()"> Submit</a>
+                    <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('program2')"> Submit</a>
                 </div>
             </form>
             <br>
@@ -304,13 +305,13 @@ $(function(){
         <br>
         <form action="">
             <label for="ques1"> Representing knowledge as comment and fact </label>
-            <input type="text" id="ques1" name="ques1" class="knowledge-check-input"><br><br>
+            <textarea id="program3" name="program3" rows="4" cols="50" class="knowledge-check-input"></textarea><br><br>
             <br>
             <br>
             <a class="btn btn-primary pull-left"
             onclick="gotoPrevious(2, 3, 'version-1-course-x-lesson-2-page-22', false, -1)"> Previous </a>
             <div class="text-center">
-                <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment()"> Submit</a>
+                <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('program3')"> Submit</a>
             </div>
         </form>
         <br>
