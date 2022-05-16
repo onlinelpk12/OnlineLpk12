@@ -16,7 +16,7 @@
 
         <link href="https://fonts.googleapis.com/css?family=ZCOOL+XiaoWei" rel="stylesheet">
 
-        <link href="../styles/style.css" rel="stylesheet" type="text/css"/>
+        <link href="../styles/style-login-register.css" rel="stylesheet" type="text/css"/>
 
     </head>
 
