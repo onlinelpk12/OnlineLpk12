@@ -7,19 +7,16 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="../js/verifytoken.js" type="text/javascript">  </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+	 <script src="../js/verifytoken.js" type="text/javascript">  </script>
 <script type="text/javascript">
 $(function(){
     verifytoken();
 });
 </script>
-
-
     <link rel="stylesheet" href="../styles/style.css">
     <script src="../js/lessonDataStructureJSON.js"></script>
-    <script src="../js/script.js"></script>
-    
+    <script src="../js/script.js"></script>    
 </head>
 
 <body>
@@ -41,13 +38,11 @@ $(function(){
   		}           
     });    
     </script>
-    
-    <%@ include file = "header.jsp" %>
-    
+	<%@ include file = "header.jsp" %>
     <section id="version-1-course-x-lesson-2-page-1" class="container" hidden>
         <div class="row">
             <div class="col-md-8 content" style="margin-left:20rem">
-            <h1> Lesson 2: Extend the family model </h1>
+            <h1 style="text-align:center">  Lesson 2: Extend the family model </h1> <br>
             <a class="btn btn-primary pull-right"
                 onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-1', false, -1)"> Next </a>
             </div>
@@ -195,7 +190,7 @@ $(function(){
             </div>
            
             </form>
-          
+          </div>
         </div>  
     </section>
     <!-- onlineSPARC -->
@@ -212,7 +207,7 @@ $(function(){
                         dad of Peter? </li>
                     <li> Extend your model: </li>
                     <ul>
-                        <li> Write knowledge about “dad” relation for the kids </li>
+                        <li> Write knowledge about "Dad" relation for the kids </li>
                         <li> Represent the knowledge into facts </li>
                     </ul>
                 </ul>
