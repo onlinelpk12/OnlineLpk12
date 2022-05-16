@@ -115,7 +115,7 @@ window.onload = function(){
 	console.log(response);
 	editor.setValue(response);	
 }
-let userId = sessionStorage.getItem("userId");
+let _userId = sessionStorage.getItem("userId");
 const apiBaseUrl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/sparc/";
 //var input="getAnswerSets";
 var editor = ace.edit("editor");
@@ -135,7 +135,7 @@ function execute(){
 		program = '';
 	}
 	let request = {
-		"userid": userId,
+		"userid": _userId,
 		"learningOutcome":currentLearningOutcomeNumber,
 		"lessonId":  currentLessonNumber,
 	        "action": "getAnimation",
@@ -149,7 +149,7 @@ function saveSparcProgram(){
 		return "Please enter valid Sparc program to save";
 	}
 	let request = {
-		"userid" : userId,
+		"userid" : _userId,
 	        "learningOutcome":currentLearningOutcomeNumber,
 		"lessonId":  currentLessonNumber,
 	        "editor":  program
@@ -162,7 +162,7 @@ function answerSets(){
 		program = '';
 	}
 	let request = {
-		"userid": userId,
+		"userid": _userId,
 		"learningOutcome":currentLearningOutcomeNumber,
 		"lessonId":  currentLessonNumber,
 	        "action": "getAnswerSets",
@@ -180,7 +180,7 @@ function submitrequest(){
 		query = '';
 	}
 	let request = {
-		"userid": userId,
+		"userid": _userId,
 		"learningOutcome":currentLearningOutcomeNumber,
 		"lessonId":  currentLessonNumber,
 	        "action": "getQuery",
