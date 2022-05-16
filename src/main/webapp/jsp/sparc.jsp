@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="../js/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="../js/mode-sparc.js" type="text/javascript"></script>
 <script src="../js/sparc_programs.js" type="text/javascript"></script>
-	 <script src="../js/verifytoken.js" type="text/javascript"></script>
-  
+<script src="../js/script.js" type="text/javascript"></script>
 
-<script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <link rel = "stylesheet" href  = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">    
 <title>Online SPARC</title>
@@ -111,15 +109,15 @@
 <script src="../js/resizer.js" type="text/javascript"></script>
 <script type="text/javascript">
 window.onload = function(){
-	verifytoken();
-	let response = getSparcProgram(2);
+	let currentLearningOutcomeNumber = sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber);
+	let currentLessonNumber = sessionStorage.getItem(sessionKeyCurrentLessonNumber);
+	let response = getSparcProgram(currentLearningOutcomeNumber);
 	console.log(response);
 	editor.setValue(response);
 	
 	}
 	let userId = sessionStorage.getItem("userId");
-	let currentLearningOutcomeNumber = sessionStorage.getItem(sessionKeyCurrentLessonNumber);
-	let currentLessonNumber = sessionStorage.getItem(sessionKeyCurrentLessonNumber);
+	
 	const apiBaseUrl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/sparc/";
 	//var input="getAnswerSets";
     var editor = ace.edit("editor");
