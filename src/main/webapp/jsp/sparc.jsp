@@ -116,7 +116,7 @@ window.onload = function(){
 	editor.setValue(response);	
 }
 let _userId = sessionStorage.getItem("userId");
-const apiBaseUrl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/sparc/";
+const _apiBaseUrl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/sparc/";
 //var input="getAnswerSets";
 var editor = ace.edit("editor");
 editor.session.setMode("ace/mode/sparc");	
@@ -201,7 +201,7 @@ function PostSparc(request,suburl) {
                 res= data;
             },
             type: 'POST',
-            url: apiBaseUrl + url,
+            url: _apiBaseUrl + url,
             success: function(data){
             	console.log('response content: ',data.content);
             	showResults(data.content);
