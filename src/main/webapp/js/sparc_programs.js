@@ -1,6 +1,3 @@
-	let id = sessionStorage.getItem("currentLearningOutcomeNumber");
-	getSparcProgram(id);
-	
 	
 	function getSparcProgram(id) {
        if(id=="0" || id=="3"){
