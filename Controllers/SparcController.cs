@@ -129,5 +129,38 @@ namespace OnlineLpk12.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }
+
+        [HttpGet("{userId}/lesson/{lessonId}")]
+        public async Task<IActionResult> GetSparcProgramsByUserId(int userId, int lessonId)
+        {
+            Response<object> response = new();
+            try
+            {
+                if(userId == 0)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Invalid User Id.");
+                    return BadRequest(response);
+                }
+                var result = await _sparcService.GetSparcProgramsByUserId(userId, lessonId);
+                if(result != null && result.Content != null && result.Content.Any())
+                {
+                    response.Content = result.Content;
+                    return Ok(response);
+                }
+                else
+                {
+                    response.Message = "No Sparc programs found for the user";
+                    return NotFound(response);
+                }
+            }
+            catch(Exception ex)
+            {
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("Error occurred while fetching the data.");
+                _logService.LogError(userId, "GetSparcProgramsByUserId", "SparcController", ex.Message, ex);
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
+            }
+        }
     }
 }
