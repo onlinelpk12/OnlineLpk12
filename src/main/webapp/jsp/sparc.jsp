@@ -247,7 +247,7 @@ function SubmitSparc() {
         
     let isAssessmentPassed = sessionStorage.getItem(sessionKeyIsAssessmentPassed) === 'true';
     _isSparcPassed = sessionStorage.getItem(sessionKeyIsSparcPassed) === 'true';
-    
+    let message = document.getElementById('next-step-link');
     if (isAssessmentPassed && _isSparcPassed) {
         //sessionStorage.removeItem(sessionKeyIsAssessmentPassed);
         //let pageIdToShow = sessionStorage.getItem(sessionKeyShowPageId);
