@@ -256,12 +256,14 @@ function SubmitSparc() {
         // student passed root assessment, so allow student to go to next lesson
         if (isAssessmentPassed && currentLearningOutcomeNumber == 0) {
             let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber + 1) + ".jsp";
-            message.innerHTML = "You have passed the root assessment. please click <a href='" + nextLessonUrl + "'> here </a> to go to next lesson";
+		window.location.href = nextLessonUrl;
+           // message.innerHTML = "You have passed the root assessment. please click <a href='" + nextLessonUrl + "'> here </a> to go to next lesson";
         }
         // passed all learning outcomes in the lesson
         else if (isAssessmentPassed && currentLearningOutcomeNumber == currentLessonDetails.totalLearningOutcomes) {
             let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber + 1) + ".jsp";
-            message.innerHTML = "You have passed all the assessments. please click <a href='" + nextLessonUrl + "'> here </a> to go to next lesson";
+		window.location.href = nextLessonUrl;
+            //message.innerHTML = "You have passed all the assessments. please click <a href='" + nextLessonUrl + "'> here </a> to go to next lesson";
         }
         else if (isAssessmentPassed && currentLearningOutcomeNumber > 0) {
             let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber) + ".jsp";
@@ -269,8 +271,8 @@ function SubmitSparc() {
             let nextLearningOutcomeDetails = currentLessonDetails.rootLearningOutcome.subLearningOutcomes.filter(x=> x.learningOutcomeId ==  currentLearningOutcomeNumber+1)[0];
             let showPageId = nextLearningOutcomeDetails.pages[0].pageId;
             sessionStorage.setItem(sessionKeyShowPageId,showPageId);
-
-            message.innerHTML = "You have passed assessment Please click <a href='" + nextLessonUrl + "'> here </a> to go to next learning outcome";
+	    window.location.href = nextLessonUrl;
+            //message.innerHTML = "You have passed assessment Please click <a href='" + nextLessonUrl + "'> here </a> to go to next learning outcome";
         }
     }
     }
