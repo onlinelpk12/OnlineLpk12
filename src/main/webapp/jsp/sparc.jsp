@@ -232,23 +232,23 @@ window.onload = function(){
 <script type="text/javascript">
 function SubmitSparc() {
 	
-    let isSparcPassed = true;
+    let _isSparcPassed = true;
     let sessionKeyIsSparcPassed ="isSparcPassed";
-    if(isSparcPassed==false){
+    if(_isSparcPassed==false){
     //validate sparc program
     
     return;
     
     }
-    sessionStorage.setItem(sessionKeyIsSparcPassed, isSparcPassed);
+    sessionStorage.setItem(sessionKeyIsSparcPassed, _isSparcPassed);
     let currentLessonNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber));
     let currentLearningOutcomeNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber));
     let currentLessonDetails = lessonsJson.lessons.filter(lesson => lesson.lessonId == currentLessonNumber)[0];
         
     let isAssessmentPassed = sessionStorage.getItem(sessionKeyIsAssessmentPassed) === 'true';
-    let isSparcPassed = sessionStorage.getItem(sessionKeyIsSparcPassed) === 'true';
+    _isSparcPassed = sessionStorage.getItem(sessionKeyIsSparcPassed) === 'true';
     
-    if (isAssessmentPassed && isSparcPassed) {
+    if (isAssessmentPassed && _isSparcPassed) {
         //sessionStorage.removeItem(sessionKeyIsAssessmentPassed);
         //let pageIdToShow = sessionStorage.getItem(sessionKeyShowPageId);
         //message.innerHTML = "Congratulations on completing the programming task. Please click <a href='" + nextLessonUrl + "'> here </a> to go to next steps."
