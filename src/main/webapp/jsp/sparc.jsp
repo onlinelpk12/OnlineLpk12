@@ -115,8 +115,8 @@ window.onload = function(){
 	
 	}
 	let userId = sessionStorage.getItem("userId");
-	let currentLearningOutcomeNumber = sessionStorage.getItem("sessionKeyCurrentLessonNumber");
-	let currentLessonNumber = sessionStorage.getItem("sessionKeyCurrentLessonNumber");
+	let currentLearningOutcomeNumber = sessionStorage.getItem(sessionKeyCurrentLessonNumber);
+	let currentLessonNumber = sessionStorage.getItem(sessionKeyCurrentLessonNumber);
 	const apiBaseUrl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/sparc/";
 	//var input="getAnswerSets";
     var editor = ace.edit("editor");
