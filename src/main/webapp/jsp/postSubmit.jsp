@@ -90,6 +90,9 @@
                 else if (isAssessmentPassed && currentLearningOutcomeNumber > 0) {
                     let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber) + ".jsp";
 
+                    let nextLearningOutcomeDetails = currentLessonDetails.rootLearningOutcome.subLearningOutcomes.filter(x=> x.learningOutcomeId ==  currentLearningOutcomeNumber+1)[0];
+                    let showPageId = nextLearningOutcomeDetails.pages[0].pageId;
+                    sessionStorage.setItem(sessionKeyShowPageId,showPageId);
 
                     message.innerHTML = "You have passed assessment Please click <a href='" + nextLessonUrl + "'> here </a> to go to next learning outcome";
                 }
