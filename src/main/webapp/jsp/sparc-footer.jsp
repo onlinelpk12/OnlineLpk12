@@ -31,7 +31,7 @@
  	</div>
  	<div class="col-md-4">
  	  <div id="sparcFooterNextBtn">
- 	     <button class="btn btn-primary pull-right" onclick="SubmitSparc()"> Next </button>
+ 	     <button class="btn btn-primary pull-right" onclick="SubmitSparc()" id="sparc-footer-next-btn"> Next </button>
  	  </div>
  	</div>
  </div>
@@ -41,24 +41,16 @@
 </body>
 <script type="text/javascript">
 function SubmitSparc() {
-
     let isSparcPassed = true;
     let sessionKeyIsSparcPassed ="isSparcPassed";
     if(isSparcPassed==false){
-    //validate sparc program
-    return;
-    
+      //validate sparc program
+      return;
     }
-    
     sessionStorage.setItem(sessionKeyIsSparcPassed, isSparcPassed);
-
     if (isSparcPassed) {
-
         window.open("../jsp/postSubmit.jsp", "_self");
-
     }
-
 }
-
 </script>
 </html>
