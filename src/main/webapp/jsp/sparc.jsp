@@ -111,7 +111,7 @@
 window.onload = function(){
 	let currentLearningOutcomeNumber = sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber);
 	let currentLessonNumber = sessionStorage.getItem(sessionKeyCurrentLessonNumber);
-	let response = getSparcProgram(currentLearningOutcomeNumber);
+	let response = getSparcProgram(2);
 	console.log(response);
 	editor.setValue(response);
 	
