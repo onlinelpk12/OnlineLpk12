@@ -106,8 +106,8 @@ $(function(){
     <section id="version-1-course-x-lesson-2-page-4" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <img src="../images/Newimage1.png" alt="Image" width="300" height="300">
-                <img src="../images/Newimage2.png" alt="Image" width="300" height="200">
+                <img src="../images/Newimage1.png" alt="Image" width="300" height="200">
+                <img src="../images/Newimage2.png" alt="Image" width="400" height="100">
                 
                 <br>
                 <a class="btn btn-primary pull-left"
