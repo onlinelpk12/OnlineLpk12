@@ -113,7 +113,8 @@ let currentLessonNumber = sessionStorage.getItem(sessionKeyCurrentLessonNumber);
 window.onload = function(){
 	let response = getSparcProgram(currentLearningOutcomeNumber);
 	console.log(response);
-	editor.setValue(response);	
+	editor.setValue(response);
+	document.getElementById("#sparc-footer-next-btn").disabled = true;
 }
 let _userId = sessionStorage.getItem("userId");
 const _apiBaseUrl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/sparc/";
@@ -142,6 +143,7 @@ function execute(){
 	        "editor":  program
 	};
 	PostSparc(request,"execute");
+	document.getElementById("#sparc-footer-next-btn").disabled = false;
 }
 function saveSparcProgram(){
 	let program = editor.getValue(); 
@@ -169,6 +171,7 @@ function answerSets(){
 	        "editor":  program
 	};
 	PostSparc(request,"execute");
+	document.getElementById("#sparc-footer-next-btn").disabled = false;
 }	
 function submitrequest(){
 	let program = editor.getValue(); 
@@ -188,6 +191,7 @@ function submitrequest(){
 	        "editor":  program
 	};
 	PostSparc(request,"execute");
+	document.getElementById("#sparc-footer-next-btn").disabled = false;
 }
 function PostSparc(request,suburl) {
 	let url=suburl;
