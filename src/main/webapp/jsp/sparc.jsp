@@ -9,6 +9,7 @@
 <script src="../js/mode-sparc.js" type="text/javascript"></script>
 <script src="../js/sparc_programs.js" type="text/javascript"></script>
 <script src="../js/script.js" type="text/javascript"></script>
+   
 <title>Online SPARC</title>
 <style type="text/css" media="screen">
     #editor { 
@@ -111,110 +112,121 @@
 let currentLearningOutcomeNumber = sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber);
 let currentLessonNumber = sessionStorage.getItem(sessionKeyCurrentLessonNumber);
 window.onload = function(){
+	document.getElementById("sparc-footer-next-btn").disabled = true;
 	let response = getSparcProgram(currentLearningOutcomeNumber);
 	console.log(response);
 	editor.setValue(response);
-	document.getElementById("sparc-footer-next-btn").disabled = true;
-}
-let _userId = sessionStorage.getItem("userId");
-const _apiBaseUrl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/sparc/";
-//var input="getAnswerSets";
-var editor = ace.edit("editor");
-editor.session.setMode("ace/mode/sparc");	
-var showResults=function(response){
-	$('#results').html('<center> <button onclick="clearResults()">Clear the Results</button> </center>');
-	$('#results').append(response);
-}
-    
-var clearResults=function(){
-	$('#results').empty();
-}
 	
-function execute(){
-	let program = editor.getValue(); 
-	if(program == null || program == '' || program == undefined){
-		program = '';
 	}
-	let request = {
-		"userid": _userId,
-		"learningOutcome":currentLearningOutcomeNumber,
-		"lessonId":  currentLessonNumber,
-	        "action": "getAnimation",
-	        "editor":  program
-	};
-	PostSparc(request,"execute");
-	document.getElementById("sparc-footer-next-btn").disabled = false;
-}
-function saveSparcProgram(){
-	let program = editor.getValue(); 
-	if(program == null || program == '' || program == undefined){
-		return "Please enter valid Sparc program to save";
+	let userid = sessionStorage.getItem("userId");
+	
+	const apiBaseurl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/sparc/";
+	//var input="getAnswerSets";
+    var editor = ace.edit("editor");
+    editor.session.setMode("ace/mode/sparc");
+	
+    var showResults=function(response){
+		$('#results').html('<center> <button onclick="clearResults()">Clear the Results</button> </center>');
+		$('#results').append(response);
 	}
-	let request = {
-		"userid" : _userId,
-	        "learningOutcome":currentLearningOutcomeNumber,
-		"lessonId":  currentLessonNumber,
-	        "editor":  program
-	};
-	PostSparc(request,"save");
-}
-function answerSets(){
-	let program = editor.getValue(); 	
-	if(program == null || program == '' || program == undefined){
-		program = '';
+    
+	
+	var clearResults=function(){
+		$('#results').empty();
 	}
-	let request = {
-		"userid": _userId,
-		"learningOutcome":currentLearningOutcomeNumber,
-		"lessonId":  currentLessonNumber,
-	        "action": "getAnswerSets",
-	        "editor":  program
-	};
-	PostSparc(request,"execute");
-	document.getElementById("sparc-footer-next-btn").disabled = false;
-}	
-function submitrequest(){
-	let program = editor.getValue(); 
-	let query = $('#txt_query').val();
-	if(program == null || program == '' || program == undefined){
-		program = '';
+	
+	function execute(){
+		let program = editor.getValue(); 
+		if(program == null || program == '' || program == undefined){
+			program = '';
+		}
+		let request = {
+				 "userid": userid,
+				 "outcomes":currentLearningOutcomeNumber,
+				 "lesson":  currentLessonNumber,
+	             "action": "getAnimation",
+	             "editor":  program
+	         };
+		PostSparc(request,"execute");
+		document.getElementById("sparc-footer-next-btn").disabled = false;
 	}
-	if(query == null || query == '' || query == undefined){
-		query = '';
+	
+	function saveSparcProgram(){
+		let program = editor.getValue(); 
+		if(program == null || program == '' || program == undefined){
+			return "Please enter valid Sparc program to save";
+		}
+		let request = {
+				 "userid" : userid,
+				 "outcomes":currentLearningOutcomeNumber,
+				 "lesson":  currentLessonNumber,
+	             "editor":  program
+	         };
+		PostSparc(request,"save");
 	}
-	let request = {
-		"userid": _userId,
-		"learningOutcome":currentLearningOutcomeNumber,
-		"lessonId":  currentLessonNumber,
-	        "action": "getQuery",
-	        "query" : query,
-	        "editor":  program
-	};
-	PostSparc(request,"execute");
-	document.getElementById("sparc-footer-next-btn").disabled = false;
-}
-function PostSparc(request,suburl) {
-	let url=suburl;
+	
+	
+	function answerSets(){
+		let program = editor.getValue(); 
+		
+		if(program == null || program == '' || program == undefined){
+			program = '';
+		}
+		let request = {
+				"userid": userid,
+				 "outcomes":currentLearningOutcomeNumber,
+				 "lesson":  currentLessonNumber,
+	             "action": "getAnswerSets",
+	             "editor":  program
+	         };
+		PostSparc(request,"execute");
+		document.getElementById("sparc-footer-next-btn").disabled = false;
+	}
+	
+	function submitrequest(){
+		let program = editor.getValue(); 
+		let query = $('#txt_query').val();
+		if(program == null || program == '' || program == undefined){
+			program = '';
+		}
+		if(query == null || query == '' || query == undefined){
+			query = '';
+		}
+		let request = {
+				"userid": userid,
+				 "outcomes":currentLearningOutcomeNumber,
+				 "lesson":  currentLessonNumber,
+	             "action": "getQuery",
+	             "query" : query,
+	             "editor":  program
+	         };
+		PostSparc(request,"execute");
+		document.getElementById("sparc-footer-next-btn").disabled = false;
+	}
+	
+	function PostSparc(request,suburl) {
+		let url=suburl;
         let success = false;
         let res="";
         console.log('request: ', request);
         $.ajax({
-       	    contentType:'application/x-www-form-urlencoded',
+       	 contentType:'application/x-www-form-urlencoded',
             data: request,
             success: function (data) {
                 res= data;
             },
             type: 'POST',
-            url: _apiBaseUrl + url,
+            url: apiBaseurl + url,
             success: function(data){
             	console.log('response content: ',data.content);
             	showResults(data.content);
+            	
             },
             error: function(data){
             	console.log(data);
             }
         });
-}
+	}
 </script>
 <%@ include file = "sparc-footer.jsp" %> 
 </body>
