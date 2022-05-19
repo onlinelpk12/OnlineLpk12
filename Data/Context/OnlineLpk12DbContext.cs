@@ -20,6 +20,7 @@ namespace OnlineLpk12.Data.Context
         public virtual DbSet<ActivityLog> ActivityLogs { get; set; } = null!;
         public virtual DbSet<Content> Contents { get; set; } = null!;
         public virtual DbSet<Course> Courses { get; set; } = null!;
+        public virtual DbSet<CoursesStudent> CoursesStudents { get; set; } = null!;
         public virtual DbSet<Lesson> Lessons { get; set; } = null!;
         public virtual DbSet<LessonStatus> LessonStatuses { get; set; } = null!;
         public virtual DbSet<Quiz> Quizzes { get; set; } = null!;
@@ -108,15 +109,33 @@ namespace OnlineLpk12.Data.Context
 
                 entity.Property(e => e.Id)
                     .HasColumnType("int(11)")
+                    .ValueGeneratedNever()
                     .HasColumnName("id");
 
                 entity.Property(e => e.CourseName)
                     .HasMaxLength(100)
                     .HasColumnName("course_name");
 
-                entity.Property(e => e.SemesterYear)
-                    .HasMaxLength(45)
-                    .HasColumnName("semester_year");
+                entity.Property(e => e.Semester)
+                    .HasMaxLength(10)
+                    .HasColumnName("semester");
+
+                entity.Property(e => e.Year)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("year");
+            });
+
+            modelBuilder.Entity<CoursesStudent>(entity =>
+            {
+                entity.ToTable("courses_students");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.CourseId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("course_id");
 
                 entity.Property(e => e.StudentId)
                     .HasColumnType("int(11)")

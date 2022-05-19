@@ -10,7 +10,6 @@ namespace OnlineLpk12.Services.Implementation
     public class SparcService : ISparcService
     {
         private readonly OnlineLpk12DbContext _context;
-        private readonly HttpClient client = new HttpClient();
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogService _logService;
 
