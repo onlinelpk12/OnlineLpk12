@@ -27,6 +27,7 @@ namespace OnlineLpk12.Controllers
             Response<List<Course>> response = new();
             try
             {
+                //If user Id is less than or equal to 0 -> throw bad request error
                 if(userId < 1)
                 {
                     response.Message = "One or more validation errors occurred.";
@@ -34,6 +35,7 @@ namespace OnlineLpk12.Controllers
                     return BadRequest(response);
                 }
 
+                //Check if the user is teacher or not. If not throw bad request error
                 bool isTeacher = await _userService.IsUserTeacher(userId);
                 if (!isTeacher)
                 {
@@ -42,12 +44,16 @@ namespace OnlineLpk12.Controllers
                     return BadRequest(response);
                 }
 
+                //Get Courses for the teacher
                 var result = await _teacherService.GetCourses(userId);
+                
+                //If there are any courses return them
                 if(result.Content != null && result.Content.Any())
                 {
                     response.Content = result.Content;
                     return Ok(response);
                 }
+                //If there are no courses return Not found error
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("No courses found for this teacher.");
                 return NotFound(response);
@@ -60,6 +66,58 @@ namespace OnlineLpk12.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }
+        [HttpGet("{userId}/course/{courseId}")]
+        public async Task<IActionResult> GetStudentsForCourse(int userId, int courseId)
+        {
+            Response<List<Student>> response = new();
+            try
+            {
+                //if User Id is less than or equal to 0 -> return bad request error
+                if(userId < 1)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Enter valid User Id.");
+                    return BadRequest(response);
+                }
 
+                //if Course Id is less than or equal to 0 -> return bad request error
+                if (courseId < 1)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Enter valid Course Id.");
+                    return BadRequest(response);
+                }
+
+                //Check if the user is teacher or not. If not throw bad request error
+                bool isTeacher = await _userService.IsUserTeacher(userId);
+                if (!isTeacher)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Given user is not a teacher.");
+                    return BadRequest(response);
+                }
+
+                //Get students for the course
+                var result = await _teacherService.GetStudentsForCourse(userId, courseId);
+
+                //If there are any courses return them
+                if (result.Content != null && result.Content.Any())
+                {
+                    response.Content = result.Content;
+                    return Ok(response);
+                }
+                //If there are no courses return Not found error
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("No students found for this course and teacher.");
+                return NotFound(response);
+            }
+            catch (Exception ex)
+            {
+                _logService.LogError(userId, "GetStudentsForCourse", "TeacherController", ex.Message, ex);
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("Error occurred while fetching the data.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
+            }
+        }
     }
 }

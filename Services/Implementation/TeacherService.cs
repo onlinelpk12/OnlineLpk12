@@ -52,5 +52,34 @@ namespace OnlineLpk12.Services.Implementation
             }
         }
 
+        public async Task<Result<List<Student>>> GetStudentsForCourse(int userId, int courseId)
+        {
+            var result = new Result<List<Student>>()
+            {
+                Content = new List<Student>()
+            };
+            try
+            {
+                var data = (from std in _context.CoursesStudents
+                            join user in _context.Users
+                            on std.StudentId equals user.Id
+                            where std.CourseId == courseId && std.TeacherId == userId
+                            select new Student()
+                            {
+                                Id = user.Id,
+                                FirstName = user.FirstName,
+                                LastName = user.LastName,
+                                UserName = user.Username
+                            }).Distinct().ToList();
+                result.Content = data;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                await _logService.LogError(userId, "GetStudentsForCourse", "TeacherService", ex.Message, ex);
+                throw;
+            }
+        }
+
     }
 }
