@@ -21,7 +21,7 @@ namespace OnlineLpk12.Controllers
             _logService = logService;
         }
 
-        [HttpGet("courses/{userId}")]
+        [HttpGet("{userId}")]
         public async Task<IActionResult> GetCourses(int userId)
         {
             Response<List<Course>> response = new();
@@ -60,5 +60,6 @@ namespace OnlineLpk12.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }
+
     }
 }
