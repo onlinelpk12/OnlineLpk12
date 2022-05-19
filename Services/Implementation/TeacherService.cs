@@ -60,7 +60,7 @@ namespace OnlineLpk12.Services.Implementation
             };
             try
             {
-                var data = (from std in _context.CoursesStudents
+                var data = await (from std in _context.CoursesStudents
                             join user in _context.Users
                             on std.StudentId equals user.Id
                             where std.CourseId == courseId && std.TeacherId == userId
@@ -70,7 +70,7 @@ namespace OnlineLpk12.Services.Implementation
                                 FirstName = user.FirstName,
                                 LastName = user.LastName,
                                 UserName = user.Username
-                            }).Distinct().ToList();
+                            }).Distinct().ToListAsync();
                 result.Content = data;
                 return result;
             }
@@ -87,19 +87,44 @@ namespace OnlineLpk12.Services.Implementation
             var result = new Result<List<SparcProgram>>();
             try
             {
-                result.Content = (from sp in _context.Sparcs
+                result.Content = await (from sp in _context.Sparcs
                                   where sp.UserId == userId
                                   select new SparcProgram()
                                   {
                                       LessonId = sp.LessonId ?? 0,
                                       LearningOutcome = sp.LearningOutcome ?? 0,
                                       UserId = userId
-                                  }).ToList();
+                                  }).ToListAsync();
                 return result;
             }
             catch (Exception ex)
             {
                 await _logService.LogError(userId, "GetSparcList", "TeacherService", ex.Message, ex);
+                throw;
+            }
+        }
+
+        public async Task<Result<SparcProgram>> GetSparcProgram(int userId, int lessonId, int learningOutcome)
+        {
+            var result = new Result<SparcProgram>();
+            try
+            {
+                var data = await (from sp in _context.Sparcs
+                                  where sp.UserId == userId && sp.LessonId == lessonId 
+                                  && sp.LearningOutcome == learningOutcome
+                                  orderby sp.ActivityTimeStamp descending
+                                  select new SparcProgram()
+                                  {
+                                      LessonId = sp.LessonId ?? 0,
+                                      LearningOutcome = sp.LearningOutcome ?? 0,
+                                      UserId = userId
+                                  }).FirstOrDefaultAsync();
+                result.Content = data;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                await _logService.LogError(userId, "GetSparcProgram", "TeacherService", ex.Message, ex);
                 throw;
             }
         }
