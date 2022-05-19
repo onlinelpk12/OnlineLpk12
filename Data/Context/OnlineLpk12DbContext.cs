@@ -28,6 +28,7 @@ namespace OnlineLpk12.Data.Context
         public virtual DbSet<QuizStatus> QuizStatuses { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<Sparc> Sparcs { get; set; } = null!;
+        public virtual DbSet<StudentLessonProgress> StudentLessonProgresses { get; set; } = null!;
         public virtual DbSet<StudentProgress> StudentProgresses { get; set; } = null!;
         public virtual DbSet<StudentQuiz> StudentQuizzes { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
@@ -308,6 +309,31 @@ namespace OnlineLpk12.Data.Context
                 entity.Property(e => e.UserId)
                     .HasColumnType("int(11)")
                     .HasColumnName("user_id");
+            });
+
+            modelBuilder.Entity<StudentLessonProgress>(entity =>
+            {
+                entity.ToTable("student_lesson_progress");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.ActivityTimeStamp)
+                    .HasColumnType("datetime")
+                    .HasColumnName("activity_time_stamp");
+
+                entity.Property(e => e.LearningOutcome)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("learning_outcome");
+
+                entity.Property(e => e.LessonId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("lesson_id");
+
+                entity.Property(e => e.StudentId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("student_id");
             });
 
             modelBuilder.Entity<StudentProgress>(entity =>

@@ -82,7 +82,6 @@ namespace OnlineLpk12.Services.Implementation
             }
         }
 
-
         public async Task<Result<List<SparcProgram>>> GetSparcList(int userId)
         {
             var result = new Result<List<SparcProgram>>();
@@ -127,6 +126,30 @@ namespace OnlineLpk12.Services.Implementation
             catch (Exception ex)
             {
                 await _logService.LogError(userId, "GetSparcProgram", "TeacherService", ex.Message, ex);
+                throw;
+            }
+        }
+
+        public async Task<Result<List<LessonProgress>>> GetLessonProgressList(int userId)
+        {
+            var result = new Result<List<LessonProgress>>();
+            try
+            {
+                result.Content = await (from sp in _context.StudentLessonProgresses
+                                        where sp.StudentId == userId
+                                        orderby sp.ActivityTimeStamp descending
+                                        select new LessonProgress()
+                                        {
+                                            LessonId = sp.LessonId,
+                                            LearningOutcome = sp.LearningOutcome,
+                                            StudentId = userId,
+                                            ActivityTime = sp.ActivityTimeStamp
+                                        }).ToListAsync();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                await _logService.LogError(userId, "GetLessonProgressList", "TeacherService", ex.Message, ex);
                 throw;
             }
         }

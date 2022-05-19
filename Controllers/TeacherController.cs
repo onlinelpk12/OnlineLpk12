@@ -135,16 +135,16 @@ namespace OnlineLpk12.Controllers
                     return BadRequest(response);
                 }
 
-                //Get Courses for the teacher
+                //Get sparc programs for the student
                 var result = await _teacherService.GetSparcList(userId);
 
-                //If there are any courses return them
+                //If there are any sparc programs return them
                 if (result.Content != null && result.Content.Any())
                 {
                     response.Content = result.Content;
                     return Ok(response);
                 }
-                //If there are no courses return Not found error
+                //If there are no sparc programs return Not found error
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("No sparc programs found for this student.");
                 return NotFound(response);
@@ -158,8 +158,8 @@ namespace OnlineLpk12.Controllers
             }
         }
 
-        [HttpGet("{userId}/sparc/lessson/{lessonId}/courseoutcome/{courseOutcome}")]
-        public async Task<IActionResult> GetSparcProgram(int userId, int lessonId, int courseOutcome)
+        [HttpGet("{userId}/sparc/lessson/{lessonId}/learningoutcome/{learningOutcome}")]
+        public async Task<IActionResult> GetSparcProgram(int userId, int lessonId, int learningOutcome)
         {
             Response<SparcProgram> response = new();
             try
@@ -180,24 +180,24 @@ namespace OnlineLpk12.Controllers
                     return BadRequest(response);
                 }
 
-                //If course outcome is less than or equal to 0 -> throw bad request error
-                if (courseOutcome < 1)
+                //If learning outcome is less than or equal to 0 -> throw bad request error
+                if (learningOutcome < 1)
                 {
                     response.Message = "One or more validation errors occurred.";
                     response.Errors.Add("Enter valid Course Outcome Id.");
                     return BadRequest(response);
                 }
 
-                //Get Courses for the teacher
-                var result = await _teacherService.GetSparcProgram(userId, lessonId, courseOutcome);
+                //Get sparc progrem for the given user id, lesson id, learning outcome
+                var result = await _teacherService.GetSparcProgram(userId, lessonId, learningOutcome);
 
-                //If there are any courses return them
+                //If there is any sparc progrem return
                 if (result.Content != null)
                 {
                     response.Content = result.Content;
                     return Ok(response);
                 }
-                //If there are no courses return Not found error
+                //If there is no sparc program return Not found error
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("No sparc programs found.");
                 return NotFound(response);
@@ -205,6 +205,43 @@ namespace OnlineLpk12.Controllers
             catch (Exception ex)
             {
                 _logService.LogError(userId, "GetSparcProgram", "TeacherController", ex.Message, ex);
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("Error occurred while fetching the data.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
+            }
+        }
+
+        [HttpGet("{userId}/lessonprogress")]
+        public async Task<IActionResult> GetLessonProgressList(int userId)
+        {
+            Response<List<LessonProgress>> response = new();
+            try
+            {
+                //If user Id is less than or equal to 0 -> throw bad request error
+                if (userId < 1)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Enter valid User Id.");
+                    return BadRequest(response);
+                }
+
+                //Get lesson progress for the student
+                var result = await _teacherService.GetLessonProgressList(userId);
+
+                //If there is any lesson progress, return them
+                if (result.Content != null && result.Content.Any())
+                {
+                    response.Content = result.Content;
+                    return Ok(response);
+                }
+                //If there is no progress saved, return Not found error
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("No lesson progress found for this student.");
+                return NotFound(response);
+            }
+            catch (Exception ex)
+            {
+                _logService.LogError(userId, "GetSparcList", "TeacherController", ex.Message, ex);
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
