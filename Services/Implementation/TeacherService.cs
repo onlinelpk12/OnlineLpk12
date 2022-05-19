@@ -81,5 +81,27 @@ namespace OnlineLpk12.Services.Implementation
             }
         }
 
+
+        public async Task<Result<List<SparcProgram>>> GetSparcList(int userId)
+        {
+            var result = new Result<List<SparcProgram>>();
+            try
+            {
+                result.Content = (from sp in _context.Sparcs
+                                  where sp.UserId == userId
+                                  select new SparcProgram()
+                                  {
+                                      LessonId = sp.LessonId ?? 0,
+                                      LearningOutcome = sp.LearningOutcome ?? 0,
+                                      UserId = userId
+                                  }).ToList();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                await _logService.LogError(userId, "GetSparcList", "TeacherService", ex.Message, ex);
+                throw;
+            }
+        }
     }
 }
