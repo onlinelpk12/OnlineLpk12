@@ -27,12 +27,12 @@ namespace OnlineLpk12.Services.Implementation
             try
             {
                 var data = await (from cs in _context.CoursesStudents
-                            join course in _context.Courses
-                            on cs.CourseId equals course.Id
-                            where cs.TeacherId == userId
-                            select course).ToListAsync();
+                                  join course in _context.Courses
+                                  on cs.CourseId equals course.Id
+                                  where cs.TeacherId == userId
+                                  select course).Distinct().ToListAsync();
 
-                
+
                 foreach (var item in data)
                 {
                     result.Content.Add(new Course()
@@ -40,8 +40,7 @@ namespace OnlineLpk12.Services.Implementation
                         CourseId = item.Id,
                         CourseName = item.CourseName.Trim(),
                         Semester = item.Semester.Trim(),
-                        Year = item.Year,
-                        TeacherId = userId
+                        Year = item.Year
                     });
                 }
                 return result;

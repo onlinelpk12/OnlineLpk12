@@ -6,6 +6,5 @@
         public string CourseName { get; set; }
         public string Semester { get; set; }
         public int Year { get; set; }
-        public int TeacherId { get; set; }
     }
 }
