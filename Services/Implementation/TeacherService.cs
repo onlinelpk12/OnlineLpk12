@@ -2,6 +2,7 @@
 using OnlineLpk12.Data.Context;
 using OnlineLpk12.Data.Entities;
 using OnlineLpk12.Services.Interface;
+using System.Text;
 
 namespace OnlineLpk12.Services.Implementation
 {
@@ -117,7 +118,8 @@ namespace OnlineLpk12.Services.Implementation
                                   {
                                       LessonId = sp.LessonId ?? 0,
                                       LearningOutcome = sp.LearningOutcome ?? 0,
-                                      UserId = userId
+                                      UserId = userId,
+                                      Program = sp.Program != null ? Encoding.Default.GetString(sp.Program) : ""
                                   }).FirstOrDefaultAsync();
                 result.Content = data;
                 return result;
