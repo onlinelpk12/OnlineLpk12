@@ -143,8 +143,8 @@ window.onload = function(){
 		}
 		let request = {
 				 "userid": userid,
-				 "outcomes":currentLearningOutcomeNumber,
-				 "lesson":  currentLessonNumber,
+				 "learningOutcome":currentLearningOutcomeNumber,
+				 "lessonId":  currentLessonNumber,
 	             "action": "getAnimation",
 	             "editor":  program
 	         };
@@ -159,8 +159,8 @@ window.onload = function(){
 		}
 		let request = {
 				 "userid" : userid,
-				 "outcomes":currentLearningOutcomeNumber,
-				 "lesson":  currentLessonNumber,
+				 "learningOutcome":currentLearningOutcomeNumber,
+				 "lessonId":  currentLessonNumber,
 	             "editor":  program
 	         };
 		PostSparc(request,"save");
@@ -175,8 +175,8 @@ window.onload = function(){
 		}
 		let request = {
 				"userid": userid,
-				 "outcomes":currentLearningOutcomeNumber,
-				 "lesson":  currentLessonNumber,
+				 "learningOutcome":currentLearningOutcomeNumber,
+				 "lessonId":  currentLessonNumber,
 	             "action": "getAnswerSets",
 	             "editor":  program
 	         };
@@ -195,8 +195,8 @@ window.onload = function(){
 		}
 		let request = {
 				"userid": userid,
-				 "outcomes":currentLearningOutcomeNumber,
-				 "lesson":  currentLessonNumber,
+				 "learningOutcome":currentLearningOutcomeNumber,
+				 "lessonId":  currentLessonNumber,
 	             "action": "getQuery",
 	             "query" : query,
 	             "editor":  program
