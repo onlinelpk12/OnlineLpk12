@@ -6,5 +6,6 @@
         public int LessonId { get; set; }
         public int LearningOutcome { get; set; }
         public string Program { get; set; }
+        public string ActivityTime { get; set; }
     }
 }

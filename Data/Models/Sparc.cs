@@ -12,7 +12,7 @@ namespace OnlineLpk12.Data.Models
         public string? Query { get; set; }
         public byte[]? Results { get; set; }
         public int? ProgrammingTaskId { get; set; }
-        public DateTime? ActivityTimeStamp { get; set; }
+        public DateTime ActivityTimeStamp { get; set; }
         public int? LearningOutcome { get; set; }
     }
 }

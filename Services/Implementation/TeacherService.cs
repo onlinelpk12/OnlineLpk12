@@ -93,7 +93,8 @@ namespace OnlineLpk12.Services.Implementation
                                   {
                                       LessonId = sp.LessonId ?? 0,
                                       LearningOutcome = sp.LearningOutcome ?? 0,
-                                      UserId = userId
+                                      UserId = userId,
+                                      ActivityTime = sp.ActivityTimeStamp.ToString("MM/dd/yyyy hh:mm:ss tt"),
                                   }).ToListAsync();
                 return result;
             }
@@ -118,6 +119,7 @@ namespace OnlineLpk12.Services.Implementation
                                       LessonId = sp.LessonId ?? 0,
                                       LearningOutcome = sp.LearningOutcome ?? 0,
                                       UserId = userId,
+                                      ActivityTime = sp.ActivityTimeStamp.ToString("MM/dd/yyyy hh:mm:ss tt"),
                                       Program = sp.Program != null ? Encoding.Default.GetString(sp.Program) : ""
                                   }).FirstOrDefaultAsync();
                 result.Content = data;
@@ -144,7 +146,7 @@ namespace OnlineLpk12.Services.Implementation
                                             LearningOutcome = sp.LearningOutcome,
                                             PageNumber = sp.PageNumber,
                                             StudentId = userId,
-                                            ActivityTime = sp.ActivityTimeStamp
+                                            ActivityTime = sp.ActivityTimeStamp.ToString("MM/dd/yyyy hh:mm:ss tt")
                                         }).ToListAsync();
                 return result;
             }
