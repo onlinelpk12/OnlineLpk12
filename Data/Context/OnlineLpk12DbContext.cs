@@ -28,6 +28,10 @@ namespace OnlineLpk12.Data.Context
         public virtual DbSet<QuizStatus> QuizStatuses { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<Sparc> Sparcs { get; set; } = null!;
+        public virtual DbSet<SparcFile> SparcFiles { get; set; } = null!;
+        public virtual DbSet<SparcFolder> SparcFolders { get; set; } = null!;
+        public virtual DbSet<SparcFolderContain> SparcFolderContains { get; set; } = null!;
+        public virtual DbSet<SparcFolderFileAccess> SparcFolderFileAccesses { get; set; } = null!;
         public virtual DbSet<StudentLessonProgress> StudentLessonProgresses { get; set; } = null!;
         public virtual DbSet<StudentProgress> StudentProgresses { get; set; } = null!;
         public virtual DbSet<StudentQuiz> StudentQuizzes { get; set; } = null!;
@@ -311,6 +315,102 @@ namespace OnlineLpk12.Data.Context
                     .HasColumnName("user_id");
             });
 
+            modelBuilder.Entity<SparcFile>(entity =>
+            {
+                entity.ToTable("sparc_file");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.DateCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("date_created");
+
+                entity.Property(e => e.FileName)
+                    .HasMaxLength(45)
+                    .HasColumnName("file_name");
+
+                entity.Property(e => e.FileUrl)
+                    .HasMaxLength(100)
+                    .HasColumnName("file_url");
+
+                entity.Property(e => e.Owner)
+                    .HasMaxLength(45)
+                    .HasColumnName("owner");
+            });
+
+            modelBuilder.Entity<SparcFolder>(entity =>
+            {
+                entity.ToTable("sparc_folder");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.DateCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("date_created");
+
+                entity.Property(e => e.FolderName)
+                    .HasMaxLength(50)
+                    .HasColumnName("folder_name");
+
+                entity.Property(e => e.FolderUrl)
+                    .HasMaxLength(100)
+                    .HasColumnName("folder_url");
+
+                entity.Property(e => e.Owner)
+                    .HasMaxLength(45)
+                    .HasColumnName("owner");
+
+                entity.Property(e => e.ParentUrl)
+                    .HasMaxLength(100)
+                    .HasColumnName("parent_url");
+            });
+
+            modelBuilder.Entity<SparcFolderContain>(entity =>
+            {
+                entity.ToTable("sparc_folder_contains");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.FileUrl)
+                    .HasMaxLength(100)
+                    .HasColumnName("file_url");
+
+                entity.Property(e => e.FolderUrl)
+                    .HasMaxLength(100)
+                    .HasColumnName("folder_url");
+            });
+
+            modelBuilder.Entity<SparcFolderFileAccess>(entity =>
+            {
+                entity.ToTable("sparc_folder_file_access");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.FileUrl)
+                    .HasMaxLength(100)
+                    .HasColumnName("file_url");
+
+                entity.Property(e => e.FolderUrl)
+                    .HasMaxLength(100)
+                    .HasColumnName("folder_url");
+
+                entity.Property(e => e.HasAccess)
+                    .HasColumnType("tinyint(4)")
+                    .HasColumnName("has_access");
+
+                entity.Property(e => e.Username)
+                    .HasMaxLength(45)
+                    .HasColumnName("username");
+            });
+
             modelBuilder.Entity<StudentLessonProgress>(entity =>
             {
                 entity.ToTable("student_lesson_progress");
@@ -330,6 +430,10 @@ namespace OnlineLpk12.Data.Context
                 entity.Property(e => e.LessonId)
                     .HasColumnType("int(11)")
                     .HasColumnName("lesson_id");
+
+                entity.Property(e => e.PageNumber)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("page_number");
 
                 entity.Property(e => e.StudentId)
                     .HasColumnType("int(11)")

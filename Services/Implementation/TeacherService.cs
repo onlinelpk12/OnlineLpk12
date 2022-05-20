@@ -142,6 +142,7 @@ namespace OnlineLpk12.Services.Implementation
                                         {
                                             LessonId = sp.LessonId,
                                             LearningOutcome = sp.LearningOutcome,
+                                            PageNumber = sp.PageNumber,
                                             StudentId = userId,
                                             ActivityTime = sp.ActivityTimeStamp
                                         }).ToListAsync();

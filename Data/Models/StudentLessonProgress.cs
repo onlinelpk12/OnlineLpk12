@@ -8,6 +8,7 @@ namespace OnlineLpk12.Data.Models
         public long Id { get; set; }
         public int StudentId { get; set; }
         public int LessonId { get; set; }
+        public int PageNumber { get; set; }
         public int LearningOutcome { get; set; }
         public DateTime ActivityTimeStamp { get; set; }
     }
