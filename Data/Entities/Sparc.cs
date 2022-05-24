@@ -2,6 +2,7 @@
 {
     public class Sparc
     {
+        public string Grade { get; set; }
         public int UserId { get; set; }
         public int LessonId { get; set; }
         public int LearningOutcome { get; set; }

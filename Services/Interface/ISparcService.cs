@@ -9,5 +9,7 @@ namespace OnlineLpk12.Services.Interface
         public Task<Result<string>> ExecuteSparcRequest(Sparc sparcRequest);
         public Task<Result<string>> SaveSparcProgram(Sparc sparcRequest);
         public Task<Result<List<SparcProgram>>> GetSparcProgramsByUserId(int userId, int lessonId);
+        public Task<Result<string>> SubmitSparcGrade(Sparc sparcRequest);
+
     }
 }

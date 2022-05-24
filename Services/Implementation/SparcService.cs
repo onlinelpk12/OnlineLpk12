@@ -224,5 +224,51 @@ namespace OnlineLpk12.Services.Implementation
             }
         }
 
+        public async Task<Result<string>> SubmitSparcGrade(Sparc sparcRequest)
+        {
+            //_logService.LogInfo(sparcRequest.UserId, "SubmitSparcGrade", "SparcService", "Execution of SubmitSparcGrade method started");
+
+            var result = new Result<string>();
+            try
+            {
+                var datafromdb = await (from gr in _context.SparcGrades
+                                  where gr.StudentId == sparcRequest.UserId &&
+                                  gr.LessonId == sparcRequest.LessonId &&
+                                  gr.LearningOutcome == sparcRequest.LearningOutcome
+                                  select gr).FirstOrDefaultAsync();
+                if(datafromdb == null)
+                {
+                    var data = new Data.Models.SparcGrade()
+                    {
+                        LessonId = sparcRequest.LessonId,
+                        LearningOutcome = sparcRequest.LearningOutcome,
+                        StudentId = sparcRequest.UserId,
+                        Grade = sparcRequest.Grade,
+                        ActivityTimeStamp = DateTime.Now
+                    };
+                    await _context.SparcGrades.AddAsync(data);
+                }
+                else
+                {
+                    datafromdb.Grade = sparcRequest.Grade;
+                }
+                await _context.SaveChangesAsync();
+
+                result.Success = true;
+                result.Message = "Grade submitted successfully";
+            }
+            catch (Exception ex)
+            {
+                _logService.LogError(sparcRequest.UserId, "SubmitSparcGrade", "SparcService", ex.Message, ex);
+                result.Success = false;
+                result.Message = "Grade submission failed.";
+            }
+            finally
+            {
+                //_logService.LogInfo(sparcRequest.UserId, "SubmitSparcGrade", "SparcService", "Execution of SubmitSparcGrade method ended");
+            }
+            return result;
+        }
+
     }
 }

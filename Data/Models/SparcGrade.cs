@@ -11,5 +11,6 @@ namespace OnlineLpk12.Data.Models
         public int SparcId { get; set; }
         public int StudentId { get; set; }
         public string Grade { get; set; } = null!;
+        public DateTime ActivityTimeStamp { get; set; }
     }
 }

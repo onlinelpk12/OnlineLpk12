@@ -420,6 +420,10 @@ namespace OnlineLpk12.Data.Context
                     .HasColumnType("int(11)")
                     .HasColumnName("id");
 
+                entity.Property(e => e.ActivityTimeStamp)
+                    .HasColumnType("datetime")
+                    .HasColumnName("activity_time_stamp");
+
                 entity.Property(e => e.Grade)
                     .HasMaxLength(45)
                     .HasColumnName("grade");

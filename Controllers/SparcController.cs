@@ -162,5 +162,41 @@ namespace OnlineLpk12.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }
+
+        [HttpPost("submitgrade")]
+        [Consumes("application/x-www-form-urlencoded")]
+        public async Task<IActionResult> SubmitSparcGrade([FromForm] Sparc request)
+        {
+            Response<string> response = new();
+            try
+            {
+                if (request == null)
+                {
+                    response.Errors = new List<string>() { "Request is invalid." };
+                    response.Message = "One or more validation errors occurred.";
+                    //_logService.LogInfo(request.UserId, "SubmitSparcGrade", "SparcController", $"{response.Message} - {String.Join(", ", response.Errors.ToArray())}");
+                    return BadRequest(response);
+                }
+                if (string.IsNullOrEmpty(request.Grade))
+                    response.Errors.Add("Grade is empty. Invalid Grade");
+                if (request.LessonId < 1)
+                    response.Errors.Add("Invalid Lesson Id");
+                if (request.LearningOutcome < 1)
+                    response.Errors.Add("Invalid Learning Outcome");
+                if (request.UserId < 1)
+                    response.Errors.Add("Invalid User Id");
+
+                var result = await _sparcService.SubmitSparcGrade(request);
+                response.Content = result.Message;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("Error occurred while fetching the data.");
+                _logService.LogError(request.UserId, "SaveSparcProgram", "SparcController", ex.Message, ex);
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
+            }
+        }
     }
 }
