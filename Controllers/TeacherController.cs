@@ -248,5 +248,41 @@ namespace OnlineLpk12.Controllers
             }
         }
 
+        [HttpGet("{userId}/assessment")]
+        public async Task<IActionResult> GetAssessments(int userId)
+        {
+            Response<List<AssessmentOverview>> response = new();
+            try
+            {
+                //If user Id is less than or equal to 0 -> throw bad request error
+                if (userId < 1)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Enter valid User Id.");
+                    return BadRequest(response);
+                }
+
+                //Get lesson progress for the student
+                var result = await _teacherService.GetAssessments(userId);
+
+                //If there is any lesson progress, return them
+                if (result.Content != null && result.Content.Any())
+                {
+                    response.Content = result.Content;
+                    return Ok(response);
+                }
+                //If there is no progress saved, return Not found error
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("No assessments found for this student.");
+                return NotFound(response);
+            }
+            catch (Exception ex)
+            {
+                _logService.LogError(userId, "GetSparcList", "TeacherController", ex.Message, ex);
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("Error occurred while fetching the data.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
+            }
+        }
     }
 }

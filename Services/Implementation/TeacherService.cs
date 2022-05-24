@@ -159,5 +159,41 @@ namespace OnlineLpk12.Services.Implementation
                 throw;
             }
         }
+
+        public async Task<Result<List<AssessmentOverview>>> GetAssessments(int userId)
+        {
+            var result = new Result<List<AssessmentOverview>>();
+            try
+            {
+                var data = await (from assm in _context.AssessmentGrades
+                                  where assm.StudentId == userId
+                                  select new AssessmentOverview()
+                                  {
+                                      AssessmentId = assm.Id,
+                                      LearningOutcome = assm.LearningOutcome,
+                                      LessonId = assm.LessonId,
+                                      Grade = !string.IsNullOrEmpty(assm.Grade) ? assm.Grade : "Not yet graded",
+                                      Score = assm.Score,
+                                      TotalScore = assm.TotalScore,
+                                      StudentId = assm.StudentId
+                                  }).ToListAsync();
+                if (data != null)
+                {
+                    result.Content = data;
+                    result.Success = true;
+                }
+                else
+                {
+                    result.Success = false;
+                }
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                await _logService.LogError(userId, "GetAssessments", "TeacherService", ex.Message, ex);
+                throw;
+            }
+        }
     }
 }

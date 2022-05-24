@@ -18,6 +18,8 @@ namespace OnlineLpk12.Data.Context
         }
 
         public virtual DbSet<ActivityLog> ActivityLogs { get; set; } = null!;
+        public virtual DbSet<AssessmentGrade> AssessmentGrades { get; set; } = null!;
+        public virtual DbSet<AssessmentSubmission> AssessmentSubmissions { get; set; } = null!;
         public virtual DbSet<Content> Contents { get; set; } = null!;
         public virtual DbSet<Course> Courses { get; set; } = null!;
         public virtual DbSet<CoursesStudent> CoursesStudents { get; set; } = null!;
@@ -86,6 +88,68 @@ namespace OnlineLpk12.Data.Context
                 entity.Property(e => e.UserId)
                     .HasColumnType("int(11)")
                     .HasColumnName("user_id");
+            });
+
+            modelBuilder.Entity<AssessmentGrade>(entity =>
+            {
+                entity.ToTable("assessment_grade");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.Grade)
+                    .HasMaxLength(45)
+                    .HasColumnName("grade");
+
+                entity.Property(e => e.LearningOutcome)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("learning_outcome");
+
+                entity.Property(e => e.LessonId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("lesson_id");
+
+                entity.Property(e => e.Score)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("score");
+
+                entity.Property(e => e.StudentId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("student_id");
+
+                entity.Property(e => e.TotalScore)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("total_score");
+            });
+
+            modelBuilder.Entity<AssessmentSubmission>(entity =>
+            {
+                entity.ToTable("assessment_submissions");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.Answer)
+                    .HasMaxLength(1000)
+                    .HasColumnName("answer");
+
+                entity.Property(e => e.LearningOutcome)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("learning_outcome");
+
+                entity.Property(e => e.LessonId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("lesson_id");
+
+                entity.Property(e => e.Question)
+                    .HasMaxLength(1000)
+                    .HasColumnName("question");
+
+                entity.Property(e => e.StudentId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("student_id");
             });
 
             modelBuilder.Entity<Content>(entity =>
