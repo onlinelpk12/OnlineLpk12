@@ -7,5 +7,6 @@
         public int LearningOutcome { get; set; }
         public string Program { get; set; }
         public string ActivityTime { get; set; }
+        public string Grade { get; set; }
     }
 }

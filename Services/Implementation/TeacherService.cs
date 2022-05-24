@@ -62,16 +62,16 @@ namespace OnlineLpk12.Services.Implementation
             try
             {
                 var data = await (from std in _context.CoursesStudents
-                            join user in _context.Users
-                            on std.StudentId equals user.Id
-                            where std.CourseId == courseId && std.TeacherId == userId
-                            select new Student()
-                            {
-                                Id = user.Id,
-                                FirstName = user.FirstName,
-                                LastName = user.LastName,
-                                UserName = user.Username
-                            }).Distinct().ToListAsync();
+                                  join user in _context.Users
+                                  on std.StudentId equals user.Id
+                                  where std.CourseId == courseId && std.TeacherId == userId
+                                  select new Student()
+                                  {
+                                      Id = user.Id,
+                                      FirstName = user.FirstName,
+                                      LastName = user.LastName,
+                                      UserName = user.Username
+                                  }).Distinct().ToListAsync();
                 result.Content = data;
                 return result;
             }
@@ -88,14 +88,17 @@ namespace OnlineLpk12.Services.Implementation
             try
             {
                 result.Content = await (from sp in _context.Sparcs
-                                  where sp.UserId == userId
-                                  select new SparcProgram()
-                                  {
-                                      LessonId = sp.LessonId ?? 0,
-                                      LearningOutcome = sp.LearningOutcome ?? 0,
-                                      UserId = userId,
-                                      ActivityTime = sp.ActivityTimeStamp.ToString("MM/dd/yyyy hh:mm:ss tt"),
-                                  }).ToListAsync();
+                                        join gr in _context.SparcGrades
+                                        on sp.Id equals gr.SparcId
+                                        where sp.UserId == userId
+                                        select new SparcProgram()
+                                        {
+                                            LessonId = sp.LessonId ?? 0,
+                                            LearningOutcome = sp.LearningOutcome ?? 0,
+                                            UserId = userId,
+                                            ActivityTime = sp.ActivityTimeStamp.ToString("MM/dd/yyyy hh:mm:ss tt"),
+                                            Grade = !string.IsNullOrEmpty(gr.Grade) && gr.Grade != "NA" ? gr.Grade : "Not yet graded",
+                                        }).ToListAsync();
                 return result;
             }
             catch (Exception ex)
@@ -111,7 +114,7 @@ namespace OnlineLpk12.Services.Implementation
             try
             {
                 var data = await (from sp in _context.Sparcs
-                                  where sp.UserId == userId && sp.LessonId == lessonId 
+                                  where sp.UserId == userId && sp.LessonId == lessonId
                                   && sp.LearningOutcome == learningOutcome
                                   orderby sp.ActivityTimeStamp descending
                                   select new SparcProgram()

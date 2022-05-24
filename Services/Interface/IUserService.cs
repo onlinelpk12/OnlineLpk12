@@ -12,5 +12,6 @@ namespace OnlineLpk12.Services.Interface
         //Task<bool> IsEmailIdExists(string emailId);
         //Task<bool> IsUserNameExists(string userName);
         Task<bool> IsUserTeacher(int userId);
+        Task<string> GetUserNameByUserId(int userId);
     }
 }

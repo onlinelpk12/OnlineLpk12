@@ -140,5 +140,21 @@ namespace OnlineLpk12.Services.Implementation
                 return false;
             }
         }
+
+        public async Task<string> GetUserNameByUserId(int userId)
+        {
+            try
+            {
+                var user = await (from usr in _context.Users
+                                  where usr.Id == userId
+                                  select usr).FirstOrDefaultAsync();
+                return user != null && !string.IsNullOrEmpty(user.Username) ? user.Username : "";
+            }
+            catch (Exception ex)
+            {
+                _logService.LogError(userId, "GetUserNameByUserId", "UserService", ex.Message, ex);
+                return "";
+            }
+        }
     }
 }
