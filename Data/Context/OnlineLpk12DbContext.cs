@@ -18,7 +18,7 @@ namespace OnlineLpk12.Data.Context
         }
 
         public virtual DbSet<ActivityLog> ActivityLogs { get; set; } = null!;
-        public virtual DbSet<AssessmentGrade> AssessmentGrades { get; set; } = null!;
+        public virtual DbSet<AssessmentStatus> AssessmentStatuses { get; set; } = null!;
         public virtual DbSet<AssessmentSubmission> AssessmentSubmissions { get; set; } = null!;
         public virtual DbSet<Content> Contents { get; set; } = null!;
         public virtual DbSet<Course> Courses { get; set; } = null!;
@@ -43,11 +43,11 @@ namespace OnlineLpk12.Data.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySql("server=onlinelpk12database.mysql.database.azure.com;database=onlinelpk12;user=onlinelpk12admin@onlinelpk12database;password=Paswd@1234", Microsoft.EntityFrameworkCore.ServerVersion.Parse("5.7.32-mysql"));
-            }
+//            if (!optionsBuilder.IsConfigured)
+//            {
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+//                optionsBuilder.UseMySql("server=onlinelpk12database.mysql.database.azure.com;database=onlinelpk12;user=onlinelpk12admin@onlinelpk12database;password=Paswd@1234", Microsoft.EntityFrameworkCore.ServerVersion.Parse("5.7.32-mysql"));
+//            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -90,17 +90,13 @@ namespace OnlineLpk12.Data.Context
                     .HasColumnName("user_id");
             });
 
-            modelBuilder.Entity<AssessmentGrade>(entity =>
+            modelBuilder.Entity<AssessmentStatus>(entity =>
             {
-                entity.ToTable("assessment_grade");
+                entity.ToTable("assessment_status");
 
                 entity.Property(e => e.Id)
                     .HasColumnType("int(11)")
                     .HasColumnName("id");
-
-                entity.Property(e => e.Grade)
-                    .HasMaxLength(45)
-                    .HasColumnName("grade");
 
                 entity.Property(e => e.LearningOutcome)
                     .HasColumnType("int(11)")
@@ -113,6 +109,10 @@ namespace OnlineLpk12.Data.Context
                 entity.Property(e => e.Score)
                     .HasColumnType("int(11)")
                     .HasColumnName("score");
+
+                entity.Property(e => e.Status)
+                    .HasMaxLength(45)
+                    .HasColumnName("status");
 
                 entity.Property(e => e.StudentId)
                     .HasColumnType("int(11)")

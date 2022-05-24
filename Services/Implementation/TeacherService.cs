@@ -165,14 +165,14 @@ namespace OnlineLpk12.Services.Implementation
             var result = new Result<List<AssessmentOverview>>();
             try
             {
-                var data = await (from assm in _context.AssessmentGrades
+                var data = await (from assm in _context.AssessmentStatuses
                                   where assm.StudentId == userId
                                   select new AssessmentOverview()
                                   {
                                       AssessmentId = assm.Id,
                                       LearningOutcome = assm.LearningOutcome,
                                       LessonId = assm.LessonId,
-                                      Grade = !string.IsNullOrEmpty(assm.Grade) ? assm.Grade : "Not yet graded",
+                                      Status = !string.IsNullOrEmpty(assm.Status) ? assm.Status : "Not yet started",
                                       Score = assm.Score,
                                       TotalScore = assm.TotalScore,
                                       StudentId = assm.StudentId

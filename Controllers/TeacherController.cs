@@ -284,5 +284,11 @@ namespace OnlineLpk12.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }
+
+        //[HttpGet("{userId}/assessment/{assessmentId}")]
+        //public async Task<IActionResult> GetAssessmentDetails(int userId, int assessmentId)
+        //{
+
+        //}
     }
 }
