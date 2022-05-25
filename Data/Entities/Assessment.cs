@@ -5,7 +5,6 @@
         public int StudentId { get; set; }
         public int LessonId { get; set; }
         public int LearningOutcome { get; set; }
-        public string Question { get; set; }
-        public string Answer { get; set; }
+        public List<QuestionAnswer> QuestionAnswers { get; set; }
     }
 }

@@ -10,5 +10,6 @@ namespace OnlineLpk12.Services.Interface
         Task<Result<SparcProgram>> GetSparcProgram(int userId, int lessonId, int learningOutcome);
         Task<Result<List<LessonProgress>>> GetLessonProgressList(int userId);
         Task<Result<List<AssessmentOverview>>> GetAssessments(int userId);
+        Task<Result<Assessment>> GetAssessmentDetails(int userId, int lessonId, int learningOutcome);
     }
 }

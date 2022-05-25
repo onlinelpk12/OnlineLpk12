@@ -195,5 +195,49 @@ namespace OnlineLpk12.Services.Implementation
                 throw;
             }
         }
+
+        public async Task<Result<Assessment>> GetAssessmentDetails(int userId, int lessonId, int learningOutcome)
+        {
+            var result = new Result<Assessment>();
+            try
+            {
+                var data = await (from assment in _context.AssessmentSubmissions
+                                  where assment.StudentId == userId &&
+                                  assment.LessonId == lessonId &&
+                                  assment.LearningOutcome == learningOutcome
+                                  select assment).ToListAsync();
+
+                if (data != null)
+                {
+                    Assessment assessment = new Assessment()
+                    {
+                        LessonId = lessonId,
+                        LearningOutcome = learningOutcome,
+                        StudentId = userId,
+                        QuestionAnswers = new List<QuestionAnswer>()
+                    };
+                    foreach (var item in data)
+                    {
+                        assessment.QuestionAnswers.Add(new QuestionAnswer()
+                        {
+                            Question = item.Question,
+                            Answer = item.Answer
+                        });
+                    }
+                    result.Success = true;
+                    result.Content = assessment;
+                }
+                else
+                {
+                    result.Success = false;
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                await _logService.LogError(userId, "GetAssessments", "TeacherService", ex.Message, ex);
+                throw;
+            }
+        }
     }
 }
