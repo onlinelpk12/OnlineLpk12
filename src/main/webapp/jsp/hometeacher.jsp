@@ -5,9 +5,10 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ <script src="../js/verifytoken.js" type="text/javascript"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<%@ include file = "headerteacher.jsp" %>
+<%@ include file = "header.jsp" %>
 </head>
 <body>
 <div class="container pt-5">
@@ -35,14 +36,23 @@
 <img class="card-img-top" src="../images/progress.jpg" alt="progress" style="width:100%">
 <div class="card-body">
 <p class="card-text">Click below to view progress</p>
-<a href="../jsp/teacher.jsp" class="btn btn-primary">Student's progress</a>
+<a href="../jsp/courseList.jsp" class="btn btn-primary">Student's progress</a>
 </div>
 </form>
 </div>
 </div>
 </div>
 </div>
-<br>
+<script type="text/javascript">
+
+$(function() {
+	 verifytoken();
+});
+
+
+
+
+</script>
 <%@ include file = "footer.jsp" %>
 </body>
 </html>

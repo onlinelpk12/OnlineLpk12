@@ -10,6 +10,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+ <script src="../js/verifytoken.js" type="text/javascript"></script>
 <style>
 .table-styled {
 border-collapse: collapse
@@ -28,37 +29,52 @@ border-collapse: collapse
 <jsp:include page="footer.jsp"/>
 </body>
 </html>
-<script type="text/javascript"> 
+<script type="text/javascript">
+
+window.onload = function() {
+	 verifytoken();
+	getApiData();
+	
+}
+
+function getApiData()
+{
+//let user_id = sessionStorage.getItem("userId");
+//let user_id="14";
+let studentid=sessionStorage.getItem("studentid");
+const teacher_url = "https://onlinelpk12dotnetapi.azurewebsites.net/api/Teacher/"+studentid+"/lessonprogress";
+
+
+var response = null;
+$.get(teacher_url, function(data, status){
+response = data
+buildLessonList(response);
+});
+return response;
+}
+
+function buildLessonList(response){
+
 let htmlTable = "<table class='table table-sm table-bordered table-hover'>";
 let headerRow = "<tr style='background-color:#275E9B;color:white'>";
-headerRow += "<th>" + "Teacher ID" + "</th>";
-headerRow += "<th>" + "Semester" + "</th>";
-headerRow += "<th>" + "Term" + "</th>";
-headerRow += "<th>" + "Course" + "</th>";
-headerRow += "<th>" + "Course ID" + "</th>";
-headerRow += "<th>" + "Link to access Students under course" + "</th>";
 
-
+headerRow += "<th>" + "Lesson ID" + "</th>";
+headerRow += "<th>" + "Learning Outcome" + "</th>";
+headerRow += "<th>" + "Page Number" + "</th>";
+headerRow += "<th>" + "Activity time" + "</th>";
 htmlTable+= headerRow;
-for(let i=1; i<=6;i++)
+for(let i=0; i<response.content.length;i++)
 {
-let row = "";
-row += "<tr>";
-row += '<td>' + '20'+ '</td>';
-row += '<td>' + i + '</td>';
-row += '<td>' + '2022-2023' + '</td>';
-row += '<td>' + 'Course-2' + '</td>';
-row += '<td>' +  i + '</td>';
-row+='<td>' + ' <a href="teacher1.jsp"> ' + 'Click here to view Students Progress enrolled in this course </a>' +'</td>'; 
-row += '</tr>';
+	let row = `<tr> `
+		+ `<td> ${response.content[i]?.lessonId}</td>`
+		+ `<td> ${response.content[i]?.learningOutcome} </td>`
+		+ `<td> ${response.content[i]?.pageNumber} </td>`
+		+ `<td> ${response.content[i]?.activityTime} </td>`
+		+ `</tr>`;
 htmlTable += row;
 }
 htmlTable += '</table>';
 $('#student-progress-table').html(htmlTable);
-
+}
 
 </script>
- 
- 
- 
- 
