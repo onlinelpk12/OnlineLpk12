@@ -37,7 +37,7 @@ namespace OnlineLpk12.Controllers
                 if(lessonProgress == null)
                 {
                     response.Message = "One or more validation errors occurred.";
-                    response.Errors.Add("In valid request");
+                    response.Errors.Add("Invalid request");
                     return BadRequest(response);
                 }
 
@@ -95,6 +95,13 @@ namespace OnlineLpk12.Controllers
                 {
                     response.Message = "One or more validation errors occurred.";
                     response.Errors.Add("Enter valid User Id.");
+                    return BadRequest(response);
+                }
+
+                if (assessmentOverview == null)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Invalid request");
                     return BadRequest(response);
                 }
 
