@@ -13,100 +13,106 @@
 	
 <title>Online SPARC</title>
 <style type="text/css" media="screen">
-    #editor { 
-		position: fixed;
-		margin: 0;
-		float: left;
-		width: 55%;
-		height: 100%;
-		top: 50;
-    }
-	#column-resizer{
-		position: fixed;
-		left: 56%;
-		cursor: col-resize;
-		margin: 0;
-		padding: 0;
-		width: 0.8%;
-		height: 100%;
-		background-color: #DDD;
-		border-radius: 3px;
-	}
-	#results{
-	    position: relative;
-		margin: 0;
-		float: right;
-		width: 39%;
-	}
-	ul {
-		list-style-type: none;
-  		margin: 0;
-  		padding: 0;
-		padding-left:2em;
-	}
-	ul li {
-		padding-left:2em;
-	}
-	li {
-  		display: inline;
-	}
-	#txt_query{
-		margin-top: 8px;
-	}
+#editor {
+position: fixed;
+margin: 0;
+float: left;
+width: 55%;
+height: 100%;
+top: 50;
+}
+#column-resizer{
+position: fixed;
+left: 56%;
+cursor: col-resize;
+margin: 0;
+padding: 0;
+width: 0.8%;
+height: 100%;
+background-color: #DDD;
+border-radius: 3px;
+}
+#results{
+position: relative;
+margin: 0;
+float: right;
+width: 39%;
+}
+ul {
+list-style-type: none;
+margin: 0;
+padding: 0;
+padding-left:2em;
+}
+ul li {
+padding-left:2em;
+}
+li {
+display: inline;
+}
+#txt_query{
+margin-top: 8px;
+}
 </style>
 </head>
 <body>
 
+
+
 <div id="wrapper" class="toggled">
-	<div id="wrap">
-		<div id="navbar">
-			<header>
-				<nav class="navbar navbar-dark bg-primary">
-					<div class="container-fluid">
-						<div class="collapse navbar-collapse">                
-							<ul class="nav navbar-nav navbar-left">
-								<li>
-									<input type="text" class="form-control" placeholder="Enter query" name="txt_query" id="txt_query" size="50">
-								</li>
-								<li>
-									<button type="submit" class="btn btn-default navbar-btn" id="btn_getQuery" value="getQuery" onclick="submitrequest()">
-	                            			Submit
-	                            	</button>
-								</li>
-							</ul>
-                			<ul class="nav navbar-nav navbar-right">
-                				<li> 
-                    				<button type="submit" class="btn btn-default navbar-btn" id="btn_saveSparcProgram" value="saveSparcProgram" onclick="saveSparcProgram()">
-                        				Save Sparc Program
-                    				</button> 
-                    			</li>
-                    			<li> 
-                    				<button type="submit" class="btn btn-default navbar-btn" id="btn_getAnswerSets" value="getAnswerSets" onclick="answerSets()">
-                        				Get Answer Sets
-                    				</button> 
-                    			</li>
-		    					<li> </li>
-                    			<li> 
-                    				<button type="submit" class="btn btn-default navbar-btn" id="btn_getAnimation" value="getAnimation" onclick="execute()">  
-                        				Execute
-                    				</button> 
-                    			</li>
-                    			<li> 
-                    			</li>
-                  			</ul>
-            			</div> 
-           			</div>
-            	</nav>
-            </header>
-		</div>
-	</div>
+<div id="wrap">
+<div id="navbar">
+<header>
+<nav class="navbar navbar-dark bg-primary">
+<div class="container-fluid">
+<div class="collapse navbar-collapse">
+<ul class="nav navbar-nav navbar-left">
+<li>
+<input type="text" class="form-control" placeholder="Enter query" name="txt_query" id="txt_query" size="50">
+</li>
+<li>
+<button type="submit" class="btn btn-default navbar-btn" id="btn_getQuery" value="getQuery" onclick="submitrequest()">
+Submit
+</button>
+</li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+<button type="submit" class="btn btn-default navbar-btn" id="btn_saveSparcProgram" value="saveSparcProgram" onclick="saveSparcProgram()">
+Save Sparc Program
+</button>
+</li>
+<li>
+<button type="submit" class="btn btn-default navbar-btn" id="btn_getAnswerSets" value="getAnswerSets" onclick="answerSets()">
+Get Answer Sets
+</button>
+</li>
+<li> </li>
+<li>
+<button type="submit" class="btn btn-default navbar-btn" id="btn_getAnimation" value="getAnimation" onclick="execute()">
+Execute
+</button>
+</li>
+<li>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+</header>
+</div>
+</div>
 </div>
 
+
+
 <div id="page-content-wrapper">
-	<div id="editor"></div>
-	<div id="column-resizer"></div>
-	<div id="results"></div>
+<div id="editor"></div>
+<div id="column-resizer"></div>
+<div id="results"></div>
 </div>
+
+
 
 <script src="../js/resizer.js" type="text/javascript"></script>
 <script type="text/javascript">
