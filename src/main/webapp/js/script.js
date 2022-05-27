@@ -100,7 +100,7 @@ function getRandomInt(max) {
 function getGrading(studentLevel, input, answer) {
      let percentageMatching = similarity(input, answer)*100;
     
-    return  percentageMatching >= 70 ? "pass" : "fail";
+    return  percentageMatching;
     //return result[getRandomInt(result.length)]
 }
 
@@ -110,6 +110,8 @@ function submitAssessment(currentPageId, textAreaId){
     
   let input = document.getElementById(textAreaId).value;
   let isAssessmentPassed = null;
+  let assessmentStatus = null;
+  let score = 0;
   if(input == null || input == undefined || input.trim().length == 0){
     isAssessmentPassed = false;
   }
@@ -124,12 +126,57 @@ function submitAssessment(currentPageId, textAreaId){
     else if(textAreaId == "program2"){
      answer = "%John is the dad of peter dad(john, peter)";
     }
-    isAssessmentPassed = getGrading(studentLevel[getRandomInt(studentLevel.length)], input, answer) == "pass" ? true : false;
+    score = getGrading(studentLevel[getRandomInt(studentLevel.length)], input, answer) == "pass" ? true : false;
+      if(score >= 70){
+        isAssessmentPassed = true;
+        assessmentStatus = "pass"
+    }
+    else{
+        assessmentStatus = "fail";
+    }
   }
     sessionStorage.setItem(sessionKeyIsAssessmentPassed, isAssessmentPassed);
-    window.open(nextStepPage, "_self");
+    SaveStudentAssessmentStatusThroughAPI(score,100,assessmentStatus).then(
+        function() {
+            window.open(nextStepPage, "_self");
+        }
+    );
 }
 
+async function SaveStudentAssessmentStatusThroughAPI(score, totalScore, assessmentStatus){
+   
+    let assessmentStatusRequest =  {
+        assessmentId: 0,
+        lessonId: parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber)),
+        studentId: parseInt(sessionStorage.getItem("userId")),
+        learningOutcome:  parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber)),
+        status : assessmentStatus,
+        score: score,
+        totalScore: totalScore
+      }
+
+    const saveStudentAssessmentStatusAPIUrl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/Student/"+assessmentStatusRequest.studentId+"/assessmentStatus";
+  $.ajax({
+      contentType: 'application/json',
+      data: JSON.stringify(assessmentStatusRequest),
+      dataType: 'json',
+      type: 'POST',
+      url: saveStudentAssessmentStatusAPIUrl,
+      success: function (data) {
+         
+      },
+      statusCode: {
+          400: function (error) {
+          },
+          404: function (error) {
+          },
+          500: function (error) {
+          }
+      },
+      error: function (error) {
+      }       
+  });
+}
 
 
 function similarity(s1, s2) {
