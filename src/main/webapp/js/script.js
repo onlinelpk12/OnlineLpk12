@@ -100,7 +100,7 @@ function getRandomInt(max) {
 function getGrading(studentLevel, input, answer) {
      let percentageMatching = similarity(input, answer)*100;
     
-    return  percentageMatching;
+    return  percentageMatching.toFixed();
     //return result[getRandomInt(result.length)]
 }
 
