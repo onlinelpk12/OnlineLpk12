@@ -4,6 +4,8 @@ using OnlineLpk12.Data.Entities;
 using OnlineLpk12.Services.Interface;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace OnlineLpk12.Services.Implementation
 {
@@ -75,9 +77,6 @@ namespace OnlineLpk12.Services.Implementation
 
         public async Task<Result<string>> ExecuteSparcRequest(Sparc sparcRequest)
         {
-            //Log to database
-            _logService.LogInfo(sparcRequest.UserId, "ExecuteSparcRequest", "SparcService", "Execution of ExecuteSparcRequest method started");
-
             var result = new Result<string>();
             try
             {
@@ -126,20 +125,15 @@ namespace OnlineLpk12.Services.Implementation
             }
             catch (Exception ex)
             {
-                _logService.LogError(sparcRequest.UserId, "ExecuteSparcRequest", "SparcService", ex.Message, ex);
+                _logService.LogError(sparcRequest.UserId, MethodBase.GetCurrentMethod().Name, 
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 throw;
-            }
-            finally
-            {
-                _logService.LogInfo(sparcRequest.UserId, "ExecuteSparcRequest", "SparcService", "Execution of ExecuteSparcRequest method ended");
             }
         }
 
 
         public async Task<Result<string>> SaveSparcProgram(Sparc sparcRequest)
         {
-            _logService.LogInfo(sparcRequest.UserId, "SaveSparcProgram", "SparcService", "Execution of SaveSparcProgram method started");
-
             var result = new Result<string>();
             try
             {
@@ -149,13 +143,10 @@ namespace OnlineLpk12.Services.Implementation
             }
             catch (Exception ex)
             {
-                _logService.LogError(sparcRequest.UserId, "SaveSparcProgram", "SparcService", ex.Message, ex);
+                _logService.LogError(sparcRequest.UserId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 result.Success = false;
                 result.Message = "Save failed.";
-            }
-            finally
-            {
-                _logService.LogInfo(sparcRequest.UserId, "SaveSparcProgram", "SparcService", "Execution of SaveSparcProgram method ended");
             }
             return result;
         }
@@ -168,8 +159,6 @@ namespace OnlineLpk12.Services.Implementation
                 {
                     LessonId = sparcRequest.LessonId,
                     LearningOutcome = sparcRequest.LearningOutcome,
-                    //ProgrammingTaskId = 1,
-                    //QuizId = 1,
                     UserId = sparcRequest.UserId,
                     Program = Encoding.Default.GetBytes(sparcRequest.Editor),
                     Query = sparcRequest.Query,
@@ -181,7 +170,8 @@ namespace OnlineLpk12.Services.Implementation
             }
             catch (Exception ex)
             {
-                await _logService.LogError(sparcRequest.UserId, "SaveSparcData", "SparcService", ex.Message, ex);
+                await _logService.LogError(sparcRequest.UserId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 throw;
             }
         }
@@ -219,15 +209,14 @@ namespace OnlineLpk12.Services.Implementation
             }
             catch (Exception ex)
             {
-                await _logService.LogError(userId, "GetSparcProgramsByUserId", "SparcService", ex.Message, ex);
+                await _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 throw;
             }
         }
 
         public async Task<Result<string>> SubmitSparcGrade(Sparc sparcRequest)
         {
-            //_logService.LogInfo(sparcRequest.UserId, "SubmitSparcGrade", "SparcService", "Execution of SubmitSparcGrade method started");
-
             var result = new Result<string>();
             try
             {
@@ -259,13 +248,10 @@ namespace OnlineLpk12.Services.Implementation
             }
             catch (Exception ex)
             {
-                _logService.LogError(sparcRequest.UserId, "SubmitSparcGrade", "SparcService", ex.Message, ex);
+                _logService.LogError(sparcRequest.UserId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 result.Success = false;
                 result.Message = "Grade submission failed.";
-            }
-            finally
-            {
-                //_logService.LogInfo(sparcRequest.UserId, "SubmitSparcGrade", "SparcService", "Execution of SubmitSparcGrade method ended");
             }
             return result;
         }

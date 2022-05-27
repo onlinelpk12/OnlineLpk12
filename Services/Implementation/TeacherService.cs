@@ -3,19 +3,19 @@ using OnlineLpk12.Data.Context;
 using OnlineLpk12.Data.Entities;
 using OnlineLpk12.Services.Interface;
 using System.Text;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace OnlineLpk12.Services.Implementation
 {
     public class TeacherService : ITeacherService
     {
         private readonly OnlineLpk12DbContext _context;
-        private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogService _logService;
 
-        public TeacherService(OnlineLpk12DbContext context, IHttpClientFactory httpClientFactory, ILogService logService)
+        public TeacherService(OnlineLpk12DbContext context, ILogService logService)
         {
             _context = context;
-            _httpClientFactory = httpClientFactory;
             _logService = logService;
         }
 
@@ -48,7 +48,8 @@ namespace OnlineLpk12.Services.Implementation
             }
             catch (Exception ex)
             {
-                await _logService.LogError(userId, "GetCourses", "TeacherService", ex.Message, ex);
+                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                   Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 throw;
             }
         }
@@ -77,7 +78,8 @@ namespace OnlineLpk12.Services.Implementation
             }
             catch (Exception ex)
             {
-                await _logService.LogError(userId, "GetStudentsForCourse", "TeacherService", ex.Message, ex);
+                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 throw;
             }
         }
@@ -103,7 +105,8 @@ namespace OnlineLpk12.Services.Implementation
             }
             catch (Exception ex)
             {
-                await _logService.LogError(userId, "GetSparcList", "TeacherService", ex.Message, ex);
+                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                   Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 throw;
             }
         }
@@ -130,7 +133,8 @@ namespace OnlineLpk12.Services.Implementation
             }
             catch (Exception ex)
             {
-                await _logService.LogError(userId, "GetSparcProgram", "TeacherService", ex.Message, ex);
+                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 throw;
             }
         }
@@ -155,7 +159,8 @@ namespace OnlineLpk12.Services.Implementation
             }
             catch (Exception ex)
             {
-                await _logService.LogError(userId, "GetLessonProgressList", "TeacherService", ex.Message, ex);
+                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 throw;
             }
         }
@@ -191,7 +196,8 @@ namespace OnlineLpk12.Services.Implementation
             }
             catch (Exception ex)
             {
-                await _logService.LogError(userId, "GetAssessments", "TeacherService", ex.Message, ex);
+                await _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 throw;
             }
         }
@@ -209,7 +215,7 @@ namespace OnlineLpk12.Services.Implementation
 
                 if (data != null)
                 {
-                    Assessment assessment = new Assessment()
+                    Assessment assessment = new()
                     {
                         LessonId = lessonId,
                         LearningOutcome = learningOutcome,
@@ -235,7 +241,8 @@ namespace OnlineLpk12.Services.Implementation
             }
             catch (Exception ex)
             {
-                await _logService.LogError(userId, "GetAssessments", "TeacherService", ex.Message, ex);
+                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 throw;
             }
         }

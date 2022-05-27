@@ -61,7 +61,8 @@ namespace OnlineLpk12.Controllers
             }
             catch (Exception ex)
             {
-                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name, _fileName, ex.Message, ex);
+                _logService.LogError(userId, System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineLpk12.Data.Entities;
 using OnlineLpk12.Services.Interface;
 using System.Net;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace OnlineLpk12.Controllers
 {
@@ -60,7 +62,8 @@ namespace OnlineLpk12.Controllers
             }
             catch (Exception ex)
             {
-                _logService.LogError(userId, "GetCourses", "TeacherController", ex.Message, ex);
+                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
@@ -114,7 +117,8 @@ namespace OnlineLpk12.Controllers
             }
             catch (Exception ex)
             {
-                _logService.LogError(userId, "GetStudentsForCourse", "TeacherController", ex.Message, ex);
+                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
@@ -151,7 +155,8 @@ namespace OnlineLpk12.Controllers
             }
             catch (Exception ex)
             {
-                _logService.LogError(userId, "GetSparcList", "TeacherController", ex.Message, ex);
+                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
@@ -204,7 +209,8 @@ namespace OnlineLpk12.Controllers
             }
             catch (Exception ex)
             {
-                _logService.LogError(userId, "GetSparcProgram", "TeacherController", ex.Message, ex);
+                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
@@ -241,7 +247,8 @@ namespace OnlineLpk12.Controllers
             }
             catch (Exception ex)
             {
-                _logService.LogError(userId, "GetSparcList", "TeacherController", ex.Message, ex);
+                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
@@ -278,7 +285,8 @@ namespace OnlineLpk12.Controllers
             }
             catch (Exception ex)
             {
-                _logService.LogError(userId, "GetSparcList", "TeacherController", ex.Message, ex);
+                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
@@ -331,7 +339,8 @@ namespace OnlineLpk12.Controllers
             }
             catch (Exception ex)
             {
-                _logService.LogError(userId, "GetSparcList", "TeacherController", ex.Message, ex);
+                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);

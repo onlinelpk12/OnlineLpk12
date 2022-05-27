@@ -4,6 +4,8 @@ using OnlineLpk12.Data.Entities;
 using OnlineLpk12.Helpers;
 using OnlineLpk12.Services.Interface;
 using System.Net;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace OnlineLpk12.Controllers
 {
@@ -86,7 +88,6 @@ namespace OnlineLpk12.Controllers
                 {
                     response.Errors = validationMessages;
                     response.Message = "One or more validation errors occurred.";
-                    _logService.LogInfo(request.UserId, "ExecuteSparc", "SparcController", $"{response.Message} - {String.Join(", ", response.Errors.ToArray())}");
                     return BadRequest(response);
                 }
                 var result = await _sparcService.ExecuteSparcRequest(request);
@@ -97,7 +98,8 @@ namespace OnlineLpk12.Controllers
             {
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
-                _logService.LogError(request.UserId, "ExecuteSparc", "SparcController", ex.Message, ex);
+                _logService.LogError(request.UserId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }
@@ -113,7 +115,6 @@ namespace OnlineLpk12.Controllers
                 {
                     response.Errors = new List<string>() { "Request is invalid." };
                     response.Message = "One or more validation errors occurred.";
-                    _logService.LogInfo(request.UserId, "SaveSparcProgram", "SparcController", $"{response.Message} - {String.Join(", ", response.Errors.ToArray())}");
                     return BadRequest(response);
                 }
                 
@@ -125,7 +126,8 @@ namespace OnlineLpk12.Controllers
             {
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
-                _logService.LogError(request.UserId, "SaveSparcProgram", "SparcController", ex.Message, ex);
+                _logService.LogError(request.UserId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }
@@ -158,7 +160,8 @@ namespace OnlineLpk12.Controllers
             {
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
-                _logService.LogError(userId, "GetSparcProgramsByUserId", "SparcController", ex.Message, ex);
+                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }
@@ -174,7 +177,6 @@ namespace OnlineLpk12.Controllers
                 {
                     response.Errors = new List<string>() { "Request is invalid." };
                     response.Message = "One or more validation errors occurred.";
-                    //_logService.LogInfo(request.UserId, "SubmitSparcGrade", "SparcController", $"{response.Message} - {String.Join(", ", response.Errors.ToArray())}");
                     return BadRequest(response);
                 }
                 if (string.IsNullOrEmpty(request.Grade))
@@ -186,6 +188,12 @@ namespace OnlineLpk12.Controllers
                 if (request.UserId < 1)
                     response.Errors.Add("Invalid User Id");
 
+                if(response.Errors.Count > 0)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    return BadRequest(response);
+                }
+
                 var result = await _sparcService.SubmitSparcGrade(request);
                 response.Content = result.Message;
                 return Ok(response);
@@ -194,7 +202,8 @@ namespace OnlineLpk12.Controllers
             {
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
-                _logService.LogError(request.UserId, "SaveSparcProgram", "SparcController", ex.Message, ex);
+                _logService.LogError(request.UserId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }
