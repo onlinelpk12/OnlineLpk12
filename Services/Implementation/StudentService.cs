@@ -17,10 +17,8 @@ namespace OnlineLpk12.Services.Implementation
             this._context = context;
             this._logService = logService;
         }
-        public bool SaveAssessmentAnswers(int userId, LessonProgress lessonProgress)
-        {
-            throw new NotImplementedException();
-        }
+
+        
 
         public bool SaveLessonProgress(LessonProgress lessonProgress)
         {
@@ -92,6 +90,47 @@ namespace OnlineLpk12.Services.Implementation
             {
 
                 _logService.LogError(assessmentOverview.StudentId, MethodBase.GetCurrentMethod().Name,
+                   Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
+                throw;
+            }
+        }
+
+        public bool SaveAssessmentSubmission(Assessment assessment)
+        {
+            try
+            {
+                foreach (var questionAnswer in assessment.QuestionAnswers)
+                {
+                    AssessmentSubmission assessmentSubmissionFromDB = _context.AssessmentSubmissions
+                         .FirstOrDefault(x => x.StudentId == assessment.StudentId
+                         && x.LessonId == assessment.LessonId
+                         && x.LearningOutcome == assessment.LearningOutcome
+                         && x.Question == questionAnswer.Question);
+
+                    if (assessmentSubmissionFromDB == null)
+                    {
+                        AssessmentSubmission assessmentSubmission = new()
+                        {
+                            StudentId = assessment.StudentId,
+                            LessonId = assessment.LessonId,
+                            LearningOutcome = assessment.LearningOutcome,
+                            Question = questionAnswer.Question,
+                            Answer = questionAnswer.Answer
+                        };
+                        _context.AssessmentSubmissions.Add(assessmentSubmission);
+                    }
+                    else
+                    {
+                        assessmentSubmissionFromDB.Answer = questionAnswer.Answer;
+                    }
+                }
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                _logService.LogError(assessment.StudentId, MethodBase.GetCurrentMethod().Name,
                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 throw;
             }

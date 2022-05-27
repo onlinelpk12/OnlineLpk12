@@ -7,7 +7,7 @@ namespace OnlineLpk12.Services.Interface
     {
         public bool SaveLessonProgress(LessonProgress lessonProgress);
         public bool SaveAssessmentScore(AssessmentOverview assessmentOverview);
-        public bool SaveAssessmentAnswers(int userId, LessonProgress lessonProgress);
+        public bool SaveAssessmentSubmission(Assessment assessment);
 
     }
 }
