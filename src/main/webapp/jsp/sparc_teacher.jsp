@@ -72,6 +72,14 @@ color: white;
 <nav class="navbar navbar-dark bg-primary">
 <div class="container-fluid">
 <div class="collapse navbar-collapse">
+<ul class="nav navbar-nav navbar-left">
+<li>
+<form>
+  	  <a href="#" id="goBackButton" onclick="history.back()" style="margin-top:13px"><img height="30" width="40" src="../images/back.png" style="margin-top:13px" ></a>
+   <a id="homepagelink" href="home.jsp" style="margin-top:13px"><img height="30" width="40" src="../images/home.png" style="margin-top:13px"></a>
+      </form>
+</li>
+</ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
 <label for="grade" id="dropdown">Choose a grade:</label>
@@ -128,6 +136,7 @@ Execute
 var studentid=sessionStorage.getItem("studentid");
 var lessonid=sessionStorage.getItem("lessonID");
 var lessonoutcome=sessionStorage.getItem("lessonOutcome");
+var userRole = sessionStorage.getItem('userRole');
 const apiBaseurl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/sparc/";
 
 var editor = ace.edit("editor");
@@ -136,91 +145,98 @@ editor.session.setMode("ace/mode/sparc");
 var showResults=function(response){
 	$('#results').html('<center> <button onclick="clearResults()">Clear the Results</button> </center>');
 	$('#results').append(response);
-	}
+}
 	
 var clearResults=function(){
 	$('#results').empty();
-	}
-
+}
 
 $(function(){
-	 verifytoken();
+	verifytoken();
 	getApiData();
-
+	if(userRole == 'Student'){
+		$('#dropdown').hide();
+		$('#grade').hide();
+		$('#btn_submit_grade').hide();
+		$('#btn_getAnswerSets').hide();
+		$('#btn_getAnimation').hide();
+	}
+	else if (userRole == 'Teacher'){
+		$('#dropdown').show();
+		$('#grade').show();
+		$('#btn_submit_grade').show();
+		$('#btn_getAnswerSets').show();
+		$('#btn_getAnimation').show();
+	}
+	
 });
 
 function getApiData()
 {
-let lessonid=sessionStorage.getItem("lessonID");
-let lessonoutcome=sessionStorage.getItem("lessonOutcome");
-const teacher_url = "https://onlinelpk12dotnetapi.azurewebsites.net/api/Teacher/"+studentid+"/sparc/lessson/"+lessonid+"/learningoutcome/"+lessonoutcome;
+	let lessonid=sessionStorage.getItem("lessonID");
+	let lessonoutcome=sessionStorage.getItem("lessonOutcome");
+	const teacher_url = "https://onlinelpk12dotnetapi.azurewebsites.net/api/Teacher/"+studentid+"/sparc/lessson/"+lessonid+"/learningoutcome/"+lessonoutcome;
 
-
-$.get(teacher_url, function(data, status){
-editor.setValue(data.content.program);
-});
+	$.get(teacher_url, function(data, status){
+		editor.setValue(data.content.program);
+	});
 }
 
 function execute(){
-let program = editor.getValue();
-if(program == null || program == '' || program == undefined){
-program = '';
-}
-let request = {
-"userid": studentid,
-"learningOutcome":lessonoutcome,
-"lessonId": lessonid,
-"action": "getAnimation",
-"editor": program
-};
-PostSparc(request,"execute");
+	let program = editor.getValue();
+	if(program == null || program == '' || program == undefined){
+		program = '';
+	}
+	let request = {
+		"userid": studentid,
+		"learningOutcome":lessonoutcome,
+		"lessonId": lessonid,
+		"action": "getAnimation",
+		"editor": program
+	};
+	PostSparc(request,"execute");
 }
 
 function answerSets(){
-let program = editor.getValue();
+	let program = editor.getValue();
 
-if(program == null || program == '' || program == undefined){
-program = '';
+	if(program == null || program == '' || program == undefined){
+		program = '';
+	}
+	let request = {
+		"userid": studentid,
+		"learningOutcome":lessonoutcome,
+		"lessonId": lessonid,
+		"action": "getAnswerSets",
+		"editor": program
+	};
+	PostSparc(request,"execute");
 }
-let request = {
-"userid": studentid,
-"learningOutcome":lessonoutcome,
-"lessonId": lessonid,
-"action": "getAnswerSets",
-"editor": program
-};
-PostSparc(request,"execute");
-}
-
 
 function PostSparc(request,suburl) {
-let url=suburl;
-let success = false;
-let res="";
-console.log('request: ', request);
-$.ajax({
-contentType:'application/x-www-form-urlencoded',
-data: request,
-success: function (data) {
-res= data;
-},
-type: 'POST',
-url: apiBaseurl + url,
-success: function(data){
-console.log('response content: ',data.content);
-showResults(data.content);
-
-},
-error: function(data){
-console.log(data);
+	let url=suburl;
+	let success = false;
+	let res="";
+	console.log('request: ', request);
+	$.ajax({
+		contentType:'application/x-www-form-urlencoded',
+		data: request,
+		success: function (data) {
+			res= data;
+		},
+		type: 'POST',
+		url: apiBaseurl + url,
+		success: function(data){
+			console.log('response content: ',data.content);
+			showResults(data.content);
+		},
+		error: function(data){
+			console.log(data);
+		}
+	});
 }
-});
-}
-
 
 function submitGrade(){
-	
-	
 	let grade = $('#grade').val();
 	let request = {
 			"userid": studentid,

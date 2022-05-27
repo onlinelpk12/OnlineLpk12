@@ -31,6 +31,7 @@ border-collapse: collapse
 </html>
 <script type="text/javascript">
 var student_name= sessionStorage.getItem("studentUserName");
+var userRole = sessionStorage.getItem('userRole');
 window.onload = function() {
 	 verifytoken();
 	getApiData();
@@ -50,21 +51,31 @@ function buildLessonList(response){
 	let htmlTable = "<table class='table table-sm table-bordered table-hover'>";
 	let headerRow = "<tr style='background-color:#275E9B;color:white'>";
 
-	headerRow += "<th>" + "Student name" + "</th>";
+	if(userRole == 'Teacher'){
+		headerRow += "<th>" + "Student name" + "</th>";
+	}
 	headerRow += "<th>" + "Lesson Number" + "</th>";
 	headerRow += "<th>" + "Learning Outcome Number" + "</th>";
 	headerRow += "<th>" + "Sparc Programs" + "</th>";
 	headerRow += "<th>" + "Activity time" + "</th>";
-	headerRow += "<th>" + "Grade" + "</th>";
+	if(userRole == 'Teacher'){
+		headerRow += "<th>" + "Grade" + "</th>";
+	}
 	htmlTable+= headerRow;
 	for(let i=0; i<response.content.length;i++){
-		let row = `<tr> <td> ${student_name} </td> `
-				+ `<td> ${response.content[i]?.lessonId}</td>`
+		let row = '<tr>';
+		if(userRole == 'Teacher'){
+			row+= `<td> ${student_name} </td> `;	
+		}
+		
+		row+=`<td> ${response.content[i]?.lessonId}</td>`
 				+ `<td> ${response.content[i]?.learningOutcome} </td>`
 				+ `<td> <a class='btn btn-primary' onclick='viewSparcProgram("${response.content[i]?.lessonId}", "${response.content[i]?.learningOutcome}")' > Click here to view Students Sparc programs </a>`
-				+ `<td> ${response.content[i]?.activityTime} </td>`
-				+ `<td> <font color="green"> ${response.content[i]?.grade}  </td>`
-				+ `</tr>`;
+				+ `<td> ${response.content[i]?.activityTime} </td>`;
+		if(userRole=='Teacher'){
+			row+=`<td> <font color="green"> ${response.content[i]?.grade}  </td>`;
+		}	
+		row+= `</tr>`;
 		htmlTable+=row;
 	}
 	htmlTable += '</table>';

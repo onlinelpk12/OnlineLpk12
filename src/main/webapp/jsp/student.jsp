@@ -10,7 +10,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
- <script src="../js/verifytoken.js" type="text/javascript"></script>
+<script src="../js/verifytoken.js" type="text/javascript"></script>
 <style>
 .table-styled {
 border-collapse: collapse
@@ -25,48 +25,53 @@ border-collapse: collapse
 
 
 
+
+
 </div>
 <jsp:include page="footer.jsp"/>
 </body>
 </html>
-<script type="text/javascript"> 
-//let user_id = sessionStorage.getItem("userId");
-let user_id="14";
+<script type="text/javascript">
+let studentid= sessionStorage.getItem("userId");
+sessionStorage.setItem("studentid",studentid);
 let htmlTable = "<table class='table table-sm table-bordered table-hover'>";
 let headerRow = "<tr style='background-color:#275E9B;color:white'>";
-headerRow += "<th>" + "Teacher ID" + "</th>";
-headerRow += "<th>" + "Semester" + "</th>";
-headerRow += "<th>" + "Term" + "</th>";
-headerRow += "<th>" + "Course" + "</th>";
-headerRow += "<th>" + "Link to access Students under course" + "</th>";
+
+
+
+headerRow += "<th>" + "Sparc Programs" + "</th>";
+headerRow += "<th>" + "Lesson Progress" + "</th>";
+headerRow += "<th>" + "Assessment Details" + "</th>";
+
 
 
 htmlTable+= headerRow;
-for(let i=1; i<=6;i++)
-{
-let row = "";
-row += "<tr>";
-row += '<td>' + '20'+ '</td>';
-row += '<td>' + i + '</td>';
-row += '<td>' + '2022-2023' + '</td>';
-row += '<td>' + 'Course-2' + '</td>';
-row+='<td>' + ' <a href="teacher1.jsp"> ' + 'Click here to view Students Progress enrolled in this course </a>' +'</td>'; 
-row += '</tr>';
+let row = `<tr>`
++ `<td> <a class='btn btn-primary' onclick='viewSparcProgram("${studentid}")' > Click here to view My Sparc programs </a> </td>`
++ `<td> <a class='btn btn-primary' onclick='viewLessonProgress("${studentid}")' > Click here to view My Lesson progress </a> </td>`
++ `<td> <a class='btn btn-primary' onclick='viewAssessmentDetails("${studentid}")' > Click here to view My Assessment submissions </a> </td>`
++ `</tr>`;
 htmlTable += row;
+
+
 
 htmlTable += '</table>';
 $('#teacher-courses-table').html(htmlTable);
 
 
+
+
 function viewSparcProgram(user_id){
-	window.location.href="sparcProgramsList.jsp";	
+window.location.href="sparcProgramsList.jsp";
 }
 
+
+
 function viewLessonProgress(user_id){
-	window.location.href="lessonList.jsp";	
+window.location.href="lessonList.jsp";
 }
+
+function viewAssessmentDetails(user_id){
+	window.location.href="assessmentList.jsp";
+	}
 </script>
- 
- 
- 
- 
