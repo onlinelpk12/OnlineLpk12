@@ -149,7 +149,7 @@ $(function(){
                     <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(2, 0, 'version-1-course-x-lesson-2-page-6', false, -1)"> Previous </a>
                     <div class="text-center">
-                        <a class="btn btn-primary" style="margin-left: -15rem;" onclick="submitAssessment("version-1-course-x-lesson-2-page-6", 'program0')"> Submit </a>
+                        <a class="btn btn-primary" style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-2-page-6', 'program0')"> Submit </a>
                     </div>
                 </form>
             </div>
@@ -187,7 +187,7 @@ $(function(){
                 <a class="btn btn-primary pull-left"
                 onclick="gotoPrevious(2, 1, 'version-1-course-x-lesson-2-page-11', false, -1)"> Previous </a>
                 <div class="text-center">
-                <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment("version-1-course-x-lesson-2-page-11", 'program1')"> Submit</a>
+                <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-2-page-11', 'program1')"> Submit</a>
             </div>
            
             </form>
@@ -235,7 +235,7 @@ $(function(){
                 <a class="btn btn-primary pull-left"
                 onclick="gotoPrevious(2, 2, 'version-1-course-x-lesson-2-page-16', false, -1)"> Previous </a>
                 <div class="text-center">
-                    <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment("version-1-course-x-lesson-2-page-16", 'program2')"> Submit</a>
+                    <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-2-page-16', 'program2')"> Submit</a>
                 </div>
             </form>
             <br>
@@ -311,7 +311,7 @@ $(function(){
             <a class="btn btn-primary pull-left"
             onclick="gotoPrevious(2, 3, 'version-1-course-x-lesson-2-page-22', false, -1)"> Previous </a>
             <div class="text-center">
-                <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment("version-1-course-x-lesson-2-page-22", 'program3')"> Submit</a>
+                <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-2-page-22', 'program3')"> Submit</a>
             </div>
         </form>
         <br>
