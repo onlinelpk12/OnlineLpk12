@@ -48,7 +48,12 @@ const teacher_url = "https://onlinelpk12dotnetapi.azurewebsites.net/api/Teacher/
 var response = null;
 $.get(teacher_url, function(data, status){
 response = data
+if(response==null){
+	showErrorMessage(studentid);
+}
+else{
 buildLessonList(response);
+}
 });
 return response;
 }
@@ -75,6 +80,10 @@ htmlTable += row;
 }
 htmlTable += '</table>';
 $('#student-progress-table').html(htmlTable);
+}
+
+function showErrorMessage(id){
+	$('#student-progress-table').html('There are no lessons viewed by student having id'+id);
 }
 
 </script>
