@@ -44,7 +44,7 @@ function gotoNext(currentLessonNumber, currentLearningOutcomeNumber, currentPage
     currentPage.hidden = true;
     nextPage.hidden = false;
     
-    SaveStudentLessonsProgress(currentLessonNumber, currentLearningOutcomeNumber, currentPageId);
+    SaveStudentLessonsProgress(currentLessonNumber, currentLearningOutcomeNumber, nextPageId);
 }
 
 
