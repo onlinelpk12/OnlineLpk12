@@ -43,6 +43,8 @@ function gotoNext(currentLessonNumber, currentLearningOutcomeNumber, currentPage
 
     currentPage.hidden = true;
     nextPage.hidden = false;
+    
+    SaveStudentLessonsProgress(currentLessonNumber, currentLearningOutcomeNumber, currentPageId);
 }
 
 
@@ -168,6 +170,49 @@ function similarity(s1, s2) {
         costs[s2.length] = lastValue;
     }
     return costs[s2.length];
+  }
+function SaveStudentLessonsProgress(lessonId, learningOutcomeId, pageId){
+      let studentLessonProgressRequest = {
+          studentId:0,
+          lessonId:0,
+          learningOutcome:0,
+          pageNumber:0,
+          activityTime:null
+        };
+     
+     let pageIdIndex = pageId.indexOf("page");
+     let ActualpageId = pageId.substring(pageIdIndex,pageId.length).replace("page-","")
+
+     studentLessonProgressRequest.studentId = parseInt(sessionStorage.getItem('userId'));
+     studentLessonProgressRequest.lessonId = lessonId,
+     studentLessonProgressRequest.learningOutcome = learningOutcomeId,
+     studentLessonProgressRequest.pageNumber = parseInt(ActualpageId);
+
+     SaveStudentLessonsProgressThroughAPI(studentLessonProgressRequest);
+  }
+
+  function SaveStudentLessonsProgressThroughAPI(studentLessonsProgressRequest){
+      const saveStudentProgressAPIUrl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/Student/"+studentLessonsProgressRequest.studentId+"/lessonprogress";
+    $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify(studentLessonsProgressRequest),
+        dataType: 'json',
+        type: 'POST',
+        url: saveStudentProgressAPIUrl,
+        success: function (data) {
+           
+        },
+        statusCode: {
+            400: function (error) {
+            },
+            404: function (error) {
+            },
+            500: function (error) {
+            }
+        },
+        error: function (error) {
+        }       
+    });
   }
 // above functions are used now.
 
