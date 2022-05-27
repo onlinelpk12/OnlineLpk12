@@ -14,5 +14,6 @@ namespace OnlineLpk12.Data.Models
         public int? ProgrammingTaskId { get; set; }
         public DateTime ActivityTimeStamp { get; set; }
         public int? LearningOutcome { get; set; }
+        public sbyte? IsGrading { get; set; }
     }
 }

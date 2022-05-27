@@ -10,5 +10,6 @@
         public string Editor { get; set; }
         public string Query { get; set; }
         public string FileUrl { get; set; }
+        public bool IsGrading { get; set; }
     }
 }

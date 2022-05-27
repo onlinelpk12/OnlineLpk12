@@ -100,7 +100,7 @@ namespace OnlineLpk12.Services.Implementation
                                             UserId = userId,
                                             ActivityTime = sp.ActivityTimeStamp.ToString("MM/dd/yyyy hh:mm:ss tt"),
                                             Grade = !string.IsNullOrEmpty(gr.Grade) && gr.Grade != "NA" ? gr.Grade : "Not yet graded",
-                                        }).ToListAsync();
+                                        }).OrderByDescending(x => x.ActivityTime).ToListAsync();
                 return result;
             }
             catch (Exception ex)

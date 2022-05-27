@@ -23,6 +23,12 @@ namespace OnlineLpk12.Controllers
             _logService = logService;
         }
 
+        /// <summary>
+        /// Gets list of all courses for the teacher
+        /// Throws Bad Request error if user is not teacher
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet("{userId}")]
         public async Task<IActionResult> GetCourses(int userId)
         {
@@ -70,6 +76,13 @@ namespace OnlineLpk12.Controllers
             }
         }
         
+        /// <summary>
+        /// Gets the list of students for the course 
+        /// Throws bad request if the user is not teacher
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="courseId"></param>
+        /// <returns></returns>
         [HttpGet("{userId}/course/{courseId}")]
         public async Task<IActionResult> GetStudentsForCourse(int userId, int courseId)
         {
@@ -125,6 +138,11 @@ namespace OnlineLpk12.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet("{userId}/sparc")]
         public async Task<IActionResult> GetSparcList(int userId)
         {
