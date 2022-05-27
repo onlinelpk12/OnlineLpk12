@@ -104,7 +104,10 @@ function getGrading(studentLevel, input, answer) {
     //return result[getRandomInt(result.length)]
 }
 
-function submitAssessment(textAreaId){
+function submitAssessment(currentPageId, textAreaId){
+ SaveStudentLessonsProgress(parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber)), parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber)), currentPageId);
+  
+    
   let input = document.getElementById(textAreaId).value;
   let isAssessmentPassed = null;
   if(input == null || input == undefined || input.trim().length == 0){
@@ -123,8 +126,6 @@ function submitAssessment(textAreaId){
     }
     isAssessmentPassed = getGrading(studentLevel[getRandomInt(studentLevel.length)], input, answer) == "pass" ? true : false;
   }
-   
-   
     sessionStorage.setItem(sessionKeyIsAssessmentPassed, isAssessmentPassed);
     window.open(nextStepPage, "_self");
 }
