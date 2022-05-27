@@ -6,6 +6,10 @@ using OnlineLpk12.Helpers;
 
 namespace OnlineLpk12.Controllers
 {
+
+    /*************************************************************************************************************/
+    //These methods are no longer used. These are developed as per the initial design
+
     [Route("api/[controller]")]
     [ApiController]
     public class StudentProgressController : ControllerBase

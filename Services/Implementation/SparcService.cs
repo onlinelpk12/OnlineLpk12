@@ -74,7 +74,11 @@ namespace OnlineLpk12.Services.Implementation
         //    }
         //}
 
-
+        /// <summary>
+        /// Execute the sparc request
+        /// </summary>
+        /// <param name="sparcRequest"></param>
+        /// <returns></returns>
         public async Task<Result<string>> ExecuteSparcRequest(Sparc sparcRequest)
         {
             var result = new Result<string>();
@@ -131,7 +135,11 @@ namespace OnlineLpk12.Services.Implementation
             }
         }
 
-
+        /// <summary>
+        /// Save sparc request
+        /// </summary>
+        /// <param name="sparcRequest"></param>
+        /// <returns></returns>
         public async Task<Result<string>> SaveSparcProgram(Sparc sparcRequest)
         {
             var result = new Result<string>();
@@ -151,6 +159,12 @@ namespace OnlineLpk12.Services.Implementation
             return result;
         }
 
+        /// <summary>
+        /// Save sparc data
+        /// </summary>
+        /// <param name="sparcRequest"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
         private async Task SaveSparcData(Sparc sparcRequest, string response)
         {
             try
@@ -198,6 +212,12 @@ namespace OnlineLpk12.Services.Implementation
             }
         }
 
+        /// <summary>
+        /// Get Sparc programs by user id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="lessonId"></param>
+        /// <returns></returns>
         public async Task<Result<List<SparcProgram>>> GetSparcProgramsByUserId(int userId, int lessonId)
         {
             var result = new Result<List<SparcProgram>>();
@@ -237,6 +257,11 @@ namespace OnlineLpk12.Services.Implementation
             }
         }
 
+        /// <summary>
+        /// Submit sparc grade
+        /// </summary>
+        /// <param name="sparcRequest"></param>
+        /// <returns></returns>
         public async Task<Result<string>> SubmitSparcGrade(Sparc sparcRequest)
         {
             var result = new Result<string>();

@@ -92,7 +92,7 @@ namespace OnlineLpk12.Services.Implementation
                 result.Content = await (from sp in _context.Sparcs
                                         join gr in _context.SparcGrades
                                         on sp.Id equals gr.SparcId
-                                        where sp.UserId == userId
+                                        where sp.UserId == userId && sp.IsGrading == (sbyte)0
                                         select new SparcProgram()
                                         {
                                             LessonId = sp.LessonId ?? 0,

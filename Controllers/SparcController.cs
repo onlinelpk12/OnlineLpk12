@@ -76,6 +76,12 @@ namespace OnlineLpk12.Controllers
         //    }
         //}
 
+        /// <summary>
+        /// Executes the sparc request
+        /// Execution of sparc program / Submitting the Query / Getting answer sets
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost("execute")]
         [Consumes("application/x-www-form-urlencoded")]
         public async Task<IActionResult> ExecuteSparc([FromForm] Sparc request)
@@ -104,6 +110,11 @@ namespace OnlineLpk12.Controllers
             }
         }
 
+        /// <summary>
+        /// Save the sparc program
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost("save")]
         [Consumes("application/x-www-form-urlencoded")]
         public async Task<IActionResult> SaveSparcProgram([FromForm] Sparc request)
@@ -132,6 +143,12 @@ namespace OnlineLpk12.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets the sparc programs by user id and kesson id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="lessonId"></param>
+        /// <returns></returns>
         [HttpGet("{userId}/lesson/{lessonId}")]
         public async Task<IActionResult> GetSparcProgramsByUserId(int userId, int lessonId)
         {
@@ -166,6 +183,11 @@ namespace OnlineLpk12.Controllers
             }
         }
 
+        /// <summary>
+        /// Submits the grade for the sparc program
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost("submitgrade")]
         [Consumes("application/x-www-form-urlencoded")]
         public async Task<IActionResult> SubmitSparcGrade([FromForm] Sparc request)
