@@ -74,7 +74,11 @@ namespace OnlineLpk12.Services.Implementation
         //    }
         //}
 
-
+        /// <summary>
+        /// Execute the sparc request
+        /// </summary>
+        /// <param name="sparcRequest"></param>
+        /// <returns></returns>
         public async Task<Result<string>> ExecuteSparcRequest(Sparc sparcRequest)
         {
             var result = new Result<string>();
@@ -125,13 +129,17 @@ namespace OnlineLpk12.Services.Implementation
             }
             catch (Exception ex)
             {
-                _logService.LogError(sparcRequest.UserId, MethodBase.GetCurrentMethod().Name, 
+                _logService.LogError(sparcRequest.UserId, MethodBase.GetCurrentMethod().Name,
                     Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 throw;
             }
         }
 
-
+        /// <summary>
+        /// Save sparc request
+        /// </summary>
+        /// <param name="sparcRequest"></param>
+        /// <returns></returns>
         public async Task<Result<string>> SaveSparcProgram(Sparc sparcRequest)
         {
             var result = new Result<string>();
@@ -151,21 +159,49 @@ namespace OnlineLpk12.Services.Implementation
             return result;
         }
 
+        /// <summary>
+        /// Save sparc data
+        /// </summary>
+        /// <param name="sparcRequest"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
         private async Task SaveSparcData(Sparc sparcRequest, string response)
         {
             try
             {
-                var data = new Data.Models.Sparc()
+                var d = await (from sp in _context.Sparcs
+                               where sp.LessonId == sparcRequest.LessonId &&
+                               sp.LearningOutcome == sparcRequest.LearningOutcome &&
+                               sp.UserId == sparcRequest.UserId
+                               select sp).FirstOrDefaultAsync();
+
+                if (d != null)
                 {
-                    LessonId = sparcRequest.LessonId,
-                    LearningOutcome = sparcRequest.LearningOutcome,
-                    UserId = sparcRequest.UserId,
-                    Program = Encoding.Default.GetBytes(sparcRequest.Editor),
-                    Query = sparcRequest.Query,
-                    Results = Encoding.Default.GetBytes(sparcRequest.Action == "getQuery" ? response : ""),
-                    ActivityTimeStamp = DateTime.Now
-                };
-                await _context.Sparcs.AddAsync(data);
+                    d.Program = Encoding.Default.GetBytes(sparcRequest.Editor);
+                    d.ActivityTimeStamp = DateTime.Now;
+                    d.IsGrading = sparcRequest.IsGrading ? (sbyte)1 : (sbyte)0;
+                    if (!string.IsNullOrEmpty(response))
+                    {
+                        d.Query = sparcRequest.Query;
+                        d.Results = Encoding.Default.GetBytes(sparcRequest.Action == "getQuery" ? response : "");
+                    }
+                }
+                else
+                {
+                    var data = new Data.Models.Sparc()
+                    {
+                        LessonId = sparcRequest.LessonId,
+                        LearningOutcome = sparcRequest.LearningOutcome,
+                        UserId = sparcRequest.UserId,
+                        Program = Encoding.Default.GetBytes(sparcRequest.Editor),
+                        Query = sparcRequest.Query,
+                        Results = Encoding.Default.GetBytes(sparcRequest.Action == "getQuery" ? response : ""),
+                        ActivityTimeStamp = DateTime.Now,
+                        IsGrading = sparcRequest.IsGrading ? (sbyte)1 : (sbyte)0
+                    };
+                    await _context.Sparcs.AddAsync(data);
+                }
+
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -176,6 +212,12 @@ namespace OnlineLpk12.Services.Implementation
             }
         }
 
+        /// <summary>
+        /// Get Sparc programs by user id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="lessonId"></param>
+        /// <returns></returns>
         public async Task<Result<List<SparcProgram>>> GetSparcProgramsByUserId(int userId, int lessonId)
         {
             var result = new Result<List<SparcProgram>>();
@@ -184,14 +226,14 @@ namespace OnlineLpk12.Services.Implementation
                 if (lessonId > 0)
                 {
                     result.Content = (from sp in _context.Sparcs
-                                where sp.UserId == userId && sp.LessonId == lessonId
-                                select new SparcProgram()
-                                {
-                                    LessonId = sp.LessonId ?? 0,
-                                    LearningOutcome = sp.LearningOutcome ?? 0,
-                                    Program = Encoding.Default.GetString(sp.Program),
-                                    UserId = userId
-                                }).ToList();
+                                      where sp.UserId == userId && sp.LessonId == lessonId
+                                      select new SparcProgram()
+                                      {
+                                          LessonId = sp.LessonId ?? 0,
+                                          LearningOutcome = sp.LearningOutcome ?? 0,
+                                          Program = Encoding.Default.GetString(sp.Program),
+                                          UserId = userId
+                                      }).ToList();
                 }
                 else
                 {
@@ -215,17 +257,22 @@ namespace OnlineLpk12.Services.Implementation
             }
         }
 
+        /// <summary>
+        /// Submit sparc grade
+        /// </summary>
+        /// <param name="sparcRequest"></param>
+        /// <returns></returns>
         public async Task<Result<string>> SubmitSparcGrade(Sparc sparcRequest)
         {
             var result = new Result<string>();
             try
             {
                 var datafromdb = await (from gr in _context.SparcGrades
-                                  where gr.StudentId == sparcRequest.UserId &&
-                                  gr.LessonId == sparcRequest.LessonId &&
-                                  gr.LearningOutcome == sparcRequest.LearningOutcome
-                                  select gr).FirstOrDefaultAsync();
-                if(datafromdb == null)
+                                        where gr.StudentId == sparcRequest.UserId &&
+                                        gr.LessonId == sparcRequest.LessonId &&
+                                        gr.LearningOutcome == sparcRequest.LearningOutcome
+                                        select gr).FirstOrDefaultAsync();
+                if (datafromdb == null)
                 {
                     var data = new Data.Models.SparcGrade()
                     {

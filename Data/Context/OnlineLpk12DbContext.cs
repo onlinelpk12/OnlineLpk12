@@ -351,6 +351,10 @@ namespace OnlineLpk12.Data.Context
                     .HasColumnType("datetime")
                     .HasColumnName("activity_time_stamp");
 
+                entity.Property(e => e.IsGrading)
+                    .HasColumnType("tinyint(4)")
+                    .HasColumnName("is_grading");
+
                 entity.Property(e => e.LearningOutcome)
                     .HasColumnType("int(11)")
                     .HasColumnName("learning_outcome");

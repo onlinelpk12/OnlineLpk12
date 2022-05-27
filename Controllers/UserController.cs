@@ -8,6 +8,8 @@ using System.Text;
 
 namespace OnlineLpk12.Controllers
 {
+
+    //This file is no longer used. These were developed as per the initial design
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase

@@ -23,6 +23,12 @@ namespace OnlineLpk12.Controllers
             _logService = logService;
         }
 
+        /// <summary>
+        /// Gets list of all courses for the teacher
+        /// Throws Bad Request error if user is not teacher
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet("{userId}")]
         public async Task<IActionResult> GetCourses(int userId)
         {
@@ -70,6 +76,13 @@ namespace OnlineLpk12.Controllers
             }
         }
         
+        /// <summary>
+        /// Gets the list of students for the course 
+        /// Throws bad request if the user is not teacher
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="courseId"></param>
+        /// <returns></returns>
         [HttpGet("{userId}/course/{courseId}")]
         public async Task<IActionResult> GetStudentsForCourse(int userId, int courseId)
         {
@@ -125,6 +138,11 @@ namespace OnlineLpk12.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets the list of sparc programs for the corresponding user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet("{userId}/sparc")]
         public async Task<IActionResult> GetSparcList(int userId)
         {
@@ -163,6 +181,13 @@ namespace OnlineLpk12.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets the sparc program for the corresponding user id, lesson id and learning outcome
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="lessonId"></param>
+        /// <param name="learningOutcome"></param>
+        /// <returns></returns>
         [HttpGet("{userId}/sparc/lessson/{lessonId}/learningoutcome/{learningOutcome}")]
         public async Task<IActionResult> GetSparcProgram(int userId, int lessonId, int learningOutcome)
         {
@@ -217,6 +242,11 @@ namespace OnlineLpk12.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets the list of lessons progress based on the userid
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet("{userId}/lessonprogress")]
         public async Task<IActionResult> GetLessonProgressList(int userId)
         {
@@ -255,6 +285,11 @@ namespace OnlineLpk12.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets the list of assessments overview based on the student id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet("{userId}/assessment")]
         public async Task<IActionResult> GetAssessments(int userId)
         {
@@ -292,7 +327,14 @@ namespace OnlineLpk12.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }
-
+        
+        /// <summary>
+        /// Get the assessment details for the corresponding student id, lesson id and learning outcome
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="lessonId"></param>
+        /// <param name="learningOutcome"></param>
+        /// <returns></returns>
         [HttpGet("{userId}/assessment/lessson/{lessonId}/learningoutcome/{learningOutcome}")]
         public async Task<IActionResult> GetAssessmentDetails(int userId, int lessonId, int learningOutcome)
         {
