@@ -7,11 +7,16 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+	 <script src="../js/verifytoken.js" type="text/javascript">  </script>
+<script type="text/javascript">
+$(function(){
+    verifytoken();
+});
+</script>
     <link rel="stylesheet" href="../styles/style.css">
     <script src="../js/lessonDataStructureJSON.js"></script>
-    <script src="../js/script.js"></script>
-    <%@ include file = "header.jsp" %>
+    <script src="../js/script.js"></script>    
 </head>
 
 <body>
@@ -33,6 +38,7 @@
   		}           
     });    
     </script>
+	<%@ include file = "header.jsp" %>
     <section id="version-1-course-x-lesson-2-page-1" class="container" hidden>
         <div class="row">
             <div class="col-md-8 content" style="margin-left:20rem">
@@ -137,12 +143,13 @@
                 <h2>Extent your model for the relation of mom</h2>
                 <form action="">
                     <label for="ques1"> Representing knowledge as comment and fact  </label><br />
-                    <input type="text" id="ques1" name="ques1" class="knowledge-check-input"><br><br>
+                    <textarea id="program0" name="program0" rows="4" cols="50" class="knowledge-check-input"></textarea>
+                    <br><br>
                     <br>
                     <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(2, 0, 'version-1-course-x-lesson-2-page-6', false, -1)"> Previous </a>
                     <div class="text-center">
-                        <a class="btn btn-primary" style="margin-left: -15rem;" onclick="submitAssessment()"> Submit </a>
+                        <a class="btn btn-primary" style="margin-left: -15rem;" onclick="submitAssessment('program0')"> Submit </a>
                     </div>
                 </form>
             </div>
@@ -175,12 +182,12 @@
             <h4> Extend your model by the following </h4>
             <form action="">
                 <label for="ques1"> Representing knowledge as comment and fact </label>
-                <input type="text" id="ques1" name="ques1" class="knowledge-check-input"><br><br>
+                <textarea id="program1" name="program1" rows="4" cols="50" class="knowledge-check-input"></textarea><br><br>
                 <br>
                 <a class="btn btn-primary pull-left"
                 onclick="gotoPrevious(2, 1, 'version-1-course-x-lesson-2-page-11', false, -1)"> Previous </a>
                 <div class="text-center">
-                <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment()"> Submit</a>
+                <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('program1')"> Submit</a>
             </div>
            
             </form>
@@ -222,13 +229,13 @@
             <br>
             <form action="">
                 <label for="ques1"> Representing knowledge as comment and fact </label>
-                <input type="text" id="ques1" name="ques1" class="knowledge-check-input"><br><br>
+                <textarea id="program2" name="program2" rows="4" cols="50" class="knowledge-check-input"></textarea><br><br>
                 <br>
                 <br>
                 <a class="btn btn-primary pull-left"
                 onclick="gotoPrevious(2, 2, 'version-1-course-x-lesson-2-page-16', false, -1)"> Previous </a>
                 <div class="text-center">
-                    <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment()"> Submit</a>
+                    <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('program2')"> Submit</a>
                 </div>
             </form>
             <br>
@@ -298,13 +305,13 @@
         <br>
         <form action="">
             <label for="ques1"> Representing knowledge as comment and fact </label>
-            <input type="text" id="ques1" name="ques1" class="knowledge-check-input"><br><br>
+            <textarea id="program3" name="program3" rows="4" cols="50" class="knowledge-check-input"></textarea><br><br>
             <br>
             <br>
             <a class="btn btn-primary pull-left"
             onclick="gotoPrevious(2, 3, 'version-1-course-x-lesson-2-page-22', false, -1)"> Previous </a>
             <div class="text-center">
-                <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment()"> Submit</a>
+                <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('program3')"> Submit</a>
             </div>
         </form>
         <br>

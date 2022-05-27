@@ -8,24 +8,32 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script src="../js/lessonDataStructureJSON.js"></script>
     <script src="../js/script.js"></script>
-    <%@ include file = "header.jsp" %>
+	  <script src="../js/verifytoken.js" type="text/javascript"></script>
+ <script type="text/javascript">
+    $(function(){
+      verifytoken();
+    });
+  </script>
+    
 </head>
 
 <body>
-    
+    <%@ include file = "header.jsp" %>
 
     <section id="nextbutton" class="container">
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <p id="next-step-link"></p>
+   <div id="message-div" class="alert" role="alert">
+ <p id="next-step-link"></p>
+</div>
             </div>
         </div>
     </section>
 
-    <!-- <%@ include file = "footer.jsp" %>  -->
+    <%@ include file = "footer.jsp" %>
 
 
     <script type="text/javascript">
@@ -50,7 +58,9 @@
         }
 
         $(document).ready(function () {
-        	 let message = document.getElementById('next-step-link');
+        	let messageAlert = document.getElementById('message-div');
+		let message = document.getElementById('next-step-link');
+		
              let isAssessmentPassed = sessionStorage.getItem(sessionKeyIsAssessmentPassed) === 'true';
              let nextLessonUrl = "sparc.html";
 
@@ -61,6 +71,10 @@
              // show next step based on binary search
 
              if (isAssessmentPassed) {
+		     messageAlert.classList.remove('alert-success');
+		    messageAlert.classList.remove('alert-danger');
+		     
+		     messageAlert.classList.add('alert-success')
                  message.innerHTML = "You have passed the assessment. Please click <a href='" + sparcPage + "'> here </a> to to practice programming task."
              }
              else {
@@ -70,10 +84,14 @@
                  sessionStorage.setItem(sessionKeyShowPageId, nextPageId);
 
                  let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber) + ".jsp";
+		 
+		messageAlert.classList.remove('alert-success');
+		messageAlert.classList.remove('alert-danger');
+		     
+		messageAlert.classList.add('alert-danger'); 
+		     
                  message.innerHTML = "You have not passed the assessment. Please click <a href='" + nextLessonUrl + "'> here </a> to go to next step";
              }
-             return;
-
         });
     </script>
 </body>

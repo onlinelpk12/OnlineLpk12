@@ -34,16 +34,24 @@ border-collapse: collapse
 let user_id="14";
 let htmlTable = "<table class='table table-sm table-bordered table-hover'>";
 let headerRow = "<tr style='background-color:#275E9B;color:white'>";
-
-headerRow += "<th>" + "Sparc Programs" + "</th>";
-headerRow += "<th>" + "Lesson Progress" + "</th>";
+headerRow += "<th>" + "Teacher ID" + "</th>";
+headerRow += "<th>" + "Semester" + "</th>";
+headerRow += "<th>" + "Term" + "</th>";
+headerRow += "<th>" + "Course" + "</th>";
+headerRow += "<th>" + "Link to access Students under course" + "</th>";
 
 
 htmlTable+= headerRow;
-	let row = `<tr>`
-		+ `<td> <a class='btn btn-primary' onclick='viewSparcProgram("${user_id}")' > Click here to view My Sparc programs </a> </td>`
-		+ `<td> <a class='btn btn-primary' onclick='viewLessonProgress("${user_id}")' > Click here to view My Lesson progress </a> </td>`
-		+ `</tr>`;
+for(let i=1; i<=6;i++)
+{
+let row = "";
+row += "<tr>";
+row += '<td>' + '20'+ '</td>';
+row += '<td>' + i + '</td>';
+row += '<td>' + '2022-2023' + '</td>';
+row += '<td>' + 'Course-2' + '</td>';
+row+='<td>' + ' <a href="teacher1.jsp"> ' + 'Click here to view Students Progress enrolled in this course </a>' +'</td>'; 
+row += '</tr>';
 htmlTable += row;
 
 htmlTable += '</table>';

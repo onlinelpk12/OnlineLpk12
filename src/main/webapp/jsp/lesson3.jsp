@@ -11,35 +11,11 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script src="scripts/script.js"></script>
     <link rel="stylesheet" href="styles/style.css">
+    <%@ include file = "header.jsp" %>
 </head>
 
 <body>
-     
-<div class="container pt-5 my-10 bg-primary text-white" style="width:100%">
-
-
-    <div class="col-sm-3">
-     <form action="header.jsp">
-           <a href="#" id="goBackButton" onclick="history.back()" style="margin-top:25px"><img height="30" width="40" src="images/back.png" style="margin-top:25px" ></a>
-           <a href="home.jsp" style="margin-top:25px"><img height="30" width="40" src="images/home.png" style="margin-top:25px"></a>
-         </form>
-     </div>
-   
-   
-   <div class="col-sm-6" style="text-align:center">
-        
-   <h2> Welcome to Online LPK12 Course</h2>
-   </div>
-   
-   <div class="col-sm-2" style="margin-top:30px">
-   <h4>Rashmi Mamidi </h4>
-   </div>
-   <div class="col-sm-1">
-   <a href="logout.jsp" style="margin-top:30px" class="btn btn-warning">Logout</a>
-   </div>
-   </div>
-
-    <section id="learning-outcome-0" class="container">
+       <section id="learning-outcome-0" class="container">
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
         <h1 class="text-primary"> Lesson 3 Variables and Queries </h1>
@@ -242,9 +218,6 @@
         
         <button class="btn btn-primary" onclick="gotoPrevious('part-14','part-13');"> Previous </button>
     </section>
+        <%@ include file = "footer.jsp" %>
  <body>
-        <div class="footer">
-          <h4>Online LPK12 Course</h4>
-        </div>
-        </body>
         </html>
