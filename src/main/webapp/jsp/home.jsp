@@ -12,24 +12,13 @@
 </head>
 <body>
 
-
-
-<div class="col-md-4">
-
-
-
-</div>
-
-
-
-
 <div class="container pt-5" style="text-align:center">
 <div class="row">
-<div class="col-md-4">
+<div class="col-md-6">
 <h2>Lessons</h2>
 <div class="card" style="width:400px">
 <form action="lessonnumber.jsp">
-<img class="card-img-top" src="../images/lessons.png" alt="lessons" style="width:95%">
+<img class="card-img-top" src="../images/lessons.png" alt="lessons" style="width:100%">
 <div class="card-body">
 <p class="card-text">Click below to view lessons</p>
 <a href="lesson.jsp" class="btn btn-primary">Lessons</a>
@@ -38,11 +27,25 @@
 </div>
 </div>
 
-<div class="col-md-4">
+<div class="col-sm-6">
+<h2>My Progress</h2>
+<div class="card" style="width:400px">
+<form action="progress.jsp">
 
 
 
+
+
+
+<img class="card-img-top" src="../images/progress.jpg" alt="progress" style="width:100%">
+<div class="card-body">
+<p class="card-text">Click below to view progress</p>
+<a href="../jsp/student.jsp" class="btn btn-primary">My Progress</a>
 </div>
+</form>
+</div>
+</div>
+
 </div>
 </div>
 <br>
@@ -50,7 +53,7 @@
 <script>
 
 $(function() {
-  verifytoken();
+ verifytoken();
 $("#goBackButton").hide();
 });
 
