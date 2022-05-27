@@ -1,6 +1,6 @@
 ﻿namespace OnlineLpk12.Data.Entities
 {
-    public class LessonProgressResponse
+    public class SuccessResponse
     {
         public bool IsSuccess { get; set; }
     }

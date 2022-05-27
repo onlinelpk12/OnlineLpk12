@@ -57,5 +57,44 @@ namespace OnlineLpk12.Services.Implementation
                 throw;
             }
         }
+
+        public bool SaveAssessmentScore(AssessmentOverview assessmentOverview)
+        {
+            try
+            {
+                AssessmentStatus assessmentStatusFromDB = _context.AssessmentStatuses
+                    .FirstOrDefault(x => x.StudentId == assessmentOverview.StudentId
+                    && x.LessonId == assessmentOverview.LessonId
+                    && x.LearningOutcome == assessmentOverview.LearningOutcome);
+                if (assessmentStatusFromDB == null)
+                {
+                    AssessmentStatus assessmentStatus = new()
+                    {
+                        StudentId = assessmentOverview.StudentId,
+                        LessonId = assessmentOverview.LessonId,
+                        LearningOutcome = assessmentOverview.LearningOutcome,
+                        Score = assessmentOverview.Score,
+                        TotalScore = assessmentOverview.TotalScore,
+                        Status = assessmentOverview.Status,
+                    };
+                    _context.AssessmentStatuses.Add(assessmentStatus);
+                }
+                else
+                {
+                    assessmentStatusFromDB.Score = assessmentOverview.Score;
+                    assessmentStatusFromDB.TotalScore = assessmentOverview.TotalScore;
+                    assessmentStatusFromDB.Status = assessmentOverview.Status;
+                }
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                _logService.LogError(assessmentOverview.StudentId, MethodBase.GetCurrentMethod().Name,
+                   Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
+                throw;
+            }
+        }
     }
 }
