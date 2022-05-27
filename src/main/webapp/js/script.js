@@ -126,7 +126,7 @@ function submitAssessment(currentPageId, textAreaId){
     else if(textAreaId == "program2"){
      answer = "%John is the dad of peter dad(john, peter)";
     }
-    score = getGrading(studentLevel[getRandomInt(studentLevel.length)], input, answer) == "pass" ? true : false;
+    score = getGrading(studentLevel[getRandomInt(studentLevel.length)], input, answer);
       if(score >= 70){
         isAssessmentPassed = true;
         assessmentStatus = "pass"
