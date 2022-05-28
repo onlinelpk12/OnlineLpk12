@@ -105,7 +105,7 @@ function getGrading(studentLevel, input, answer) {
 }
 
 function submitAssessment(currentPageId, textAreaId){
- SaveStudentLessonsProgress(parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber)), parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber)), currentPageId);
+ SaveStudentLessonsProgressThroughAPI(parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber)), parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber)), currentPageId);
   
     
   let input = document.getElementById(textAreaId).value;
@@ -136,15 +136,64 @@ function submitAssessment(currentPageId, textAreaId){
     }
   }
     sessionStorage.setItem(sessionKeyIsAssessmentPassed, isAssessmentPassed);
-    SaveStudentAssessmentStatusThroughAPI(score,100,assessmentStatus).then(
-        function() {
-            window.open(nextStepPage, "_self");
-        }
-    );
+    
+    Promise.all(
+        [SaveStudentAssessmentStatusThroughAPI(score, 100, assessmentStatus),
+        SaveStudentAssessmentSubmissionThroughAPI(question, submittedAnswer)])
+        .then(function (responses) {
+            return Promise.all(responses.map(function (response) { return response; }));
+        }).then(function (data) {
+            //	console.log(data);
+        })
+        .catch(function (error) {
+            // console.log(error);
+        });
+    
+    window.open(nextStepPage, "_self");
 }
 
-async function SaveStudentAssessmentStatusThroughAPI(score, totalScore, assessmentStatus){
-   
+function SaveStudentAssessmentSubmissionThroughAPI(question, submittedAnswer) {    
+    let assessmentSubmissionRequest = {
+        assessmentId: 0,
+        lessonId: parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber)),
+        studentId: parseInt(sessionStorage.getItem("userId")),
+        learningOutcome: parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber)),
+        questionAnswers: [
+            {
+                question: question,
+                answer: submittedAnswer
+            }
+        ]
+    }
+
+    const saveStudentAssessmentSubmissionAPIUrl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/Student/" + assessmentSubmissionRequest.studentId + "/assessmentDetails";
+    $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify(assessmentSubmissionRequest),
+        dataType: 'json',
+        type: 'POST',
+        url: saveStudentAssessmentSubmissionAPIUrl,
+        success: function (data) {
+            return data;
+        },
+        statusCode: {
+            400: function (error) {
+                return error;
+            },
+            404: function (error) {
+                return error;
+            },
+            500: function (error) {
+                return error;
+            }
+        },
+        error: function (error) {
+            return error;
+        }
+    });
+}
+
+function SaveStudentAssessmentStatusThroughAPI(score, totalScore, assessmentStatus){   
     let assessmentStatusRequest =  {
         assessmentId: 0,
         lessonId: parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber)),
@@ -219,31 +268,23 @@ function similarity(s1, s2) {
     }
     return costs[s2.length];
   }
-function SaveStudentLessonsProgress(lessonId, learningOutcomeId, pageId){
-      let studentLessonProgressRequest = {
-          studentId:0,
-          lessonId:0,
-          learningOutcome:0,
-          pageNumber:0,
-          activityTime:null
-        };
-     
+
+  function SaveStudentLessonsProgressThroughAPI(lessonId, learningOutcomeId, pageId){
      let pageIdIndex = pageId.indexOf("page");
      let ActualpageId = pageId.substring(pageIdIndex,pageId.length).replace("page-","")
-
-     studentLessonProgressRequest.studentId = parseInt(sessionStorage.getItem('userId'));
-     studentLessonProgressRequest.lessonId = lessonId,
-     studentLessonProgressRequest.learningOutcome = learningOutcomeId,
-     studentLessonProgressRequest.pageNumber = parseInt(ActualpageId);
-
-     SaveStudentLessonsProgressThroughAPI(studentLessonProgressRequest);
-  }
-
-  function SaveStudentLessonsProgressThroughAPI(studentLessonsProgressRequest){
-      const saveStudentProgressAPIUrl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/Student/"+studentLessonsProgressRequest.studentId+"/lessonprogress";
+     
+      let studentLessonProgressRequest = {
+          studentId:parseInt(sessionStorage.getItem('userId'));,
+          lessonId:lessonId,
+          learningOutcome: learningOutcomeId,
+          pageNumber: parseInt(ActualpageId),
+          activityTime:null
+        };
+      
+      const saveStudentProgressAPIUrl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/Student/"+studentLessonProgressRequest.studentId+"/lessonprogress";
     $.ajax({
         contentType: 'application/json',
-        data: JSON.stringify(studentLessonsProgressRequest),
+        data: JSON.stringify(studentLessonProgressRequest),
         dataType: 'json',
         type: 'POST',
         url: saveStudentProgressAPIUrl,
