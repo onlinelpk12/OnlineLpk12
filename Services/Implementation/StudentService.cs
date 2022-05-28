@@ -36,13 +36,13 @@ namespace OnlineLpk12.Services.Implementation
                         LessonId = lessonProgress.LessonId,
                         LearningOutcome = lessonProgress.LearningOutcome,
                         PageNumber = lessonProgress.PageNumber,
-                        ActivityTimeStamp = DateTime.Now
+                        ActivityTimeStamp = GetCurrentCSTTime()
                     };
                     _context.StudentLessonProgresses.Add(studentLessonProgress);
                 }
                 else
                 {
-                    studentLessonProgressFromDb.ActivityTimeStamp = DateTime.Now;
+                    studentLessonProgressFromDb.ActivityTimeStamp = GetCurrentCSTTime();
                 }
                 _context.SaveChanges();
                 return true;
@@ -134,6 +134,36 @@ namespace OnlineLpk12.Services.Implementation
                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 throw;
             }
+        }
+        private DateTime GetCurrentCSTTime()
+        {
+            try
+            {
+                if(string.Equals(TimeZoneInfo.Local.StandardName, "Central Standard Time",
+                    StringComparison.CurrentCultureIgnoreCase))
+                {
+                    return DateTime.Now;
+                }
+                else
+                {
+                    TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+                    DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, cstZone);
+                    return cstTime;
+                }
+            }
+            catch (TimeZoneNotFoundException)
+            {
+
+            }
+            catch (InvalidTimeZoneException)
+            {
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return DateTime.UtcNow.AddHours(-5);
         }
     }
 }
