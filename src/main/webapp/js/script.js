@@ -106,27 +106,31 @@ function getGrading(studentLevel, input, answer) {
 
 function submitAssessment(currentPageId, textAreaId){
  SaveStudentLessonsProgressThroughAPI(parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber)), parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber)), currentPageId);
-  
-    
-  let input = document.getElementById(textAreaId).value;
+     
+  let submittedAnswer = document.getElementById(textAreaId).value;
   let isAssessmentPassed = null;
   let assessmentStatus = null;
+  let question = null;
   let score = 0;
-  if(input == null || input == undefined || input.trim().length == 0){
+  let question = null;
+  if(submittedAnswer == null || submittedAnswer == undefined || submittedAnswer.trim().length == 0){
     isAssessmentPassed = false;
   }
   else{
     let answer = null;
     if(textAreaId == "program0" || textAreaId == "program3"){
-     answer = "%Joaan is the mother of peter mother (joaan, peter)"   
+        question = "Extent your model for the relation of mom";
+        answer = "%Joaan is the mother of peter mother (joaan, peter)"   
     }
     else if(textAreaId == "program1"){
-     answer = "%John is a parent of Peter parent(john, peter)";
+        question = "Extend Family Model for Parent of Peter";
+        answer = "%John is a parent of Peter parent(john, peter)";
     }
     else if(textAreaId == "program2"){
-     answer = "%John is the dad of peter dad(john, peter)";
+        question = "Extend your Model for dad of peter";
+        answer = "%John is the dad of peter dad(john, peter)";
     }
-    score = getGrading(studentLevel[getRandomInt(studentLevel.length)], input, answer);
+    score = getGrading(studentLevel[getRandomInt(studentLevel.length)], submittedAnswer, answer);
       if(score >= 70){
         isAssessmentPassed = true;
         assessmentStatus = "pass"
