@@ -271,14 +271,14 @@ function similarity(s1, s2) {
 
   function SaveStudentLessonsProgressThroughAPI(lessonId, learningOutcomeId, pageId){
      let pageIdIndex = pageId.indexOf("page");
-     let ActualpageId = pageId.substring(pageIdIndex,pageId.length).replace("page-","")
+     let ActualpageId = pageId.substring(pageIdIndex,pageId.length).replace("page-","");
      
       let studentLessonProgressRequest = {
-          studentId:parseInt(sessionStorage.getItem('userId'));,
-          lessonId:lessonId,
+          studentId: parseInt(sessionStorage.getItem('userId')),
+          lessonId: lessonId,
           learningOutcome: learningOutcomeId,
           pageNumber: parseInt(ActualpageId),
-          activityTime:null
+          activityTime: null
         };
       
       const saveStudentProgressAPIUrl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/Student/"+studentLessonProgressRequest.studentId+"/lessonprogress";
