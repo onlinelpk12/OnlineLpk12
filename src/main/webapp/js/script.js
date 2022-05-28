@@ -112,7 +112,6 @@ function submitAssessment(currentPageId, textAreaId){
   let assessmentStatus = null;
   let question = null;
   let score = 0;
-  let question = null;
   if(submittedAnswer == null || submittedAnswer == undefined || submittedAnswer.trim().length == 0){
     isAssessmentPassed = false;
   }
