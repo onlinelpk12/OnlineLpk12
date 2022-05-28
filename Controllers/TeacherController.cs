@@ -357,8 +357,8 @@ namespace OnlineLpk12.Controllers
                     return BadRequest(response);
                 }
 
-                //If learningoutcome is less than or equal to 0 -> throw bad request error
-                if (learningOutcome < 1)
+                //If learningoutcome is less than 0 -> throw bad request error
+                if (learningOutcome < 0)
                 {
                     response.Message = "One or more validation errors occurred.";
                     response.Errors.Add("Enter valid learning outcome.");
