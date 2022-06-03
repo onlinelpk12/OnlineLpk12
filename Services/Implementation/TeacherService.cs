@@ -93,6 +93,7 @@ namespace OnlineLpk12.Services.Implementation
                                         join gr in _context.SparcGrades
                                         on sp.Id equals gr.SparcId
                                         where sp.UserId == userId && sp.IsGrading == (sbyte)0
+                                        orderby sp.ActivityTimeStamp descending
                                         select new SparcProgram()
                                         {
                                             LessonId = sp.LessonId ?? 0,
@@ -100,7 +101,7 @@ namespace OnlineLpk12.Services.Implementation
                                             UserId = userId,
                                             ActivityTime = sp.ActivityTimeStamp.ToString("MM/dd/yyyy hh:mm:ss tt"),
                                             Grade = !string.IsNullOrEmpty(gr.Grade) && gr.Grade != "NA" ? gr.Grade : "Not yet graded",
-                                        }).OrderByDescending(x => x.ActivityTime).ToListAsync();
+                                        }).ToListAsync();
                 return result;
             }
             catch (Exception ex)
