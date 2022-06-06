@@ -134,14 +134,14 @@ namespace OnlineLpk12.Services.Implementation
                                      where sfl.Owner.ToLower() == username.ToLower() &&
                                      sfl.FileUrl.ToLower().Contains(folderUrl.ToLower())
                                      select sfl).ToListAsync();
-                if(spFiles != null && spFiles.Any())
+                if (spFiles != null && spFiles.Any())
                     _context.SparcFiles.RemoveRange(spFiles);
 
                 //Sparc Folder File Access
                 //Get all the folders, sub folders and files from sparc folder file access table
                 var spAccess = await (from fa in _context.SparcFolderFileAccesses
                                       where fa.Owner.ToLower() == username.ToLower() &&
-                                      fa.FolderUrl.ToLower().Contains(folderUrl.ToLower())  &&
+                                      fa.FolderUrl.ToLower().Contains(folderUrl.ToLower()) &&
                                       fa.HasAccess == 1
                                       select fa).ToListAsync();
                 if (spAccess != null && spAccess.Any())
@@ -153,7 +153,7 @@ namespace OnlineLpk12.Services.Implementation
                                         where spc.Owner.ToLower() == username.ToLower() &&
                                         spc.FileUrl.Contains(folderUrl.ToLower())
                                         select spc).ToListAsync();
-                if(spContents != null && spContents.Any())
+                if (spContents != null && spContents.Any())
                     _context.SparcContents.RemoveRange(spContents);
 
                 //save changes
@@ -242,7 +242,7 @@ namespace OnlineLpk12.Services.Implementation
                 });
 
                 //insert into content table
-                await _context.SparcContents.AddAsync(new SparcContent()
+                await _context.SparcContents.AddAsync(new Data.Models.SparcContent()
                 {
                     Owner = username,
                     FileUrl = fileUrl,
@@ -331,11 +331,6 @@ namespace OnlineLpk12.Services.Implementation
             return result;
         }
 
-        public Task GetAllFoldersFilesAccessible(int userId)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task GetFolderContains(int userId, string folderName, string parentUrl)
         {
             throw new NotImplementedException();
@@ -354,12 +349,12 @@ namespace OnlineLpk12.Services.Implementation
                                        where sp.Owner.ToLower() == username.ToLower() &&
                                        sp.FileUrl.ToLower() == fileUrl.ToLower()
                                        select sp).FirstOrDefaultAsync();
-                
-                if(spContent != null)
+
+                if (spContent != null)
                 {
                     spContent.DateModified = DateTime.Now;
                     spContent.Program = Encoding.Default.GetBytes(program);
-                    
+
                     //save changes
                     await _context.SaveChangesAsync();
 
@@ -389,7 +384,7 @@ namespace OnlineLpk12.Services.Implementation
                 Success = false,
                 Content = new Data.Entities.SparcContent()
             };
-            
+
             try
             {
                 //set the file url
@@ -401,7 +396,7 @@ namespace OnlineLpk12.Services.Implementation
                                        sp.FileUrl.ToLower() == fileUrl.ToLower()
                                        select sp).FirstOrDefaultAsync();
 
-                if(spContent != null)
+                if (spContent != null)
                 {
                     var data = new Data.Entities.SparcContent()
                     {
@@ -420,6 +415,36 @@ namespace OnlineLpk12.Services.Implementation
                 _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
                     Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
             }
+            return result;
+        }
+
+        public async Task<Result<string>> GetAllFoldersFilesAccessible(int userId, string username)
+        {
+            Result<string> result = new();
+
+            try
+            {
+                //Get the file record from the Sparc Content table
+                var foldersFiles = await (from sp in _context.SparcFolderFileAccesses
+                                          where sp.Owner.ToLower() == username.ToLower()
+                                          select sp).ToListAsync();
+
+                if (foldersFiles != null && foldersFiles.Any())
+                {
+                    //TO-DO: Create the tree structure here
+                    result.Success = true;
+                    result.Content = "Folder Structure";
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
+                result.Content = "Error occurred while fetching the accessible folders and files";
+                return result;
+            }
+            result.Content = "No accessible files and folder present for the user";
             return result;
         }
 

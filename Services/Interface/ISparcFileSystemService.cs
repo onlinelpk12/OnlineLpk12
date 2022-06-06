@@ -12,7 +12,7 @@ namespace OnlineLpk12.Services.Interface
         Task<Result<string>> CreateFile(int userId, string username, string fileName, string folderUrl);
         Task<Result<string>> DeleteFile(int userId, string username, string fileName, string folderUrl);
 
-        Task GetAllFoldersFilesAccessible(int userId);
+        Task<Result<string>> GetAllFoldersFilesAccessible(int userId, string username);
         Task GetFolderContains(int userId, string folderName, string parentUrl);
         Task<Result<string>> SaveFileContent(int userId, string username, string fileName, string folderUrl, string program);
         Task<Result<SparcContent>> GetFileContent(int userId, string username, string fileName, string folderUrl);
