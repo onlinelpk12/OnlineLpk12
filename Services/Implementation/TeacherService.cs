@@ -89,9 +89,11 @@ namespace OnlineLpk12.Services.Implementation
             var result = new Result<List<SparcProgram>>();
             try
             {
+                
                 result.Content = await (from sp in _context.Sparcs
                                         join gr in _context.SparcGrades
                                         on sp.Id equals gr.SparcId
+                                        //on new { LessonId = sp.LessonId, LerningOutcome = sp.LearningOutcome } equals new { LessonId = gr.LessonId, LearningOutcome = gr.LearningOutcome }
                                         where sp.UserId == userId && sp.IsGrading == (sbyte)0
                                         orderby sp.ActivityTimeStamp descending
                                         select new SparcProgram()

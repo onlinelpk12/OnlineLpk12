@@ -30,6 +30,7 @@ namespace OnlineLpk12.Data.Context
         public virtual DbSet<QuizStatus> QuizStatuses { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<Sparc> Sparcs { get; set; } = null!;
+        public virtual DbSet<SparcContent> SparcContents { get; set; } = null!;
         public virtual DbSet<SparcFile> SparcFiles { get; set; } = null!;
         public virtual DbSet<SparcFolder> SparcFolders { get; set; } = null!;
         public virtual DbSet<SparcFolderContain> SparcFolderContains { get; set; } = null!;
@@ -383,6 +384,31 @@ namespace OnlineLpk12.Data.Context
                     .HasColumnName("user_id");
             });
 
+            modelBuilder.Entity<SparcContent>(entity =>
+            {
+                entity.ToTable("sparc_content");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.DateModified)
+                    .HasColumnType("datetime")
+                    .HasColumnName("date_modified");
+
+                entity.Property(e => e.FileUrl)
+                    .HasMaxLength(1000)
+                    .HasColumnName("file_url");
+
+                entity.Property(e => e.Owner)
+                    .HasMaxLength(100)
+                    .HasColumnName("owner");
+
+                entity.Property(e => e.Program)
+                    .HasColumnType("blob")
+                    .HasColumnName("program");
+            });
+
             modelBuilder.Entity<SparcFile>(entity =>
             {
                 entity.ToTable("sparc_file");
@@ -452,6 +478,10 @@ namespace OnlineLpk12.Data.Context
                 entity.Property(e => e.FolderUrl)
                     .HasMaxLength(100)
                     .HasColumnName("folder_url");
+
+                entity.Property(e => e.Owner)
+                    .HasMaxLength(45)
+                    .HasColumnName("owner");
             });
 
             modelBuilder.Entity<SparcFolderFileAccess>(entity =>
@@ -474,9 +504,9 @@ namespace OnlineLpk12.Data.Context
                     .HasColumnType("tinyint(4)")
                     .HasColumnName("has_access");
 
-                entity.Property(e => e.Username)
+                entity.Property(e => e.Owner)
                     .HasMaxLength(45)
-                    .HasColumnName("username");
+                    .HasColumnName("owner");
             });
 
             modelBuilder.Entity<SparcGrade>(entity =>

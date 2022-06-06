@@ -148,12 +148,12 @@ namespace OnlineLpk12.Services.Implementation
                 var user = await (from usr in _context.Users
                                   where usr.Id == userId
                                   select usr).FirstOrDefaultAsync();
-                return user != null && !string.IsNullOrEmpty(user.Username) ? user.Username : "";
+                return user != null && !string.IsNullOrEmpty(user.Username) ? user.Username : string.Empty;
             }
             catch (Exception ex)
             {
                 _logService.LogError(userId, "GetUserNameByUserId", "UserService", ex.Message, ex);
-                return "";
+                return string.Empty;
             }
         }
     }
