@@ -24,6 +24,66 @@ namespace OnlineLpk12.Controllers
             _logService = logService;
             _fileName = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
         }
+        
+        [HttpPost("createrootfolder")]
+        public async Task<IActionResult> CreateRootFolder(int userId)
+        {
+            Response<string> response = new();
+            List<string> validationMessages = new();
+            string username = "";
+            try
+            {
+                //Validate the user input
+                if (userId < 1)
+                {
+                    validationMessages.Add("Enter valid User Id.");
+                }
+                else
+                {
+                    username = await _userService.GetUserNameByUserId(userId);
+                    if (string.IsNullOrEmpty(username))
+                        validationMessages.Add("User is invalid.");
+                }
+
+                if (validationMessages.Any())
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.AddRange(validationMessages);
+                    return BadRequest(response);
+                }
+
+                //Check if the root folder exists in Database
+                var isFolderExists = await _fileSystemService.IsFolderExists(userId, username, username, String.Empty);
+                if (isFolderExists == null || !isFolderExists.Success || isFolderExists.Content)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Root folder already exists");
+                    return Ok(response);
+                }
+
+                //If no folder exists -> create a new folder
+                var res = await _fileSystemService.CreateFolder(userId, username, username, String.Empty);
+                if (res != null && res.Success && !string.IsNullOrEmpty(res.Content))
+                {
+                    response.Content = res.Content;
+                }
+                else
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add(response.Content);
+                }
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                    System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("Error occurred while fetching the data.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
+            }
+        }
+
 
         [HttpPost("createfolder")]
         public async Task<IActionResult> CreateFolder(int userId, string folderName, string parentUrl)
@@ -59,8 +119,8 @@ namespace OnlineLpk12.Controllers
                 }
 
                 //Check if the folder exists in Database
-                var isFolderExists = await _fileSystemService.CheckFolderExistence(userId, username, folderName, parentUrl);
-                if (isFolderExists == null || !isFolderExists.Success || !isFolderExists.Content)
+                var isFolderExists = await _fileSystemService.IsFolderExists(userId, username, folderName, parentUrl);
+                if (isFolderExists == null || !isFolderExists.Success || isFolderExists.Content)
                 {
                     response.Message = "One or more validation errors occurred.";
                     response.Errors.Add("A folder exists already with same name");
@@ -196,8 +256,8 @@ namespace OnlineLpk12.Controllers
                 }
 
                 //Check if the folder exists in Database
-                var isFileExists = await _fileSystemService.CheckFolderExistence(userId, username, folderName, parentUrl);
-                if (isFileExists == null || !isFileExists.Success || isFileExists.Content)
+                var isFileExists = await _fileSystemService.IsFolderExists(userId, username, folderName, parentUrl);
+                if (isFileExists == null || !isFileExists.Success || !isFileExists.Content)
                 {
                     response.Message = "One or more validation errors occurred.";
                     response.Errors.Add("Folder not found to delete");

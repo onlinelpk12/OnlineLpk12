@@ -23,7 +23,7 @@ namespace OnlineLpk12.Services.Implementation
             _userService = userService;
         }
 
-        public async Task<Result<bool>> CheckFolderExistence(int userId, string username, string folderName, string parentUrl)
+        public async Task<Result<bool>> IsFolderExists(int userId, string username, string folderName, string parentUrl)
         {
             Result<bool> result = new();
             try
@@ -38,12 +38,12 @@ namespace OnlineLpk12.Services.Implementation
                                     select foldr).FirstOrDefaultAsync();
 
 
-                if (folder == null) //If no folder exists return true
+                if (folder != null) //If folder exists return true
                 {
                     result.Success = true;
                     result.Content = true;
                 }
-                else  //If any folder exists return false
+                else  //If no folder exists return false
                 {
                     result.Success = true;
                     result.Content = false;
@@ -74,7 +74,7 @@ namespace OnlineLpk12.Services.Implementation
                     FolderName = folderName,
                     DateCreated = DateTime.Now,
                     Owner = username,
-                    ParentUrl = parentUrl
+                    ParentUrl = string.IsNullOrWhiteSpace(parentUrl) ? null : parentUrl
                 });
 
                 //insert into access table

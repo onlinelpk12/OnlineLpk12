@@ -4,7 +4,7 @@ namespace OnlineLpk12.Services.Interface
 {
     public interface ISparcFileSystemService
     {
-        Task<Result<bool>> CheckFolderExistence(int userId, string username, string folderName, string parentUrl);
+        Task<Result<bool>> IsFolderExists(int userId, string username, string folderName, string parentUrl);
         Task<Result<string>> CreateFolder(int userId, string username, string folderName, string parentUrl);
         Task<Result<string>> DeleteFolder(int userId, string username, string folderName, string parentUrl);
 
