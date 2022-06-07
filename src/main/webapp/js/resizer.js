@@ -5,15 +5,26 @@ $(document).ready(function() {
 
         e.preventDefault();
         $(document).mousemove(function(e) {
-            var position = e.pageX;                   
+            var position = e.pageX;    
+            if ($("#wrapper").hasClass("toggled") === false) {
+                position = e.pageX - 250; 
+              }
+                    
                     
             var mousePercent = (position / ($('#page-content-wrapper').width()) * 100);
             var mousePercent1 = mousePercent;
+            if ($("#wrapper").hasClass("toggled") === false) {
+                mousePercent1 = mousePercent + (212)*100 / ($('#page-content-wrapper').width());
+             }
             
             if(mousePercent >= 5 && mousePercent <= 95) {
                 $('#editor').css('width', (mousePercent - 2.9) + '%');
                 $('#results').css('width', (100-mousePercent-2.9) + '%');
-                $('#column-resizer').css('left', $('#editor').width() + 12 + 'px');
+                if ($("#wrapper").hasClass("toggled") === false) {
+                	$('#column-resizer').css('left', $('#editor').width() + 262 + 'px');
+                }  else {
+                   $('#column-resizer').css('left', $('#editor').width() + 12 + 'px');
+                }
 
                 if(mousePercent <= 10) {
                     $('#editor').css('width', (10 - 2.9) + '%');
@@ -34,6 +45,32 @@ $(document).ready(function() {
         });
     });
 
+	    // Directory button handler
+	    $('#menu-toggle').click(function(e) {
+	        e.preventDefault();
+	        refreshDirectory();
+	    });
+    
+    // The following was originally put into navbar-response.js 9/29
+    
+	    $("#menu-toggle").click(function(e) {
+	        e.preventDefault();
+	        var percent1 = (($('#editor').width())+262)*100 / ($('#page-content-wrapper').width());
+	        var percent2 = (($('#editor').width()+12))*100 / ($('#page-content-wrapper').width());
+	    
+	        $("#wrapper").toggleClass("toggled");
+	    
+	        var startP = $('#editor').width();
+	        if ($("#wrapper").hasClass("toggled") == false) {
+	            $('#column-resizer').css('left', $('#editor').width()+262+'px')         
+	            $('#results').css('left', 100 + 'px');
+	        } else {
+	    
+	            $('#column-resizer').css('left', $('#editor').width()+12+'px');
+	            $('#results').css('left', 12 + 'px'); 
+	        }
+	    });
+    
         $( window ).resize(function() {
             var percent1 = (($('#editor').width())+262)*100 / ($('#page-content-wrapper').width());
             var percent2 = (($('#editor').width()+12))*100 / ($('#page-content-wrapper').width());

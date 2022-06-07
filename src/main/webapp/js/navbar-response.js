@@ -713,6 +713,18 @@ $(document).ready(function() {
         var font_size = $(this).val();
         setEditorFontSize(font_size);
     });
+    
+    var setEditorFontSize = function(font_size) {
+        if (font_size < 0) {
+            return;
+        }
+
+        if (font_size > 72) {
+            return;
+        }
+
+        document.getElementById('editor').style.fontSize=''+font_size+'px';
+    }
 
     /* This does not work 
     $(document).on("click", ".dir-folder parent_li", function() {
