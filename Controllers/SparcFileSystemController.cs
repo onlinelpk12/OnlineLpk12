@@ -25,7 +25,7 @@ namespace OnlineLpk12.Controllers
             _fileName = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
         }
 
-        [HttpPost]
+        [HttpPost("createfolder")]
         public async Task<IActionResult> CreateFolder(int userId, string folderName, string parentUrl)
         {
             Response<string> response = new();
@@ -90,7 +90,7 @@ namespace OnlineLpk12.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("createfile")]
         public async Task<IActionResult> CreateFile(int userId, string fileName, string folderUrl)
         {
             Response<string> response = new();
@@ -162,7 +162,7 @@ namespace OnlineLpk12.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("deletefolder")]
         public async Task<IActionResult> DeleteFolder(int userId, string folderName, string parentUrl)
         {
             Response<string> response = new();
@@ -227,7 +227,7 @@ namespace OnlineLpk12.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("deletefile")]
         public async Task<IActionResult> DeleteFile(int userId, string fileName, string folderUrl)
         {
             Response<string> response = new();
@@ -299,7 +299,7 @@ namespace OnlineLpk12.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("savefile")]
         public async Task<IActionResult> SaveFileContent(int userId, string fileName, string folderUrl, string program)
         {
             Response<string> response = new();
@@ -375,7 +375,7 @@ namespace OnlineLpk12.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("getfile")]
         public async Task<IActionResult> GetFileContent(int userId, string fileName, string folderUrl, string program)
         {
             Response<SparcContent> response = new();
@@ -428,7 +428,7 @@ namespace OnlineLpk12.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("getallfoldersfiles")]
         public async Task<IActionResult> GetAllFoldersFilesAccessible(int userId)
         {
             Response<string> response = new();

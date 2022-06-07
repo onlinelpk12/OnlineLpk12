@@ -29,6 +29,7 @@ builder.Services.AddTransient<ISparcService, SparcService>();
 builder.Services.AddTransient<ILogService, LogService>();
 builder.Services.AddTransient<ITeacherService, TeacherService>();
 builder.Services.AddTransient<IStudentService, StudentService>();
+builder.Services.AddTransient<ISparcFileSystemService, SparcFileSystemService>();
 
 builder.Services.AddCors(options =>
 {
