@@ -10,6 +10,7 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
 	type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="../js/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="../js/mode-sparc.js" type="text/javascript"></script>
 <script src="../js/sparc_programs.js" type="text/javascript"></script>
@@ -136,11 +137,6 @@ li {
 											id="btn_getQuery" value="getQuery" onclick="submitrequest()">
 											Submit</button>
 									</li>
-									<!-- <li>
-										<button type="submit" class="btn btn-default navbar-btn"
-											id="btn_saveSparcProgram" value="saveSparcProgram"
-											onclick="saveSparcProgram()">Save Sparc Program</button>
-									</li> -->
 									<li>
 										<button type="submit" class="btn btn-default navbar-btn"
 											id="btn_getAnswerSets" value="getAnswerSets"
@@ -203,13 +199,7 @@ li {
 
 	<script src="../js/resizer.js" type="text/javascript"></script>
 	<script src="../js/init.js" type="text/javascript"></script>
-	
-	<script>
-            $("#menu-toggle").click(function(e) {
-                e.preventDefault();
-                $("#wrapper").toggleClass("toggled");
-            });
-        </script>
+	<script type="text/javascript" src="../js/jquery.xslt.js"></script>
 	<script type="text/javascript">
 let currentLearningOutcomeNumber = sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber);
 let currentLessonNumber = sessionStorage.getItem(sessionKeyCurrentLessonNumber);
