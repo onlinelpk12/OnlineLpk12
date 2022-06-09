@@ -8,6 +8,7 @@ using OnlineLpk12.Data.Entities;
 using System.Reflection;
 using System.Diagnostics;
 using System.Text;
+using OnlineLpk12.Helpers;
 
 namespace OnlineLpk12.Services.Implementation
 {
@@ -29,7 +30,8 @@ namespace OnlineLpk12.Services.Implementation
             try
             {
                 //set the folder url
-                string folderUrl = Path.Combine(parentUrl, folderName);
+                //string folderUrl = Path.Combine(parentUrl, folderName);
+                string folderUrl = GetUrl(parentUrl, folderName);
 
                 //check if the folder already exists in the table
                 var folder = await (from foldr in _context.SparcFolders
@@ -65,7 +67,8 @@ namespace OnlineLpk12.Services.Implementation
             try
             {
                 //set the folder url
-                string folderUrl = Path.Combine(parentUrl, folderName);
+                //string folderUrl = Path.Combine(parentUrl, folderName);
+                string folderUrl = GetUrl(parentUrl, folderName);
 
                 //insert into folder table
                 await _context.SparcFolders.AddAsync(new SparcFolder()
@@ -107,7 +110,8 @@ namespace OnlineLpk12.Services.Implementation
             try
             {
                 //set the folder url
-                string folderUrl = Path.Combine(parentUrl, folderName);
+                //string folderUrl = Path.Combine(parentUrl, folderName);
+                string folderUrl = GetUrl(parentUrl, folderName);
 
                 //Sparc Folders
                 //Get all the folders and sub folders from sparc folders table
@@ -178,7 +182,8 @@ namespace OnlineLpk12.Services.Implementation
             try
             {
                 //set the file url
-                string fileUrl = Path.Combine(folderUrl, fileName);
+                //string fileUrl = Path.Combine(folderUrl, fileName);
+                string fileUrl = GetUrl(folderUrl, fileName);
 
                 //check if the file already exists in the table
                 var file = await (from fl in _context.SparcFiles
@@ -213,7 +218,8 @@ namespace OnlineLpk12.Services.Implementation
             try
             {
                 //set the file url
-                string fileUrl = Path.Combine(folderUrl, fileName);
+                //string fileUrl = Path.Combine(folderUrl, fileName);
+                string fileUrl = GetUrl(folderUrl, fileName);
 
                 //insert into file table
                 await _context.SparcFiles.AddAsync(new SparcFile()
@@ -272,7 +278,8 @@ namespace OnlineLpk12.Services.Implementation
             try
             {
                 //set the file url
-                string fileUrl = Path.Combine(folderUrl, fileName);
+                //string fileUrl = Path.Combine(folderUrl, fileName);
+                string fileUrl = GetUrl(folderUrl, fileName);
 
                 //Get the record from sparc files table and delete
                 var spFile = await (from fl in _context.SparcFiles
@@ -342,7 +349,8 @@ namespace OnlineLpk12.Services.Implementation
             try
             {
                 //set the file url
-                string fileUrl = Path.Combine(folderUrl, fileName);
+                //string fileUrl = Path.Combine(folderUrl, fileName);
+                string fileUrl = GetUrl(folderUrl, fileName);
 
                 //Get the file record from the Sparc Content table
                 var spContent = await (from sp in _context.SparcContents
@@ -388,7 +396,8 @@ namespace OnlineLpk12.Services.Implementation
             try
             {
                 //set the file url
-                string fileUrl = Path.Combine(folderUrl, fileName);
+                //string fileUrl = Path.Combine(folderUrl, fileName);
+                string fileUrl = GetUrl(folderUrl, fileName);
 
                 //Get the file record from the Sparc Content table
                 var spContent = await (from sp in _context.SparcContents
@@ -431,10 +440,19 @@ namespace OnlineLpk12.Services.Implementation
 
                 if (foldersFiles != null && foldersFiles.Any())
                 {
-                    //TO-DO: Create the tree structure here
-                    result.Success = true;
-                    result.Content = "Folder Structure";
-                    return result;
+                    List<string> folders = foldersFiles.Select(x => x.FolderUrl).Distinct().ToList();
+                    folders.Sort();
+                    List<string> files = foldersFiles.Where(k => !string.IsNullOrWhiteSpace(k.FileUrl)).Select(x => x.FileUrl).Distinct().ToList();
+                    files.Sort();
+
+                    string treeStructure = SparcFileSystemHelper.GetTree(folders, files);
+
+                    if (!string.IsNullOrWhiteSpace(treeStructure))
+                    {
+                        result.Success = true;
+                        result.Content = treeStructure;
+                        return result;
+                    }
                 }
             }
             catch (Exception ex)
@@ -448,5 +466,15 @@ namespace OnlineLpk12.Services.Implementation
             return result;
         }
 
+        private static string GetUrl(string url, string name)
+        {
+            url = url.Trim();
+            name = name.Trim();
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                return name;
+            }
+            return url.EndsWith("/") ? url + name : url + "/" + name;
+        }
     }
 }
