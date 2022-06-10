@@ -137,6 +137,11 @@ li {
 											id="btn_getQuery" value="getQuery" onclick="submitrequest()">
 											Submit</button>
 									</li>
+									<!-- <li>
+										<button type="submit" class="btn btn-default navbar-btn"
+											id="btn_saveSparcProgram" value="saveSparcProgram"
+											onclick="saveSparcProgram()">Save Sparc Program</button>
+									</li> -->
 									<li>
 										<button type="submit" class="btn btn-default navbar-btn"
 											id="btn_getAnswerSets" value="getAnswerSets"
