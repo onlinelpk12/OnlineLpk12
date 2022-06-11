@@ -19,18 +19,30 @@ var currentFile="";  // the most recently selected file
         accessible directory for session username
 */
 var refreshDirectory = function() {
-    var data = {'action': "getAccessibleDirectory"};
-
-    // Expected response : directory accessible to user
-    $.post(ajaxurl, data, function(response) {
-        $('#directory').empty();
-        $('#directory').append("<ul>" + response + "</ul>");
-        $('.easy-tree').EasyTree({
-            selectable: true,
-            deletable: true,
-            editable: true
-        });
-    });
+	let userid = sessionStorage.getItem("userId");
+    //var data = {'action': "getAccessibleDirectory"};
+	//US-13
+	$.ajax({
+	        type: 'GET',
+	        url: 'https://onlinelpk12dotnetapi.azurewebsites.net/api/SparcFileSystem/getallfoldersfiles',
+	        jsonpCallback: 'jsonCallback',
+	        dataType: 'json',
+	        data : "userId="+userid+"",
+	        jsonp: false,
+	        success: function (response) {
+	         console.log(response.content);
+	         $('#directory').empty();
+	         $('#directory').append("<ul>" + response.content + "</ul>");
+	         $('.easy-tree').EasyTree({
+	             selectable: true,
+	             deletable: true,
+	             editable: true
+	         });
+	        },
+	        error: function (e) {
+	            $("#divResult").html("WebSerivce unreachable");
+	        }
+    	});
 };
 
 /*
@@ -713,6 +725,18 @@ $(document).ready(function() {
         var font_size = $(this).val();
         setEditorFontSize(font_size);
     });
+    
+    var setEditorFontSize = function(font_size) {
+        if (font_size < 0) {
+            return;
+        }
+
+        if (font_size > 72) {
+            return;
+        }
+
+        document.getElementById('editor').style.fontSize=''+font_size+'px';
+    }
 
     /* This does not work 
     $(document).on("click", ".dir-folder parent_li", function() {
