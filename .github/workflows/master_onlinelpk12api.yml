@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'onlinelpk12api'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_898834AEF74F4B4F9D1578D73441DA83 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B6142DFB7D7242CC84580EA99078929B }}
           package: .
