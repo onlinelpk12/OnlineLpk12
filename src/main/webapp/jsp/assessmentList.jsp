@@ -40,7 +40,7 @@ function getApiData()
 let course_id=sessionStorage.getItem("courseId");
 let name= sessionStorage.getItem("studentUserName");
 let studentid=sessionStorage.getItem("studentid");
-const teacher_url = "https://onlinelpk12dotnetapi.azurewebsites.net/api/Teacher/"+studentid+"/assessment";
+const teacher_url = "https://onlinelpk12api.azurewebsites.net/api/Teacher/"+studentid+"/assessment";
 
 
 

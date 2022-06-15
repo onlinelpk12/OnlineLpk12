@@ -42,7 +42,7 @@ $(function() {
 function getApiData()
 {
 	let teacherId = sessionStorage.getItem("userId");
-	const teacher_url = "https://onlinelpk12dotnetapi.azurewebsites.net/api/Teacher/"+teacherId;
+	const teacher_url = "https://onlinelpk12api.azurewebsites.net/api/Teacher/"+teacherId;
 
 	$.get(teacher_url, function(data, status){
 		buildLessonList(data);

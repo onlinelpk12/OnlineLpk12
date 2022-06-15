@@ -24,7 +24,7 @@ var refreshDirectory = function() {
 	//US-13
 	$.ajax({
 	        type: 'GET',
-	        url: 'https://onlinelpk12dotnetapi.azurewebsites.net/api/SparcFileSystem/getallfoldersfiles',
+	        url: 'https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/getallfoldersfiles',
 	        jsonpCallback: 'jsonCallback',
 	        dataType: 'json',
 	        data : "userId="+userid+"",

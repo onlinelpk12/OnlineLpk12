@@ -1,8 +1,8 @@
 	
 	function verifytoken(){
-		
+
 	if(sessionStorage.getItem("userRole")=="Student"){
-	fetch("https://onlinelpk12node.azurewebsites.net/api/test/student",{
+	fetch("https://onlinelpk12nodeservice.azurewebsites.net/api/test/student",{
 
 				headers:{
 				
@@ -35,7 +35,7 @@
     });
     }
     else if(sessionStorage.getItem("userRole")=="Teacher"){
-	fetch("https://onlinelpk12node.azurewebsites.net/api/test/teacher",{
+	fetch("https://onlinelpk12nodeservice.azurewebsites.net/api/test/teacher",{
 
 				headers:{
 				

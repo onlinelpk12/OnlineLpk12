@@ -169,7 +169,7 @@ function SaveStudentAssessmentSubmissionThroughAPI(question, submittedAnswer) {
         ]
     }
 
-    const saveStudentAssessmentSubmissionAPIUrl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/Student/" + assessmentSubmissionRequest.studentId + "/assessmentDetails";
+    const saveStudentAssessmentSubmissionAPIUrl = "https://onlinelpk12api.azurewebsites.net/api/Student/" + assessmentSubmissionRequest.studentId + "/assessmentDetails";
     $.ajax({
         contentType: 'application/json',
         data: JSON.stringify(assessmentSubmissionRequest),
@@ -207,7 +207,7 @@ function SaveStudentAssessmentStatusThroughAPI(score, totalScore, assessmentStat
         totalScore: totalScore
       }
 
-    const saveStudentAssessmentStatusAPIUrl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/Student/"+assessmentStatusRequest.studentId+"/assessmentStatus";
+    const saveStudentAssessmentStatusAPIUrl = "https://onlinelpk12api.azurewebsites.net/api/Student/"+assessmentStatusRequest.studentId+"/assessmentStatus";
   $.ajax({
       contentType: 'application/json',
       data: JSON.stringify(assessmentStatusRequest),
@@ -284,7 +284,7 @@ function similarity(s1, s2) {
           activityTime: null
         };
       
-      const saveStudentProgressAPIUrl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/Student/"+studentLessonProgressRequest.studentId+"/lessonprogress";
+      const saveStudentProgressAPIUrl = "https://onlinelpk12api.azurewebsites.net/api/Student/"+studentLessonProgressRequest.studentId+"/lessonprogress";
     $.ajax({
         contentType: 'application/json',
         data: JSON.stringify(studentLessonProgressRequest),
