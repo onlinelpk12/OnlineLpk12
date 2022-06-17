@@ -4,6 +4,7 @@ $(document).ready(function() {
     initEasyTree(); // initialize easy tree
     refreshDirectory(); // refresh directory with what user has access to
 
+    setRootAsDefaultFolder();
     /* CURRENT FILES/FOLDERS */
     updateCurrentFile();
     //updateCurrentFolder();
