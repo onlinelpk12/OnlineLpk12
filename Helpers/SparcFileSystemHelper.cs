@@ -11,7 +11,7 @@ namespace OnlineLpk12.Helpers
             List<File> filesObj = new();
             List<Folder> foldersObj = new();
 
-            string folderTagTemplate = "<li data-value='{0}' class='dir-item'>{1} <ul>{2}</ul> </li> ";
+            string folderTagTemplate = "<li data-value='{0}' class='dir-folder'>{1} <ul>{2}</ul> </li> ";
 
             //Add files to files object
             foreach (var item in files)
