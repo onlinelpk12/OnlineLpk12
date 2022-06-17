@@ -18,10 +18,10 @@ namespace OnlineLpk12.Helpers
             {
                 filesObj.Add(new File
                 {
-                    FileName = item.Split('/').Last().ToLower(),
+                    FileName = GetFileNameFromFileUrl(item),
                     FileUrl = item.ToLower(),
-                    FolderUrl = item.LastIndexOf('/') == -1 ? String.Empty : item.Substring(0, item.LastIndexOf('/')).ToLower(),
-                    FileTag = $"<li data-value='{item.ToLower()}' class='dir-item'>{item.Split('/').Last().ToLower()}</li> "
+                    FolderUrl = GetFolderUrlFromFileUrl(item),
+                    FileTag = $"<li data-value='{item.ToLower()}' class='dir-item'>{GetFileNameFromFileUrl(item)}</li> "
                 });
             }
 
@@ -30,9 +30,9 @@ namespace OnlineLpk12.Helpers
             {
                 foldersObj.Add(new Folder
                 {
-                    FolderName = item.Split('/').Last().ToLower(),
+                    FolderName = GetFolderNameFromFolderUrl(item),
                     FolderUrl = item.ToLower(),
-                    ParentUrl = item.LastIndexOf('/') == -1 ? String.Empty : item.Substring(0, item.LastIndexOf('/')).ToLower(),
+                    ParentUrl = GetParentUrlFromFolderUrl(item),
                     FolderTag = String.Empty
                 });
             }
@@ -79,6 +79,26 @@ namespace OnlineLpk12.Helpers
                 }
             }
             return root;
+        }
+
+        public static string GetFolderNameFromFolderUrl(string folderUrl)
+        {
+            return folderUrl.Split('/').Last().ToLower();
+        }
+
+        public static string GetFileNameFromFileUrl(string fileUrl)
+        {
+            return fileUrl.Split('/').Last().ToLower();
+        }
+
+        public static string GetParentUrlFromFolderUrl(string folderUrl)
+        {
+            return folderUrl.LastIndexOf('/') == -1 ? String.Empty : folderUrl.Substring(0, folderUrl.LastIndexOf('/')).ToLower();
+        }
+
+        public static string GetFolderUrlFromFileUrl(string fileUrl)
+        {
+            return fileUrl.LastIndexOf('/') == -1 ? String.Empty : fileUrl.Substring(0, fileUrl.LastIndexOf('/')).ToLower();
         }
 
         //public static Folder GetFolderStructure(List<string> folders, List<string> files)

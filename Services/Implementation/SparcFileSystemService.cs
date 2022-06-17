@@ -468,13 +468,13 @@ namespace OnlineLpk12.Services.Implementation
 
         private static string GetUrl(string url, string name)
         {
-            url = url.Trim();
-            name = name.Trim();
+            url = url.Trim(new char[] { ' ', '/', '\\' });
+            name = name.Trim(new char[] { ' ', '/', '\\' });
             if (string.IsNullOrWhiteSpace(url))
             {
                 return name;
             }
-            return url.EndsWith("/") ? url + name : url + "/" + name;
+            return url + "/" + name;
         }
     }
 }

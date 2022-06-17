@@ -5,6 +5,7 @@ using OnlineLpk12.Services.Interface;
 using System.Net;
 using System.Reflection;
 using System.Diagnostics;
+using OnlineLpk12.Helpers;
 
 namespace OnlineLpk12.Controllers
 {
@@ -24,7 +25,7 @@ namespace OnlineLpk12.Controllers
             _logService = logService;
             _fileName = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
         }
-        
+
         [HttpPost("createrootfolder")]
         public async Task<IActionResult> CreateRootFolder(int userId)
         {
@@ -84,6 +85,63 @@ namespace OnlineLpk12.Controllers
             }
         }
 
+        [HttpPost("isFolderExists")]
+        public async Task<IActionResult> CheckFolderExistence(int userId, string folderUrl)
+        {
+            Response<string> response = new();
+            List<string> validationMessages = new();
+            string username = string.Empty;
+            try
+            {
+                //Validate the user input
+                if (userId < 1)
+                {
+                    validationMessages.Add("Enter valid User Id.");
+                }
+                else
+                {
+                    username = await _userService.GetUserNameByUserId(userId);
+                    if (string.IsNullOrEmpty(username))
+                        validationMessages.Add("User is invalid.");
+                }
+
+                if (string.IsNullOrEmpty(folderUrl))
+                    validationMessages.Add("Enter valid folder");
+
+                if (validationMessages.Any())
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.AddRange(validationMessages);
+                    return BadRequest(response);
+                }
+
+                folderUrl = folderUrl.TrimEnd(new char[] { ' ', '/', '\\' });
+                string folderName = SparcFileSystemHelper.GetFolderNameFromFolderUrl(folderUrl);
+                string parentUrl = SparcFileSystemHelper.GetParentUrlFromFolderUrl(folderUrl);
+
+                //Check if the folder exists in Database
+                var isFolderExists = await _fileSystemService.IsFolderExists(userId, username, folderName, parentUrl);
+                if (isFolderExists == null || !isFolderExists.Success) //|| isFolderExists.Content)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Error occurred while processing the request.");
+                    return Ok(response);
+                }
+
+                response.Message = isFolderExists.Content ? "Folder exists." : "Folder does not exists.";
+                response.Content = isFolderExists.Content.ToString();
+                return Ok(response);
+
+            }
+            catch (Exception ex)
+            {
+                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("Error occurred while fetching the data.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
+            }
+        }
 
         [HttpPost("createfolder")]
         public async Task<IActionResult> CreateFolder(int userId, string folderName, string parentUrl)
@@ -144,6 +202,66 @@ namespace OnlineLpk12.Controllers
             {
                 _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
                     System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("Error occurred while fetching the data.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
+            }
+        }
+
+
+        [HttpPost("isfileExists")]
+        public async Task<IActionResult> CheckFileExistence(int userId, string fileUrl)
+        {
+            Response<string> response = new();
+            List<string> validationMessages = new();
+            string username = "";
+            try
+            {
+                //Validate the user input
+                if (userId < 1)
+                {
+                    validationMessages.Add("Enter valid User Id.");
+                }
+                else
+                {
+                    username = await _userService.GetUserNameByUserId(userId);
+                    if (string.IsNullOrEmpty(username))
+                        validationMessages.Add("User is invalid.");
+                }
+
+                if (string.IsNullOrEmpty(fileUrl))
+                    validationMessages.Add("Enter valid file url");
+
+                if (validationMessages.Any())
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.AddRange(validationMessages);
+                    return BadRequest(response);
+                }
+
+
+                fileUrl = fileUrl.TrimEnd(new char[] { ' ', '/', '\\' });
+                string fileName = SparcFileSystemHelper.GetFileNameFromFileUrl(fileUrl);
+                string folderUrl = SparcFileSystemHelper.GetFolderUrlFromFileUrl(fileUrl);
+
+                //Check if the file exists in Database
+                var isFileExists = await _fileSystemService.IsFileExists(userId, username, fileName, folderUrl);
+
+                if (isFileExists == null || !isFileExists.Success)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Error occurred while processing the request.");
+                    return Ok(response);
+                }
+
+                response.Message = isFileExists.Content ? "File exists." : "File does not exists";
+                response.Content = isFileExists.Content.ToString();
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
