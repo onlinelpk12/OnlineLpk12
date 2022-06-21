@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+	<!-- EASYTREE -->
+	<link rel="stylesheet" type="text/css" href="../styles/easyTree.css">
+	<link href="../styles/simple-sidebar.css" rel="stylesheet">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script
@@ -81,12 +85,6 @@ li {
 </style>
 </head>
 <body>
-
-	<!-- EASYTREE -->
-	<link rel="stylesheet" type="text/css" href="../styles/easyTree.css">
-	<link href="../styles/simple-sidebar.css" rel="stylesheet">
-
-
 	<div id="wrapper" class="toggled">
 		<div id="sidebar-wrapper">
 			<div class="easy-tree" id="directory">
