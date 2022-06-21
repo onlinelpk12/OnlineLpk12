@@ -222,15 +222,17 @@
 			    if($(selected).hasClass("dir-folder")) { // a folder 
 				var fileurl = $(selected).data("value");
 			    }
-			    else{ // a file 
-				// var fileurl = $(selected).parent().parent().data("value");
-				var fileurl = $(selected).data("value");
+			    else{ 
+			    	//Story 24
+			    	// a file 
+			    	// var fileurl = $(selected).parent().parent().data("value");
+			    	var fileurl = $(selected).data("value");
 			    }
-			    var homeFolder = getCurrentUsername() + "/";
+			    var homeFolder = getCurrentUsername();
 			    if (fileurl == homeFolder){ // we don't do anything on the home folder. 
-				alert("The home folder is not deletable.");
-				$(dangerAlert).remove();
-				return; 
+			    	alert("The home folder is not deletable.");
+			    	$(dangerAlert).remove();
+			    	return; 
 			    }
 			    deleteFileOrFolder(fileurl); 
 

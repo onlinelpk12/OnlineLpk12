@@ -138,6 +138,7 @@ var getUserId = function(){
 */
 
 var deleteFileOrFolder = function(name) {
+	let userid = getUserId();
     //precondition: either a file or folder have to be selected. 	
     
     var userName = getCurrentUsername();
@@ -149,27 +150,41 @@ var deleteFileOrFolder = function(name) {
 	
     // update front end info about current folder / file and vars of currentFolder/File
     if (sthSelected) {
-	var currentFileiInCurrentFolder = (currentFile.indexOf(currentFolder) == 0); 
-
-        if (selectedItemType == "folder") 
-	   setCurrentFolderNew("");
-	if ((selectedItemType == "file") || currentFileiInCurrentFolder) {
-	   setCurrentFileNew(""); 
-    	   // clear the editor content
-    	   var editor = ace.edit("editor");
-    	   editor.setValue("", -1);
-	}
+    	var currentFileiInCurrentFolder = (currentFile.indexOf(currentFolder) == 0);
+    	if (selectedItemType == "folder"){
+    		setCurrentFolderNew("");
+    		
+    		//Stroy 24
+    		let index =  name.lastIndexOf("/");
+    		let ApiFolderNameParam = name.substring(index+1);
+    		let ApiParentURIParam = name.substring(0,index);
+    		var data = {
+				   		'userId': userid,
+				   		'folderName':ApiFolderNameParam,
+				   		'parentUrl': ApiParentURIParam
+    			    	};
+    		
+    		const folderDeletionAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/deletefolder?"+decodeURIComponent($.param(data,encodeData=false));
+    		$.post(folderDeletionAPI, data, function(response) {
+    			console.log(response.content);
+    		});
+    		
+    	}
+        if ((selectedItemType == "file") || currentFileiInCurrentFolder) {
+        	setCurrentFileNew("");
+        	// clear the editor content
+        	var editor = ace.edit("editor");
+        	editor.setValue("", -1);
+        }
     }
 
     // delete the file from server side 
-    var data = {
+    /*var data = {
 	   'action': "deleteFileOrFolder",
 	   'fname': name
-    };
+    };*/
 
-    $.post(ajaxurl, data, function(response) {
-            //setResultsToString(response);
-    });
+    
 
     // set selected data structure
     sthSelected = false;
@@ -510,10 +525,10 @@ $(document).ready(function() {
             	'folderName': folderName,
             	'parentUrl': parentURL
             	};
-        const folderCreationURI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/createfolder?userId="+userId+"&folderName="+folderName+"&parentUrl="+parentURL;
+        const folderCreationAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/createfolder?"+decodeURIComponent($.param(data,encodeData=false));
         
         // Expected response : success message
-        $.post(folderCreationURI, data, function(response) {
+        $.post(folderCreationAPI, data, function(response) {
             if (response.errors.length==0) {
             	console.log(response.content);
                 refreshDirectory();
@@ -707,6 +722,7 @@ $(document).ready(function() {
     $(document).on("click", ".dir-item-text", function(e) {
         var isFolder = $(this).parent().parent().hasClass('dir-folder');
         var fileurl = $(this).parent().parent().data("value");
+        fileurl=fileurl+"/";
 
         // if the selected file/folder is clicked, sthSelected will be toggled
 	// otherwise sth is selectged 
