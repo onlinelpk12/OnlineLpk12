@@ -19,7 +19,7 @@ var currentFile="";  // the most recently selected file
         accessible directory for session username
 */
 var refreshDirectory = function() {
-	let userid = sessionStorage.getItem("userId");
+	let userid = getUserId();
     //var data = {'action': "getAccessibleDirectory"};
 	//US-13
 	$.ajax({
@@ -51,12 +51,22 @@ var refreshDirectory = function() {
         to the folder folderName and then updates current folder
         on front-end
 */
+function setRootAsDefaultFolder(){
+	var currentFolderValue = getCurrentFolder();
+	if(currentFolderValue =="" || currentFolderValue==null){
+		setCurrentFolder(getCurrentUsername()+"/");
+	} else if(currentFolderValue != ""){
+		setCurrentFolder(currentFolderValue);
+	}	
+};
+
 var setCurrentFolderNew = function(folderName) {
     if (sthSelected) {
        currentFolder = folderName;
-       var data = {'action': "setCurrentFolder",
-                   'currentfolder': folderName};
-       $.post(ajaxurl, data, function(response) {}); 
+      /* var data = {'action': "setCurrentFolder",
+                   'currentfolder': folderName};*/
+       //$.post(ajaxurl, data, function(response) {}); 
+       sessionStorage.setItem("currentFolder",currentFolder);
 
        $('#span_currentfolderid').empty();
        $('#span_currentfolderid').append(currentFolder);
@@ -96,17 +106,25 @@ var setCurrentFileNew = function(fileName) {
         on front-end
 */
 var setCurrentFolder = function(folderName) {
-    var data = {'action': "setCurrentFolder",
-                'currentfolder': folderName};
-    $.post(ajaxurl, data, function(response) {
+    /*var data = {'action': "setCurrentFolder",
+                'currentfolder': folderName};*/
+    sessionStorage.setItem("currentFolder",folderName);
+    //$.post(ajaxurl, data, function(response) {
         
-        var folderurl = response;
+        var folderurl = getCurrentFolder();
         $('#span_currentfolderid').empty();
         $('#span_currentfolderid').append(folderurl);
         $('#span_currentfolderid').data("value", folderurl); 
-    });
+    //});
 };
 
+var getCurrentFolder = function(){
+	return sessionStorage.getItem("currentFolder");
+}
+
+var getUserId = function(){
+	return sessionStorage.getItem("userId");
+}
 /*
     deleteFileOrFolder(name) :
         nothing needs to be done if name is home folder  
@@ -332,7 +350,7 @@ var setEditorFontSize = function(font_size) {
 
 var getCurrentUsername = function() {
     //var username = $("#login").html();
-    var username = $('#login').attr('data-username');
+    var username = sessionStorage.getItem("username");
     if (!username || username === "Log-in") {
         return "";
     }
@@ -478,28 +496,33 @@ $(document).ready(function() {
     // New folder button
     $('#newFolder').click(function(e) {
         e.preventDefault();
-        var currentFolder = $("#span_currentfolderid").data("value");
+        var parentURL = $("#span_currentfolderid").data("value");
 
-	if (currentFolder == "") {
-	   alert("Please select a folder from the directory panel.");
-	   return;
-	}	
+		if (currentFolder == "") {
+		   alert("Please select a folder from the directory panel.");
+		   return;
+		}	
 
         var folderName = prompt("Please enter folder name");
-        data = {'action': "addNewFolder",
-                'newfolder': folderName,
-		'currentFolder': currentFolder};
-
+        let userId = getUserId();
+        parentURL.slice(0,-1);
+        data = {'userId': userId,
+            	'folderName': folderName,
+            	'parentUrl': parentURL
+            	};
+        const folderCreationURI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/createfolder?userId="+userId+"&folderName="+folderName+"&parentUrl="+parentURL;
+        
         // Expected response : success message
-        $.post(ajaxurl, data, function(response) {
-            if (!isResponseError(response)) {
+        $.post(folderCreationURI, data, function(response) {
+            if (response.errors.length==0) {
+            	console.log(response.content);
                 refreshDirectory();
                 setCurrentFolderNew(currentFolder+folderName+"/");
                 updateCurrentFolder();
             } else {
                 setResultsToString(response);
             }
-        });
+        });        
     });
 
     // New file button
