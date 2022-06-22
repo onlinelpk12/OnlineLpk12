@@ -83,19 +83,20 @@ var setCurrentFolderNew = function(folderName) {
 var setCurrentFileNew = function(fileName) {
     if (sthSelected) {
       currentFile = fileName; // same as fileName 
-      var data = {'action': "setCurrentFile",
-                  'currentfile': fileName};
-      $.post(ajaxurl, data, function(response) {
-        $('#span_currentfileid').empty();
-
-        if (!currentFile) {
-            $('#span_currentfileid').append("");
-            $('#span_currentfileid').data("value", "");
-        } else {
-            $('#span_currentfileid').append(currentFile);
-            $('#span_currentfileid').data("value", currentFile);
-        }
-      });
+      /*var data = {'action': "setCurrentFile",
+                  'currentfile': fileName};*/
+      //$.post(ajaxurl, data, function(response) {});
+      sessionStorage.setItem("currentFile",currentFile);
+	  $('#span_currentfileid').empty();
+	
+	  if (!currentFile) {
+		  $('#span_currentfileid').append("");
+		  $('#span_currentfileid').data("value", "");
+	  }
+	  else {
+		  $('#span_currentfileid').append(currentFile);
+	      $('#span_currentfileid').data("value", currentFile);
+	  }  
     }
 };
 
@@ -299,19 +300,21 @@ var updateSetting = function() {
         back-end
 */
 var setCurrentFile = function(fileName) {
-    var data = {'action': "setCurrentFile",
-            'currentfile': fileName};
-    $.post(ajaxurl, data, function(response) {
-        $('#span_currentfileid').empty();
+   /* var data = {'action': "setCurrentFile",
+            'currentfile': fileName};*/
+   /* $.post(ajaxurl, data, function(response) {});*/
+   sessionStorage.setItem("currentFile",fileName);
+   $('#span_currentfileid').empty();
 
-        if (!fileName) {
-            $('#span_currentfileid').append("");
-	    $('#span_currentfileid').data("value", "");
-        } else {
-            $('#span_currentfileid').append(fileName);
-	    $('#span_currentfileid').data("value", fileName);
-        } 
-    });
+   if (!fileName) {
+	   $('#span_currentfileid').append("");
+	   $('#span_currentfileid').data("value", "");
+   } 
+   else {
+	   $('#span_currentfileid').append(fileName);
+	   $('#span_currentfileid').data("value", fileName);
+   } 
+    
 };
 
 /*
@@ -320,16 +323,26 @@ var setCurrentFile = function(fileName) {
 */
 var setEditorToFile = function(fileName) {
 
+	let userId = getUserId();
     setCurrentFileNew(fileName);
     if (!fileName) {
         fileName = "_templates/sparc.sp";
     }
 
-    var data = {'action': "getFileContent",
-                'fileurl': fileName};    
-    $.post(ajaxurl, data, function(response) {
+    var folderurl = fileName.substring(0, fileName.lastIndexOf("/"));
+    var fileNameParam = fileName.substring(fileName.lastIndexOf("/")+1);
+    
+    var data = {
+    			 'userId': userId,
+                 'fileName': fileNameParam,
+                 'folderUrl':folderurl,
+               };   
+    
+    const getFileAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/getfile?"+decodeURIComponent($.param(data,encodeData=false));
+    $.get(getFileAPI, data, function(response) {
+    	console.log((response.content.program)?response.content.program:"empty program");
         var editor = ace.edit("editor");
-        editor.setValue(response, -1);
+        editor.setValue(response.content.program, -1);
     });
 }
 
@@ -542,20 +555,28 @@ $(document).ready(function() {
 
     // New file button
     $('#newFile').click(function(e) {
+    	let userId = getUserId();
         e.preventDefault();
         var fileName = prompt("Please enter file name");
         // var editorValue = editor.getValue();
-	var editorValue = ""; // we set the new file to be empty
-        data = {'action': "addNewFile",
+        var editorValue = ""; // we set the new file to be empty
+        /*data = {'action': "addNewFile",
                 'newfile': fileName,
-                'editor': editorValue};
+                'editor': editorValue};*/
+        let folderUrl = currentFolder.slice(0,-1);
+        data = {
+        		 'userId': userId,
+                'fileName': fileName,
+                'folderUrl': folderUrl
+               };
 
+        const fileCreationAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/createfile?"+decodeURIComponent($.param(data,encodeData=false));
         // Expected response : success message
-        $.post(ajaxurl, data, function(response) {
+        $.post(fileCreationAPI, data, function(response) {
 
-            if (!isResponseError(response)) {
+            if (response.errors.length==0) {
                 refreshDirectory();
-                setEditorToFile(response);
+                setEditorToFile(currentFolder+fileName);
                 updateCurrentFile();
             } else {
                 setResultsToString(response);
@@ -722,7 +743,9 @@ $(document).ready(function() {
     $(document).on("click", ".dir-item-text", function(e) {
         var isFolder = $(this).parent().parent().hasClass('dir-folder');
         var fileurl = $(this).parent().parent().data("value");
-        fileurl=fileurl+"/";
+        if(isFolder){
+            fileurl=fileurl+"/";        	
+        }
 
         // if the selected file/folder is clicked, sthSelected will be toggled
 	// otherwise sth is selectged 
