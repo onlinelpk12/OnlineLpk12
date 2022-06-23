@@ -704,6 +704,7 @@ $(document).ready(function() {
     	let userId = getUserId();
         // TODO check if currentuser is null then show log-in button
     	var editorValue = editor.getValue();
+    	console.log("this is editor.getValue() :"+editorValue);
         updateCurrentFile();
         var currentFile = $("#span_currentfileid").data("value");
 
@@ -732,6 +733,7 @@ $(document).ready(function() {
                 'program' : editorValue 
                };
         
+        console.log("query Params : "+decodeURIComponent($.param(data,encodeData=false)));
         const saveFileAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/savefile?"+decodeURIComponent($.param(data,encodeData=false));
         
         
