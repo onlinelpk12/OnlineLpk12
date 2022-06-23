@@ -176,6 +176,21 @@ var deleteFileOrFolder = function(name) {
         	// clear the editor content
         	var editor = ace.edit("editor");
         	editor.setValue("", -1);
+        	
+        	let index =  name.lastIndexOf("/");
+        	let ApiFileNameParam = name.substring(index+1);
+    		let ApiFolderNameParam = name.substring(0,index);
+        	var data = {
+			   		'userId': userid,
+			   		'fileName':ApiFileNameParam,
+			   		'folderUrl': ApiFolderNameParam
+			    	};
+        	
+        	const fileDeletionAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/deletefile?"+decodeURIComponent($.param(data,encodeData=false));
+    		$.post(fileDeletionAPI, data, function(response) {
+    			console.log(response.content);
+    		});
+        	
         }
     }
 
@@ -248,8 +263,8 @@ var updateCurrentFolder = function() {
 */
 var updateCurrentFile = function() {
     var data = {'action': "getCurrentFile"};
-    $.post(ajaxurl, data, function(response) {
-        var fileurl = response;
+    //$.post(ajaxurl, data, function(response) {
+        var fileurl = sessionStorage.getItem("currentFile");
         $('#span_currentfileid').empty();
 
         if (!fileurl) {
@@ -260,7 +275,7 @@ var updateCurrentFile = function() {
             $('#span_currentfileid').append(fileurl);
             $('#span_currentfileid').data("value", fileurl);
         }
-    });
+    //});
 };
 
 /*
@@ -686,11 +701,9 @@ $(document).ready(function() {
 
     // Save button
     $("#btn_save").click(function(e) {
+    	let userId = getUserId();
         // TODO check if currentuser is null then show log-in button
-                         
-
-        var editorValue = editor.getValue();
-    
+    	var editorValue = editor.getValue();
         updateCurrentFile();
         var currentFile = $("#span_currentfileid").data("value");
 
@@ -698,7 +711,7 @@ $(document).ready(function() {
         var currentFolder = $("#span_currentfolderid").data("value");
 
         // save an untitled file
-	var newFile = false; 
+        var newFile = false; 
         if (!currentFile || currentFile == "") {
             currentFile = prompt("Please enter a file name");
 	    if (currentFile === null) {// user canceled the input box. 
@@ -708,18 +721,27 @@ $(document).ready(function() {
 	    newFile = true; 
             currentFile = currentFolder.trim() + currentFile.trim();
         }
-        var currentFileurl = currentFile;
+        let index =  currentFile.lastIndexOf("/");
+        var currentFileName = currentFile.substring(index+1);
+        let folderUrl = currentFolder.slice(0,-1);
 
-        data = {'action': "saveFile",
-                'fileurl': currentFileurl,
-                'editor': editorValue};
+        data = {
+        		'userId': userId,
+                'fileName': currentFileName,
+                'folderUrl': folderUrl,
+                'program' : editorValue 
+               };
+        
+        const saveFileAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/savefile?"+decodeURIComponent($.param(data,encodeData=false));
+        
+        
 
         // setResultsToString("current file is:" + currentFileurl); 
-        $.post(ajaxurl, data, function(response) {
+        $.post(saveFileAPI, data, function(response) {
             // setResultsToString(response);
 
-            if (!isResponseError(response)) {
-                setCurrentFile(currentFileurl);
+            if (response.errors.length==0) {
+                setCurrentFile(currentFile);
                 updateCurrentFile();
 		if (newFile) 
 		   refreshDirectory();
