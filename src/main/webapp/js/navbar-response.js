@@ -733,22 +733,18 @@ $(document).ready(function() {
                 'program' : editorValue 
                };
         
-        console.log("query Params : "+decodeURIComponent($.param(data,encodeData=false)));
-        const saveFileAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/savefile?"+decodeURIComponent($.param(data,encodeData=false));
-        
-        
-
-        // setResultsToString("current file is:" + currentFileurl); 
-        $.post(saveFileAPI, data, function(response) {
-            // setResultsToString(response);
-
-            if (response.errors.length==0) {
-                setCurrentFile(currentFile);
-                updateCurrentFile();
-		if (newFile) 
-		   refreshDirectory();
-            }
-        });
+        console.log("data : ",data);
+        const saveFileAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/savefile";
+        postSparcData(saveFileAPI, data).then(resp =>{
+			console.log('response from post method: ', resp);
+			if (resp.errors.length==0) {
+                	setCurrentFile(currentFile);
+                	updateCurrentFile();
+					if (newFile) 
+		   				refreshDirectory();
+            	}
+		})
+		.catch(x => console.log(x));
     });
 
     $(document).on("click", ".dir-item", function() {
@@ -854,3 +850,20 @@ $(document).ready(function() {
 
     */
 });
+
+function postSparcData(url, data){
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+          type:'POST',
+          url:url,
+          data:JSON.stringify(data),
+          contentType: "application/json; charset=utf-8",
+          success: function (response) {
+            resolve(response);
+          },
+          error: function (error) {
+            reject(error);
+          },
+        });
+    });
+}
