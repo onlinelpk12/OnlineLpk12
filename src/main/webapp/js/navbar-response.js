@@ -1,4 +1,4 @@
-let ajaxurl = 'ajax.php';
+//let ajaxurl = 'ajax.php';
 
 /* Fluents for navigation of file system 
    They are changed by easyTree.js, and used by other js 
@@ -207,26 +207,26 @@ var deleteFileOrFolder = function(name) {
 var renameFile = function(newName) {
     // precondition: the newName must be a new name of currentFile 
     
-    let oldfileurl = currentFile;
-    let newfileurl = oldfileurl.substring(0, oldfileurl.lastIndexOf("/")+1) + newName;
+    // let oldfileurl = currentFile;
+    // let newfileurl = oldfileurl.substring(0, oldfileurl.lastIndexOf("/")+1) + newName;
     
-    if (oldfileurl == newfileurl) { //do nothing if the name is not changed
-	return; 
-    }
-    // rename file at back end 
-    let data = {
-           'action': "renameFile",
-           'oldfileurl': oldfileurl,
-	   'newfileurl': newfileurl
-    };
+    // if (oldfileurl == newfileurl) { //do nothing if the name is not changed
+	// return; 
+    // }
+    // // rename file at back end 
+    // let data = {
+    //        'action': "renameFile",
+    //        'oldfileurl': oldfileurl,
+	//    'newfileurl': newfileurl
+    // };
 
-    $.post(ajaxurl, data, function(response) {
-            // setResultsToString(response);
-    });
+    // $.post(ajaxurl, data, function(response) {
+    //         // setResultsToString(response);
+    // });
   
-    // update the current file 
-    selectedItem = newfileurl; 
-    setCurrentFileNew(newfileurl); 
+    // // update the current file 
+    // selectedItem = newfileurl; 
+    // setCurrentFileNew(newfileurl); 
 }
 
 /*
@@ -273,26 +273,26 @@ var updateCurrentFile = function() {
  returns : nothing
  */
 var updateSetting = function() {
-    let data = {'action': "getSetting"};
-    $.post(ajaxurl, data, function(response) {
-           // get timeout
-           let setting = JSON.parse(response);
-           // $('#printSetting').append("timeout = " + setting.timeout + "#sets = " + setting.sets);
-           // $('#printSetting').append(response);
-           // $('#printSetting').show(); 
+    // let data = {'action': "getSetting"};
+    // $.post(ajaxurl, data, function(response) {
+    //        // get timeout
+    //        let setting = JSON.parse(response);
+    //        // $('#printSetting').append("timeout = " + setting.timeout + "#sets = " + setting.sets);
+    //        // $('#printSetting').append(response);
+    //        // $('#printSetting').show(); 
 
-           // altert(setting);
-           $('#setting_timeout').val(setting.timeout);
-           if (setting.sets === "other"){
-               $('#setting_sets_2').prop('checked',true);
-           }
-           else{
-             if (setting.sets === "all"){
-               $('#setting_sets_1').prop('checked',true);
-             }
-             else $('#setting_sets_0').prop('checked',true);
-           }
-       });
+    //        // altert(setting);
+    //        $('#setting_timeout').val(setting.timeout);
+    //        if (setting.sets === "other"){
+    //            $('#setting_sets_2').prop('checked',true);
+    //        }
+    //        else{
+    //          if (setting.sets === "all"){
+    //            $('#setting_sets_1').prop('checked',true);
+    //          }
+    //          else $('#setting_sets_0').prop('checked',true);
+    //        }
+    //    });
 };
 
 
@@ -353,15 +353,15 @@ var setEditorToFile = function(fileName) {
     returns : nothing
 */
 var setEditorToCurrentFile = function() {
-    let data = {'action': "getCurrentFile"};
+    // let data = {'action': "getCurrentFile"};
 
-    $.post(ajaxurl, data, function(response) {
-        if (!response) {
-            response = "";
-        }
-        setEditorToFile(response);
-    });
-    return;
+    // $.post(ajaxurl, data, function(response) {
+    //     if (!response) {
+    //         response = "";
+    //     }
+    //     setEditorToFile(response);
+    // });
+    // return;
 }
 
 var setEditorFontSize = function(font_size) {
@@ -496,30 +496,30 @@ $(document).ready(function() {
     });
 
     // Get Answer Sets button handler
-    $('#btn_getAnswerSets').click(function(e) {
-        let editorValue = editor.getValue();
-        let data = {'action': "getAnswerSets",
-                   'editor': editorValue};
+    // $('#btn_getAnswerSets').click(function(e) {
+    //     let editorValue = editor.getValue();
+    //     let data = {'action': "getAnswerSets",
+    //                'editor': editorValue};
         
-	// $('#results').append("hello");
+	// // $('#results').append("hello");
 
-        // Expected response : answer sets in XML
-        $.post(ajaxurl, data, function(response) {
-            setResultsToString(response);
-        });
-    });
+    //     // Expected response : answer sets in XML
+    //     $.post(ajaxurl, data, function(response) {
+    //         setResultsToString(response);
+    //     });
+    // });
 
 	    // Animate button handler
-    $('#btn_getAnimation').click(function(e) {
-        let editorValue = editor.getValue();
-        let data = {'action': "getAnimation",
-                    'editor': editorValue};
+    // $('#btn_getAnimation').click(function(e) {
+    //     let editorValue = editor.getValue();
+    //     let data = {'action': "getAnimation",
+    //                 'editor': editorValue};
 
-        // Expected response : answer sets in XML
-        $.post(ajaxurl, data, function(response) {
-            setResultsToString(response);
-        });
-    });
+    //     // Expected response : answer sets in XML
+    //     $.post(ajaxurl, data, function(response) {
+    //         setResultsToString(response);
+    //     });
+    // });
 	
     // New folder button
     $('#newFolder').click(function(e) {
@@ -589,103 +589,103 @@ $(document).ready(function() {
     });
 
     // Delete button -- we don't hvae delete  button of #btn_delete. We have a delete button in easyTree.js
-    $("#btn_delete").click(function(e) {
-        e.preventDefault();
-        // TODO configure this
-        data = {'action': "deleteFolder",
-                'folderurl': "christian/deletefolder/"};
+    // $("#btn_delete").click(function(e) {
+    //     e.preventDefault();
+    //     // TODO configure this
+    //     data = {'action': "deleteFolder",
+    //             'folderurl': "christian/deletefolder/"};
 
-        $.post(ajaxurl, data, function(response) {
-            setResultsToString(response);
-            //$('#results').append(response + "</br>");
-        });
-    });
+    //     $.post(ajaxurl, data, function(response) {
+    //         setResultsToString(response);
+    //         //$('#results').append(response + "</br>");
+    //     });
+    // });
 
     // Share button
-    $("#btn_share").click(function(e) {
-        e.preventDefault();
-        let currentFile = $("#span_currentfileid").html();
-        let otherUser = $("#share_username").val();
-        data = {'action': "shareFile",
-                'fileurl': currentFile,
-                'username2': otherUser,
-                'permissions': "1"};
+    // $("#btn_share").click(function(e) {
+    //     e.preventDefault();
+    //     let currentFile = $("#span_currentfileid").html();
+    //     let otherUser = $("#share_username").val();
+    //     data = {'action': "shareFile",
+    //             'fileurl': currentFile,
+    //             'username2': otherUser,
+    //             'permissions': "1"};
 
-        $.post(ajaxurl, data, function(response) {
+    //     $.post(ajaxurl, data, function(response) {
 
-            if (response === "1") {
-                //alert("Share successful!");
-                $('#shareModal').modal("hide");
-            } else {
-                //alert("Error sharing file");
-                $('#shareModal').modal("hide");
-            }
+    //         if (response === "1") {
+    //             //alert("Share successful!");
+    //             $('#shareModal').modal("hide");
+    //         } else {
+    //             //alert("Error sharing file");
+    //             $('#shareModal').modal("hide");
+    //         }
 
-        });
-    });
+    //     });
+    // });
 
 // Setting  button XY
-    $("#btn_changesetting").click(function(e) {
+//     $("#btn_changesetting").click(function(e) {
 
-        e.preventDefault();
-        let timeout = $("#setting_timeout").val();
-        let sets = $("input:radio[name=setting_sets]:checked").val();
-        let otherNumSets = $("#setting_numSets").val();
+//         e.preventDefault();
+//         let timeout = $("#setting_timeout").val();
+//         let sets = $("input:radio[name=setting_sets]:checked").val();
+//         let otherNumSets = $("#setting_numSets").val();
                   
-          $("#changeSetting_fail").empty();
-          $("#changeSetting_fail").hide();
+//           $("#changeSetting_fail").empty();
+//           $("#changeSetting_fail").hide();
                                   
-          if($.isNumeric(timeout)){
-              if(parseInt(timeout)>50){
-                $("#changeSetting_fail").append("Error: your timeout is greater than the limit of 50s.");
-                $("#changeSetting_fail").show();
-              }
-              else {
-                  data = {'action': "changeSetting",
-                  'timeout': timeout,
-                  'sets': sets,
-		  'otherNumSets': otherNumSets};
-                  //    $('#settingModal').modal("hide");
-                  $.post(ajaxurl, data, function(response) {
-                         //   alert(response);
-                         //   $('#setting_timeout').val(50);
-                         //   $('#setting_sets_0').prop('checked',true)
+//           if($.isNumeric(timeout)){
+//               if(parseInt(timeout)>50){
+//                 $("#changeSetting_fail").append("Error: your timeout is greater than the limit of 50s.");
+//                 $("#changeSetting_fail").show();
+//               }
+//               else {
+//                   data = {'action': "changeSetting",
+//                   'timeout': timeout,
+//                   'sets': sets,
+// 		  'otherNumSets': otherNumSets};
+//                   //    $('#settingModal').modal("hide");
+//                   $.post(ajaxurl, data, function(response) {
+//                          //   alert(response);
+//                          //   $('#setting_timeout').val(50);
+//                          //   $('#setting_sets_0').prop('checked',true)
                          
-                         // $("#changeSetting_fail").append("repsonse=",response);
-                         // $("#changeSetting_fail").show();
-                         if (response === "1") {
-                         //alert("setting change successful!");
-                         $('#settingModal').modal("hide");
-                         } else {
-                         //alert("Error sharing file");
-                         //$("changeSetting_fail").show();
-                         }
-                });
+//                          // $("#changeSetting_fail").append("repsonse=",response);
+//                          // $("#changeSetting_fail").show();
+//                          if (response === "1") {
+//                          //alert("setting change successful!");
+//                          $('#settingModal').modal("hide");
+//                          } else {
+//                          //alert("Error sharing file");
+//                          //$("changeSetting_fail").show();
+//                          }
+//                 });
 
-              }
-           }
-           else{
-                 $("#changeSetting_fail").append("Error: your timeout is not a number.");
-                 $("#changeSetting_fail").show();
-           }
-    });
-  $("#btn_cancelsetting").click(function(e) {
-    e.preventDefault();
-    $('#settingModal').modal("hide");
-    });
+//               }
+//            }
+//            else{
+//                  $("#changeSetting_fail").append("Error: your timeout is not a number.");
+//                  $("#changeSetting_fail").show();
+//            }
+//     });
+//   $("#btn_cancelsetting").click(function(e) {
+//     e.preventDefault();
+//     $('#settingModal').modal("hide");
+//     });
 
     //End of Setting XY
 
     // Issues button
-    $("#navbar_btn_issues").click(function(e) {
-        let issue = prompt("What is your issue? Please give details as to what you did before you received an error.");
-        let data = {'action': "addIssue",
-                    'issue': issue};
+    // $("#navbar_btn_issues").click(function(e) {
+    //     let issue = prompt("What is your issue? Please give details as to what you did before you received an error.");
+    //     let data = {'action': "addIssue",
+    //                 'issue': issue};
 
-        $.post(ajaxurl, data, function(response) {
-            alert("Thank you for your contribution.");
-        });
-    });
+    //     $.post(ajaxurl, data, function(response) {
+    //         alert("Thank you for your contribution.");
+    //     });
+    // });
 
     // Save button
     $("#btn_save").click(function(e) {

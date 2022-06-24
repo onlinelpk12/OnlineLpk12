@@ -13,10 +13,10 @@ $(document).ready(function() {
     // YL 12-10-2015 scrollable editor bug: set initially
     resizeAce();
     // End of YL
-    setEditorToCurrentFile();
+    //setEditorToCurrentFile();
 
     /* LOGIN */
-    updateLogin(); // on refresh, make sure log-in name is at the top
+    //updateLogin(); // on refresh, make sure log-in name is at the top
 
     /* NAVBAR */
     //updateNavbar(); // moved to inside updateLogin function because

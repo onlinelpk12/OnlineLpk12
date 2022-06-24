@@ -3,13 +3,13 @@
 <head>
 <!-- EASYTREE -->
 <link rel="stylesheet" type="text/css" href="../styles/easyTree.css">
-<link href="../styles/simple-sidebar.css" rel="stylesheet">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="../styles/simple-sidebar.css" >
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<!-- <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script> -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
 <script src="../js/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="../js/mode-sparc.js" type="text/javascript"></script>
 <script src="../js/sparc_programs.js" type="text/javascript"></script>
@@ -53,20 +53,24 @@
 	width: 39%;
 }
 
-ul {
+#navbar {
+    min-width: 1025px;
+}
+
+.navbar ul {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
-	padding-left: 2em;
+	padding-left: 0.5em;
 }
 
-ul li {
-	padding-left: 2em;
+.navbar ul li {
+	padding-left: 0.5em;
 }
 
-li {
+.navbar li {
 	display: inline;
-}
+} 
 
 #txt_query {
 	margin-top: 8px;
