@@ -148,7 +148,7 @@ namespace OnlineLpk12.Services.Implementation
                 var user = await (from usr in _context.Users
                                   where usr.Id == userId
                                   select usr).FirstOrDefaultAsync();
-                return user != null && !string.IsNullOrEmpty(user.Username) ? user.Username : string.Empty;
+                return user != null && !string.IsNullOrEmpty(user.Username) ? user.Username.ToLower() : string.Empty;
             }
             catch (Exception ex)
             {

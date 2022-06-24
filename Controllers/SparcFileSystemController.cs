@@ -129,7 +129,7 @@ namespace OnlineLpk12.Controllers
                     return BadRequest(response);
                 }
 
-                sparc.FolderUrl = sparc.FolderUrl.TrimEnd(new char[] { ' ', '/', '\\' });
+                sparc.FolderUrl = sparc.FolderUrl.ToLower().TrimEnd(new char[] { ' ', '/', '\\' });
                 sparc.FolderName = SparcFileSystemHelper.GetFolderNameFromFolderUrl(sparc.FolderUrl);
                 sparc.ParentUrl = SparcFileSystemHelper.GetParentUrlFromFolderUrl(sparc.FolderUrl);
 
@@ -198,7 +198,7 @@ namespace OnlineLpk12.Controllers
                 }
 
                 //Check if the folder exists in Database
-                var isFolderExists = await _fileSystemService.IsFolderExists(sparc.UserId, username, sparc.FolderName, sparc.ParentUrl);
+                var isFolderExists = await _fileSystemService.IsFolderExists(sparc.UserId, username, sparc.FolderName.ToLower(), sparc.ParentUrl.ToLower());
                 if (isFolderExists == null || !isFolderExists.Success || isFolderExists.Content)
                 {
                     response.Message = "One or more validation errors occurred.";
@@ -207,7 +207,7 @@ namespace OnlineLpk12.Controllers
                 }
 
                 //If no folder exists -> create a new folder
-                var res = await _fileSystemService.CreateFolder(sparc.UserId, username, sparc.FolderName, sparc.ParentUrl);
+                var res = await _fileSystemService.CreateFolder(sparc.UserId, username, sparc.FolderName.ToLower(), sparc.ParentUrl.ToLower());
                 if (res != null && res.Success && !string.IsNullOrEmpty(res.Content))
                 {
                     response.Content = res.Content;
@@ -268,12 +268,12 @@ namespace OnlineLpk12.Controllers
                 }
 
 
-                sparc.FileUrl = sparc.FileUrl.TrimEnd(new char[] { ' ', '/', '\\' });
+                sparc.FileUrl = sparc.FileUrl.ToLower().TrimEnd(new char[] { ' ', '/', '\\' });
                 sparc.FileName = SparcFileSystemHelper.GetFileNameFromFileUrl(sparc.FileUrl);
                 sparc.FolderUrl = SparcFileSystemHelper.GetFolderUrlFromFileUrl(sparc.FileUrl);
 
                 //Check if the file exists in Database
-                var isFileExists = await _fileSystemService.IsFileExists(sparc.UserId, username, sparc.FileName, sparc.FolderUrl);
+                var isFileExists = await _fileSystemService.IsFileExists(sparc.UserId, username, sparc.FileName.ToLower(), sparc.FolderUrl.ToLower());
 
                 if (isFileExists == null || !isFileExists.Success)
                 {
@@ -337,7 +337,7 @@ namespace OnlineLpk12.Controllers
                 }
 
                 //Check if the file exists in Database
-                var isFileExists = await _fileSystemService.IsFileExists(sparc.UserId, username, sparc.FileName, sparc.FolderUrl);
+                var isFileExists = await _fileSystemService.IsFileExists(sparc.UserId, username, sparc.FileName.ToLower(), sparc.FolderUrl.ToLower());
                 if (isFileExists == null || !isFileExists.Success)
                 {
                     response.Message = "One or more validation errors occurred.";
@@ -353,7 +353,7 @@ namespace OnlineLpk12.Controllers
                 }
 
                 //If no file exists -> create a new file
-                var res = await _fileSystemService.CreateFile(sparc.UserId, username, sparc.FileName, sparc.FolderUrl);
+                var res = await _fileSystemService.CreateFile(sparc.UserId, username, sparc.FileName.ToLower(), sparc.FolderUrl.ToLower());
                 if (res != null && res.Success && !string.IsNullOrEmpty(res.Content))
                 {
                     response.Content = res.Content;
@@ -416,7 +416,7 @@ namespace OnlineLpk12.Controllers
                 }
 
                 //Check if the folder exists in Database
-                var isFileExists = await _fileSystemService.IsFolderExists(sparc.UserId, username, sparc.FolderName, sparc.ParentUrl);
+                var isFileExists = await _fileSystemService.IsFolderExists(sparc.UserId, username, sparc.FolderName.ToLower(), sparc.ParentUrl.ToLower());
                 if (isFileExists == null || !isFileExists.Success || !isFileExists.Content)
                 {
                     response.Message = "One or more validation errors occurred.";
@@ -425,7 +425,7 @@ namespace OnlineLpk12.Controllers
                 }
 
                 //If file exists -> delete the file
-                var res = await _fileSystemService.DeleteFolder(sparc.UserId, username, sparc.FolderName, sparc.ParentUrl);
+                var res = await _fileSystemService.DeleteFolder(sparc.UserId, username, sparc.FolderName.ToLower(), sparc.ParentUrl.ToLower());
                 if (res != null && res.Success && !string.IsNullOrEmpty(res.Content))
                 {
                     response.Content = res.Content;
@@ -488,7 +488,7 @@ namespace OnlineLpk12.Controllers
                 }
 
                 //Check if the file exists in Database
-                var isFileExists = await _fileSystemService.IsFileExists(sparc.UserId, username, sparc.FileName, sparc.FolderUrl);
+                var isFileExists = await _fileSystemService.IsFileExists(sparc.UserId, username, sparc.FileName.ToLower(), sparc.FolderUrl.ToLower());
                 if (isFileExists == null || !isFileExists.Success)
                 {
                     response.Message = "One or more validation errors occurred.";
@@ -504,7 +504,7 @@ namespace OnlineLpk12.Controllers
                 }
 
                 //If file exists -> delete the file
-                var res = await _fileSystemService.DeleteFile(sparc.UserId, username, sparc.FileName, sparc.FolderUrl);
+                var res = await _fileSystemService.DeleteFile(sparc.UserId, username, sparc.FileName.ToLower(), sparc.FolderUrl.ToLower());
                 if (res != null && res.Success && !string.IsNullOrEmpty(res.Content))
                 {
                     response.Content = res.Content;
@@ -568,7 +568,7 @@ namespace OnlineLpk12.Controllers
                 }
 
                 //Check if the file exists in Database
-                var isFileExists = await _fileSystemService.IsFileExists(sparc.UserId, username, sparc.FileName, sparc.FolderUrl);
+                var isFileExists = await _fileSystemService.IsFileExists(sparc.UserId, username, sparc.FileName.ToLower(), sparc.FolderUrl.ToLower());
                 if (isFileExists == null || !isFileExists.Success)
                 {
                     response.Message = "One or more validation errors occurred.";
@@ -579,7 +579,7 @@ namespace OnlineLpk12.Controllers
                 //If File not exists create a new file
                 if (!isFileExists.Content)
                 {
-                    var isFileCreated = await _fileSystemService.CreateFile(sparc.UserId, username, sparc.FileName, sparc.FolderUrl);
+                    var isFileCreated = await _fileSystemService.CreateFile(sparc.UserId, username, sparc.FileName.ToLower(), sparc.FolderUrl.ToLower());
                     if (isFileCreated == null || !isFileCreated.Success)
                     {
                         response.Message = "One or more validation errors occurred.";
@@ -588,7 +588,7 @@ namespace OnlineLpk12.Controllers
                     }
                 }
 
-                var res = await _fileSystemService.SaveFileContent(sparc.UserId, username, sparc.FileName, sparc.FolderUrl, sparc.Program);
+                var res = await _fileSystemService.SaveFileContent(sparc.UserId, username, sparc.FileName.ToLower(), sparc.FolderUrl.ToLower(), sparc.Program);
                 if (res.Success)
                 {
                     response.Content = res.Content;
@@ -643,7 +643,7 @@ namespace OnlineLpk12.Controllers
                     return BadRequest(response);
                 }
 
-                var result = await _fileSystemService.GetFileContent(userId, username, fileName, folderUrl);
+                var result = await _fileSystemService.GetFileContent(userId, username, fileName.ToLower(), folderUrl.ToLower());
                 if (result != null && result.Success)
                 {
                     response.Content = result.Content;

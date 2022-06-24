@@ -155,7 +155,7 @@ namespace OnlineLpk12.Services.Implementation
                 //Get all the files of the given folder and sub folders from sparc content table and delete
                 var spContents = await (from spc in _context.SparcContents
                                         where spc.Owner.ToLower() == username.ToLower() &&
-                                        spc.FileUrl.Contains(folderUrl.ToLower())
+                                        spc.FileUrl.ToLower().Contains(folderUrl.ToLower())
                                         select spc).ToListAsync();
                 if (spContents != null && spContents.Any())
                     _context.SparcContents.RemoveRange(spContents);
@@ -472,9 +472,9 @@ namespace OnlineLpk12.Services.Implementation
             name = name.Trim(new char[] { ' ', '/', '\\' });
             if (string.IsNullOrWhiteSpace(url))
             {
-                return name;
+                return name.ToLower();
             }
-            return url + "/" + name;
+            return $"{url.ToLower()}/{name.ToLower()}";
         }
     }
 }
