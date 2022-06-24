@@ -440,9 +440,9 @@ namespace OnlineLpk12.Services.Implementation
 
                 if (foldersFiles != null && foldersFiles.Any())
                 {
-                    List<string> folders = foldersFiles.Select(x => x.FolderUrl).Distinct().ToList();
+                    List<string> folders = foldersFiles.Select(x => x.FolderUrl).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
                     folders.Sort();
-                    List<string> files = foldersFiles.Where(k => !string.IsNullOrWhiteSpace(k.FileUrl)).Select(x => x.FileUrl).Distinct().ToList();
+                    List<string> files = foldersFiles.Where(k => !string.IsNullOrWhiteSpace(k.FileUrl)).Select(x => x.FileUrl).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
                     files.Sort();
 
                     string treeStructure = SparcFileSystemHelper.GetTree(folders, files);
