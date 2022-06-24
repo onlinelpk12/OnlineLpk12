@@ -1,17 +1,17 @@
-var ajaxurl = 'ajax.php';
+let ajaxurl = 'ajax.php';
 
 /* Fluents for navigation of file system 
    They are changed by easyTree.js, and used by other js 
 */
-var sthSelected=false; // true if some item is selected
-var selectedItem=""; // it can be a full path file name or 
+let sthSelected=false; // true if some item is selected
+let selectedItem=""; // it can be a full path file name or 
 		     // folder name or "" - nothing selected
-var selectedItemType = ""; // the type of the selected item
+let selectedItemType = ""; // the type of the selected item
 			   // is either folder or file or 
 			   // "" - nothing selected
 
-var currentFolder=""; // the most recently selected folder
-var currentFile="";  // the most recently selected file
+let currentFolder=""; // the most recently selected folder
+let currentFile="";  // the most recently selected file
 
 
 /*
@@ -52,7 +52,7 @@ var refreshDirectory = function() {
         on front-end
 */
 function setRootAsDefaultFolder(){
-	var currentFolderValue = getCurrentFolder();
+	let currentFolderValue = getCurrentFolder();
 	if(currentFolderValue =="" || currentFolderValue==null){
 		setCurrentFolder(getCurrentUsername()+"/");
 	} else if(currentFolderValue != ""){
@@ -112,7 +112,7 @@ var setCurrentFolder = function(folderName) {
     sessionStorage.setItem("currentFolder",folderName);
     //$.post(ajaxurl, data, function(response) {
         
-        var folderurl = getCurrentFolder();
+        let folderurl = getCurrentFolder();
         $('#span_currentfolderid').empty();
         $('#span_currentfolderid').append(folderurl);
         $('#span_currentfolderid').data("value", folderurl); 
@@ -142,8 +142,8 @@ var deleteFileOrFolder = function(name) {
 	let userid = getUserId();
     //precondition: either a file or folder have to be selected. 	
     
-    var userName = getCurrentUsername();
-    var homeFolder = userName + "/";
+    let userName = getCurrentUsername();
+    let homeFolder = userName + "/";
     if (name == homeFolder){
 	// home folder cannot be deleted, we do nothing.
         return; 
@@ -151,7 +151,7 @@ var deleteFileOrFolder = function(name) {
 	
     // update front end info about current folder / file and vars of currentFolder/File
     if (sthSelected) {
-    	var currentFileiInCurrentFolder = (currentFile.indexOf(currentFolder) == 0);
+    	let currentFileiInCurrentFolder = (currentFile.indexOf(currentFolder) == 0);
     	if (selectedItemType == "folder"){
     		setCurrentFolderNew("");
     		
@@ -159,7 +159,7 @@ var deleteFileOrFolder = function(name) {
     		let index =  name.lastIndexOf("/");
     		let ApiFolderNameParam = name.substring(index+1);
     		let ApiParentURIParam = name.substring(0,index);
-    		var data = {
+    		let data = {
 				   		'userId': userid,
 				   		'folderName':ApiFolderNameParam,
 				   		'parentUrl': ApiParentURIParam
@@ -174,13 +174,13 @@ var deleteFileOrFolder = function(name) {
         if ((selectedItemType == "file") || currentFileiInCurrentFolder) {
         	setCurrentFileNew("");
         	// clear the editor content
-        	var editor = ace.edit("editor");
+        	let editor = ace.edit("editor");
         	editor.setValue("", -1);
         	
         	let index =  name.lastIndexOf("/");
         	let ApiFileNameParam = name.substring(index+1);
     		let ApiFolderNameParam = name.substring(0,index);
-        	var data = {
+        	let data = {
 			   		'userId': userid,
 			   		'fileName':ApiFileNameParam,
 			   		'folderUrl': ApiFolderNameParam
@@ -217,14 +217,14 @@ var deleteFileOrFolder = function(name) {
 var renameFile = function(newName) {
     // precondition: the newName must be a new name of currentFile 
     
-    var oldfileurl = currentFile;
-    var newfileurl = oldfileurl.substring(0, oldfileurl.lastIndexOf("/")+1) + newName;
+    let oldfileurl = currentFile;
+    let newfileurl = oldfileurl.substring(0, oldfileurl.lastIndexOf("/")+1) + newName;
     
     if (oldfileurl == newfileurl) { //do nothing if the name is not changed
 	return; 
     }
     // rename file at back end 
-    var data = {
+    let data = {
            'action': "renameFile",
            'oldfileurl': oldfileurl,
 	   'newfileurl': newfileurl
@@ -262,9 +262,9 @@ var updateCurrentFolder = function() {
     returns : nothing
 */
 var updateCurrentFile = function() {
-    var data = {'action': "getCurrentFile"};
+    let data = {'action': "getCurrentFile"};
     //$.post(ajaxurl, data, function(response) {
-        var fileurl = sessionStorage.getItem("currentFile");
+        let fileurl = sessionStorage.getItem("currentFile");
         $('#span_currentfileid').empty();
 
         if (!fileurl) {
@@ -285,10 +285,10 @@ var updateCurrentFile = function() {
  returns : nothing
  */
 var updateSetting = function() {
-    var data = {'action': "getSetting"};
+    let data = {'action': "getSetting"};
     $.post(ajaxurl, data, function(response) {
            // get timeout
-           var setting = JSON.parse(response);
+           let setting = JSON.parse(response);
            // $('#printSetting').append("timeout = " + setting.timeout + "#sets = " + setting.sets);
            // $('#printSetting').append(response);
            // $('#printSetting').show(); 
@@ -344,10 +344,10 @@ var setEditorToFile = function(fileName) {
         fileName = "_templates/sparc.sp";
     }
 
-    var folderurl = fileName.substring(0, fileName.lastIndexOf("/"));
-    var fileNameParam = fileName.substring(fileName.lastIndexOf("/")+1);
+    let folderurl = fileName.substring(0, fileName.lastIndexOf("/"));
+    let fileNameParam = fileName.substring(fileName.lastIndexOf("/")+1);
     
-    var data = {
+    let data = {
     			 'userId': userId,
                  'fileName': fileNameParam,
                  'folderUrl':folderurl,
@@ -356,7 +356,7 @@ var setEditorToFile = function(fileName) {
     const getFileAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/getfile?"+decodeURIComponent($.param(data,encodeData=false));
     $.get(getFileAPI, data, function(response) {
     	console.log((response.content.program)?response.content.program:"empty program");
-        var editor = ace.edit("editor");
+        let editor = ace.edit("editor");
         editor.setValue(response.content.program, -1);
     });
 }
@@ -368,7 +368,7 @@ var setEditorToFile = function(fileName) {
     returns : nothing
 */
 var setEditorToCurrentFile = function() {
-    var data = {'action': "getCurrentFile"};
+    let data = {'action': "getCurrentFile"};
 
     $.post(ajaxurl, data, function(response) {
         if (!response) {
@@ -393,7 +393,7 @@ var setEditorFontSize = function(font_size) {
 
 var getCurrentUsername = function() {
     //var username = $("#login").html();
-    var username = sessionStorage.getItem("username");
+    let username = sessionStorage.getItem("username");
     if (!username || username === "Log-in") {
         return "";
     }
@@ -401,7 +401,7 @@ var getCurrentUsername = function() {
 }
 
 var isResponseError = function(response) {
-    var errorMessage = "Something went wrong";
+    let errorMessage = "Something went wrong";
     if (response.indexOf(errorMessage) == 0) {
         return true;
     }
@@ -410,7 +410,7 @@ var isResponseError = function(response) {
 
 var setResultsToString = function(string) {
     $('#results').empty();
-    var clearResults = '<center> <button onclick="clearResults()" > \
+    let clearResults = '<center> <button onclick="clearResults()" > \
                         Clear the Results \
                     </button> </center>';
     $('#results').append(clearResults);
@@ -458,9 +458,9 @@ var closeDirectory = function() {
 function resizeAce(){
   // $('#editor').height($(window).height()-112);
   $('#editor').height($(window).height()-140);
-  var editor = ace.edit("editor")
-  //var program = editor.getValue();
-  //var cursor = editor.getCursorPosition();
+  let editor = ace.edit("editor")
+  //let program = editor.getValue();
+  //let cursor = editor.getCursorPosition();
   editor.resize();
   // editor.setValue(program, cursor);
   return;
@@ -470,7 +470,7 @@ function resizeAce(){
 // When the DOM is ready
 $(document).ready(function() {
 
-    var editor = ace.edit("editor");
+    let editor = ace.edit("editor");
     editor.setTheme("ace/theme/textmate");
     editor.getSession().setMode("ace/mode/sparc");
 
@@ -495,12 +495,12 @@ $(document).ready(function() {
     // Get Query button handler
     $('#btn_getQuery').click(function(e) {
         e.preventDefault();
-        var editorValue = editor.getValue();
-        var queryValue = $('#txt_query').val();
+        let editorValue = editor.getValue();
+        let queryValue = $('#txt_query').val();
 	// RE - Fixed 3/9/20 10:44 ams
 	queryValue = queryValue.replace(/\?/g, "");
 
-        var data = {'action': "getQuery",
+        let data = {'action': "getQuery",
                     'query': queryValue,
                     'editor': editorValue};
 
@@ -512,8 +512,8 @@ $(document).ready(function() {
 
     // Get Answer Sets button handler
     $('#btn_getAnswerSets').click(function(e) {
-        var editorValue = editor.getValue();
-        var data = {'action': "getAnswerSets",
+        let editorValue = editor.getValue();
+        let data = {'action': "getAnswerSets",
                    'editor': editorValue};
         
 	// $('#results').append("hello");
@@ -526,8 +526,8 @@ $(document).ready(function() {
 
 	    // Animate button handler
     $('#btn_getAnimation').click(function(e) {
-        var editorValue = editor.getValue();
-        var data = {'action': "getAnimation",
+        let editorValue = editor.getValue();
+        let data = {'action': "getAnimation",
                     'editor': editorValue};
 
         // Expected response : answer sets in XML
@@ -539,14 +539,14 @@ $(document).ready(function() {
     // New folder button
     $('#newFolder').click(function(e) {
         e.preventDefault();
-        var parentURL = $("#span_currentfolderid").data("value");
+        let parentURL = $("#span_currentfolderid").data("value");
 
 		if (currentFolder == "") {
 		   alert("Please select a folder from the directory panel.");
 		   return;
 		}	
 
-        var folderName = prompt("Please enter folder name");
+        let folderName = prompt("Please enter folder name");
         let userId = getUserId();
         parentURL.slice(0,-1);
         data = {'userId': userId,
@@ -572,9 +572,9 @@ $(document).ready(function() {
     $('#newFile').click(function(e) {
     	let userId = getUserId();
         e.preventDefault();
-        var fileName = prompt("Please enter file name");
-        // var editorValue = editor.getValue();
-        var editorValue = ""; // we set the new file to be empty
+        let fileName = prompt("Please enter file name");
+        // let editorValue = editor.getValue();
+        let editorValue = ""; // we set the new file to be empty
         /*data = {'action': "addNewFile",
                 'newfile': fileName,
                 'editor': editorValue};*/
@@ -616,8 +616,8 @@ $(document).ready(function() {
     // Share button
     $("#btn_share").click(function(e) {
         e.preventDefault();
-        var currentFile = $("#span_currentfileid").html();
-        var otherUser = $("#share_username").val();
+        let currentFile = $("#span_currentfileid").html();
+        let otherUser = $("#share_username").val();
         data = {'action': "shareFile",
                 'fileurl': currentFile,
                 'username2': otherUser,
@@ -640,9 +640,9 @@ $(document).ready(function() {
     $("#btn_changesetting").click(function(e) {
 
         e.preventDefault();
-        var timeout = $("#setting_timeout").val();
-        var sets = $("input:radio[name=setting_sets]:checked").val();
-        var otherNumSets = $("#setting_numSets").val();
+        let timeout = $("#setting_timeout").val();
+        let sets = $("input:radio[name=setting_sets]:checked").val();
+        let otherNumSets = $("#setting_numSets").val();
                   
           $("#changeSetting_fail").empty();
           $("#changeSetting_fail").hide();
@@ -690,8 +690,8 @@ $(document).ready(function() {
 
     // Issues button
     $("#navbar_btn_issues").click(function(e) {
-        var issue = prompt("What is your issue? Please give details as to what you did before you received an error.");
-        var data = {'action': "addIssue",
+        let issue = prompt("What is your issue? Please give details as to what you did before you received an error.");
+        let data = {'action': "addIssue",
                     'issue': issue};
 
         $.post(ajaxurl, data, function(response) {
@@ -703,16 +703,16 @@ $(document).ready(function() {
     $("#btn_save").click(function(e) {
     	let userId = getUserId();
         // TODO check if currentuser is null then show log-in button
-    	var editorValue = editor.getValue();
+    	let editorValue = editor.getValue();
     	console.log("this is editor.getValue() :"+editorValue);
         updateCurrentFile();
-        var currentFile = $("#span_currentfileid").data("value");
+        let currentFile = $("#span_currentfileid").data("value");
 
         updateCurrentFolder();
-        var currentFolder = $("#span_currentfolderid").data("value");
+        let currentFolder = $("#span_currentfolderid").data("value");
 
         // save an untitled file
-        var newFile = false; 
+        let newFile = false; 
         if (!currentFile || currentFile == "") {
             currentFile = prompt("Please enter a file name");
 	    if (currentFile === null) {// user canceled the input box. 
@@ -723,7 +723,7 @@ $(document).ready(function() {
             currentFile = currentFolder.trim() + currentFile.trim();
         }
         let index =  currentFile.lastIndexOf("/");
-        var currentFileName = currentFile.substring(index+1);
+        let currentFileName = currentFile.substring(index+1);
         let folderUrl = currentFolder.slice(0,-1);
 
         data = {
@@ -752,10 +752,10 @@ $(document).ready(function() {
     });
 
     $(document).on("click", ".dir-item", function() {
-        var fileurl = $(this).data("value");
+        let fileurl = $(this).data("value");
         setEditorToFile(fileurl);
 
-        var folderurl = fileurl.substring(0, fileurl.lastIndexOf("/")+1);
+        let folderurl = fileurl.substring(0, fileurl.lastIndexOf("/")+1);
         setCurrentFile(fileurl);
         setCurrentFolder(folderurl);
         setCurrentFile(fileurl);
@@ -765,15 +765,15 @@ $(document).ready(function() {
 
     /* when an item is CLICKED (which may select or unselect the item from the file system */
     $(document).on("click", ".dir-item-text", function(e) {
-        var isFolder = $(this).parent().parent().hasClass('dir-folder');
-        var fileurl = $(this).parent().parent().data("value");
+        let isFolder = $(this).parent().parent().hasClass('dir-folder');
+        let fileurl = $(this).parent().parent().data("value");
         if(isFolder){
             fileurl=fileurl+"/";        	
         }
 
         // if the selected file/folder is clicked, sthSelected will be toggled
 	// otherwise sth is selectged 
-        var sameSelectionAsBefore = (fileurl == selectedItem); 
+        let sameSelectionAsBefore = (fileurl == selectedItem); 
 	
 	if (sthSelected && sameSelectionAsBefore){
 		sthSelected = false;
@@ -794,7 +794,7 @@ $(document).ready(function() {
 
           setEditorToFile(fileurl); // change the content of the editor to currentfile
 
-          var folderurl = fileurl.substring(0, fileurl.lastIndexOf("/")+1);
+          let folderurl = fileurl.substring(0, fileurl.lastIndexOf("/")+1);
 	  
           setCurrentFolderNew(folderurl);
           setCurrentFileNew(fileurl);
@@ -808,7 +808,7 @@ $(document).ready(function() {
     });
 
     $(document).on("change", "#select_fontsize", function() {
-        var font_size = $(this).val();
+        let font_size = $(this).val();
         setEditorFontSize(font_size);
     });
     

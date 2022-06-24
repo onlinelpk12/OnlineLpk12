@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- EASYTREE -->
+<link rel="stylesheet" type="text/css" href="../styles/easyTree.css">
+<link href="../styles/simple-sidebar.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-	<!-- EASYTREE -->
-	<link rel="stylesheet" type="text/css" href="../styles/easyTree.css">
-	<link href="../styles/simple-sidebar.css" rel="stylesheet">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
-	type="text/javascript"></script>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="../js/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="../js/mode-sparc.js" type="text/javascript"></script>
 <script src="../js/sparc_programs.js" type="text/javascript"></script>
 <script src="../js/script.js" type="text/javascript"></script>
 <script src="../js/lessonDataStructureJSON.js"></script>
+<!-- <script src="scripts/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script> -->
+<script src="../js/navbar-response.js" type="text/javascript"></script>
+<script src="../js/easyTree.js" type="text/javascript"></script>
+<script src="../js/easytree-response.js" type="text/javascript"></script>
+<script src="../js/resizer.js" type="text/javascript"></script>
+<script src="../js/init.js" type="text/javascript"></script>
+<script type="text/javascript" src="../js/jquery.xslt.js"></script>
 
 <title>Online SPARC</title>
 <style type="text/css" media="screen">
@@ -189,32 +191,16 @@ li {
 		</div>
 	</div>
 
-
-
-
-	<script src="scripts/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-
-	<script src="../js/navbar-response.js" type="text/javascript"
-		charset="utf-8"></script>
-	<script src="../js/easyTree.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../js/easytree-response.js" type="text/javascript"
-		charset="utf-8"></script>
-
-	<script src="../js/resizer.js" type="text/javascript"></script>
-	<script src="../js/init.js" type="text/javascript"></script>
-	<script type="text/javascript" src="../js/jquery.xslt.js"></script>
-	<script type="text/javascript">
-let currentLearningOutcomeNumber = sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber);
-let currentLessonNumber = sessionStorage.getItem(sessionKeyCurrentLessonNumber);
-window.onload = function(){
-	document.getElementById("sparc-footer-next-btn").disabled = true;
-	let response = getSparcProgram(currentLearningOutcomeNumber);
-	console.log(response);
-	editor.setValue(response);
-	
+<script type="text/javascript">
+	let currentLearningOutcomeNumber = sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber);
+	let currentLessonNumber = sessionStorage.getItem(sessionKeyCurrentLessonNumber);
+	window.onload = function(){
+		document.getElementById("sparc-footer-next-btn").disabled = true;
+		let response = getSparcProgram(currentLearningOutcomeNumber);
+		console.log(response);
+		editor.setValue(response);
 	}
 	let userid = sessionStorage.getItem("userId");
-	
 	const apiBaseurl = "https://onlinelpk12api.azurewebsites.net/api/sparc/";
 	//var input="getAnswerSets";
     var editor = ace.edit("editor");
@@ -225,7 +211,6 @@ window.onload = function(){
 		$('#results').append(response);
 	}
     
-	
 	var clearResults=function(){
 		$('#results').empty();
 	}
@@ -259,7 +244,6 @@ window.onload = function(){
 	         };
 		PostSparc(request,"save");
 	}
-	
 	
 	function answerSets(){
 		let program = editor.getValue(); 
@@ -323,52 +307,47 @@ window.onload = function(){
         });
 	}
 </script>
-	<script type="text/javascript">
-function SubmitSparc() {
-	
-    let _isSparcPassed = true;
-    let sessionKeyIsSparcPassed ="isSparcPassed";
-    if(_isSparcPassed==false){
-    //validate sparc program
-    
-    return;
-    
-    }
-    sessionStorage.setItem(sessionKeyIsSparcPassed, _isSparcPassed);
-    let currentLessonNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber));
-    let currentLearningOutcomeNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber));
-    let currentLessonDetails = lessonsJson.lessons.filter(lesson => lesson.lessonId == currentLessonNumber)[0];
-        
-    let isAssessmentPassed = sessionStorage.getItem(sessionKeyIsAssessmentPassed) === 'true';
-    _isSparcPassed = sessionStorage.getItem(sessionKeyIsSparcPassed) === 'true';
-    let message = document.getElementById('next-step-link');
-    if (isAssessmentPassed && _isSparcPassed) {
-        //sessionStorage.removeItem(sessionKeyIsAssessmentPassed);
-        //let pageIdToShow = sessionStorage.getItem(sessionKeyShowPageId);
-        //message.innerHTML = "Congratulations on completing the programming task. Please click <a href='" + nextLessonUrl + "'> here </a> to go to next steps."
-
-        // student passed root assessment, so allow student to go to next lesson
-        if (isAssessmentPassed && currentLearningOutcomeNumber == 0) {
-            let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber + 1) + ".jsp";
-		window.location.href = nextLessonUrl;
-           // message.innerHTML = "You have passed the root assessment. please click <a href='" + nextLessonUrl + "'> here </a> to go to next lesson";
-        }
-        // passed all learning outcomes in the lesson
-        else if (isAssessmentPassed && currentLearningOutcomeNumber == currentLessonDetails.rootLearningOutcome.subLearningOutcomes.length) {
-            let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber + 1) + ".jsp";
-		window.location.href = nextLessonUrl;
-            //message.innerHTML = "You have passed all the assessments. please click <a href='" + nextLessonUrl + "'> here </a> to go to next lesson";
-        }
-        else if (isAssessmentPassed && currentLearningOutcomeNumber > 0) {
-            let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber) + ".jsp";
-
-            let nextLearningOutcomeDetails = currentLessonDetails.rootLearningOutcome.subLearningOutcomes.filter(x=> x.learningOutcomeId ==  currentLearningOutcomeNumber+1)[0];
-            let showPageId = nextLearningOutcomeDetails.pages[0].pageId;
-            sessionStorage.setItem(sessionKeyShowPageId,showPageId);
-	    window.location.href = nextLessonUrl;
-            //message.innerHTML = "You have passed assessment Please click <a href='" + nextLessonUrl + "'> here </a> to go to next learning outcome";
-        }
-    }
+<script type="text/javascript">
+	function SubmitSparc() {	
+		let _isSparcPassed = true;
+		let sessionKeyIsSparcPassed ="isSparcPassed";
+		if(_isSparcPassed==false){
+			//validate sparc program    
+			return;
+		}
+		sessionStorage.setItem(sessionKeyIsSparcPassed, _isSparcPassed);
+		let currentLessonNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber));
+		let currentLearningOutcomeNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber));
+		let currentLessonDetails = lessonsJson.lessons.filter(lesson => lesson.lessonId == currentLessonNumber)[0];
+        let isAssessmentPassed = sessionStorage.getItem(sessionKeyIsAssessmentPassed) === 'true';
+		_isSparcPassed = sessionStorage.getItem(sessionKeyIsSparcPassed) === 'true';
+		let message = document.getElementById('next-step-link');
+		if (isAssessmentPassed && _isSparcPassed) {
+			//sessionStorage.removeItem(sessionKeyIsAssessmentPassed);
+			//let pageIdToShow = sessionStorage.getItem(sessionKeyShowPageId);
+			//message.innerHTML = "Congratulations on completing the programming task. Please click <a href='" + nextLessonUrl + "'> here </a> to go to next steps."
+			
+			// student passed root assessment, so allow student to go to next lesson
+			if (isAssessmentPassed && currentLearningOutcomeNumber == 0) {
+				let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber + 1) + ".jsp";
+				window.location.href = nextLessonUrl;
+				// message.innerHTML = "You have passed the root assessment. please click <a href='" + nextLessonUrl + "'> here </a> to go to next lesson";
+			}
+			// passed all learning outcomes in the lesson
+			else if (isAssessmentPassed && currentLearningOutcomeNumber == currentLessonDetails.rootLearningOutcome.subLearningOutcomes.length) {
+				let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber + 1) + ".jsp";
+				window.location.href = nextLessonUrl;
+				//message.innerHTML = "You have passed all the assessments. please click <a href='" + nextLessonUrl + "'> here </a> to go to next lesson";
+			}
+			else if (isAssessmentPassed && currentLearningOutcomeNumber > 0) {
+				let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber) + ".jsp";
+				let nextLearningOutcomeDetails = currentLessonDetails.rootLearningOutcome.subLearningOutcomes.filter(x=> x.learningOutcomeId ==  currentLearningOutcomeNumber+1)[0];
+				let showPageId = nextLearningOutcomeDetails.pages[0].pageId;
+				sessionStorage.setItem(sessionKeyShowPageId,showPageId);
+				window.location.href = nextLessonUrl;
+				//message.innerHTML = "You have passed assessment Please click <a href='" + nextLessonUrl + "'> here </a> to go to next learning outcome";
+			}
+		}
     }
 </script>
 	<%@ include file="sparc-footer.jsp"%>
