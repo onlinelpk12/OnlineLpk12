@@ -63,9 +63,6 @@ function setRootAsDefaultFolder(){
 var setCurrentFolderNew = function(folderName) {
     if (sthSelected) {
        currentFolder = folderName;
-      /* var data = {'action': "setCurrentFolder",
-                   'currentfolder': folderName};*/
-       //$.post(ajaxurl, data, function(response) {}); 
        sessionStorage.setItem("currentFolder",currentFolder);
 
        $('#span_currentfolderid').empty();
@@ -83,9 +80,6 @@ var setCurrentFolderNew = function(folderName) {
 var setCurrentFileNew = function(fileName) {
     if (sthSelected) {
       currentFile = fileName; // same as fileName 
-      /*var data = {'action': "setCurrentFile",
-                  'currentfile': fileName};*/
-      //$.post(ajaxurl, data, function(response) {});
       sessionStorage.setItem("currentFile",currentFile);
 	  $('#span_currentfileid').empty();
 	
@@ -107,16 +101,12 @@ var setCurrentFileNew = function(fileName) {
         on front-end
 */
 var setCurrentFolder = function(folderName) {
-    /*var data = {'action': "setCurrentFolder",
-                'currentfolder': folderName};*/
     sessionStorage.setItem("currentFolder",folderName);
-    //$.post(ajaxurl, data, function(response) {
-        
-        let folderurl = getCurrentFolder();
-        $('#span_currentfolderid').empty();
-        $('#span_currentfolderid').append(folderurl);
-        $('#span_currentfolderid').data("value", folderurl); 
-    //});
+    
+    let folderurl = getCurrentFolder();
+    $('#span_currentfolderid').empty();
+    $('#span_currentfolderid').append(folderurl);
+    $('#span_currentfolderid').data("value", folderurl); 
 };
 
 var getCurrentFolder = function(){
@@ -165,10 +155,16 @@ var deleteFileOrFolder = function(name) {
 				   		'parentUrl': ApiParentURIParam
     			    	};
     		
-    		const folderDeletionAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/deletefolder?"+decodeURIComponent($.param(data,encodeData=false));
-    		$.post(folderDeletionAPI, data, function(response) {
-    			console.log(response.content);
-    		});
+    		//const folderDeletionAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/deletefolder"+decodeURIComponent($.param(data,encodeData=false));
+    		const folderDeletionAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/deletefolder";
+    		
+    		postSparcData(folderDeletionAPI, data).then(resp =>{
+    			console.log('response from post method: ', resp);
+    			if (resp.errors.length==0) {
+    				console.log(resp.content);
+                }
+    		})
+    		.catch(x => console.log(x));
     		
     	}
         if ((selectedItemType == "file") || currentFileiInCurrentFolder) {
@@ -187,21 +183,15 @@ var deleteFileOrFolder = function(name) {
 			    	};
         	
         	const fileDeletionAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/deletefile?"+decodeURIComponent($.param(data,encodeData=false));
-    		$.post(fileDeletionAPI, data, function(response) {
-    			console.log(response.content);
-    		});
-        	
+        	postSparcData(fileDeletionAPI, data).then(resp =>{
+    			console.log('response from post method: ', resp);
+    			if (resp.errors.length==0) {
+    				console.log(resp.content);
+                }
+    		})
+    		.catch(x => console.log(x));        	
         }
     }
-
-    // delete the file from server side 
-    /*var data = {
-	   'action': "deleteFileOrFolder",
-	   'fname': name
-    };*/
-
-    
-
     // set selected data structure
     sthSelected = false;
     selectedItem = "";
@@ -263,19 +253,17 @@ var updateCurrentFolder = function() {
 */
 var updateCurrentFile = function() {
     let data = {'action': "getCurrentFile"};
-    //$.post(ajaxurl, data, function(response) {
-        let fileurl = sessionStorage.getItem("currentFile");
-        $('#span_currentfileid').empty();
+    let fileurl = sessionStorage.getItem("currentFile");
+    $('#span_currentfileid').empty();
 
-        if (!fileurl) {
-            //TODO do we want untitled
-            $('#span_currentfileid').append("");
-	    $('#span_currentfileid').data("value", "");
-        } else {
-            $('#span_currentfileid').append(fileurl);
-            $('#span_currentfileid').data("value", fileurl);
-        }
-    //});
+    if (!fileurl) {
+        //TODO do we want untitled
+        $('#span_currentfileid').append("");
+    $('#span_currentfileid').data("value", "");
+    } else {
+        $('#span_currentfileid').append(fileurl);
+        $('#span_currentfileid').data("value", fileurl);
+    }
 };
 
 /*
@@ -315,9 +303,6 @@ var updateSetting = function() {
         back-end
 */
 var setCurrentFile = function(fileName) {
-   /* var data = {'action': "setCurrentFile",
-            'currentfile': fileName};*/
-   /* $.post(ajaxurl, data, function(response) {});*/
    sessionStorage.setItem("currentFile",fileName);
    $('#span_currentfileid').empty();
 
@@ -548,24 +533,26 @@ $(document).ready(function() {
 
         let folderName = prompt("Please enter folder name");
         let userId = getUserId();
-        parentURL.slice(0,-1);
+        parentURL = parentURL.slice(0,-1);
         data = {'userId': userId,
             	'folderName': folderName,
             	'parentUrl': parentURL
             	};
-        const folderCreationAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/createfolder?"+decodeURIComponent($.param(data,encodeData=false));
+        const folderCreationAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/createfolder";
         
-        // Expected response : success message
-        $.post(folderCreationAPI, data, function(response) {
-            if (response.errors.length==0) {
-            	console.log(response.content);
+        postSparcData(folderCreationAPI, data).then(resp =>{
+			console.log('response from post method: ', resp);
+			if (resp.errors.length==0) {
+				console.log(resp.content);
                 refreshDirectory();
                 setCurrentFolderNew(currentFolder+folderName+"/");
                 updateCurrentFolder();
             } else {
-                setResultsToString(response);
+                setResultsToString(resp);
             }
-        });        
+		})
+		.catch(x => console.log(x)); 
+            
     });
 
     // New file button
@@ -585,19 +572,20 @@ $(document).ready(function() {
                 'folderUrl': folderUrl
                };
 
-        const fileCreationAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/createfile?"+decodeURIComponent($.param(data,encodeData=false));
+        const fileCreationAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/createfile";
         // Expected response : success message
-        $.post(fileCreationAPI, data, function(response) {
-
-            if (response.errors.length==0) {
-                refreshDirectory();
+        postSparcData(fileCreationAPI, data).then(resp =>{
+			console.log('response from post method: ', resp);
+			if (resp.errors.length==0) {
+				refreshDirectory();
                 setEditorToFile(currentFolder+fileName);
                 updateCurrentFile();
             } else {
-                setResultsToString(response);
+                setResultsToString(resp);
             }
-            //setCurrentFile(response);
-        });
+		})
+		.catch(x => console.log(x));
+        
     });
 
     // Delete button -- we don't hvae delete  button of #btn_delete. We have a delete button in easyTree.js
@@ -740,8 +728,9 @@ $(document).ready(function() {
 			if (resp.errors.length==0) {
                 	setCurrentFile(currentFile);
                 	updateCurrentFile();
-					if (newFile) 
+					if (newFile){ 
 		   				refreshDirectory();
+					}
             	}
 		})
 		.catch(x => console.log(x));
@@ -819,36 +808,6 @@ $(document).ready(function() {
 
         document.getElementById('editor').style.fontSize=''+font_size+'px';
     }
-
-    /* This does not work 
-    $(document).on("click", ".dir-folder parent_li", function() {
-        var folderurl = $(this).data("value");
-        alert("This fires");
-        setCurrentFolder(folderurl);
-    }); */
-    
-
-    // TODO: remove
-
-    /*
-    function displayResults(xml) {
-        var xsl = loadXMLDoc("compiler/SPARC/parser/NoQuery.xsl");
-        // code for IE
-        if (window.ActiveXObject|| xhttp.responseType == "msxml-document") {
-            var ex = xml.transformNode(xsl);
-            document.getElementById("result").innerHTML = ex;
-        }
-        // code for Chrome, Firefox, Opera, etc.
-        else if (document.implementation && document.implementation.createDocument) {
-            var xsltProcessor = new XSLTProcessor();
-            xsltProcessor.importStylesheet(xsl);
-            resultDocument = xsltProcessor.transformToFragment(xml, document);
-            document.getElementById("result").appendChild(resultDocument);
-            ("#result").append(resultDocument);
-        }
-    }
-
-    */
 });
 
 function postSparcData(url, data){
