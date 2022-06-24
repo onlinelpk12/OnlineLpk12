@@ -27,21 +27,28 @@ namespace OnlineLpk12.Controllers
         }
 
         [HttpPost("createrootfolder")]
-        public async Task<IActionResult> CreateRootFolder(int userId)
+        public async Task<IActionResult> CreateRootFolder([FromBody] SparcInput sparc)
         {
             Response<string> response = new();
             List<string> validationMessages = new();
             string username = "";
             try
             {
+                if(sparc == null)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Invalid input.");
+                    return BadRequest(response);
+                }
+
                 //Validate the user input
-                if (userId < 1)
+                if (sparc.UserId < 1)
                 {
                     validationMessages.Add("Enter valid User Id.");
                 }
                 else
                 {
-                    username = await _userService.GetUserNameByUserId(userId);
+                    username = await _userService.GetUserNameByUserId(sparc.UserId);
                     if (string.IsNullOrEmpty(username))
                         validationMessages.Add("User is invalid.");
                 }
@@ -54,7 +61,7 @@ namespace OnlineLpk12.Controllers
                 }
 
                 //Check if the root folder exists in Database
-                var isFolderExists = await _fileSystemService.IsFolderExists(userId, username, username, String.Empty);
+                var isFolderExists = await _fileSystemService.IsFolderExists(sparc.UserId, username, username, String.Empty);
                 if (isFolderExists == null || !isFolderExists.Success || isFolderExists.Content)
                 {
                     response.Message = "One or more validation errors occurred.";
@@ -63,7 +70,7 @@ namespace OnlineLpk12.Controllers
                 }
 
                 //If no folder exists -> create a new folder
-                var res = await _fileSystemService.CreateFolder(userId, username, username, String.Empty);
+                var res = await _fileSystemService.CreateFolder(sparc.UserId, username, username, String.Empty);
                 if (res != null && res.Success && !string.IsNullOrEmpty(res.Content))
                 {
                     response.Content = res.Content;
@@ -77,7 +84,7 @@ namespace OnlineLpk12.Controllers
             }
             catch (Exception ex)
             {
-                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                _logService.LogError(sparc.UserId, MethodBase.GetCurrentMethod().Name,
                     System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
@@ -86,26 +93,33 @@ namespace OnlineLpk12.Controllers
         }
 
         [HttpPost("isFolderExists")]
-        public async Task<IActionResult> CheckFolderExistence(int userId, string folderUrl)
+        public async Task<IActionResult> CheckFolderExistence([FromBody] SparcInput sparc)
         {
             Response<string> response = new();
             List<string> validationMessages = new();
             string username = string.Empty;
             try
             {
+                if (sparc == null)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Invalid input.");
+                    return BadRequest(response);
+                }
+
                 //Validate the user input
-                if (userId < 1)
+                if (sparc.UserId < 1)
                 {
                     validationMessages.Add("Enter valid User Id.");
                 }
                 else
                 {
-                    username = await _userService.GetUserNameByUserId(userId);
+                    username = await _userService.GetUserNameByUserId(sparc.UserId);
                     if (string.IsNullOrEmpty(username))
                         validationMessages.Add("User is invalid.");
                 }
 
-                if (string.IsNullOrEmpty(folderUrl))
+                if (string.IsNullOrEmpty(sparc.FolderUrl))
                     validationMessages.Add("Enter valid folder");
 
                 if (validationMessages.Any())
@@ -115,12 +129,12 @@ namespace OnlineLpk12.Controllers
                     return BadRequest(response);
                 }
 
-                folderUrl = folderUrl.TrimEnd(new char[] { ' ', '/', '\\' });
-                string folderName = SparcFileSystemHelper.GetFolderNameFromFolderUrl(folderUrl);
-                string parentUrl = SparcFileSystemHelper.GetParentUrlFromFolderUrl(folderUrl);
+                sparc.FolderUrl = sparc.FolderUrl.TrimEnd(new char[] { ' ', '/', '\\' });
+                sparc.FolderName = SparcFileSystemHelper.GetFolderNameFromFolderUrl(sparc.FolderUrl);
+                sparc.ParentUrl = SparcFileSystemHelper.GetParentUrlFromFolderUrl(sparc.FolderUrl);
 
                 //Check if the folder exists in Database
-                var isFolderExists = await _fileSystemService.IsFolderExists(userId, username, folderName, parentUrl);
+                var isFolderExists = await _fileSystemService.IsFolderExists(sparc.UserId, username, sparc.FolderName, sparc.ParentUrl);
                 if (isFolderExists == null || !isFolderExists.Success) //|| isFolderExists.Content)
                 {
                     response.Message = "One or more validation errors occurred.";
@@ -135,7 +149,7 @@ namespace OnlineLpk12.Controllers
             }
             catch (Exception ex)
             {
-                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                _logService.LogError(sparc.UserId, MethodBase.GetCurrentMethod().Name,
                     Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
@@ -144,29 +158,36 @@ namespace OnlineLpk12.Controllers
         }
 
         [HttpPost("createfolder")]
-        public async Task<IActionResult> CreateFolder(int userId, string folderName, string parentUrl)
+        public async Task<IActionResult> CreateFolder([FromBody] SparcInput sparc)
         {
             Response<string> response = new();
             List<string> validationMessages = new();
             string username = "";
             try
             {
+                if (sparc == null)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Invalid input.");
+                    return BadRequest(response);
+                }
+
                 //Validate the user input
-                if (userId < 1)
+                if (sparc.UserId < 1)
                 {
                     validationMessages.Add("Enter valid User Id.");
                 }
                 else
                 {
-                    username = await _userService.GetUserNameByUserId(userId);
+                    username = await _userService.GetUserNameByUserId(sparc.UserId);
                     if (string.IsNullOrEmpty(username))
                         validationMessages.Add("User is invalid.");
                 }
 
-                if (string.IsNullOrEmpty(folderName))
+                if (string.IsNullOrEmpty(sparc.FolderName))
                     validationMessages.Add("Enter valid folder name");
 
-                if (string.IsNullOrEmpty(parentUrl))
+                if (string.IsNullOrEmpty(sparc.ParentUrl))
                     validationMessages.Add("Enter valid folder url");
 
                 if (validationMessages.Any())
@@ -177,7 +198,7 @@ namespace OnlineLpk12.Controllers
                 }
 
                 //Check if the folder exists in Database
-                var isFolderExists = await _fileSystemService.IsFolderExists(userId, username, folderName, parentUrl);
+                var isFolderExists = await _fileSystemService.IsFolderExists(sparc.UserId, username, sparc.FolderName, sparc.ParentUrl);
                 if (isFolderExists == null || !isFolderExists.Success || isFolderExists.Content)
                 {
                     response.Message = "One or more validation errors occurred.";
@@ -186,7 +207,7 @@ namespace OnlineLpk12.Controllers
                 }
 
                 //If no folder exists -> create a new folder
-                var res = await _fileSystemService.CreateFolder(userId, username, folderName, parentUrl);
+                var res = await _fileSystemService.CreateFolder(sparc.UserId, username, sparc.FolderName, sparc.ParentUrl);
                 if (res != null && res.Success && !string.IsNullOrEmpty(res.Content))
                 {
                     response.Content = res.Content;
@@ -200,7 +221,7 @@ namespace OnlineLpk12.Controllers
             }
             catch (Exception ex)
             {
-                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                _logService.LogError(sparc.UserId, MethodBase.GetCurrentMethod().Name,
                     System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
@@ -210,26 +231,33 @@ namespace OnlineLpk12.Controllers
 
 
         [HttpPost("isfileExists")]
-        public async Task<IActionResult> CheckFileExistence(int userId, string fileUrl)
+        public async Task<IActionResult> CheckFileExistence([FromBody] SparcInput sparc)
         {
             Response<string> response = new();
             List<string> validationMessages = new();
             string username = "";
             try
             {
+                if (sparc == null)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Invalid input.");
+                    return BadRequest(response);
+                }
+
                 //Validate the user input
-                if (userId < 1)
+                if (sparc.UserId < 1)
                 {
                     validationMessages.Add("Enter valid User Id.");
                 }
                 else
                 {
-                    username = await _userService.GetUserNameByUserId(userId);
+                    username = await _userService.GetUserNameByUserId(sparc.UserId);
                     if (string.IsNullOrEmpty(username))
                         validationMessages.Add("User is invalid.");
                 }
 
-                if (string.IsNullOrEmpty(fileUrl))
+                if (string.IsNullOrEmpty(sparc.FileUrl))
                     validationMessages.Add("Enter valid file url");
 
                 if (validationMessages.Any())
@@ -240,12 +268,12 @@ namespace OnlineLpk12.Controllers
                 }
 
 
-                fileUrl = fileUrl.TrimEnd(new char[] { ' ', '/', '\\' });
-                string fileName = SparcFileSystemHelper.GetFileNameFromFileUrl(fileUrl);
-                string folderUrl = SparcFileSystemHelper.GetFolderUrlFromFileUrl(fileUrl);
+                sparc.FileUrl = sparc.FileUrl.TrimEnd(new char[] { ' ', '/', '\\' });
+                sparc.FileName = SparcFileSystemHelper.GetFileNameFromFileUrl(sparc.FileUrl);
+                sparc.FolderUrl = SparcFileSystemHelper.GetFolderUrlFromFileUrl(sparc.FileUrl);
 
                 //Check if the file exists in Database
-                var isFileExists = await _fileSystemService.IsFileExists(userId, username, fileName, folderUrl);
+                var isFileExists = await _fileSystemService.IsFileExists(sparc.UserId, username, sparc.FileName, sparc.FolderUrl);
 
                 if (isFileExists == null || !isFileExists.Success)
                 {
@@ -260,7 +288,7 @@ namespace OnlineLpk12.Controllers
             }
             catch (Exception ex)
             {
-                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                _logService.LogError(sparc.UserId, MethodBase.GetCurrentMethod().Name,
                     Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
@@ -269,29 +297,36 @@ namespace OnlineLpk12.Controllers
         }
 
         [HttpPost("createfile")]
-        public async Task<IActionResult> CreateFile(int userId, string fileName, string folderUrl)
+        public async Task<IActionResult> CreateFile([FromBody] SparcInput sparc)
         {
             Response<string> response = new();
             List<string> validationMessages = new();
             string username = "";
             try
             {
+                if (sparc == null)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Invalid input.");
+                    return BadRequest(response);
+                }
+
                 //Validate the user input
-                if (userId < 1)
+                if (sparc.UserId < 1)
                 {
                     validationMessages.Add("Enter valid User Id.");
                 }
                 else
                 {
-                    username = await _userService.GetUserNameByUserId(userId);
+                    username = await _userService.GetUserNameByUserId(sparc.UserId);
                     if (string.IsNullOrEmpty(username))
                         validationMessages.Add("User is invalid.");
                 }
 
-                if (string.IsNullOrEmpty(fileName))
+                if (string.IsNullOrEmpty(sparc.FileName))
                     validationMessages.Add("Enter valid file name");
 
-                if (string.IsNullOrEmpty(folderUrl))
+                if (string.IsNullOrEmpty(sparc.FolderUrl))
                     validationMessages.Add("Enter valid folder url");
 
                 if (validationMessages.Any())
@@ -302,7 +337,7 @@ namespace OnlineLpk12.Controllers
                 }
 
                 //Check if the file exists in Database
-                var isFileExists = await _fileSystemService.IsFileExists(userId, username, fileName, folderUrl);
+                var isFileExists = await _fileSystemService.IsFileExists(sparc.UserId, username, sparc.FileName, sparc.FolderUrl);
                 if (isFileExists == null || !isFileExists.Success)
                 {
                     response.Message = "One or more validation errors occurred.";
@@ -318,7 +353,7 @@ namespace OnlineLpk12.Controllers
                 }
 
                 //If no file exists -> create a new file
-                var res = await _fileSystemService.CreateFile(userId, username, fileName, folderUrl);
+                var res = await _fileSystemService.CreateFile(sparc.UserId, username, sparc.FileName, sparc.FolderUrl);
                 if (res != null && res.Success && !string.IsNullOrEmpty(res.Content))
                 {
                     response.Content = res.Content;
@@ -332,7 +367,7 @@ namespace OnlineLpk12.Controllers
             }
             catch (Exception ex)
             {
-                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                _logService.LogError(sparc.UserId, MethodBase.GetCurrentMethod().Name,
                     Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
@@ -341,29 +376,36 @@ namespace OnlineLpk12.Controllers
         }
 
         [HttpPost("deletefolder")]
-        public async Task<IActionResult> DeleteFolder(int userId, string folderName, string parentUrl)
+        public async Task<IActionResult> DeleteFolder([FromBody] SparcInput sparc)
         {
             Response<string> response = new();
             List<string> validationMessages = new();
             string username = "";
             try
             {
+                if (sparc == null)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Invalid input.");
+                    return BadRequest(response);
+                }
+
                 //Validate the user input
-                if (userId < 1)
+                if (sparc.UserId < 1)
                 {
                     validationMessages.Add("Enter valid User Id.");
                 }
                 else
                 {
-                    username = await _userService.GetUserNameByUserId(userId);
+                    username = await _userService.GetUserNameByUserId(sparc.UserId);
                     if (string.IsNullOrEmpty(username))
                         validationMessages.Add("User is invalid.");
                 }
 
-                if (string.IsNullOrEmpty(folderName))
+                if (string.IsNullOrEmpty(sparc.FolderName))
                     validationMessages.Add("Enter valid folder name");
 
-                if (string.IsNullOrEmpty(parentUrl))
+                if (string.IsNullOrEmpty(sparc.ParentUrl))
                     validationMessages.Add("Enter valid folder url");
 
                 if (validationMessages.Any())
@@ -374,7 +416,7 @@ namespace OnlineLpk12.Controllers
                 }
 
                 //Check if the folder exists in Database
-                var isFileExists = await _fileSystemService.IsFolderExists(userId, username, folderName, parentUrl);
+                var isFileExists = await _fileSystemService.IsFolderExists(sparc.UserId, username, sparc.FolderName, sparc.ParentUrl);
                 if (isFileExists == null || !isFileExists.Success || !isFileExists.Content)
                 {
                     response.Message = "One or more validation errors occurred.";
@@ -383,7 +425,7 @@ namespace OnlineLpk12.Controllers
                 }
 
                 //If file exists -> delete the file
-                var res = await _fileSystemService.DeleteFolder(userId, username, folderName, parentUrl);
+                var res = await _fileSystemService.DeleteFolder(sparc.UserId, username, sparc.FolderName, sparc.ParentUrl);
                 if (res != null && res.Success && !string.IsNullOrEmpty(res.Content))
                 {
                     response.Content = res.Content;
@@ -397,7 +439,7 @@ namespace OnlineLpk12.Controllers
             }
             catch (Exception ex)
             {
-                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                _logService.LogError(sparc.UserId, MethodBase.GetCurrentMethod().Name,
                     Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
@@ -406,29 +448,36 @@ namespace OnlineLpk12.Controllers
         }
 
         [HttpPost("deletefile")]
-        public async Task<IActionResult> DeleteFile(int userId, string fileName, string folderUrl)
+        public async Task<IActionResult> DeleteFile([FromBody] SparcInput sparc)
         {
             Response<string> response = new();
             List<string> validationMessages = new();
             string username = "";
             try
             {
+                if (sparc == null)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Invalid input.");
+                    return BadRequest(response);
+                }
+
                 //Validate the user input
-                if (userId < 1)
+                if (sparc.UserId < 1)
                 {
                     validationMessages.Add("Enter valid User Id.");
                 }
                 else
                 {
-                    username = await _userService.GetUserNameByUserId(userId);
+                    username = await _userService.GetUserNameByUserId(sparc.UserId);
                     if (string.IsNullOrEmpty(username))
                         validationMessages.Add("User is invalid.");
                 }
 
-                if (string.IsNullOrEmpty(fileName))
+                if (string.IsNullOrEmpty(sparc.FileName))
                     validationMessages.Add("Enter valid file name");
 
-                if (string.IsNullOrEmpty(folderUrl))
+                if (string.IsNullOrEmpty(sparc.FolderUrl))
                     validationMessages.Add("Enter valid folder url");
 
                 if (validationMessages.Any())
@@ -439,7 +488,7 @@ namespace OnlineLpk12.Controllers
                 }
 
                 //Check if the file exists in Database
-                var isFileExists = await _fileSystemService.IsFileExists(userId, username, fileName, folderUrl);
+                var isFileExists = await _fileSystemService.IsFileExists(sparc.UserId, username, sparc.FileName, sparc.FolderUrl);
                 if (isFileExists == null || !isFileExists.Success)
                 {
                     response.Message = "One or more validation errors occurred.";
@@ -455,7 +504,7 @@ namespace OnlineLpk12.Controllers
                 }
 
                 //If file exists -> delete the file
-                var res = await _fileSystemService.DeleteFile(userId, username, fileName, folderUrl);
+                var res = await _fileSystemService.DeleteFile(sparc.UserId, username, sparc.FileName, sparc.FolderUrl);
                 if (res != null && res.Success && !string.IsNullOrEmpty(res.Content))
                 {
                     response.Content = res.Content;
@@ -469,7 +518,7 @@ namespace OnlineLpk12.Controllers
             }
             catch (Exception ex)
             {
-                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                _logService.LogError(sparc.UserId, MethodBase.GetCurrentMethod().Name,
                     Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
@@ -477,30 +526,38 @@ namespace OnlineLpk12.Controllers
             }
         }
 
+
         [HttpPost("savefile")]
-        public async Task<IActionResult> SaveFileContent(int userId, string fileName, string folderUrl, string program)
+        public async Task<IActionResult> SaveFileContent([FromBody] SparcInput sparc)
         {
             Response<string> response = new();
             List<string> validationMessages = new();
             string username = "";
             try
             {
+                if (sparc == null)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Invalid input.");
+                    return BadRequest(response);
+                }
+
                 //Validate the user input
-                if (userId < 1)
+                if (sparc.UserId < 1)
                 {
                     validationMessages.Add("Enter valid User Id.");
                 }
                 else
                 {
-                    username = await _userService.GetUserNameByUserId(userId);
+                    username = await _userService.GetUserNameByUserId(sparc.UserId);
                     if (string.IsNullOrEmpty(username))
                         validationMessages.Add("User is invalid.");
                 }
 
-                if (string.IsNullOrEmpty(fileName))
+                if (string.IsNullOrEmpty(sparc.FileName))
                     validationMessages.Add("Enter valid file name");
 
-                if (string.IsNullOrEmpty(folderUrl))
+                if (string.IsNullOrEmpty(sparc.FolderUrl))
                     validationMessages.Add("Enter valid folder url");
 
                 if (validationMessages.Any())
@@ -511,7 +568,7 @@ namespace OnlineLpk12.Controllers
                 }
 
                 //Check if the file exists in Database
-                var isFileExists = await _fileSystemService.IsFileExists(userId, username, fileName, folderUrl);
+                var isFileExists = await _fileSystemService.IsFileExists(sparc.UserId, username, sparc.FileName, sparc.FolderUrl);
                 if (isFileExists == null || !isFileExists.Success)
                 {
                     response.Message = "One or more validation errors occurred.";
@@ -522,7 +579,7 @@ namespace OnlineLpk12.Controllers
                 //If File not exists create a new file
                 if (!isFileExists.Content)
                 {
-                    var isFileCreated = await _fileSystemService.CreateFile(userId, username, fileName, folderUrl);
+                    var isFileCreated = await _fileSystemService.CreateFile(sparc.UserId, username, sparc.FileName, sparc.FolderUrl);
                     if (isFileCreated == null || !isFileCreated.Success)
                     {
                         response.Message = "One or more validation errors occurred.";
@@ -531,7 +588,7 @@ namespace OnlineLpk12.Controllers
                     }
                 }
 
-                var res = await _fileSystemService.SaveFileContent(userId, username, fileName, folderUrl, program);
+                var res = await _fileSystemService.SaveFileContent(sparc.UserId, username, sparc.FileName, sparc.FolderUrl, sparc.Program);
                 if (res.Success)
                 {
                     response.Content = res.Content;
@@ -545,7 +602,7 @@ namespace OnlineLpk12.Controllers
             }
             catch (Exception ex)
             {
-                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                _logService.LogError(sparc.UserId, MethodBase.GetCurrentMethod().Name,
                     Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
