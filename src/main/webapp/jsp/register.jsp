@@ -105,11 +105,18 @@
 	       			resp.then((data)=>{       			 
 	       			 var userid = data.userId;
 	       			 var createRootFolderApi = new URL('https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/createrootfolder');
-	       			 var params = {userId:userid} // or:
-	       			 createRootFolderApi.search = new URLSearchParams(params).toString();
+	       			 var body = {
+	       					 		userId :userid
+	       					 	} // or:
+	       					 			
+	       			 //createRootFolderApi.search = new URLSearchParams(params).toString();
 					 console.log(createRootFolderApi);
 	       			 fetch(createRootFolderApi,{
-	       				 method:'POST'
+	       				 method:'POST',
+	       				 body: JSON.stringify(body),
+	       				headers: {
+	       				    'Content-type': 'application/json; charset=UTF-8',
+	       				  }
 	       			 }).then(function(response){
 	       				if(response.status==200){
 	       					console.log(data)

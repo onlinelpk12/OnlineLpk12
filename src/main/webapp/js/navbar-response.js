@@ -531,7 +531,7 @@ $(document).ready(function() {
 		   return;
 		}	
 
-        let folderName = prompt("Please enter folder name");
+        let folderName = prompt("Please enter folder name").toLowerCase();
         let userId = getUserId();
         parentURL = parentURL.slice(0,-1);
         data = {'userId': userId,
@@ -559,7 +559,7 @@ $(document).ready(function() {
     $('#newFile').click(function(e) {
     	let userId = getUserId();
         e.preventDefault();
-        let fileName = prompt("Please enter file name");
+        let fileName = prompt("Please enter file name").toLowerCase();
         // let editorValue = editor.getValue();
         let editorValue = ""; // we set the new file to be empty
         /*data = {'action': "addNewFile",
@@ -734,6 +734,8 @@ $(document).ready(function() {
             	}
 		})
 		.catch(x => console.log(x));
+        
+        alert("The program saved successfully to file "+currentFileName);
     });
 
     $(document).on("click", ".dir-item", function() {
