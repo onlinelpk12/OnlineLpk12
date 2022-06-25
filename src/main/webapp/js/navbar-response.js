@@ -338,7 +338,7 @@ var setEditorToFile = function(fileName) {
                  'folderUrl':folderurl,
                };   
     
-    const getFileAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/getfile?"+decodeURIComponent($.param(data,encodeData=false));
+    const getFileAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/getfile?"+($.param(data,encodeData=false));
     $.get(getFileAPI, data, function(response) {
     	console.log((response.content.program)?response.content.program:"empty program");
         let editor = ace.edit("editor");
