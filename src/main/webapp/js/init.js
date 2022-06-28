@@ -24,4 +24,8 @@ $(document).ready(function() {
                   
     /* Setting Configuration */
     updateSetting();
+    
+    if($('.easy-tree .easy-tree-toolbar .edit').length > 0){
+        $('.easy-tree .easy-tree-toolbar .edit').hide();
+    }
 });
