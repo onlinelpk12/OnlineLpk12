@@ -63,8 +63,8 @@ function buildLessonList(response){
 	for(let i=0; i<response.content.questionAnswers.length;i++)
 	{
 	let row = `<tr>`
-		+ `<td> ${response.content.questionAnswers[i]?.question}</td>`
-		+ `<td> ${response.content.questionAnswers[i]?.answer} </td>`
+		+ `<td> ${response.content.questionAnswers[i]?.question}</td>`		
+		+ `<td> ${response.content.questionAnswers[i]?.answer.split('\n').map(e => `<p>${e}</p>`).join('')} </td>`
 		+ `</tr>`;
 		htmlTable+=row;
 	}
