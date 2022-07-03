@@ -84,7 +84,7 @@ $(function(){
                 <h2> What-questions </h2>
                     <ul> 
                         <li> Who is the father of Peter? </li>
-                        <li> Who is Peter’s mother? </li>
+                        <li> Who is Peter's mother? </li>
                     </ul>
                 <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(3, 0, 'version-1-course-x-lesson-3-page-3', false, -1)"> Previous
