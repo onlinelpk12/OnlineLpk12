@@ -1,5 +1,8 @@
-let lessonsJson =
+const course =
 {
+    "version":1,
+	"courseName":"Online LPK12",
+	"courseCode":"OLPK12",
     "lessons": [
         {
             "lessonId": 2,
@@ -531,4 +534,6 @@ let lessonsJson =
             }
         }       
     ]
-}
+};
+
+const lessonsJson  = course.lessons;
