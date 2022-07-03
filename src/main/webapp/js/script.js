@@ -8,7 +8,7 @@ function disableElement(id) {
     }
 }
 
-const apiBaseUrl = "https://onlinelpk12appservice.azurewebsites.net/api";
+const apiBaseUrl = "https://onlinelpk12api.azurewebsites.net/api";
 const lessonsUrl = "/onlineSystem/lessonnumber.jsp"
 
 let userIdFromSession = 0;
@@ -104,32 +104,22 @@ function getGrading(studentLevel, input, answer) {
     //return result[getRandomInt(result.length)]
 }
 
-function submitAssessment(currentPageId, textAreaId){
+function submitAssessment(currentPageId, programId){
  SaveStudentLessonsProgressThroughAPI(parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber)), parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber)), currentPageId);
      
-  let submittedAnswer = document.getElementById(textAreaId).value;
+  let submittedAnswer = document.getElementById(programId).value;
   let isAssessmentPassed = null;
   let assessmentStatus = null;
-  let question = null;
   let score = 0;
+  let actualQuestionAns = null;
   if(submittedAnswer == null || submittedAnswer == undefined || submittedAnswer.trim().length == 0){
     isAssessmentPassed = false;
   }
   else{
-    let answer = null;
-    if(textAreaId == "program0" || textAreaId == "program3"){
-        question = "Extent your model for the relation of mom";
-        answer = "%Joaan is the mother of peter mother (joaan, peter)"   
-    }
-    else if(textAreaId == "program1"){
-        question = "Extend Family Model for Parent of Peter";
-        answer = "%John is a parent of Peter parent(john, peter)";
-    }
-    else if(textAreaId == "program2"){
-        question = "Extend your Model for dad of peter";
-        answer = "%John is the dad of peter dad(john, peter)";
-    }
-    score = getGrading(studentLevel[getRandomInt(studentLevel.length)], submittedAnswer, answer);
+    let currentLessonNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber));
+    actualQuestionAns =  getAssessmentQuestionAndAnswer(currentLessonNumber, programId);
+    
+    score = getGrading(studentLevel[getRandomInt(studentLevel.length)], submittedAnswer, actualQuestionAns.answer);
       if(score >= 70){
         isAssessmentPassed = true;
         assessmentStatus = "pass"
@@ -142,7 +132,7 @@ function submitAssessment(currentPageId, textAreaId){
     
     Promise.all(
         [SaveStudentAssessmentStatusThroughAPI(score, 100, assessmentStatus),
-        SaveStudentAssessmentSubmissionThroughAPI(question, submittedAnswer)])
+        SaveStudentAssessmentSubmissionThroughAPI(actualQuestionAns.question, submittedAnswer)])
         .then(function (responses) {
             return Promise.all(responses.map(function (response) { return response; }));
         }).then(function (data) {
@@ -153,6 +143,58 @@ function submitAssessment(currentPageId, textAreaId){
         });
     
     window.open(nextStepPage, "_self");
+}
+
+function getAssessmentQuestionAndAnswer(currentLessonNumber, programId)
+{
+    let question = null;
+    let answer = null;
+    if(currentLessonNumber == 2)
+    {
+        if(programId == "program0" || programId == "program3"){
+            question = "Extent your model for the relation of mom";
+            answer = "%Joaan is the mother of peter mother (joaan, peter)"   
+        }
+        else if(programId == "program1"){
+            question = "Extend Family Model for Parent of Peter";
+            answer = "%John is a parent of Peter parent(john, peter)";
+        }
+        else if(programId == "program2"){
+            question = "Extend your Model for dad of peter";
+            answer = "%John is the dad of peter dad(john, peter)";
+        }
+    }
+    else if(currentLessonNumber == 3)
+    {
+        if(programId == "program0" || programId == "program3"){
+            question = "Extent your model for the relation of mom";
+            answer = "%Joaan is the mother of peter mother (joaan, peter)"   
+        }
+        else if(programId == "program1"){
+            question = "Extend Family Model for Parent of Peter";
+            answer = "%John is a parent of Peter parent(john, peter)";
+        }
+        else if(programId == "program2"){
+            question = 'Extent your model for "who is the mother of Peter?"';
+            answer = "%John is the dad of peter dad(john, peter)";
+        }
+    }
+    else if(currentLessonNumber == 4)
+    {
+        if(programId == "program0" || programId == "program3"){
+            question = "Extent your model for the relation of mom";
+            answer = "%Joaan is the mother of peter mother (joaan, peter)"   
+        }
+        else if(programId == "program1"){
+            question = "Extend Family Model for Parent of Peter";
+            answer = "%John is a parent of Peter parent(john, peter)";
+        }
+        else if(programId == "program2"){
+            question = "Extend your Model for dad of peter";
+            answer = "%John is the dad of peter dad(john, peter)";
+        }
+    }
+   return {"question" : question, "answer" : answer}; 
 }
 
 function SaveStudentAssessmentSubmissionThroughAPI(question, submittedAnswer) {    
@@ -169,7 +211,7 @@ function SaveStudentAssessmentSubmissionThroughAPI(question, submittedAnswer) {
         ]
     }
 
-    const saveStudentAssessmentSubmissionAPIUrl = "https://onlinelpk12api.azurewebsites.net/api/Student/" + assessmentSubmissionRequest.studentId + "/assessmentDetails";
+    const saveStudentAssessmentSubmissionAPIUrl = apiBaseUrl+ "/Student/" + assessmentSubmissionRequest.studentId + "/assessmentDetails";
     $.ajax({
         contentType: 'application/json',
         data: JSON.stringify(assessmentSubmissionRequest),
@@ -207,7 +249,7 @@ function SaveStudentAssessmentStatusThroughAPI(score, totalScore, assessmentStat
         totalScore: totalScore
       }
 
-    const saveStudentAssessmentStatusAPIUrl = "https://onlinelpk12api.azurewebsites.net/api/Student/"+assessmentStatusRequest.studentId+"/assessmentStatus";
+    const saveStudentAssessmentStatusAPIUrl = apiBaseUrl+ "/Student/"+assessmentStatusRequest.studentId+"/assessmentStatus";
   $.ajax({
       contentType: 'application/json',
       data: JSON.stringify(assessmentStatusRequest),
@@ -284,7 +326,7 @@ function similarity(s1, s2) {
           activityTime: null
         };
       
-      const saveStudentProgressAPIUrl = "https://onlinelpk12api.azurewebsites.net/api/Student/"+studentLessonProgressRequest.studentId+"/lessonprogress";
+      const saveStudentProgressAPIUrl = apiBaseUrl+ "/Student/"+studentLessonProgressRequest.studentId+"/lessonprogress";
     $.ajax({
         contentType: 'application/json',
         data: JSON.stringify(studentLessonProgressRequest),

@@ -327,7 +327,7 @@
 		_isSparcPassed = sessionStorage.getItem(sessionKeyIsSparcPassed) === 'true';
 		let message = document.getElementById('next-step-link');
 		if (isAssessmentPassed && _isSparcPassed) {
-			//sessionStorage.removeItem(sessionKeyIsAssessmentPassed);
+			sessionStorage.removeItem(sessionKeyShowPageId);
 			//let pageIdToShow = sessionStorage.getItem(sessionKeyShowPageId);
 			//message.innerHTML = "Congratulations on completing the programming task. Please click <a href='" + nextLessonUrl + "'> here </a> to go to next steps."
 			

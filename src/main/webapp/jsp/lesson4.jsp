@@ -2,7 +2,7 @@
 <html lang="en">
     
 <head>
-    <title>Lesson 3</title>
+    <title>Lesson 4</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -28,7 +28,7 @@ $(function(){
             
         let pageIdToShow= sessionStorage.getItem(sessionKeyShowPageId);
   		if(pageIdToShow== null || pageIdToShow == '' || pageIdToShow == undefined){
-              let firstPageIdOfCurrentLesson = GetFirstPageIdOfCurrentLessonFromJSON(3);
+              let firstPageIdOfCurrentLesson = GetFirstPageIdOfCurrentLessonFromJSON(4);
   			 let currentSection = document.getElementById(firstPageIdOfCurrentLesson);
   			 currentSection.hidden = false;
   		}
@@ -39,26 +39,24 @@ $(function(){
     });    
     </script>
 	<%@ include file = "header.jsp" %>
-    <section id="version-1-course-x-lesson-3-page-1" class="container" hidden>
+    <section id="version-1-course-x-lesson-4-page-1" class="container" hidden>
         <div class="row">
             <div class="col-md-8 content" style="margin-left:20rem">
-            <h1 style="text-align:center">  Lesson 3: Variables and Queries </h1> <br>
+            <h1 style="text-align:center">  Lesson 4:  Modeling Dad using Variables and Rules</h1> <br>
             <a class="btn btn-primary pull-right"
-                onclick="gotoNext(3, 0, 'version-1-course-x-lesson-3-page-1', false, -1)"> Next </a>
+                onclick="gotoNext(4, 0, 'version-1-course-x-lesson-4-page-1', false, -1)"> Next </a>
             </div>
         </div>
     </section>
 
 
-    <section id="version-1-course-x-lesson-3-page-2" class="container" hidden>
+    <section id="version-1-course-x-lesson-4-page-2" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <h2> Recall the family </h2>
-                <ul>
                     <li> What we know </li>
                         <ul>
-                            <li> John is the father of Peter </li>
-                            <li> John is also the father of Sara and Linda </li>
+                            <li> John is the father of Peter,Sarah and Linda </li>
+                            <li> Joann is also the mother of Peter,Sarah and Linda </li>
                         </ul>
                     <li> Questions </li>
                         <ul>
@@ -67,72 +65,69 @@ $(function(){
                             <li> Who is Peter's dad? </li>
                             <li> Who is the mother of Peter? </li>
                         </ul>
-                </ul>
+
                 <a class="btn btn-primary pull-left"
-                    onclick="gotoPrevious(3, 0, 'version-1-course-x-lesson-3-page-2', false, -1)"> Previous
+                    onclick="gotoPrevious(4, 0, 'version-1-course-x-lesson-4-page-2', false, -1)"> Previous
                 </a>
                 <a class="btn btn-primary pull-right"
-                    onclick="gotoNext(3, 0, 'version-1-course-x-lesson-3-page-2', false, -1)"> Next 
+                    onclick="gotoNext(4, 0, 'version-1-course-x-lesson-4-page-2', false, -1)"> Next 
                 </a>
             </div>
         </div>
     </section>
 
-    <section id="version-1-course-x-lesson-3-page-3" class="container" hidden>
+    <section id="version-1-course-x-lesson-4-page-3" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <h2> What-questions </h2>
-                    <ul> 
-                        <li> Who is the father of Peter? </li>
-                        <li> Who is Peter’s mother? </li>
-                    </ul>
+                <img src="../images/Lesson4image1.png" alt="Image" width="500" height="250">
+                
                 <a class="btn btn-primary pull-left"
-                    onclick="gotoPrevious(3, 0, 'version-1-course-x-lesson-3-page-3', false, -1)"> Previous
+                    onclick="gotoPrevious(4, 0, 'version-1-course-x-lesson-4-page-3', false, -1)"> Previous
                 </a>
                 <a class="btn btn-primary pull-right"
-                    onclick="gotoNext(3, 0, 'version-1-course-x-lesson-3-page-3', true, 1)"> Next
+                    onclick="gotoNext(4, 0, 'version-1-course-x-lesson-4-page-3', true, 1)"> Next
                 </a>
             </div>
         </div>
     </section>
 
-    <section id="version-1-course-x-lesson-3-page-4" class="container" hidden>
+    <section id="version-1-course-x-lesson-4-page-4" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <img src="../images/Lesson3image1.png" alt="Image" width="500" height="300">
+                <img src="../images/Lesson4image2.png" alt="Image" width="500" height="300">
                 
                 <br>
                 <a class="btn btn-primary pull-left"
-                    onclick="gotoPrevious(3, 0, 'version-1-course-x-lesson-3-page-4', false, -1)"> Previous
+                    onclick="gotoPrevious(4, 0, 'version-1-course-x-lesson-4-page-4', false, -1)"> Previous
                 </a>
                 <a class="btn btn-primary pull-right"
-                    onclick="gotoNext(3, 0, 'version-1-course-x-lesson-3-page-4', true, 1)"> Next
+                    onclick="gotoNext(4, 0, 'version-1-course-x-lesson-4-page-4', true, 1)"> Next
                 </a>
             </div>
         </div>
     </section>
 
-    <section id="version-1-course-x-lesson-3-page-5" class="container" hidden>
+    <section id="version-1-course-x-lesson-4-page-5" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <img src="../images/Lesson3image2.png" alt="Image" width="500" height="300">
+                <img src="../images/Lesson4image3.png" alt="Image" width="500" height="200">
                
                 <br>
                 <a class="btn btn-primary pull-left"
-                    onclick="gotoPrevious(3, 0, 'version-1-course-x-lesson-3-page-5', false, -1)"> Previous
+                    onclick="gotoPrevious(4, 0, 'version-1-course-x-lesson-4-page-5', false, -1)"> Previous
                 </a>
                 <a class="btn btn-primary pull-right"
-                    onclick="gotoNext(3, 0, 'version-1-course-x-lesson-3-page-5', true, 1)"> Next
+                    onclick="gotoNext(4, 0, 'version-1-course-x-lesson-4-page-5', true, 1)"> Next
                 </a>
             </div>
         </div>
     </section>
 
 
-    <section id="version-1-course-x-lesson-3-page-6" class="container" hidden>
+    <section id="version-1-course-x-lesson-4-page-6" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <h4>Extent your model for "who is the mother of Peter?"</h4>
+                <h4>Extent your model for "parent" rule</h4>
                 <br>
                 <form action="">
                     <label for="ques1"> Representing knowledge as comment and fact  </label><br />
@@ -140,38 +135,39 @@ $(function(){
                     <br><br>
                     <br>
                     <a class="btn btn-primary pull-left"
-                    onclick="gotoPrevious(3, 0, 'version-1-course-x-lesson-3-page-6', false, -1)"> Previous </a>
+                    onclick="gotoPrevious(4, 0, 'version-1-course-x-lesson-4-page-6', false, -1)"> Previous </a>
                     <div class="text-center">
-                        <a class="btn btn-primary" style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-3-page-6', 'program0')"> Submit </a>
+                        <a class="btn btn-primary" style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-4-page-6', 'program0')"> Submit </a>
                     </div>
                 </form>
             </div>
         </div>
     </section>
-    <!-- page-7 status page -->
-    <!-- page-8 Online SPARC -->
+    <!-- Online SPARC -->
+    <!-- skipped 7,8,9 pages -->
+
 
     <!-- learning outcome 1 -->
-    <section id="version-1-course-x-lesson-3-page-9" class="container" hidden>
+    <section id="version-1-course-x-lesson-4-page-10" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-            <h2> Learning outcome 1: Extend the Model for father relation</h2>
-            <img src="../images/Lesson3image1.png" alt="Image" width="500" height="400">
+            <h2> Learning outcome 1: Extend the Model for parent relation</h2>
+            <img src="../images/Lesson4image4.png" alt="Image" width="500" height="300">
 
             <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(3, 1, 'version-1-course-x-lesson-3-page-9', false, -1)"> Previous </a>
+                onclick="gotoPrevious(4, 1, 'version-1-course-x-lesson-4-page-10', false, -1)"> Previous </a>
             <a class="btn btn-primary pull-right"
-                onclick="gotoNext(3, 1, 'version-1-course-x-lesson-3-page-9', false, -1)"> Next </a>
+                onclick="gotoNext(4, 1, 'version-1-course-x-lesson-4-page-10', false, -1)"> Next </a>
             </div>
         </div>  
     </section>
 
-    <section id="version-1-course-x-lesson-3-page-10" class="container" hidden>
+    <section id="version-1-course-x-lesson-4-page-11" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <h2>Learning outcome 1: Extending the model for Father relation </h2>
+                <h2>Learning outcome 1: Extend the Model for parent relation </h2>
                 <br>
-                <h4>Extent your model for "who is the father of Peter?"</h4>
+                <h4>Extent your model for dad rule</h4>
                 <br>
                 <form action="">
                     <label for="ques1"> Representing knowledge as comment and fact  </label><br />
@@ -179,39 +175,40 @@ $(function(){
                     <br><br>
                     <br>
                 <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(3, 1, 'version-1-course-x-lesson-3-page-10', false, -1)"> Previous </a>
+                onclick="gotoPrevious(4, 1, 'version-1-course-x-lesson-4-page-11', false, -1)"> Previous </a>
                 <div class="text-center">
-                <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-3-page-10', 'program1')"> Submit</a>
+                <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-4-page-11', 'program1')"> Submit</a>
             </div>
            
             </form>
           </div>
         </div>  
     </section>
-    <!-- page-11 status page -->
-    <!-- page-12 onlineSPARC -->
+    <!-- onlineSPARC -->
+    <!-- skipped 12,13,14 pages -->
+
 
     <!-- learning outcome 2 -->
-    <section id="version-1-course-x-lesson-3-page-13" class="container" hidden>
+    <section id="version-1-course-x-lesson-4-page-15" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <h2>Learning outcome 2: Extending the model for father relation </h2>
-                <img src="../images/Lesson3image3.png" alt="Image" width="500" height="200">
+                <h2>Learning outcome 2: Extending the model for dad relation </h2>
+                <img src="../images/Lesson4image5.png" alt="Image" width="500" height="200">
 
                 <a class="btn btn-primary pull-left"
-                    onclick="gotoPrevious(3, 2, 'version-1-course-x-lesson-3-page-13', false, -1)"> Previous </a>
+                    onclick="gotoPrevious(4, 2, 'version-1-course-x-lesson-4-page-15', false, -1)"> Previous </a>
                 <a class="btn btn-primary pull-right"
-                    onclick="gotoNext(3, 2, 'version-1-course-x-lesson-3-page-13', false, -1)"> Next </a>
+                    onclick="gotoNext(4, 2, 'version-1-course-x-lesson-4-page-15', false, -1)"> Next </a>
             </div>
         </div>
     </section>
                 
-    <section id="version-1-course-x-lesson-3-page-14" class="container" hidden>
+    <section id="version-1-course-x-lesson-4-page-16" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-            <h2>Learning outcome 2: Extending the model for father relation </h2>
+            <h2>Learning outcome 2: Extending the model for dad relation </h2>
             <br>
-            <h4> Extend your Model for "Whom is John the father of?" </h4>
+            <h4> Extend your Model for mom rule </h4>
             <br>
             <form action="">
                 <label for="ques1"> Representing knowledge as comment and fact </label>
@@ -219,9 +216,9 @@ $(function(){
                 <br>
                 <br>
                 <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(3, 2, 'version-1-course-x-lesson-3-page-14', false, -1)"> Previous </a>
+                onclick="gotoPrevious(4, 2, 'version-1-course-x-lesson-4-page-16', false, -1)"> Previous </a>
                 <div class="text-center">
-                    <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-3-page-14', 'program2')"> Submit</a>
+                    <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-4-page-16', 'program2')"> Submit</a>
                 </div>
             </form>
             <br>
@@ -229,48 +226,60 @@ $(function(){
             </div>
         </div>
     </section>
-    
-    <!-- page-15 status page -->
-    <!-- page-16 onlineSPARC -->
+    <!-- onlineSPARC -->
+    <!-- skipped 17,18,19 pages -->
+
 
     <!-- learning outcome 3 -->
-        <section id="version-1-course-x-lesson-3-page-17" class="container" hidden>
+        <section id="version-1-course-x-lesson-4-page-20" class="container" hidden>
             <div class="row">
                 <div class="col-md-6 content" style="margin-left:20rem">
-        <h2>Learning outcome 3: Extending the model for Dad relation </h2>
-        <img src="../images/Lesson3image4.png" alt="Image" width="500" height="100">
-        <img src="../images/Lesson3image5.png" alt="Image" width="500" height="100">
+        <h2>Learning outcome 3: Extending the model for father relation </h2>
+        <img src="../images/Lesson4image4.png" alt="Image" width="500" height="300">
         
         <a class="btn btn-primary pull-left"
-            onclick="gotoPrevious(3, 3, 'version-1-course-x-lesson-3-page-17', false, -1)"> Previous </a>
-         <a class="btn btn-primary pull-right"
-            onclick="gotoNext(3, 3, 'version-1-course-x-lesson-3-page-17', false, -1)"> Next </a>
+            onclick="gotoPrevious(4, 3, 'version-1-course-x-lesson-4-page-20', false, -1)"> Previous </a>
+        <a class="btn btn-primary pull-right"
+            onclick="gotoNext(4, 3, 'version-1-course-x-lesson-4-page-20', false, -1)"> Next </a>
     </div></div>
 </section>
 
-<section id="version-1-course-x-lesson-3-page-18" class="container" hidden>
+    <section id="version-1-course-x-lesson-4-page-21" class="container" hidden>
+        <div class="row">
+            <div class="col-md-6 content" style="margin-left:20rem">
+    <h2>Learning outcome 3: Extending the model for father relation </h2>
+    <img src="../images/Lesson4image5.png" alt="Image" width="500" height="300">
+
+    <a class="btn btn-primary pull-left"
+        onclick="gotoPrevious(4, 3, 'version-1-course-x-lesson-4-page-21', false, -1)"> Previous </a>
+    <a class="btn btn-primary pull-right"
+        onclick="gotoNext(4, 3, 'version-1-course-x-lesson-4-page-21', false, -1)"> Next </a>
+    </div></div>
+</section>
+
+<section id="version-1-course-x-lesson-4-page-22" class="container" hidden>
     <div class="row">
         <div class="col-md-6 content" style="margin-left:20rem">
-            <h2>Learning outcome 3: Extending the model for Dad relation </h2>
+            <h2>Learning outcome 3: Extending the model for father relation </h2>
             <br>
-            <h4> Extend your Model for "Who is the Dad of Peter?" </h4>
+            <h4> Extend your Model for parent rule </h4>
             <br>
             <form action="">
                 <label for="ques1"> Representing knowledge as comment and fact </label>
-                <textarea id="program3" name="program3" rows="4" cols="50" class="knowledge-check-input"></textarea><br><br>
+                <textarea id="program2" name="program2" rows="4" cols="50" class="knowledge-check-input"></textarea><br><br>
                 <br>
                 <br>
                 <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(3, 3, 'version-1-course-x-lesson-3-page-18', false, -1)"> Previous </a>
+                onclick="gotoPrevious(4, 3, 'version-1-course-x-lesson-4-page-22', false, -1)"> Previous </a>
                 <div class="text-center">
-                    <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-3-page-18', 'program3')"> Submit</a>
+                    <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-4-page-22', 'program3')"> Submit</a>
         
     </div></div>
 </section>
 
-    <!-- page-19 status page -->
-    <!-- page-20 onlineSPARC -->
-
-	<%@ include file = "footer.jsp" %> 
+        
+<!-- onlineSPARC -->
+<!-- skipped 23,24,25 pages -->
+	<%@ include file = "footer.jsp" %>
    </body>
 </html>
