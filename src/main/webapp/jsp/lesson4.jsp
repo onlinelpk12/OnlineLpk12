@@ -127,7 +127,7 @@ $(function(){
     <section id="version-1-course-x-lesson-4-page-6" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <h4>Extent your model for "parent" rule</h4>
+                <h4>Extend your model for "parent" rule</h4>
                 <br>
                 <form action="">
                     <label for="ques1"> Representing knowledge as comment and fact  </label><br />
@@ -167,7 +167,7 @@ $(function(){
             <div class="col-md-6 content" style="margin-left:20rem">
                 <h2>Learning outcome 1: Extend the Model for parent relation </h2>
                 <br>
-                <h4>Extent your model for dad rule</h4>
+                <h4>Extend your model for dad rule</h4>
                 <br>
                 <form action="">
                     <label for="ques1"> Representing knowledge as comment and fact  </label><br />
@@ -266,7 +266,7 @@ $(function(){
             <br>
             <form action="">
                 <label for="ques1"> Representing knowledge as comment and fact </label>
-                <textarea id="program2" name="program2" rows="4" cols="50" class="knowledge-check-input"></textarea><br><br>
+                <textarea id="program3" name="program3" rows="4" cols="50" class="knowledge-check-input"></textarea><br><br>
                 <br>
                 <br>
                 <a class="btn btn-primary pull-left"
