@@ -166,36 +166,47 @@ function getAssessmentQuestionAndAnswer(currentLessonNumber, programId)
     }
     else if(currentLessonNumber == 3)
     {
-        if(programId == "program0" || programId == "program3"){
-            question = "Extent your model for the relation of mom";
-            answer = "%Joaan is the mother of peter mother (joaan, peter)"   
+        if(programId == "program0"){
+            question = "who is the mother of Peter?";
+            answer = "%Joaan is the mother of peter mother(who, peter)";  
         }
         else if(programId == "program1"){
-            question = "Extend Family Model for Parent of Peter";
-            answer = "%John is a parent of Peter parent(john, peter)";
+            question = "Extend your model for who is the father of Peter?";
+            answer = "%John is a father of Peter father(who, peter)";
         }
         else if(programId == "program2"){
-            question = 'Extent your model for "who is the mother of Peter?"';
-            answer = "%John is the dad of peter dad(john, peter)";
+            question = 'Extend your Model for "Whom is John the father of?"';
+            answer = "%John is the father of peter father(john, whom)";
+        }
+        else if(programId == "program3")
+        {
+            question = 'Extend your Model for "Who is the Dad of Peter?"';
+            answer = "%John is the dad of peter dad(who, peter)";
         }
     }
     else if(currentLessonNumber == 4)
     {
         if(programId == "program0" || programId == "program3"){
-            question = "Extent your model for the relation of mom";
-            answer = "%Joaan is the mother of peter mother (joaan, peter)"   
+            question = 'Extend your model for "parent" rule';
+            answer = "%Joaan is the parent of peter parent (joaan, peter)"   
         }
         else if(programId == "program1"){
-            question = "Extend Family Model for Parent of Peter";
-            answer = "%John is a parent of Peter parent(john, peter)";
+            question = "Extend your model for dad rule";
+            answer = "%John is a dad of Peter dad(john, peter)";
         }
         else if(programId == "program2"){
-            question = "Extend your Model for dad of peter";
-            answer = "%John is the dad of peter dad(john, peter)";
+            question = "Extend your model for mon rule";
+            answer = "%Jooan is the mom of peter mom(Jooan, peter)";
+        }
+        else if(programId == "program3")
+        {
+            question = "Extend your model for parent rule";
+            answer = "%John is the parent of peter parent(john, peter)";
         }
     }
    return {"question" : question, "answer" : answer}; 
 }
+
 
 function SaveStudentAssessmentSubmissionThroughAPI(question, submittedAnswer) {    
     let assessmentSubmissionRequest = {
