@@ -536,4 +536,4 @@ const course =
     ]
 };
 
-const lessonsJson  = course.lessons;
+const lessonsJson  = course;
