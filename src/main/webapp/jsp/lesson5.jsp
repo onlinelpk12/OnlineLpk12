@@ -73,7 +73,7 @@ $(function(){
 	<section id="version-1-course-x-lesson-5-page-3" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <h2>Extent your model to add knowledge about element(s) of your choice</h2>
+                <h4>Extent your model to add knowledge about element(s) of your choice</h4>
                 <form action="">
                     <label for="ques1"> The element has to be one of the first 20 in the periodic table, represent knowledge as comment and fact  </label><br/>
                     <textarea id="program0" name="program0" rows="4" cols="50" class="knowledge-check-input"></textarea>
@@ -129,8 +129,8 @@ $(function(){
 	<section id="version-1-course-x-lesson-5-page-8" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <h2>Assume symbolFor(E, S)means that the chemical symbol for element E is S</h2>
-				<h2>Extend the computer model to answer the question</h2>
+                <h4>Assume symbolFor(E, S)means that the chemical symbol for element E is S</h4>
+				<h4>Extend the computer model to answer the question</h4>
                 <form action="">
                     <label for="ques1"> Represent knowledge as comment and fact for chemical symbol </label><br/>
                     <textarea id="program1" name="program1" rows="4" cols="50" class="knowledge-check-input"></textarea>
@@ -171,8 +171,8 @@ $(function(){
 	<section id="version-1-course-x-lesson-5-page-12" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <h2>Assume symbolFor(E, S)means that the chemical symbol for element E is S</h2>
-				<h2>Extend the computer model to answer the question</h2>
+                <h4>Assume symbolFor(E, S)means that the chemical symbol for element E is S</h4>
+				<h4>Extend the computer model to answer the question</h4>
                 <form action="">
                     <label for="ques1"> Represent knowledge as comment and fact for chemical symbol </label><br/>
                     <textarea id="program2" name="program2" rows="4" cols="50" class="knowledge-check-input"></textarea>
