@@ -532,7 +532,147 @@ const course =
                     }
                 ]
             }
-        }       
+        },
+	    {
+            "lessonId": 5,
+            "lessonTitle": "Model periodic table - chemical symbols",
+            "rootLearningOutcome": {
+                "description":"",
+                "learningOutcomeId": 0,
+                "pages": [
+                    {
+                        "pageId": "version-1-course-x-lesson-5-page-1",
+                        "previousPageId": null,
+                        "nextPageId": "version-1-course-x-lesson-5-page-2",
+                        "pageType": "ContentPage"
+                    },
+                    {
+                        "pageId": "version-1-course-x-lesson-5-page-2",
+                        "previousPageId": "version-1-course-x-lesson-5-page-1",
+                        "nextPageId": "version-1-course-x-lesson-5-page-3",
+                        "pageType": "ContentPage"
+                    },                
+                    {
+                        "pageId": "version-1-course-x-lesson-5-page-3",
+                        "previousPageId": "version-1-course-x-lesson-5-page-2",
+                        "nextPageId": null,
+                        "submitPageId": "version-1-course-x-lesson-5-page-4",
+                        "pageType": "AssessmentPage"
+                    },
+                    {
+                        "pageId": "version-1-course-x-lesson-5-page-4",
+                        "previousPageId": null,
+                        "nextPageId": null,
+                        "adaptivePageId1": "version-1-course-x-lesson-5-page-5",
+                        "adaptivePageId2": "version-1-course-x-lesson-5-page-11",
+                        "pageType": "StatusPage"
+                    },
+                    {
+                        "pageId": "version-1-course-x-lesson-5-page-5",
+                        "previousPageId": null,
+                        "nextPageId": null,
+                        "nextPageId": "version-1-course-x-lesson-6-page-1",                        
+                        "pageType": "SparcPage"
+                    }
+                ],
+                "subLearningOutcomes": [
+                    {
+                        "learningOutcomeId": 1,
+                        "pages": [
+                            {
+                                "pageId": "version-1-course-x-lesson-5-page-6",
+                                "previousPageId": null,
+                                "nextPageId": "version-1-course-x-lesson-5-page-7",
+                                "pageType": "ContentPage"
+                            },
+                            {
+                                "pageId": "version-1-course-x-lesson-5-page-7",
+                                "previousPageId": "version-1-course-x-lesson-5-page-6",
+                                "nextPageId": "version-1-course-x-lesson-5-page-8",                               
+                                "pageType": "ContentPage"
+                            },                            
+                            {
+                                "pageId": "version-1-course-x-lesson-5-page-8",
+                                "previousPageId": "version-1-course-x-lesson-5-page-7",
+                                "nextPageId": null,
+                                "submitPageId": "version-1-course-x-lesson-5-page-9",
+                                "pageType": "AssessmentPage"
+                            },
+                            {
+                                "pageId": "version-1-course-x-lesson-5-page-9",
+                                "previousPageId": null,
+                                "nextPageId": null,
+                                "adaptivePageId1": "version-1-course-x-lesson-5-page-6",
+                                "adaptivePageId2": "version-1-course-x-lesson-5-page-10",
+                                "pageType": "StatusPage"
+                            },
+                            {
+                                "pageId": "version-1-course-x-lesson-5-page-10",
+                                "previousPageId": null,
+                                "nextPageId": null,
+                                "nextPageId": "version-1-course-x-lesson-5-page-11",                        
+                                "pageType": "SparcPage"
+                            }
+                        ]
+                    },
+                    {
+                        "learningOutcomeId": 2,
+                        "pages": [
+                            {
+                                "pageId": "version-1-course-x-lesson-5-page-11",
+                                "previousPageId": null,
+                                "nextPageId": "version-1-course-x-lesson-5-page-12",
+                                "pageType": "ContentPage"
+                            },                                                                                    
+                            {
+                                "pageId": "version-1-course-x-lesson-5-page-12",
+                                "previousPageId": "version-1-course-x-lesson-5-page-11",
+                                "nextPageId": null,
+                                "submitPageId": "version-1-course-x-lesson-5-page-13",
+                                "pageType": "AssessmentPage"
+                            },
+                            {
+                                "pageId": "version-1-course-x-lesson-5-page-13",
+                                "previousPageId": null,
+                                "nextPageId": null,
+                                "adaptivePageId1": "version-1-course-x-lesson-5-page-14",
+                                "adaptivePageId2": "version-1-course-x-lesson-5-page-6",                                
+                                "pageType": "StatusPage"
+                            },
+                            {
+                                "pageId": "version-1-course-x-lesson-5-page-14",
+                                "previousPageId": null,
+                                "nextPageId": null,
+                                "nextPageId": "version-1-course-x-lesson-5-page-15",                        
+                                "pageType": "SparcPage"
+                            }
+                        ]
+                    },
+                    {
+                        "learningOutcomeId": 3,
+                        "pages": [
+                            {
+                                "pageId": "version-1-course-x-lesson-5-page-15",
+                                "previousPageId": null,
+                                "nextPageId": "version-1-course-x-lesson-5-page-16",
+                                "pageType": "ContentPage"
+                            }
+                        ]
+                    },
+                    {
+                        "learningOutcomeId": 4,
+                        "pages": [
+                            {
+                                "pageId": "version-1-course-x-lesson-5-page-23",
+                                "previousPageId": null,
+                                "nextPageId": "version-1-course-x-lesson-5-page-23",
+                                "pageType": "ContentPage"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
     ]
 };
 
