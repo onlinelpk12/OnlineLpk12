@@ -168,20 +168,20 @@ function getAssessmentQuestionAndAnswer(currentLessonNumber, programId)
     {
         if(programId == "program0"){
             question = "who is the mother of Peter?";
-            answer = "%Joaan is the mother of peter mother(who, peter)";  
+            answer = "%Joaan is the mother of peter mother(Joaan, peter)";  
         }
         else if(programId == "program1"){
             question = "Extend your model for who is the father of Peter?";
-            answer = "%John is a father of Peter father(who, peter)";
+            answer = "%John is a father of Peter father(John, peter)";
         }
         else if(programId == "program2"){
             question = 'Extend your Model for "Whom is John the father of?"';
-            answer = "%John is the father of peter father(john, whom)";
+            answer = "%John is the father of peter father(john, peter)";
         }
         else if(programId == "program3")
         {
             question = 'Extend your Model for "Who is the Dad of Peter?"';
-            answer = "%John is the dad of peter dad(who, peter)";
+            answer = "%John is the dad of peter dad(john, peter)";
         }
     }
     else if(currentLessonNumber == 4)
