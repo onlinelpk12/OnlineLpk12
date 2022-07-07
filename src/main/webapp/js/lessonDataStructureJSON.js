@@ -672,6 +672,23 @@ const course =
                     }
                 ]
             }
+        },
+        {
+            "lessonId": 6,
+            "lessonTitle": "Model periodic table - atomic number",
+            "rootLearningOutcome": {
+                "description":"",
+                "learningOutcomeId": 0,
+                "pages": [
+                    {
+                        "pageId": "version-1-course-x-lesson-6-page-1",
+                        "previousPageId": null,
+                        "nextPageId": "version-1-course-x-lesson-6-page-2",
+                        "pageType": "ContentPage"
+                    }                   
+                ],
+                "subLearningOutcomes":[]
+            }
         }
     ]
 };

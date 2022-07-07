@@ -1,4 +1,4 @@
-let total_learning_outcomes = 3;
+//let total_learning_outcomes = 3;
 let current_lesson_number = -1;
 let current_assessment_number = -1;
 function disableElement(id) {
@@ -204,6 +204,26 @@ function getAssessmentQuestionAndAnswer(currentLessonNumber, programId)
             answer = "%John is the parent of peter parent(john, peter)";
         }
     }
+    else if(currentLessonNumber == 5)
+    {
+        if(programId == "program0" || programId == "program4"){
+            question = 'Extend your model for one of the first 20 elements in the periodic table';
+            answer = "% The chemical symbol for helium is He symbolFor(helium, he)"   
+        }
+        else if(programId == "program1"){
+            question = "Extend your model for Hydrogen";
+            answer = "% The chemical symbol for hydrogen is H symbolFor(hydrogen, h)";
+        }
+        else if(programId == "program2"){
+            question = "Extend your model for Carbon";
+            answer = "% the The chemical symbol for carbon is C symbolFor(carbon, c)";
+        }
+        else if(programId == "program3")
+        {
+            question = "Extend your model for Phosphorus";
+            answer = "% the The chemical symbol for Phosphorus is P symbolFor(Phosphorus, P)";
+        }
+    }
    return {"question" : question, "answer" : answer}; 
 }
 
@@ -361,7 +381,7 @@ function similarity(s1, s2) {
   }
 // above functions are used now.
 
-function gotoNextAfterAssessment(isAssessmentPassed) {
+/*function gotoNextAfterAssessment(isAssessmentPassed) {
     if (isAssessmentPassed && (current_assessment_number == 0 || current_assessment_number == total_learning_outcomes)) {
         let nextLessonUrl = "lesson" + (current_lesson_number + 1) + ".html"
         window.open(nextLessonUrl, "_self");
@@ -662,3 +682,4 @@ function showScoreToUser(score) {
 function isNullOrUndefined(input) {
     return input == null || input == undefined;
 }
+*/

@@ -7,7 +7,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
  <script src="../js/verifytoken.js" type="text/javascript"></script>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Home</title>
 <%@ include file = "header.jsp" %>
 </head>
 <body>
