@@ -57,7 +57,7 @@ $(function(){
                 <ul>
                     <li> A periodic table tell us us important information of an element and help us predicate properties of elements </li>
                     <li> In this Chapter we learn modeling the chemical symbols into computer knowledge </li>
-                    <li> Let’s see where you stand in modeling the chemical symbol with small assessment </li>
+                    <li> Let us see where you stand in modeling the chemical symbol with small assessment </li>
                 </ul>
                 <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(5, 0, 'version-1-course-x-lesson-5-page-2', false, -1)"> Previous
