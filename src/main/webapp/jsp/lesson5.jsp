@@ -220,6 +220,8 @@ $(function(){
 
 <!-- onlineSPARC -->
 <!-- skipped 23,24,25 pages -->
+<!-- learning outcome 3 -->
+
 <%@ include file = "footer.jsp" %>
    </body>
 
