@@ -57,7 +57,7 @@ $(function(){
                 <ul>
                     <li> A periodic table tell us us important information of an element and help us predicate properties of elements </li>
                     <li> In this Chapter we learn modeling the chemical symbols into computer knowledge </li>
-                    <li> Let us see where you stand in modeling the chemical symbol with small assessment </li>
+                    <li> Let’s see where you stand in modeling the chemical symbol with small assessment </li>
                 </ul>
                 <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(5, 0, 'version-1-course-x-lesson-5-page-2', false, -1)"> Previous
@@ -215,13 +215,70 @@ $(function(){
             onclick="gotoPrevious(5, 3, 'version-1-course-x-lesson-5-page-15', false, -1)"> Previous </a>
          <a class="btn btn-primary pull-right"
             onclick="gotoNext(5, 3, 'version-1-course-x-lesson-5-page-15', false, -1)"> Next </a>
-    </div></div>
+              </div>
+          </div>
     </section>
+    <!-- learning outcome 3 assigment 3--->
 
-<!-- onlineSPARC -->
-<!-- skipped 23,24,25 pages -->
-<!-- learning outcome 3 -->
+    <section id="version-1-course-x-lesson-5-page-16" class="container" hidden>
+        <div class="row">
+            <div class="col-md-6 content" style="margin-left:20rem">
+                <form action="">
+                    <label for="ques1"> Extend model to add the knowledge about symbol for Phosphorus to the computer model by representing knowledge as comment and fact </label><br/>
+                    <textarea id="program3" name="program3" rows="4" cols="50" class="knowledge-check-input"></textarea>
+                    <br><br>
+                    <br>
+                    <a class="btn btn-primary pull-left"
+                    onclick="gotoPrevious(5, 3, 'version-1-course-x-lesson-5-page-16', false, -1)"> Previous </a>
+                    <div class="text-center">
+                        <a class="btn btn-primary" style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-5-page-16', 'program3')"> Submit </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    
+    </section>
+<!-- onlineSPARC pages 17,18,19-->
+     <!-- learning outcome 4 -->
+    <section id="version-1-course-x-lesson-5-page-20" class="container" hidden>
+        <div class="row">
+            <div class="col-md-6 content" style="margin-left:20rem">
+    <h2>Learning Outcome 4: A cell in a periodic table  </h2>
+    <ul>
+        <li> Questions </li>
+        <ul>
+            <li> Can you ask a question similar to our earlier ones? </li>
+            <li> Can you extend your model and test it? </li>
+        </ul>
+    </ul>
+    <a class="btn btn-primary pull-left"
+        onclick="gotoPrevious(5, 4, 'version-1-course-x-lesson-5-page-20', false, -1)"> Previous </a>
+     <a class="btn btn-primary pull-right"
+        onclick="gotoNext(5, 4, 'version-1-course-x-lesson-5-page-20', false, -1)"> Next </a>
+          </div>
+      </div>
+</section>
+<!-- learning outcome 4 assigment 4--->
 
+<section id="version-1-course-x-lesson-5-page-21" class="container" hidden>
+    <div class="row">
+        <div class="col-md-6 content" style="margin-left:20rem">
+            <form action="">
+                <label for="ques1"> Extend model to add knowledge about element(s) of your choice. The element has to be one of the first 20 in the periodic table. </label><br/>
+                <textarea id="program4" name="program4" rows="4" cols="50" class="knowledge-check-input"></textarea>
+                <br><br>
+                <br>
+                <a class="btn btn-primary pull-left"
+                onclick="gotoPrevious(5, 4, 'version-1-course-x-lesson-5-page-21', false, -1)"> Previous </a>
+                <div class="text-center">
+                    <a class="btn btn-primary" style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-5-page-21', 'program4')"> Submit </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</section>
+<!-- sparc  22,23,24 pages -->
 <%@ include file = "footer.jsp" %>
    </body>
 
