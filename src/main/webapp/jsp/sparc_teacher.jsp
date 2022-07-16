@@ -137,7 +137,7 @@ var studentid=sessionStorage.getItem("studentid");
 var lessonid=sessionStorage.getItem("lessonID");
 var lessonoutcome=sessionStorage.getItem("lessonOutcome");
 var userRole = sessionStorage.getItem('userRole');
-const apiBaseurl = "https://onlinelpk12api.herokuapp.com/api/sparc/";
+const apiBaseurl = "https://onlinelpk12api.azurewebsites.net/api/sparc/";
 
 var editor = ace.edit("editor");
 editor.session.setMode("ace/mode/sparc");
@@ -175,7 +175,7 @@ function getApiData()
 {
 	let lessonid=sessionStorage.getItem("lessonID");
 	let lessonoutcome=sessionStorage.getItem("lessonOutcome");
-	const teacher_url = "https://onlinelpk12api.herokuapp.com/api/Teacher/"+studentid+"/sparc/lessson/"+lessonid+"/learningoutcome/"+lessonoutcome;
+	const teacher_url = "https://onlinelpk12api.azurewebsites.net/api/Teacher/"+studentid+"/sparc/lessson/"+lessonid+"/learningoutcome/"+lessonoutcome;
 
 	$.get(teacher_url, function(data, status){
 		editor.setValue(data.content.program);

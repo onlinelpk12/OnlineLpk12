@@ -46,7 +46,7 @@
       var username=document.getElementById('username').value;
       var password=document.getElementById('password').value;
       //fetch post request
-      fetch("https://onlinelpk12nodeservice.herokuapp.com/api/auth/signin",{
+      fetch("https://onlinelpk12nodeservice.azurewebsites.net/api/auth/signin",{
         method:'POST',
         body: JSON.stringify({
             "username":username,

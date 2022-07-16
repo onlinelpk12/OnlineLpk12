@@ -8,7 +8,7 @@ function disableElement(id) {
     }
 }
 
-const apiBaseUrl = "https://onlinelpk12api.herokuapp.com/api";
+const apiBaseUrl = "https://onlinelpk12api.azurewebsites.net/api";
 const lessonsUrl = "/onlineSystem/lessonnumber.jsp"
 
 let userIdFromSession = 0;

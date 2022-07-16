@@ -40,7 +40,7 @@ window.onload = function() {
 function getApiData()
 {
 	let studentid = sessionStorage.getItem("studentid");
-	const teacher_url = "https://onlinelpk12api.herokuapp.com/api/Teacher/"+studentid+"/sparc/";
+	const teacher_url = "https://onlinelpk12api.azurewebsites.net/api/Teacher/"+studentid+"/sparc/";
 
 	$.get(teacher_url, function(data, status){
 		buildLessonList(data);
