@@ -83,7 +83,7 @@
 	
 	        //fetch post request
 	
-	        fetch("https://onlinelpk12nodeservice.azurewebsites.net/api/auth/signup",{
+	        fetch("https://onlinelpk12nodeservice.herokuapp.com/api/auth/signup",{
 	            method:'POST',
 	            body: JSON.stringify({
 					"firstname":firstname,
@@ -104,7 +104,7 @@
 	       			//US-13
 	       			resp.then((data)=>{       			 
 	       			 var userid = data.userId;
-	       			 var createRootFolderApi = new URL('https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/createrootfolder');
+	       			 var createRootFolderApi = new URL('https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/createrootfolder');
 	       			 var body = {
 	       					 		userId :userid
 	       					 	} // or:
