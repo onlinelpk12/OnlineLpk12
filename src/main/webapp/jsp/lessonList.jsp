@@ -42,7 +42,7 @@ function getApiData()
 //let user_id = sessionStorage.getItem("userId");
 //let user_id="14";
 let studentid=sessionStorage.getItem("studentid");
-const teacher_url = "https://onlinelpk12api.azurewebsites.net/api/Teacher/"+studentid+"/lessonprogress";
+const teacher_url = "https://onlinelpk12api.herokuapp.com/api/Teacher/"+studentid+"/lessonprogress";
 
 
 var response = null;
