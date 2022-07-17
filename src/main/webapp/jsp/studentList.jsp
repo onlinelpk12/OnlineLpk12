@@ -41,7 +41,8 @@ function getApiData()
 {
 	let teacherId = sessionStorage.getItem("userId");
 	let course_id=sessionStorage.getItem("courseId");
-	const teacher_url = "https://onlinelpk12api.herokuapp.com/api/Teacher/"+teacherId+"/course/"+course_id;
+	const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
+	const teacher_url = corsProxy+"https://onlinelpk12api.herokuapp.com/api/Teacher/"+teacherId+"/course/"+course_id;
 
 	$.get(teacher_url, function(data, status){
 		buildLessonList(data);

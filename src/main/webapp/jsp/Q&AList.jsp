@@ -44,7 +44,8 @@ let userName = sessionStorage.getItem("studentUserName");
 let studentid=sessionStorage.getItem("studentid");
 let lessonid=sessionStorage.getItem("lessonID");
 let lessonoutcome=sessionStorage.getItem("lessonOutcome");
-const teacher_url = "https://onlinelpk12api.herokuapp.com/api/Teacher/"+studentid+"/assessment/lessson/"+lessonid+"/learningoutcome/"+lessonoutcome;
+const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
+const teacher_url = corsProxy+"https://onlinelpk12api.herokuapp.com/api/Teacher/"+studentid+"/assessment/lessson/"+lessonid+"/learningoutcome/"+lessonoutcome;
 
 
 $.get(teacher_url, function(data, status){

@@ -40,7 +40,8 @@ function getApiData()
 let course_id=sessionStorage.getItem("courseId");
 let name= sessionStorage.getItem("studentUserName");
 let studentid=sessionStorage.getItem("studentid");
-const teacher_url = "https://onlinelpk12api.herokuapp.com/api/Teacher/"+studentid+"/assessment";
+const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
+const teacher_url = corsProxy+"https://onlinelpk12api.herokuapp.com/api/Teacher/"+studentid+"/assessment";
 
 
 

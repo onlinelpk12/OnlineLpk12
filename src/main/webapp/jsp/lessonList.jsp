@@ -42,7 +42,8 @@ function getApiData()
 //let user_id = sessionStorage.getItem("userId");
 //let user_id="14";
 let studentid=sessionStorage.getItem("studentid");
-const teacher_url = "https://onlinelpk12api.herokuapp.com/api/Teacher/"+studentid+"/lessonprogress";
+const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
+const teacher_url = corsProxy+"https://onlinelpk12api.herokuapp.com/api/Teacher/"+studentid+"/lessonprogress";
 
 
 var response = null;

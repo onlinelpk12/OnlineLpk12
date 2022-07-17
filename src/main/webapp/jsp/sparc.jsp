@@ -205,7 +205,8 @@
 		editor.setValue(response);
 	}
 	let userid = sessionStorage.getItem("userId");
-	const apiBaseurl = "https://onlinelpk12api.herokuapp.com/api/sparc/";
+	const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
+	const apiBaseurl = corsProxy+"https://onlinelpk12api.herokuapp.com/api/sparc/";
 	//var input="getAnswerSets";
     var editor = ace.edit("editor");
     editor.session.setMode("ace/mode/sparc");

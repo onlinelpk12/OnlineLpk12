@@ -8,7 +8,8 @@ function disableElement(id) {
     }
 }
 
-const apiBaseUrl = "https://onlinelpk12api.herokuapp.com/api";
+const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
+const apiBaseUrl = corsProxy+"https://onlinelpk12api.herokuapp.com/api";
 const lessonsUrl = "/onlineSystem/lessonnumber.jsp"
 
 let userIdFromSession = 0;

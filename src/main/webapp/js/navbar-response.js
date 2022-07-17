@@ -157,7 +157,7 @@ var deleteFileOrFolder = function(name) {
     			    	};
     		
     		//const folderDeletionAPI = "https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/deletefolder"+decodeURIComponent($.param(data,encodeData=false));
-    		const folderDeletionAPI = "https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/deletefolder";
+    		const folderDeletionAPI = corsProxy+"https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/deletefolder";
     		
     		postSparcData(folderDeletionAPI, data).then(resp =>{
     			console.log('response from post method: ', resp);
@@ -183,7 +183,7 @@ var deleteFileOrFolder = function(name) {
 			   		'folderUrl': ApiFolderNameParam
 			    	};
         	
-        	const fileDeletionAPI = "https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/deletefile?"+decodeURIComponent($.param(data,encodeData=false));
+        	const fileDeletionAPI = corsProxy+"https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/deletefile?"+decodeURIComponent($.param(data,encodeData=false));
         	postSparcData(fileDeletionAPI, data).then(resp =>{
     			console.log('response from post method: ', resp);
     			if (resp.errors.length==0) {
@@ -339,7 +339,7 @@ var setEditorToFile = function(fileName) {
                  'folderUrl':folderurl,
                };   
     
-    const getFileAPI = "https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/getfile?"+($.param(data,encodeData=false));
+    const getFileAPI = corsProxy+"https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/getfile?"+($.param(data,encodeData=false));
     $.get(getFileAPI, data, function(response) {
     	console.log((response.content.program)?response.content.program:"empty program");
         let editor = ace.edit("editor");
@@ -539,7 +539,7 @@ $(document).ready(function() {
             	'folderName': folderName,
             	'parentUrl': parentURL
             	};
-        const folderCreationAPI = "https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/createfolder";
+        const folderCreationAPI = corsProxy+"https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/createfolder";
         
         postSparcData(folderCreationAPI, data).then(resp =>{
 			console.log('response from post method: ', resp);
@@ -573,7 +573,7 @@ $(document).ready(function() {
                 'folderUrl': folderUrl
                };
 
-        const fileCreationAPI = "https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/createfile";
+        const fileCreationAPI = corsProxy+"https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/createfile";
         // Expected response : success message
         postSparcData(fileCreationAPI, data).then(resp =>{
 			console.log('response from post method: ', resp);
@@ -723,7 +723,7 @@ $(document).ready(function() {
                };
         
         console.log("data : ",data);
-        const saveFileAPI = "https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/savefile";
+        const saveFileAPI = corsProxy+"https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/savefile";
         postSparcData(saveFileAPI, data).then(resp =>{
 			console.log('response from post method: ', resp);
 			if (resp.errors.length==0) {

@@ -105,7 +105,8 @@
 	       			//US-13
 	       			resp.then((data)=>{       			 
 	       			 var userid = data.userId;
-	       			 var createRootFolderApi = new URL('https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/createrootfolder');
+	       			 const createRootFolderAPI = corsProxy+"https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/createrootfolder";
+	       			 var createRootFolderApi = new URL(createRootFolderAPI);
 	       			 var body = {
 	       					 		userId :userid
 	       					 	} // or:
