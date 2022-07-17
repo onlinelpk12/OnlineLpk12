@@ -12,7 +12,7 @@ let selectedItemType = ""; // the type of the selected item
 
 let currentFolder=""; // the most recently selected folder
 let currentFile="";  // the most recently selected file
-
+const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
 
 /*
     refreshDirectory() : empties the directory, refills with
@@ -20,11 +20,12 @@ let currentFile="";  // the most recently selected file
 */
 var refreshDirectory = function() {
 	let userid = getUserId();
+	const getAllFilesForldersAPI = corsProxy+"https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/getallfoldersfiles";
     //var data = {'action': "getAccessibleDirectory"};
 	//US-13
 	$.ajax({
 	        type: 'GET',
-	        url: 'https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/getallfoldersfiles',
+	        url: getAllFilesForldersAPI,
 	        jsonpCallback: 'jsonCallback',
 	        dataType: 'json',
 	        data : "userId="+userid+"",
