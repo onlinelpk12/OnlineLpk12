@@ -25,7 +25,7 @@ $(function(){
         $( document ).ready(function() { 
             sessionStorage.removeItem(sessionKeyIsAssessmentPassed);
             sessionStorage.removeItem(sessionKeyIsSparcPassed);
-            
+            //sessionStorage.removeItem(sessionKeyShowPageId); //60
         let pageIdToShow= sessionStorage.getItem(sessionKeyShowPageId);
   		if(pageIdToShow== null || pageIdToShow == '' || pageIdToShow == undefined){
               let firstPageIdOfCurrentLesson = GetFirstPageIdOfCurrentLessonFromJSON(4);
