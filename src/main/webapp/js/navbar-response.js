@@ -24,7 +24,7 @@ var refreshDirectory = function() {
 	//US-13
 	$.ajax({
 	        type: 'GET',
-	        url: 'https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/getallfoldersfiles',
+	        url: 'https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/getallfoldersfiles',
 	        jsonpCallback: 'jsonCallback',
 	        dataType: 'json',
 	        data : "userId="+userid+"",
@@ -155,8 +155,8 @@ var deleteFileOrFolder = function(name) {
 				   		'parentUrl': ApiParentURIParam
     			    	};
     		
-    		//const folderDeletionAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/deletefolder"+decodeURIComponent($.param(data,encodeData=false));
-    		const folderDeletionAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/deletefolder";
+    		//const folderDeletionAPI = "https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/deletefolder"+decodeURIComponent($.param(data,encodeData=false));
+    		const folderDeletionAPI = "https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/deletefolder";
     		
     		postSparcData(folderDeletionAPI, data).then(resp =>{
     			console.log('response from post method: ', resp);
@@ -182,7 +182,7 @@ var deleteFileOrFolder = function(name) {
 			   		'folderUrl': ApiFolderNameParam
 			    	};
         	
-        	const fileDeletionAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/deletefile?"+decodeURIComponent($.param(data,encodeData=false));
+        	const fileDeletionAPI = "https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/deletefile?"+decodeURIComponent($.param(data,encodeData=false));
         	postSparcData(fileDeletionAPI, data).then(resp =>{
     			console.log('response from post method: ', resp);
     			if (resp.errors.length==0) {
@@ -338,7 +338,7 @@ var setEditorToFile = function(fileName) {
                  'folderUrl':folderurl,
                };   
     
-    const getFileAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/getfile?"+($.param(data,encodeData=false));
+    const getFileAPI = "https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/getfile?"+($.param(data,encodeData=false));
     $.get(getFileAPI, data, function(response) {
     	console.log((response.content.program)?response.content.program:"empty program");
         let editor = ace.edit("editor");
@@ -538,7 +538,7 @@ $(document).ready(function() {
             	'folderName': folderName,
             	'parentUrl': parentURL
             	};
-        const folderCreationAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/createfolder";
+        const folderCreationAPI = "https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/createfolder";
         
         postSparcData(folderCreationAPI, data).then(resp =>{
 			console.log('response from post method: ', resp);
@@ -572,7 +572,7 @@ $(document).ready(function() {
                 'folderUrl': folderUrl
                };
 
-        const fileCreationAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/createfile";
+        const fileCreationAPI = "https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/createfile";
         // Expected response : success message
         postSparcData(fileCreationAPI, data).then(resp =>{
 			console.log('response from post method: ', resp);
@@ -722,7 +722,7 @@ $(document).ready(function() {
                };
         
         console.log("data : ",data);
-        const saveFileAPI = "https://onlinelpk12api.azurewebsites.net/api/SparcFileSystem/savefile";
+        const saveFileAPI = "https://onlinelpk12api.herokuapp.com/api/SparcFileSystem/savefile";
         postSparcData(saveFileAPI, data).then(resp =>{
 			console.log('response from post method: ', resp);
 			if (resp.errors.length==0) {
