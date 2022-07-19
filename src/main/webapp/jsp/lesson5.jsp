@@ -73,7 +73,7 @@ $(function(){
 	<section id="version-1-course-x-lesson-5-page-3" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <h4>From the periodic table among the first 20 elements , represent any one element’s chemical symbol.</h4>
+                <h4>From the periodic table among the first 20 elements , represent any one element&#39;s chemical symbol.</h4>
                 <form action="">
                     <label for="ques1">   Where the chemical symbol of x is y </label><br/>
                     <textarea id="program0" name="program0" rows="4" cols="50" class="knowledge-check-input"></textarea>
