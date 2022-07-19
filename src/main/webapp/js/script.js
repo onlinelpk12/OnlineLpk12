@@ -216,12 +216,12 @@ function getAssessmentQuestionAndAnswer(currentLessonNumber, programId)
         }
         else if(programId == "program2"){
             question = "Extend your model for Carbon";
-            answer = "% the The chemical symbol for carbon is C symbolFor(carbon, c)";
+            answer = "% The chemical symbol for carbon is C symbolFor(carbon, c)";
         }
         else if(programId == "program3")
         {
             question = "Extend your model for Phosphorus";
-            answer = "% the The chemical symbol for Phosphorus is P symbolFor(Phosphorus, P)";
+            answer = "% The chemical symbol for Phosphorus is P symbolFor(Phosphorus, P)";
         }
     }
    return {"question" : question, "answer" : answer}; 

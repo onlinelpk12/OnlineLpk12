@@ -11,11 +11,11 @@ function getSparcProgram(id) {
 %% Description:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sorts
-#people = {peter, joaan}.
+	#people = {peter, joaan}.
 predicates
-mother (#people, #people).
+	mother(#people, #people).
 rules
-mother (joaan, peter).`     
+	mother(joaan, peter).`     
 	}       
 	else if(id == 1){       
 		return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -24,11 +24,11 @@ mother (joaan, peter).`
 %% Description:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sorts
-#people = {peter, john}.
+	#people = {peter, john}.
 predicates
-parent(#people, #people).
+	parent(#people, #people).
 rules
-parent(john, peter).`
+	parent(john, peter).`
 	}
 	else if(id == 2){       
 		return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -37,11 +37,11 @@ parent(john, peter).`
 %% Description:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sorts
-#people = {peter, john}.
+	#people = {peter, john}.
 predicates
-dad(#people, #people).
+	dad(#people, #people).
 rules
-dad(john, peter).` 
+	dad(john, peter).` 
 	}
 	else{       
 		return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -50,11 +50,11 @@ dad(john, peter).`
 %% Description:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sorts
-#people = {sara, bob}.
+	#people = {sara, bob}.
 predicates
-father(#people, #people).
+	father(#people, #people).
 rules
-father(bob, sara).`
+	father(bob, sara).`
 	}
 }
 else if(lessonNumber == 3)
@@ -62,58 +62,58 @@ else if(lessonNumber == 3)
     if(id == 0)
     {
         return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %% Template for a SPARC file
-        %% Author: 
-        %% Description:
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        sorts
-        #people = {peter, joaan}.
-        predicates
-        mother (#people, #people).
-        rules
-        mother (joaan, peter).`;
+%% Template for a SPARC file
+%% Author: 
+%% Description:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sorts
+   #people = {peter, joaan}.
+predicates
+   mother(#people, #people).
+rules
+   mother(joaan, peter).`;
     }
     else if(id == 1)
     {
         return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %% Template for a SPARC file
-        %% Author: 
-        %% Description:
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        sorts
-        #people = {peter, John}.
-        predicates
-        father (#people, #people).
-        rules
-        father (John, peter).`;
+%% Template for a SPARC file
+%% Author: 
+%% Description:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sorts
+   #people = {peter, john}.
+predicates
+   father(#people, #people).
+rules
+   father(john, peter).`;
     }
     else if(id == 2)
     {
         return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %% Template for a SPARC file
-        %% Author: 
-        %% Description:
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        sorts
-        #people = {peter, John}.
-        predicates
-        father (#people, #people).
-        rules
-        father (John, peter).`;
+%% Template for a SPARC file
+%% Author: 
+%% Description:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sorts
+   #people = {peter, john}.
+predicates
+   father(#people, #people).
+rules
+   father(john, peter).`;
     }
     else if(id == 3)
     {
         return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %% Template for a SPARC file
-        %% Author: 
-        %% Description:
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        sorts
-        #people = {peter, John}.
-        predicates
-        dad (#people, #people).
-        rules
-        dad (John, peter).`;
+%% Template for a SPARC file
+%% Author: 
+%% Description:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sorts
+   #people = {peter, john}.
+predicates
+   dad(#people, #people).
+rules
+    dad(john, peter).`;
     }
 }
 else if(lessonNumber == 4)
@@ -121,58 +121,58 @@ else if(lessonNumber == 4)
     if(id == 0)
     {
     	return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %% Template for a SPARC file
-        %% Author: 
-        %% Description:
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        sorts
-        #people = {peter, John}.
-        predicates
-        parent (#people, #people).
-        rules
-        parent (John, peter).`;
+%% Template for a SPARC file
+%% Author: 
+%% Description:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sorts
+	#people = {peter, john}.
+predicates
+	parent(#people, #people).
+rules
+	parent(john, peter).`;
     }
     else if(id == 1)
     {
     	return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %% Template for a SPARC file
-        %% Author: 
-        %% Description:
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        sorts
-        #people = {peter, John}.
-        predicates
-        dad (#people, #people).
-        rules
-        dad (John, peter).`;
+%% Template for a SPARC file
+%% Author: 
+%% Description:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sorts
+	#people = {peter, john}.
+predicates
+	dad(#people, #people).
+rules
+	dad(john, peter).`;
     }
     else if(id == 2)
     {
     	return  `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %% Template for a SPARC file
-        %% Author: 
-        %% Description:
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        sorts
-        #people = {peter, Jooan}.
-        predicates
-        mom (#people, #people).
-        rules
-        mom (Jooan, peter).`;
+%% Template for a SPARC file
+%% Author: 
+%% Description:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sorts
+	#people = {peter, jooan}.
+predicates
+	mom(#people, #people).
+rules
+	mom(jooan, peter).`;
     }
     else if(id == 3)
     {
-    	return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %% Template for a SPARC file
-        %% Author: 
-        %% Description:
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        sorts
-        #people = {peter, John}.
-        predicates
-        parent (#people, #people).
-        rules
-        parent (John, peter).`;
+return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Template for a SPARC file
+%% Author: 
+%% Description:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sorts
+	#people = {peter, john}.
+predicates
+	parent(#people, #people).
+rules
+	parent(john, peter).`;
     }
 }
 else if(lessonNumber == 5)
@@ -180,58 +180,58 @@ else if(lessonNumber == 5)
     if(id == 0 || id == 4)
     {
     	return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %% Template for a SPARC file
-        %% Author: 
-        %% Description:
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        sorts
-        #element = {Helium, He}.
-        predicates
-        symbolFor (#element, #element).
-        rules
-        symbolFor (Helium, He).`;
+%% Template for a SPARC file
+%% Author: 
+%% Description:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sorts
+	#element = {helium, he}.
+predicates
+	symbolFor(#element, #element).
+rules
+	symbolFor(helium, he).`;
     }
     else if(id == 1)
     {
     	return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %% Template for a SPARC file
-        %% Author: 
-        %% Description:
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        sorts
-        #element = {Hydrogen, H}.
-        predicates
-        symbolFor (#element, #element).
-        rules
-        symbolFor (Hydrogen, H).`;
+%% Template for a SPARC file
+%% Author: 
+%% Description:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sorts
+	#element = {hydrogen, h}.
+predicates
+	symbolFor(#element, #element).
+rules
+	symbolFor(hydrogen, h).`;
     }
     else if(id == 2)
     {
     	return  `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %% Template for a SPARC file
-        %% Author: 
-        %% Description:
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        sorts
-        #element = {Carbon, C}.
-        predicates
-        symbolFor (#element, #element).
-        rules
-        symbolFor (Carbon, C).`;
+%% Template for a SPARC file
+%% Author: 
+%% Description:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sorts
+	#element = {carbon, c}.
+predicates
+	symbolFor(#element, #element).
+rules
+	symbolFor(carbon, c).`;
     }
     else if(id == 3)
     {
     	return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %% Template for a SPARC file
-        %% Author: 
-        %% Description:
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        sorts
-        #element = {Phosphorus, P}.
-        predicates
-        symbolFor (#element, #element).
-        rules
-        symbolFor (Phosphorus, P).`;
+%% Template for a SPARC file
+%% Author: 
+%% Description:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sorts
+	#element = {phosphorus, p}.
+predicates
+	symbolFor(#element, #element).
+rules
+	symbolFor(phosphorus, p).`;
     }
 }
 
