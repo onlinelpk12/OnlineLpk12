@@ -537,7 +537,7 @@ const course =
             "lessonId": 5,
             "lessonTitle": "Model periodic table - chemical symbols",
             "rootLearningOutcome": {
-                "description":"",
+                "description":"Root Learning Outcome : Model the Chemical Symbol",
                 "learningOutcomeId": 0,
                 "pages": [
                     {
@@ -578,6 +578,7 @@ const course =
                 "subLearningOutcomes": [
                     {
                         "learningOutcomeId": 1,
+						"description":"Learning outcome 1: Periodic Table",
                         "pages": [
                             {
                                 "pageId": "version-1-course-x-lesson-5-page-6",
@@ -617,6 +618,7 @@ const course =
                     },
                     {
                         "learningOutcomeId": 2,
+						"description":"Learning outcome 2: A cell in a periodic table - a new element",
                         "pages": [
                             {
                                 "pageId": "version-1-course-x-lesson-5-page-11",
@@ -650,12 +652,35 @@ const course =
                     },
                     {
                         "learningOutcomeId": 3,
+						"description":"Learning outcome 3: Extending the model for Phosphorous",
                         "pages": [
                             {
                                 "pageId": "version-1-course-x-lesson-5-page-15",
                                 "previousPageId": null,
                                 "nextPageId": "version-1-course-x-lesson-5-page-16",
                                 "pageType": "ContentPage"
+                            },
+                            {
+                                "pageId": "version-1-course-x-lesson-5-page-16",
+                                "previousPageId": "version-1-course-x-lesson-5-page-15",
+                                "nextPageId": null,
+                                "submitPageId": "version-1-course-x-lesson-5-page-17",
+                                "pageType": "AssessmentPage"
+                            },
+                            {
+                                "pageId": "version-1-course-x-lesson-5-page-17",
+                                "previousPageId": null,
+                                "nextPageId": null,
+                                "adaptivePageId1": "version-1-course-x-lesson-5-page-18",
+                                "adaptivePageId2": "version-1-course-x-lesson-5-page-6",                                
+                                "pageType": "StatusPage"
+                            },
+                            {
+                                "pageId": "version-1-course-x-lesson-5-page-18",
+                                "previousPageId": null,
+                                "nextPageId": null,
+                                "nextPageId": "version-1-course-x-lesson-5-page-19",                        
+                                "pageType": "SparcPage"
                             }
                         ]
                     },
@@ -663,10 +688,32 @@ const course =
                         "learningOutcomeId": 4,
                         "pages": [
                             {
+                                "pageId": "version-1-course-x-lesson-5-page-20",
+                                "previousPageId": null,
+                                "nextPageId": "version-1-course-x-lesson-5-page-21",
+                                "pageType": "ContentPage"
+                            },
+                            {
+                                "pageId": "version-1-course-x-lesson-5-page-21",
+                                "previousPageId": "version-1-course-x-lesson-5-page-20",
+                                "nextPageId": null,
+                                "submitPageId": "version-1-course-x-lesson-5-page-22",
+                                "pageType": "AssessmentPage"
+                            },
+                            {
+                                "pageId": "version-1-course-x-lesson-5-page-22",
+                                "previousPageId": null,
+                                "nextPageId": null,
+                                "adaptivePageId1": "version-1-course-x-lesson-5-page-23",
+                                "adaptivePageId2": "version-1-course-x-lesson-5-page-11",                                
+                                "pageType": "StatusPage"
+                            },
+                            {
                                 "pageId": "version-1-course-x-lesson-5-page-23",
                                 "previousPageId": null,
-                                "nextPageId": "version-1-course-x-lesson-5-page-23",
-                                "pageType": "ContentPage"
+                                "nextPageId": null,
+                                "nextPageId": "version-1-course-x-lesson-6-page-1",                        
+                                "pageType": "SparcPage"
                             }
                         ]
                     }
