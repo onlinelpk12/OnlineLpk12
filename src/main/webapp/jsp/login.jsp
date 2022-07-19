@@ -46,7 +46,9 @@
       var username=document.getElementById('username').value;
       var password=document.getElementById('password').value;
       //fetch post request
-      fetch("https://onlinelpk12nodeservice.azurewebsites.net/api/auth/signin",{
+      const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
+      const signInAPI = corsProxy+"https://onlinelpk12nodeservice.herokuapp.com/api/auth/signin";
+      fetch(signInAPI,{
         method:'POST',
         body: JSON.stringify({
             "username":username,

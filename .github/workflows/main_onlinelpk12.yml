@@ -49,5 +49,5 @@ jobs:
         with:
           app-name: 'onlinelpk12'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2F88E25EBEBE4166B42D1D7EC5F6DE10 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_3DF02236D65944B9AA898AB7D51E07F0 }}
           package: '*.war'
