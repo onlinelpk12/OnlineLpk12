@@ -57,7 +57,7 @@ $(function(){
                 <ul>
                     <li> A periodic table tell us us important information of an element and help us predicate properties of elements </li>
                     <li> In this Chapter we learn modeling the chemical symbols into computer knowledge </li>
-                    <li> Let us see where you stand in modeling the chemical symbol with small assessment </li>
+                    <li> Let&#39;s see where you stand in modeling the chemical symbol with small assessment </li>
                 </ul>
                 <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(5, 0, 'version-1-course-x-lesson-5-page-2', false, -1)"> Previous
@@ -73,9 +73,9 @@ $(function(){
 	<section id="version-1-course-x-lesson-5-page-3" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <h4>Extent your model to add knowledge about element(s) of your choice</h4>
+                <h4>From the periodic table among the first 20 elements , represent any one element’s chemical symbol.</h4>
                 <form action="">
-                    <label for="ques1"> The element has to be one of the first 20 in the periodic table, represent knowledge as comment and fact  </label><br/>
+                    <label for="ques1">   Where the chemical symbol of x is y </label><br/>
                     <textarea id="program0" name="program0" rows="4" cols="50" class="knowledge-check-input"></textarea>
                     <br><br>
                     <br>
@@ -129,10 +129,9 @@ $(function(){
 	<section id="version-1-course-x-lesson-5-page-8" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <h4>Assume symbolFor(E, S)means that the chemical symbol for element E is S</h4>
-				<h4>Extend the computer model to answer the question</h4>
+                <h4>Model a query to which element &quot;H&quot; is symbol of ?</h4>
                 <form action="">
-                    <label for="ques1"> Represent knowledge as comment and fact for chemical symbol </label><br/>
+                    <label for="ques1">  Where the chemical symbol of x is y </label><br/>
                     <textarea id="program1" name="program1" rows="4" cols="50" class="knowledge-check-input"></textarea>
                     <br><br>
                     <br>
@@ -171,10 +170,9 @@ $(function(){
 	<section id="version-1-course-x-lesson-5-page-12" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <h4>Assume symbolFor(E, S)means that the chemical symbol for element E is S</h4>
-				<h4>Extend the computer model to answer the question</h4>
+                <h4>Write a query to which the &quot;C&quot; is symbol of ?</h4>
                 <form action="">
-                    <label for="ques1"> Represent knowledge as comment and fact for chemical symbol </label><br/>
+                    <label for="ques1">Where the chemical symbol of x is y</label><br/>
                     <textarea id="program2" name="program2" rows="4" cols="50" class="knowledge-check-input"></textarea>
                     <br><br>
                     <br>
@@ -224,7 +222,8 @@ $(function(){
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
                 <form action="">
-                    <label for="ques1"> Extend model to add the knowledge about symbol for Phosphorus to the computer model by representing knowledge as comment and fact </label><br/>
+                    <h4> Write a query to answer what is the symbol of phosphorus </h4>
+                    <label for="ques1"> Where the chemical symbol of x is y</label><br/>
                     <textarea id="program3" name="program3" rows="4" cols="50" class="knowledge-check-input"></textarea>
                     <br><br>
                     <br>
@@ -243,7 +242,7 @@ $(function(){
     <section id="version-1-course-x-lesson-5-page-20" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-    <h2>Learning Outcome 4: A cell in a periodic table  </h2>
+    <h2>Learning outcome 4: A cell in a periodic table  </h2>
     <ul>
         <li> Questions </li>
         <ul>
@@ -264,7 +263,8 @@ $(function(){
     <div class="row">
         <div class="col-md-6 content" style="margin-left:20rem">
             <form action="">
-                <label for="ques1"> Extend model to add knowledge about element(s) of your choice. The element has to be one of the first 20 in the periodic table. </label><br/>
+                <h4> From the periodic table among the first 20 elements , represent any one element&#39;s chemical symbol.</h4>
+                <label for="ques1">Where the chemical symbol of x is y</label><br/>
                 <textarea id="program4" name="program4" rows="4" cols="50" class="knowledge-check-input"></textarea>
                 <br><br>
                 <br>

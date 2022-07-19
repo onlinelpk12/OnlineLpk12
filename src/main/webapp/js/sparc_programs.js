@@ -11,11 +11,11 @@ function getSparcProgram(id) {
 %% Description:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sorts
-#people = {peter, joaan}.
+	#people = {peter, joaan}.
 predicates
-mother (#people, #people).
+	mother(#people, #people).
 rules
-mother (joaan, peter).`     
+	mother(joaan, peter).`     
 	}       
 	else if(id == 1){       
 		return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -24,11 +24,11 @@ mother (joaan, peter).`
 %% Description:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sorts
-#people = {peter, john}.
+	#people = {peter, john}.
 predicates
-parent(#people, #people).
+	parent(#people, #people).
 rules
-parent(john, peter).`
+	parent(john, peter).`
 	}
 	else if(id == 2){       
 		return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -37,11 +37,11 @@ parent(john, peter).`
 %% Description:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sorts
-#people = {peter, john}.
+	#people = {peter, john}.
 predicates
-dad(#people, #people).
+	dad(#people, #people).
 rules
-dad(john, peter).` 
+	dad(john, peter).` 
 	}
 	else{       
 		return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -50,11 +50,11 @@ dad(john, peter).`
 %% Description:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sorts
-#people = {sara, bob}.
+	#people = {sara, bob}.
 predicates
-father(#people, #people).
+	father(#people, #people).
 rules
-father(bob, sara).`
+	father(bob, sara).`
 	}
 }
 else if(lessonNumber == 3)
