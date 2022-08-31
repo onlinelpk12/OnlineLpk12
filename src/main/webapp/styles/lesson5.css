@@ -1,0 +1,19 @@
+.form-control:valid {
+  background-color:  #96d3ec!important;
+}
+.form-control-correct {
+  background-color:  #90EE90;
+}
+.form-control-incorrect {
+  background-color:  #FCAC98;
+}
+
+.form-control-fact:valid {
+  background-color:  #96d3ec!important;
+}
+.form-control-fact-correct {
+  background-color:  #90EE90;
+}
+.form-control-fact-incorrect {
+  background-color:  #FCAC98;
+}

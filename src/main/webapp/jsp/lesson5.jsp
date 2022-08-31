@@ -8,7 +8,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-	 <script src="../js/verifytoken.js" type="text/javascript">  </script>
+	<script src="../js/verifytoken.js" type="text/javascript">  </script>
+	 <link rel="stylesheet" href="../styles/lesson5.css">
 <script type="text/javascript">
 $(function(){
     verifytoken();
@@ -36,7 +37,7 @@ $(function(){
   			 let currentSection = document.getElementById(pageIdToShow);
   			 currentSection.hidden = false;
   		}           
-    });    
+    });     
     </script>
 	<%@ include file = "header.jsp" %>
     <section id="version-1-course-x-lesson-5-page-1" class="container" hidden>
@@ -53,11 +54,13 @@ $(function(){
     <section id="version-1-course-x-lesson-5-page-2" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <h1 class="text-primary"> Model the Chemical Symbol </h1>
+                <h1 class="text-primary"> Periodic Table </h1>
                 <ul>
-                    <li> A periodic table tell us us important information of an element and help us predicate properties of elements </li>
-                    <li> In this Chapter we learn modeling the chemical symbols into computer knowledge </li>
-                    <li> Let&#39;s see where you stand in modeling the chemical symbol with small assessment </li>
+                    <li>What is the periodic table for? </li>
+                    <p> a periodic table tells us important information of an element (i.e., chemical symbol, mass number, atomic number)  and helps up to predicate 
+	properties of elements. </p>
+					<li>We will develop computer model for the basic information of a periodic table. 
+					</li>
                 </ul>
                 <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(5, 0, 'version-1-course-x-lesson-5-page-2', false, -1)"> Previous
@@ -73,9 +76,16 @@ $(function(){
 	<section id="version-1-course-x-lesson-5-page-3" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <h4>From the periodic table among the first 20 elements , represent any one element&#39;s chemical symbol.</h4>
+            	<h3><b>Activity : Extend and Test Model as You Like</b></h3>
+                <ul>
+                		<li>Extend model: add knowledge to model about element(s) of your choice. The element has to be one of the first 20 in the periodic table.</li>
+                		<ul>
+                			<li>Remember to write the comment first</li>
+                			<li>Then write the fact about this knowledge. </li>
+                		</ul>
+                	</ul>
                 <form action="">
-                    <label for="ques1">   Where the chemical symbol of x is y </label><br/>
+                    <label for="ques1"></label><br/>
                     <textarea id="program0" name="program0" rows="4" cols="50" class="knowledge-check-input"></textarea>
                     <br><br>
                     <br>
@@ -96,11 +106,8 @@ $(function(){
     <section id="version-1-course-x-lesson-5-page-6" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-            <h2> Learning outcome 1: Periodic Table</h2>
-            <ul>
-				<li> What is the periodic table for? </li>
-				<li> We will develop computer model for the basic information of a periodic table </li>
-			</ul>
+            <h2> Learning outcome 1</h2>
+            <img src="../images/lesson5/HydrogenSlide.png" alt="Image" width="500" height="300">
             <a class="btn btn-primary pull-left"
                 onclick="gotoPrevious(5, 1, 'version-1-course-x-lesson-5-page-6', false, -1)"> Previous </a>
             <a class="btn btn-primary pull-right"
@@ -112,7 +119,29 @@ $(function(){
     <section id="version-1-course-x-lesson-5-page-7" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <img src="../images/lesson-5-page-7.png" alt="Image" width="500" height="300">
+               <h4><b>Computer Model for Chemical symbols</b></h4>
+               <ol>
+               		<li>Assume symbolFor(E, S)means that the chemical symbol for element E is S.  
+               		</li>
+               		<li>For your computer model to answer the earlier question, how would you expand your model 
+               		</li>
+               </ol>
+               
+               <ul>
+               		<li>Type the knowledge as comments 
+               		</li>
+               		
+               		<div id="hydrogenAssessment" class="form-group">
+					  <input id="knowledgeComment" type="text" class="form-control" required>
+					</div>
+					<div id="correctAnswerComment"></div>
+               		<li>Type the fact/rule to represent that knowledge 
+               		</li>
+               		<div id="factAssessmentHydrogen" class="form-group">
+					  <input id="fact" type="text" class="form-control" required>
+					</div>
+					<div id="correctAnswerFact"></div>
+               </ul>
                 
                 <br>
                 <a class="btn btn-primary pull-left"
@@ -280,6 +309,9 @@ $(function(){
 </section>
 <!-- sparc  22,23,24 pages -->
 <%@ include file = "footer.jsp" %>
+	<script src="../js/lesson5/validations.js" type="text/javascript">  </script>
+	    
+	
    </body>
 
 </html>
