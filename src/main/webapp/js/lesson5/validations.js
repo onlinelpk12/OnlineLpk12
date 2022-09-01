@@ -35,3 +35,47 @@ factBox.addEventListener('keyup', function(){
     		correctAnswerComment.innerHTML = "symbolFor(hydrogen, H)";
     	}
 }); 
+
+
+var symbolCBox = document.getElementById("identifySymbolC");
+symbolCBox.addEventListener('keyup', function(){
+	    //do some stuff
+	    //alert("hello");
+    	let answer = symbolCBox.value;
+    	let originalAnswer = "C";
+    	if(answer.toLowerCase() == originalAnswer.toLowerCase()){
+    		symbolCBox.className = 'form-control-carbon-correct';
+    	}
+    	else {
+    		symbolCBox.className = 'form-control-carbon-incorrect';
+    	}
+}); 
+
+
+var symbolPBox = document.getElementById("identifySymbolP");
+symbolPBox.addEventListener('keyup', function(){
+	    //do some stuff
+	    //alert("hello");
+    	let answer = symbolPBox.value;
+    	let originalAnswer = "P";
+    	if(answer.toLowerCase() == originalAnswer.toLowerCase()){
+    		symbolPBox.className = 'form-control-p-correct';
+    	}
+    	else {
+    		symbolPBox.className = 'form-control-p-incorrect';
+    	}
+});
+
+function changeImageRandomly(){
+	let randomNumber = getRandomInt(17);
+	console.log(randomNumber);
+	/*while(randomNumber>0 && randumNumber<=18){
+		randomNumber = Math.random()*18;
+	}*/
+	document.getElementById("randomImageDisplay").src = "../images/lesson5/elements/"+randomNumber+".png";
+	//alert(imagePath);
+}
+
+function getRandomInt(max) {
+	  return Math.floor(Math.random() * max);
+}
