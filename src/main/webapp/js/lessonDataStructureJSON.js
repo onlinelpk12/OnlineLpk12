@@ -555,7 +555,7 @@ const course =
                     {
                         "pageId": "version-1-course-x-lesson-5-page-3",
                         "previousPageId": "version-1-course-x-lesson-5-page-2",
-                        "nextPageId": null,
+                        "nextPageId": "version-1-course-x-lesson-5-page-6",
                         "submitPageId": "version-1-course-x-lesson-5-page-4",
                         "pageType": "AssessmentPage"
                     },
@@ -582,7 +582,7 @@ const course =
                         "pages": [
                             {
                                 "pageId": "version-1-course-x-lesson-5-page-6",
-                                "previousPageId": null,
+                                "previousPageId": "version-1-course-x-lesson-5-page-3",
                                 "nextPageId": "version-1-course-x-lesson-5-page-7",
                                 "pageType": "ContentPage"
                             },
