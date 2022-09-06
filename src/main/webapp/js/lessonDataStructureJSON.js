@@ -622,7 +622,7 @@ const course =
                         "pages": [
                             {
                                 "pageId": "version-1-course-x-lesson-5-page-11",
-                                "previousPageId": null,
+                                "previousPageId": "version-1-course-x-lesson-5-page-8",
                                 "nextPageId": "version-1-course-x-lesson-5-page-12",
                                 "pageType": "ContentPage"
                             },                                                                                    
@@ -656,7 +656,7 @@ const course =
                         "pages": [
                             {
                                 "pageId": "version-1-course-x-lesson-5-page-15",
-                                "previousPageId": null,
+                                "previousPageId": "version-1-course-x-lesson-5-page-12",
                                 "nextPageId": "version-1-course-x-lesson-5-page-16",
                                 "pageType": "ContentPage"
                             },
@@ -689,7 +689,7 @@ const course =
                         "pages": [
                             {
                                 "pageId": "version-1-course-x-lesson-5-page-20",
-                                "previousPageId": null,
+                                "previousPageId": "version-1-course-x-lesson-5-page-15",
                                 "nextPageId": "version-1-course-x-lesson-5-page-21",
                                 "pageType": "ContentPage"
                             },
@@ -729,7 +729,7 @@ const course =
                 "pages": [
                     {
                         "pageId": "version-1-course-x-lesson-6-page-1",
-                        "previousPageId": null,
+                        "previousPageId": "version-1-course-x-lesson-5-page-20",
                         "nextPageId": "version-1-course-x-lesson-6-page-2",
                         "pageType": "ContentPage"
                     }                   
