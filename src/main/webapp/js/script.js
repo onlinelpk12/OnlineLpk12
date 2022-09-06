@@ -206,6 +206,9 @@ function getAssessmentQuestionAndAnswer(currentLessonNumber, programId)
     }
     else if(currentLessonNumber == 5)
     {
+    	let elementSelectedFlag = sessionStorage.getItem("elementSelected");
+    	let elementName = sessionStorage.getItem("elementName");
+    	let symbolSelected = sessionStorage.getItem("elementSymbol");
         if(programId == "program0" || programId == "program4"){
             question = 'Extend your model for one of the first 20 elements in the periodic table';
             answer = "% The chemical symbol for helium is He symbolFor(helium, he)"   
@@ -218,10 +221,14 @@ function getAssessmentQuestionAndAnswer(currentLessonNumber, programId)
             question = "Extend your model for Carbon";
             answer = "% The chemical symbol for carbon is C symbolFor(carbon, c)";
         }
-        else if(programId == "program3")
+        else if(programId == "program3" && elementSelectedFlag)
         {
             question = "Extend your model for Phosphorus";
-            answer = "% The chemical symbol for Phosphorus is P symbolFor(Phosphorus, P)";
+            answer = "% The chemical symbol for "+elementName+" is "+symbolSelected+" symbolFor("+elementName+", "+symbolSelected+")";
+        }
+        else if(programId == "program3" && !elementSelectedFlag){
+        	question = "Extend your model for Phosphorus";
+            answer = "% The chemical symbol for helium is He symbolFor(helium, he)";        
         }
     }
    return {"question" : question, "answer" : answer}; 

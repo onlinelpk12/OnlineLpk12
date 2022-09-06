@@ -89,10 +89,14 @@ $(function(){
                     <textarea id="program0" name="program0" rows="4" cols="50" class="knowledge-check-input"></textarea>
                     <br><br>
                     <br>
-                    <a class="btn btn-primary pull-left"
-                    onclick="gotoPrevious(5, 0, 'version-1-course-x-lesson-5-page-3', false, -1)"> Previous </a>
-                    <div class="text-center">
-                        <a class="btn btn-primary" style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-5-page-3', 'program0')"> Submit </a>
+                    <div id="outer">
+	                    <a class="btn btn-primary pull-left"
+	                    onclick="gotoPrevious(5, 0, 'version-1-course-x-lesson-5-page-3', false, -1)"> Previous </a>
+	                    <div class="text-center">
+	                        <a class="btn btn-primary" style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-5-page-3', 'program0')"> Submit </a>
+	                    </div>
+	                     <a class="btn btn-primary pull-right"  style="margin: -35px; margin-right: 76px; background-color: lightcoral;"
+	                    onclick="gotoNext(5, 0, 'version-1-course-x-lesson-5-page-3', false, -1)">Skip Pre-Assessment</a>
                     </div>
                 </form>
             </div>
@@ -337,7 +341,7 @@ $(function(){
             <form action="">
               <h3><b>Activity : Extend and Test Model as You Like</b></h3>
                 <ul>
-                		<li>Extend model: add knowledge to model about element(s) of your choice. The element has to be one of the first 20 in the periodic table.</li>
+                		<li id="chosenElement">Extend model: add the knowledge about symbol to the model</li>
                 		<ul>
                 			<li>Remember to write the comment first</li>
                 			<li>Then write the fact about this knowledge. </li>
