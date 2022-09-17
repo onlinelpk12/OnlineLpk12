@@ -223,7 +223,7 @@ function getAssessmentQuestionAndAnswer(currentLessonNumber, programId)
         }
         else if(programId == "program3" && elementSelectedFlag)
         {
-            question = "Extend your model for Phosphorus";
+            question = "Extend your model for any element";
             answer = "% The chemical symbol for "+elementName+" is "+symbolSelected+" symbolFor("+elementName+", "+symbolSelected+")";
         }
         else if(programId == "program3" && !elementSelectedFlag){
@@ -231,6 +231,27 @@ function getAssessmentQuestionAndAnswer(currentLessonNumber, programId)
             answer = "% The chemical symbol for helium is He symbolFor(helium, he)";        
         }
     }
+    else if(currentLessonNumber == 6){
+		let elementSelectedFlag = sessionStorage.getItem("elementSelected");
+    	let elementName = sessionStorage.getItem("elementName");
+    	let symbolSelected = sessionStorage.getItem("elementSymbol");
+		if(programId == "program0"){
+            question = 'What is the proton and atomic number of carbon ?';
+            answer = "% The atomic number of carbon is 6 atomicNumber(carbon, 6)";   
+        }
+        else if(programId == "program1"){
+			question = 'What is the proton and atomic number of hydrogen ?';
+            answer = "% The atomic number of hydrogen is 1 atomicNumber(hydrogen, 1)";   
+		}
+		else if(programId == "program2"){
+			question = 'What is the proton and atomic number of oxygen ?';
+            answer = "% The atomic number of oxygen is 8 atomicNumber(oxygen, 8)";
+		}
+		else if(programId == "program3" && elementSelectedFlag){			
+    		question = "Extend your model for any element";
+            answer = "% The atomic number of "+elementName+" is "+symbolSelected+" atomicNumber("+elementName+", "+symbolSelected+")";
+		}
+	}
    return {"question" : question, "answer" : answer}; 
 }
 

@@ -234,5 +234,59 @@ rules
 	symbolFor(phosphorus, p).`;
     }
 }
+else if(lessonNumber == 6){
+	if(id == 0){
+		return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Template for a SPARC file
+%% Author: 
+%% Description:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sorts
+	#element = {carbon, 6}.
+predicates
+	atomicNumber(#element, #element).
+rules
+	atomicNumber(carbon, 6).`;
+	}
+	else if(id == 1){
+		return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Template for a SPARC file
+%% Author: 
+%% Description:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sorts
+	#element = {hydrogen, 1}.
+predicates
+	atomicNumber(#element, #element).
+rules
+	atomicNumber(hydrogen, 1).`;
+	}
+	else if(id == 2){
+		return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Template for a SPARC file
+%% Author: 
+%% Description:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sorts
+	#element = {oxygen, 8}.
+predicates
+	atomicNumber(#element, #element).
+rules
+	atomicNumber(oxygen, 8).`;
+	}
+	else if(id == 3){
+		return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Template for a SPARC file
+%% Author: 
+%% Description:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sorts
+	#element = {helium, 2}.
+predicates
+	atomicNumber(#element, #element).
+rules
+	atomicNumber(helium, 2).`;
+	}
+}
 
 }
