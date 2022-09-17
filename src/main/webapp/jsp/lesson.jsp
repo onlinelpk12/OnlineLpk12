@@ -36,7 +36,7 @@ a.disabled {
 <p></p>
 <li><a href="../jsp/lesson5.jsp">Click here to View Lesson 5!</a></li>
 <p></p>
-<li><a href="../jsp/lesson6.jsp" class="disabled">Click here to View Lesson 6!</a></li>
+<li><a href="../jsp/lesson6.jsp">Click here to View Lesson 6!</a></li>
 <p></p>
 <li><a href="../jsp/lesson7.jsp" class="disabled">Click here to View Lesson 7!</a></li>
 <p></p>

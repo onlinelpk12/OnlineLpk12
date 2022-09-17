@@ -119,9 +119,9 @@ function changeImageRandomly(){
 	document.getElementById("randomImageDisplay").src = "../images/lesson5/elements/"+randomNumber+".png";
 	let selectedElement = elementMap.get(randomNumber);
 	document.getElementById("chosenElement").innerHTML = "Extend model: add the knowledge about symbol <b>"+elementMap.get(randomNumber)+"</b> to the model";
-	sessionStorage.setItem(elementSelected,true);
-	sessionStorage.setItem(elementName,selectedElement);
-	sessionStorage.setItem(elementSymbol,elementSymbolMap.get(randomNumber));
+	sessionStorage.setItem("elementSelected",true);
+	sessionStorage.setItem("elementName",selectedElement);
+	sessionStorage.setItem("elementSymbol",elementSymbolMap.get(randomNumber));
 	
 }
 
