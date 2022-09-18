@@ -284,6 +284,8 @@ $(function(){
                     <div class="text-center">
                         <a class="btn btn-primary" style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-6-page-10', 'program0')"> Submit </a>
                     </div>
+                    <a class="btn btn-primary pull-right"  style="margin: -35px; margin-right: 76px; background-color: lightcoral;"
+	                    onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-10', false, -1)">Skip Pre-Assessment</a>
                 </form>
             </div>
         </div>

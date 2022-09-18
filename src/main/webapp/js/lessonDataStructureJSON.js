@@ -779,7 +779,7 @@ const course =
           {
             "pageId": "version-1-course-x-lesson-6-page-10",
             "previousPageId": "version-1-course-x-lesson-6-page-9",
-            "nextPageId": "version-1-course-x-lesson-6-page-6",
+            "nextPageId": "version-1-course-x-lesson-6-page-13",
             "submitPageId": "version-1-course-x-lesson-6-page-11",
             "pageType": "AssessmentPage"
           },
