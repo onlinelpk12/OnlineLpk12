@@ -22,11 +22,14 @@
 <div class="footer">
  <div class="row" style="margin:1rem 5rem 0 5rem">
  	<div class="col-md-4">
+	 	<div id="sparcFooterPrevBtn">
+	 	     <button class="btn btn-primary pull-left" onclick="" id="sparc-footer-prev-btn"> Prev</button>
+	 	  </div>
  	</div>
  	<div class="col-md-4">
  	  <h4 style="text-align:center">Online SPARC</h4>
  	</div>
- 	<div class="col-md-4">
+ 	<div class="col-md-4"> 	
  	  <div id="sparcFooterNextBtn">
  	     <button class="btn btn-primary pull-right" onclick="SubmitSparc()" id="sparc-footer-next-btn"> Next</button>
  	  </div>

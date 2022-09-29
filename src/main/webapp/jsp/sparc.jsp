@@ -29,7 +29,7 @@
 	position: fixed;
 	margin: 0;
 	float: left;
-	width: 55%;
+	width: 32%;
 	height: 100%;
 	top: 50;
 }
@@ -188,10 +188,10 @@
                         <option value="72">72px</option>
                     </select>
                 </div>
-				<div id="editor"></div>
+				<div id="editor" style="left: 545px;"></div>
 			</div>
-			<div id="column-resizer"></div>
-			<div id="results"></div>
+			<div id="column-resizer" style="left: 1030.8px;"></div>
+			<div id="results" style="width: 450.49px;"></div>
 		</div>
 	</div>
 
