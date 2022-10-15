@@ -33,6 +33,14 @@
 	height: 100%;
 	top: 50;
 }
+#workbookActivity {
+	position: fixed;
+	margin: 0;
+	float: left;
+	width: 58%;
+	height: 100%;
+	top: 50;
+}
 
 #column-resizer {
 	position: fixed;
@@ -188,6 +196,20 @@
                         <option value="72">72px</option>
                     </select>
                 </div>
+                <div id="workbookActivity">
+			        <div class="row">
+			            <div class="col-md-6 content">
+			            	<h3><b id="activityTitle">Activity : Extend and Test Model as You Like</b></h3>
+				                <ul>
+			                		<li id="question">Extend model: add knowledge to model about element(s) of your choice. The element has to be one of the first 20 in the periodic table.</li>
+			                		<ul>
+			                			<li>Remember to write the comment first</li>
+			                			<li>Then write the fact about this knowledge. </li>
+			                		</ul>
+				               </ul>
+			         	</div>
+			        </div>                	
+                </div>
 				<div id="editor" style="left: 545px;"></div>
 			</div>
 			<div id="column-resizer" style="left: 1030.8px;"></div>
@@ -203,6 +225,9 @@
 		let response = getSparcProgram(currentLearningOutcomeNumber);
 		console.log(response);
 		editor.setValue(response);
+		let titleQuestion =  getActivityInformation();
+	    document.getElementById("activityTitle").innerHTML = titleQuestion.title;
+	    document.getElementById("question").innerHTML = titleQuestion.question;
 	}
 	let userid = sessionStorage.getItem("userId");
 	const apiBaseurl = "https://onlinelpk12-corsproxy.herokuapp.com/"+"https://onlinelpk12api.herokuapp.com/api/sparc/";
@@ -217,6 +242,38 @@
     
 	var clearResults=function(){
 		$('#results').empty();
+	}
+	
+	function getActivityInformation(){
+		let currentLessonNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber));
+		let currentLearningOutcomeNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber));
+		
+		if(currentLessonNumber == 5)
+	    {
+	    	let elementName = sessionStorage.getItem("elementName");
+	        if(currentLearningOutcomeNumber == 0){
+	            title = 'Activity : Extend and Test Model as You Like';
+	            question = "Extend model: add knowledge to model about element(s) of your choice. The element has to be one of the first 20 in the periodic table."   
+	        }
+	        else if(currentLearningOutcomeNumber == 1){
+	        	title = 'Activity : Extend Periodic Table Model - hydrogen';
+	            question = "Add to the model the knowledge: The chemical symbol for hydrogen is H."   
+	        }
+	        else if(currentLearningOutcomeNumber == 2){
+	        	title = "Activity : Extend and Test Model -- Carbon";
+	        	question = "Extend model: add the knowledge about symbol for Carbon to the model";
+	        }
+	        else if(currentLearningOutcomeNumber == 3)
+	        {
+	            title = "Activity : Extend and Test Model -- Phosphorus";
+	            question = "Extend model: add the knowledge about symbol for Phosphorus to the model";
+	        }
+	        else if(currentLearningOutcomeNumber == 4){
+	        	title = "Activity : Extend and Test Model as You Like";
+	        	question = "Extend model: add the knowledge about symbol <b>"+elementName+"</b> to the model";        
+	        }
+	    }
+		return {"title" : title, "question" : question};
 	}
 	
 	function execute(){
@@ -311,7 +368,7 @@
         });
 	}
 </script>
-<script type="text/javascript">
+<script type="text/javascript">	
 	function SubmitSparc() {	
 		let _isSparcPassed = true;
 		let sessionKeyIsSparcPassed ="isSparcPassed";

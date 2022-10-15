@@ -86,7 +86,7 @@ $(function(){
                 	</ul>
                 <form action="">
                     <label for="ques1">Test your model: ask a query about Element.</label><br/>
-                    <textarea id="program0" name="program0" rows="4" cols="50" class="knowledge-check-input"></textarea>
+                    <textarea id="program0" name="program0" rows="4" cols="50" class="knowledge-check-input" placeholder="//Type your comment first &#10; //Type the fact about this knowledge"></textarea>
                     <br><br>
                     <br>
                     <div id="outer">
@@ -172,7 +172,7 @@ $(function(){
                 	</ul>
                 <form action="">
                     <label for="ques1">Test your model: ask a query about Hydrogen. </label><br/>
-                    <textarea id="program1" name="program1" rows="4" cols="50" class="knowledge-check-input"></textarea>
+                    <textarea id="program1" name="program1" rows="4" cols="50" class="knowledge-check-input" placeholder="//Type your comment first &#10; //Type the fact about this knowledge"></textarea>
                     <br><br>
                     <br>
                     <a class="btn btn-primary pull-left"
@@ -290,7 +290,7 @@ $(function(){
                 		</ul>
                 	</ul>  
                     <label for="ques1">Test your model: ask a query about Phosphorus.</label><br/>
-                    <textarea id="program3" name="program3" rows="4" cols="50" class="knowledge-check-input"></textarea>
+                    <textarea id="program3" name="program3" rows="4" cols="50" class="knowledge-check-input" placeholder="//Type your comment first &#10; //Type the fact about this knowledge"></textarea>
                     <br><br>
                     <br>
                     <a class="btn btn-primary pull-left"
@@ -348,7 +348,7 @@ $(function(){
                 		</ul>
                 	</ul>
                 <label for="ques1">Test your model: ask a query about Element.</label><br/>
-                <textarea id="program4" name="program4" rows="4" cols="50" class="knowledge-check-input"></textarea>
+                <textarea id="program4" name="program4" rows="4" cols="50" class="knowledge-check-input" placeholder="//Type your comment first &#10; //Type the fact about this knowledge"></textarea>
                 <br><br>
                 <br>
                 <a class="btn btn-primary pull-left"
