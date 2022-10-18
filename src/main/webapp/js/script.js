@@ -252,6 +252,31 @@ function getAssessmentQuestionAndAnswer(currentLessonNumber, programId)
             answer = "% The atomic number of "+elementName+" is "+symbolSelected+" atomicNumber("+elementName+", "+symbolSelected+")";
 		}
 	}
+    else if(currentLessonNumber == 7){
+		let elementSelectedFlag = sessionStorage.getItem("elementSelected");
+    	let elementProtonNumber = sessionStorage.getItem("elementProtonNumber");
+    	let symbolSelected = sessionStorage.getItem("elementSymbol");
+		if(programId == "program0"){
+            question = 'write the relation rule protron and atomic number of hydrogen?';
+            answer = "% protonsOf(E, N) :- atomicNumber(E, N).";   
+        }
+        else if(programId == "program1"){
+			question = 'Write query about protrons of  hydrogen ?';
+            answer = "% The proton number of hydrogen is 1 protonsOf(H,1)";   
+		}
+		else if(programId == "program2"){
+			question = 'write the relation between proton and atomic number of the hydrogen of element H?';
+            answer = "% N is the atomic number of the element E if N is the number of protons of element E protonsOf(E, N) :- atomicNumber(E, N)";
+		}
+		else if(programId == "program3"){
+			question = 'write the relation between atomic and protron number of the hydrogen of element H?';
+            answer = "% N is the atomic number of the element. if N is the number of protons of element E. atomicNumber(E, N) :- protonsOf(E, N).";
+		}
+		else if(programId == "program4" && elementSelectedFlag){			
+    		question = "write the relation between atomic and proton number of the element";
+            answer = "% The number of protons of the atom of an element"+symbolSelected+" is "+elementProtonNumber+", if "+elementProtonNumber+" is the atomic number of the element "+symbolSelected+".protonsOf("+symbolSelected+","+elementProtonNumber+") :- atomicNumber("+symbolSelected+", "+elementProtonNumber+")."+elementProtonNumber+" is the atomic number of the element "+symbolSelected+" if "+elementProtonNumber+" is the number of protons of element "+symbolSelected+".atomicNumber("+symbolSelected+", "+elementProtonNumber+") :- protonsOf("+symbolSelected+", "+elementProtonNumber+").";
+		}
+	}
    return {"question" : question, "answer" : answer}; 
 }
 

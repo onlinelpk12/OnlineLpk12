@@ -288,5 +288,72 @@ rules
 	atomicNumber(helium, 2).`;
 	}
 }
-
+else if(lessonNumber == 7){
+		if(id == 0){
+			return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% Template for a SPARC file
+	%% Author: 
+	%% Description:
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	sorts
+		#element = {Hydrogen, 1}.
+	predicates
+		atomicNumber(#element, #prtonNumber).
+	rules
+		atomicNumber(H, 1).`;
+		}
+		else if(id == 1){
+			return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% Template for a SPARC file
+	%% Author: 
+	%% Description:
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	sorts
+		#element = {hydrogen, 1}.
+	predicates
+		PrtonNumber(#element, #element).
+	rules
+		protonNumber(hydrogen, 1).`;
+		}
+		else if(id == 2){
+			return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% Template for a SPARC file
+	%% Author: 
+	%% Description:
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	sorts
+		#element = {hydrogen, 1} & {hydrogen, 1}.
+	predicates
+		 ProtonNumber(#element, #element),atomicNumber(#element, #element).
+	rules
+		protonNumber(H, 1)= atomicNumber(H,1).`;
+		}
+	else if(id == 3){
+			return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% Template for a SPARC file
+	%% Author: 
+	%% Description:
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	sorts
+		#element = {hydrogen, 1} & {hydrogen, 1}.
+	predicates
+		 atomicNumber(#element, #element),ProtonNumber(#element, #element).
+	rules
+		atomicNumber(H,1) = protonNumber(H, 1).`;
+		}
+		else if(id == 4){
+			return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% Template for a SPARC file
+	%% Author: 
+	%% Description:
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	sorts
+		#element = {N, E}.
+	predicates
+		atomicNumber(#element, #element).
+	rules
+		atomicNumber(N, E).`;
+		}
+	}
+    return null;
 }
