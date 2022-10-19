@@ -153,7 +153,7 @@ $(function(){
                			<ul>
                				<li>Here we will learn how to write the query and rules and regulations for it by considering an example of a query as protonsOf(h, M).</li>
 
-               				<li>Here in protonsOf(h, M) query h denotes the element first letter and M denotes the variable it varies from element to element (Ex: H as ‘As’ )</li>
+               				<li>Here in protonsOf(h, M) query h denotes the element first letter and M denotes the variable it varies from element to element (Ex: H as As )</li>
                				<li>Generally, we can use any name for a variable if its first letter is capital.(Ex: protonsOf(h, What) or protonsOf(h, TheProtonNumber) ).</li>
                				<li>Note: No spaces are allowed in the middle of variables for example in the name TheProtonNumber if you observe there is no space.</li>
                			</ul>
@@ -238,7 +238,7 @@ $(function(){
             <ul>
                		<li>Question</li>
                		<ul>
-               			<li>Your current model doesn’t work well on the new questions How to extend your model? </li>
+               			<li>Your current model will not work well on the new questions How to extend your model? </li>
                			<ul>
                				<li>Figure out the proton number yourself for each element and write facts about the proton number. (we ignore this approach here.) </li>
                			</ul>                			
@@ -263,7 +263,7 @@ $(function(){
                			<li>Figure out knowledge to obtain proton number from atomic number (in English)  </li>
                				<li>(1st version) The proton number of an element is the atomic number of the element. </li>
                			    <li>(2nd version - make the number explicit by introducing a name) The proton number of an element is N if the atomic number of the element is N. </li>
-               				<li>(3rd version - introduce variables for “an element”) The proton number of an element E  is N if the atomic number of the element E is N. </li>
+               				<li>(3rd version - introduce variables for an element) The proton number of an element E  is N if the atomic number of the element E is N. </li>
                				<li>(4th version - add quantifier [the variables refer to any value]) For every E and N, the proton number of an element E  is N if the atomic number of E is N. </li>
                			</ul>               		  
                 <br><br>   
@@ -366,7 +366,7 @@ $(function(){
                			<li>Now we develop another computer model</li>
                			<ul>
                				<li>Assume we know the proton number of every element. </li>
-               				<li>The model should “tell us” the atomic number of each element. </li>
+               				<li>The model should tell us the atomic number of each element. </li>
                			</ul>                			
                			<ul>
                				<li>What knowledge do we use to get the atomic number of an element? </li>
@@ -389,7 +389,7 @@ $(function(){
                			<li>Figure out knowledge to obtain atomic number from proton number  </li>
                				<li>(1st version) The atomic number of an element is the proton number of the element.  </li>
                			    <li>(2nd version - make the number explicit by introducing a name) The atomic number of an element is N if the proton number of the element is N.</li>
-               				<li>(3rd version - introduce variables for “an element”) The atomic number of an element E  is N if the protron number of the element E is N. </li>
+               				<li>(3rd version - introduce variables for an element) The atomic number of an element E  is N if the protron number of the element E is N. </li>
                				<li>(4th version - add quantifier [the variables refer to any value]) For every E and N, the atomic number of an the element E  is N if the protron number of E is N. </li>
                			</ul>               		  
                 <br><br>   
