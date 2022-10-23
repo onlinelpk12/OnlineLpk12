@@ -8,7 +8,6 @@
 
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<!-- <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script> -->
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
 <script src="../js/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="../js/mode-sparc.js" type="text/javascript"></script>
@@ -52,6 +51,7 @@
 	height: 100%;
 	background-color: #DDD;
 	border-radius: 3px;
+	margin-top: -80px;
 }
 
 #results {
@@ -94,6 +94,55 @@
 .nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
     background-color: #3798d0;
     border-color: #337ab7;
+}
+#fileSystem{
+padding-left: 528px;
+padding-right: 624px;
+}
+
+
+/* for  panels*/
+.panel-heading {
+    width: 430px;
+}
+.panel-title {
+    height:18px
+}
+.panel-title a {
+    float:right;
+    text-decoration:none;
+    padding: 10px 430px;
+    margin: -10px -430px;
+}
+.panel-body {
+   /*  height: 432px; */
+  /*  height: 580px;
+    rotate: 90deg; */
+    
+    height: 482px;
+    margin-inline: 58px;
+    
+    /*margin-right: -39px;*/
+    rotate: 90deg;
+}
+
+.panel-group {
+    /*width:430px;*/
+    width: 580px;
+    z-index: 100;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translateX(-100%) rotate(-90deg);
+    -webkit-transform-origin: right top;
+    -moz-transform: translateX(-100%) rotate(-90deg);
+    -moz-transform-origin: right top;
+    -o-transform: translateX(-100%) rotate(-90deg);
+    -o-transform-origin: right top;
+    transform: translateX(-100%) rotate(-90deg);
+    transform-origin: right top;
+}
+
+.combined{
+
 }
 
 </style>
@@ -176,48 +225,71 @@
 		
 		<div id="page-content-wrapper">
 			<div id="div_editorpanel">
-                <div id="span_currentfolder"> 
-                    Current folder:
-                    <span id="span_currentfolderid"></span> 
-                </div>
-                <div id="span_currentfile"> 
-                    Current file:
-                    <span id="span_currentfileid"></span> 
-                </div>
+				<div id="workbookActivity">
+					<div class="row">
+						<div class="col-md-6 content">
+							<div class="panel-group" id="accordion">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a id ="questionToggle" aria-expanded="true" data-toggle="collapse" data-parent="#accordion"
+												href="#collapseOne"> Activity Description </a>
+										</h4>
 
-                <div id="div_fontsize">
-                    <span> Font size: </span>
-                    <select id="select_fontsize">
-                        <option value="8">8px</option>
-                        <option value="12" selected="selected">12px</option>
-                        <option value="18">18px</option>
-                        <option value="24">24px</option>
-                        <option value="36">36px</option>
-                        <option value="72">72px</option>
-                    </select>
-                </div>
-                <div id="workbookActivity">
-			        <div class="row">
-			            <div class="col-md-6 content">
-			            	<h3><b id="activityTitle">Activity : Extend and Test Model as You Like</b></h3>
-				                <ul>
-			                		<li id="question">Extend model: add knowledge to model about element(s) of your choice. The element has to be one of the first 20 in the periodic table.</li>
-			                		<ul>
-			                			<li>Remember to write the comment first</li>
-			                			<li>Then write the fact about this knowledge. </li>
-			                		</ul>
-				               </ul>
-			         	</div>
-			        </div>                	
-                </div>
-				<div id="editor" style="left: 545px;"></div>
+									</div>
+									<div id="collapseOne" class="panel-collapse collapse in">
+										<div class="panel-body">
+											<h3>
+												<b id="activityTitle">Activity : Extend and Test Model
+													as You Like</b>
+											</h3>
+											<ul>
+												<li id="question">Extend model: add knowledge to model
+													about element(s) of your choice. The element has to be one
+													of the first 20 in the periodic table.</li>
+												<ul>
+													<li>Remember to write the comment first</li>
+													<li>Then write the fact about this knowledge.</li>
+												</ul>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="combined">
+					<div>
+						<div id="fileSystem">
+							<div id="span_currentfolder">
+								Current folder: <span id="span_currentfolderid"></span>
+							</div>
+							<div id="span_currentfile">
+								Current file: <span id="span_currentfileid"></span>
+							</div>
+
+							<div id="div_fontsize">
+								<span> Font size: </span> <select id="select_fontsize">
+									<option value="8">8px</option>
+									<option value="12" selected="selected">12px</option>
+									<option value="18">18px</option>
+									<option value="24">24px</option>
+									<option value="36">36px</option>
+									<option value="72">72px</option>
+								</select>
+							</div>
+						</div>
+						<div  class="combined" id="editor" style="left: 545px;"></div>
+					</div>
+					<div class="combined" id="column-resizer" style="left: 1030.8px;"></div>
+					<div class="combined" id="results" style="width: 450.49px;"></div>
+				</div>				
 			</div>
-			<div id="column-resizer" style="left: 1030.8px;"></div>
-			<div id="results" style="width: 450.49px;"></div>
 		</div>
 	</div>
 
-<script type="text/javascript">
+<script type="text/javascript">	
 	let currentLearningOutcomeNumber = sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber);
 	let currentLessonNumber = sessionStorage.getItem(sessionKeyCurrentLessonNumber);
 	window.onload = function(){
@@ -368,7 +440,7 @@
         });
 	}
 </script>
-<script type="text/javascript">	
+<script type="text/javascript">	    
 	function SubmitSparc() {	
 		let _isSparcPassed = true;
 		let sessionKeyIsSparcPassed ="isSparcPassed";
@@ -409,7 +481,25 @@
 				//message.innerHTML = "You have passed assessment Please click <a href='" + nextLessonUrl + "'> here </a> to go to next learning outcome";
 			}
 		}
-    }
+    }	
+	
+	
+	const toggle = document.getElementById("questionToggle");
+    toggle.addEventListener('click', () => {
+    	var isExpanded = $(toggle).attr("aria-expanded");
+    	const element = document.querySelector('.combined');
+    	const elementEditor = document.querySelector('#editor');
+    	if(isExpanded == "false"){
+    		//alert("expanded");
+    		const element = document.querySelector('.combined');
+    	    element.style.marginLeft ='0px';
+    	    elementEditor.style.marginLeft ='0px';
+    	}else{
+    		//alert("closed");    		
+    	    element.style.marginLeft ='-485px';    	    
+    	    elementEditor.style.marginLeft ='-485px';
+    	}
+    });
 </script>
 	<%@ include file="sparc-footer.jsp"%>
 </body>
