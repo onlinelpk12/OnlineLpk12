@@ -189,7 +189,7 @@ sorts
 predicates
 	symbolFor(#element, #element).
 rules
-	symbolFor(helium, he).`;
+	%Please write your fact here`;
     }
     else if(id == 1)
     {
@@ -203,7 +203,7 @@ sorts
 predicates
 	symbolFor(#element, #element).
 rules
-	symbolFor(hydrogen, h).`;
+	%Please write your fact here`;
     }
     else if(id == 2)
     {
@@ -217,7 +217,7 @@ sorts
 predicates
 	symbolFor(#element, #element).
 rules
-	symbolFor(carbon, c).`;
+	%Please write your fact here`;
     }
     else if(id == 3)
     {
@@ -231,7 +231,7 @@ sorts
 predicates
 	symbolFor(#element, #element).
 rules
-	symbolFor(phosphorus, p).`;
+	%Please write your fact here`;
     }
 }
 else if(lessonNumber == 6){
