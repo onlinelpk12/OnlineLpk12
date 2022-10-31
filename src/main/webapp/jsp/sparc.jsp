@@ -292,6 +292,7 @@ padding-right: 624px;
 <script type="text/javascript">	
 	let currentLearningOutcomeNumber = sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber);
 	let currentLessonNumber = sessionStorage.getItem(sessionKeyCurrentLessonNumber);
+	let currentConsoleOutput = "currentConsoleOutput";
 	window.onload = function(){
 		document.getElementById("sparc-footer-next-btn").disabled = true;
 		let response = getSparcProgram(currentLearningOutcomeNumber);
@@ -314,7 +315,7 @@ padding-right: 624px;
     
 	var clearResults=function(){
 		$('#results').empty();
-	}
+	}	
 	
 	function getActivityInformation(){
 		let currentLessonNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber));
@@ -432,7 +433,7 @@ padding-right: 624px;
             success: function(data){
             	console.log('response content: ',data.content);
             	showResults(data.content);
-            	
+            	sessionStorage.setItem(currentConsoleOutput,data.content);
             },
             error: function(data){
             	console.log(data);
@@ -440,14 +441,74 @@ padding-right: 624px;
         });
 	}
 </script>
-<script type="text/javascript">	    
+<script type="text/javascript">	
+	function removeTags(str) {
+	    if ((str===null) || (str===''))
+	        return false;
+	    else
+	        str = str.toString();
+	          
+	    // Regular expression to identify HTML tags in 
+	    // the input string. Replacing the identified 
+	    // HTML tag with a null string.
+	    return str.replace( /(<([^>]+)>)/ig, '');
+	}
+	
+	function evaluateSparcConsoleOutput(consoleResponse){
+		if(consoleResponse.toLowerCase().includes("answer to query") && consoleResponse.toLowerCase().includes("yes")){
+			return true;
+		} 
+		else if(consoleResponse.toLowerCase().includes("answer to query") && consoleResponse.toLowerCase().includes("=")){
+			let combinationsMap = processConstVaraiableCombination(consoleResponse);
+			if(combinationsMap.size > 0){ // datastructure is a valid one having combination of varables and constants
+				return true;
+			}
+		}
+		else return false;
+		
+	}
+	
+	function getPosition(string, subString, index) {
+		  return string.split(subString, index).join(subString).length;
+	} 
+	
+	function processConstVaraiableCombination(outputString){
+		outputString = outputString.replace('\n','');
+		let combinationsMap = new Map();
+		const searchTerm = '  ';
+		const indexOfFirst = outputString.indexOf(searchTerm);
+		var combinationCombinedString = outputString.substring(indexOfFirst, outputString.length).trim();
+		console.log(combinationCombinedString);
+		var numberOfCombinations = outputString.match(/[=]/g).length;
+		if(numberOfCombinations > 1){
+			const dividerIndexPosition = getPosition(combinationCombinedString, ' ', 3);
+			var variable1 = combinationCombinedString.substring(0, dividerIndexPosition).trim();
+			console.log(variable1);
+			var variable2 = combinationCombinedString.substring(dividerIndexPosition, combinationCombinedString.length).trim();
+			console.log(variable2);
+			combinationsMap.set(variable1.substring(0,variable1.indexOf('=')).trim(),
+  				    variable1.substring(variable1.indexOf('=')+1,variable1.length).trim());
+			combinationsMap.set(variable2.substring(0,variable2.indexOf('=')).trim(),
+			  				    variable2.substring(variable2.indexOf('=')+1,variable2.length).trim());
+		} else if(numberOfCombinations == 1){
+			var variable1 = combinationCombinedString.trim();
+			console.log(variable1);
+			combinationsMap.set(variable1.substring(0,variable1.indexOf('=')).trim(),
+  				    variable1.substring(variable1.indexOf('=')+1,variable1.length).trim());
+		}
+		return combinationsMap;		
+	}
+
 	function SubmitSparc() {	
 		let _isSparcPassed = true;
 		let sessionKeyIsSparcPassed ="isSparcPassed";
+		var sparcConsoleOutput = removeTags(sessionStorage.getItem(currentConsoleOutput));
+		_isSparcPassed = evaluateSparcConsoleOutput(sparcConsoleOutput);
 		if(_isSparcPassed==false){
 			//validate sparc program    
 			return;
 		}
+		console.log(_isSparcPassed);
 		sessionStorage.setItem(sessionKeyIsSparcPassed, _isSparcPassed);
 		let currentLessonNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber));
 		let currentLearningOutcomeNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber));

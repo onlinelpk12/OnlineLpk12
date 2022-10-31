@@ -37,13 +37,18 @@ function gotoNext(currentLessonNumber, currentLearningOutcomeNumber, currentPage
 
     let currentPageDetails = getCurrentPageDetailsFromJSON(currentLessonNumber, currentLearningOutcomeNumber,currentPageId);
     let nextPageId = currentPageDetails.nextPageId;
-
-    let currentPage = document.getElementById(currentPageId);
-    let nextPage = document.getElementById(nextPageId);
-
-    currentPage.hidden = true;
-    nextPage.hidden = false;
     
+    //#119 Workbook Integration
+    let nextPageDetails = getNextPageDetailsFromJSON(currentLessonNumber, currentLearningOutcomeNumber,nextPageId);
+    if(nextPageDetails.pageType!="SparcPage"){		
+	    let currentPage = document.getElementById(currentPageId);
+	    let nextPage = document.getElementById(nextPageId);
+	
+	    currentPage.hidden = true;
+	    nextPage.hidden = false;	
+	}else{
+		window.open(sparcPage, "_self");
+	}
     SaveStudentLessonsProgressThroughAPI(currentLessonNumber, currentLearningOutcomeNumber, currentPageId);
 }
 
@@ -87,6 +92,20 @@ function getCurrentPageDetailsFromJSON(currentLessonNumber, currentLearningOutco
         currentPageDetails =  learningOutcomeDetails.pages.filter(page => page.pageId == currentPageId)[0];
     }
     return currentPageDetails;
+}
+
+//119 
+function getNextPageDetailsFromJSON(currentLessonNumber, currentLearningOutcomeNumber,nextPageId){
+    let nextPageDetails = null;
+    let currentLessonDetails = lessonsJson.lessons.filter(lesson => lesson.lessonId == currentLessonNumber)[0];
+    if (currentLearningOutcomeNumber == currentLessonDetails.rootLearningOutcome.learningOutcomeId) {
+        nextPageDetails = currentLessonDetails.rootLearningOutcome.pages.filter(page => page.pageId == nextPageId)[0];
+    }
+    else{
+        let learningOutcomeDetails = currentLessonDetails.rootLearningOutcome.subLearningOutcomes.filter(x=> x.learningOutcomeId == currentLearningOutcomeNumber)[0];
+        nextPageDetails =  learningOutcomeDetails.pages.filter(page => page.pageId == nextPageId)[0];
+    }
+    return nextPageDetails;
 }
 
 

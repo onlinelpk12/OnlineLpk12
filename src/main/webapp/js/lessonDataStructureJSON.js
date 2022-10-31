@@ -549,10 +549,10 @@ const course =
 		          {
 		            "pageId": "version-1-course-x-lesson-5-page-2",
 		            "previousPageId": "version-1-course-x-lesson-5-page-1",
-		            "nextPageId": "version-1-course-x-lesson-5-page-3",
+		            "nextPageId": "version-1-course-x-lesson-5-page-5",
 		            "pageType": "ContentPage"
 		          },
-		          {
+		          /*{
 		            "pageId": "version-1-course-x-lesson-5-page-3",
 		            "previousPageId": "version-1-course-x-lesson-5-page-2",
 		            "nextPageId": "version-1-course-x-lesson-5-page-6",
@@ -566,7 +566,7 @@ const course =
 		            "adaptivePageId1": "version-1-course-x-lesson-5-page-5",
 		            "adaptivePageId2": "version-1-course-x-lesson-5-page-11",
 		            "pageType": "StatusPage"
-		          },
+		          },*/
 		          {
 		            "pageId": "version-1-course-x-lesson-5-page-5",
 		            "previousPageId": null,
@@ -588,10 +588,10 @@ const course =
 		              {
 		                "pageId": "version-1-course-x-lesson-5-page-7",
 		                "previousPageId": "version-1-course-x-lesson-5-page-6",
-		                "nextPageId": "version-1-course-x-lesson-5-page-8",
+		                "nextPageId": "version-1-course-x-lesson-5-page-10",
 		                "pageType": "ContentPage"
 		              },
-		              {
+		              /*{
 		                "pageId": "version-1-course-x-lesson-5-page-8",
 		                "previousPageId": "version-1-course-x-lesson-5-page-7",
 		                "nextPageId": null,
@@ -605,10 +605,10 @@ const course =
 		                "adaptivePageId1": "version-1-course-x-lesson-5-page-6",
 		                "adaptivePageId2": "version-1-course-x-lesson-5-page-10",
 		                "pageType": "StatusPage"
-		              },
+		              },*/
 		              {
 		                "pageId": "version-1-course-x-lesson-5-page-10",
-		                "previousPageId": null,
+		                "previousPageId": "version-1-course-x-lesson-5-page-7",
 		                "nextPageId": "version-1-course-x-lesson-5-page-11",
 		                "pageType": "SparcPage"
 		              }
