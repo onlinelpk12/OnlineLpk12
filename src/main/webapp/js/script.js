@@ -34,6 +34,7 @@ let quizContent = null;
 function gotoNext(currentLessonNumber, currentLearningOutcomeNumber, currentPageId, isNextPageQuiz, nextAssessmentNumber) {
     sessionStorage.setItem(sessionKeyCurrentLessonNumber, currentLessonNumber.toString());
     sessionStorage.setItem(sessionKeyCurrentLearningOutcomeNumber, currentLearningOutcomeNumber.toString()); 
+    sessionStorage.setItem(sessionKeyShowPageId, currentPageId.toString())
 
     let currentPageDetails = getCurrentPageDetailsFromJSON(currentLessonNumber, currentLearningOutcomeNumber,currentPageId);
     let nextPageId = currentPageDetails.nextPageId;
@@ -47,6 +48,7 @@ function gotoNext(currentLessonNumber, currentLearningOutcomeNumber, currentPage
 	    currentPage.hidden = true;
 	    nextPage.hidden = false;	
 	}else{
+		sessionStorage.setItem(sessionKeyShowPageId, nextPageId.toString())
 		window.open(sparcPage, "_self");
 	}
     SaveStudentLessonsProgressThroughAPI(currentLessonNumber, currentLearningOutcomeNumber, currentPageId);
@@ -59,7 +61,6 @@ function gotoPrevious(currentLessonNumber, currentLearningOutcomeNumber, current
     
     let currentPageDetails = getCurrentPageDetailsFromJSON(currentLessonNumber, currentLearningOutcomeNumber,currentPageId);
     let previousPageId = currentPageDetails.previousPageId;
-   
    
     let currentSection = document.getElementById(currentPageId);
     let previousSection = document.getElementById(previousPageId);

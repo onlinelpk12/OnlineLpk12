@@ -569,7 +569,7 @@ const course =
 		          },*/
 		          {
 		            "pageId": "version-1-course-x-lesson-5-page-5",
-		            "previousPageId": null,
+		            "previousPageId": "version-1-course-x-lesson-5-page-2",
 		            "nextPageId": "version-1-course-x-lesson-6-page-1",
 		            "pageType": "SparcPage"
 		          }
@@ -621,10 +621,10 @@ const course =
 		              {
 		                "pageId": "version-1-course-x-lesson-5-page-11",
 		                "previousPageId": "version-1-course-x-lesson-5-page-8",
-		                "nextPageId": "version-1-course-x-lesson-5-page-12",
+		                "nextPageId": "version-1-course-x-lesson-5-page-14",
 		                "pageType": "ContentPage"
 		              },
-		              {
+		              /*{
 		                "pageId": "version-1-course-x-lesson-5-page-12",
 		                "previousPageId": "version-1-course-x-lesson-5-page-11",
 		                "nextPageId": null,
@@ -638,10 +638,10 @@ const course =
 		                "adaptivePageId1": "version-1-course-x-lesson-5-page-14",
 		                "adaptivePageId2": "version-1-course-x-lesson-5-page-6",
 		                "pageType": "StatusPage"
-		              },
+		              },*/
 		              {
 		                "pageId": "version-1-course-x-lesson-5-page-14",
-		                "previousPageId": null,
+		                "previousPageId": "version-1-course-x-lesson-5-page-11",
 		                "nextPageId": "version-1-course-x-lesson-5-page-15",
 		                "pageType": "SparcPage"
 		              }
@@ -654,10 +654,10 @@ const course =
 		              {
 		                "pageId": "version-1-course-x-lesson-5-page-15",
 		                "previousPageId": "version-1-course-x-lesson-5-page-12",
-		                "nextPageId": "version-1-course-x-lesson-5-page-16",
+		                "nextPageId": "version-1-course-x-lesson-5-page-18",
 		                "pageType": "ContentPage"
 		              },
-		              {
+		              /*{
 		                "pageId": "version-1-course-x-lesson-5-page-16",
 		                "previousPageId": "version-1-course-x-lesson-5-page-15",
 		                "nextPageId": null,
@@ -671,10 +671,10 @@ const course =
 		                "adaptivePageId1": "version-1-course-x-lesson-5-page-18",
 		                "adaptivePageId2": "version-1-course-x-lesson-5-page-6",
 		                "pageType": "StatusPage"
-		              },
+		              },*/
 		              {
 		                "pageId": "version-1-course-x-lesson-5-page-18",
-		                "previousPageId": null,
+		                "previousPageId": "version-1-course-x-lesson-5-page-15",
 		                "nextPageId": "version-1-course-x-lesson-5-page-19",
 		                "pageType": "SparcPage"
 		              }
@@ -686,10 +686,10 @@ const course =
 		              {
 		                "pageId": "version-1-course-x-lesson-5-page-20",
 		                "previousPageId": "version-1-course-x-lesson-5-page-15",
-		                "nextPageId": "version-1-course-x-lesson-5-page-21",
+		                "nextPageId": "version-1-course-x-lesson-5-page-23",
 		                "pageType": "ContentPage"
 		              },
-		              {
+		              /*{
 		                "pageId": "version-1-course-x-lesson-5-page-21",
 		                "previousPageId": "version-1-course-x-lesson-5-page-20",
 		                "nextPageId": null,
@@ -703,10 +703,10 @@ const course =
 		                "adaptivePageId1": "version-1-course-x-lesson-5-page-23",
 		                "adaptivePageId2": "version-1-course-x-lesson-5-page-11",
 		                "pageType": "StatusPage"
-		              },
+		              },*/
 		              {
 		                "pageId": "version-1-course-x-lesson-5-page-23",
-		                "previousPageId": null,
+		                "previousPageId": "version-1-course-x-lesson-5-page-20",
 		                "nextPageId": "version-1-course-x-lesson-6-page-1",
 		                "pageType": "SparcPage"
 		              }

@@ -498,16 +498,31 @@ padding-right: 624px;
 		}
 		return combinationsMap;		
 	}
+	
+	  function getNextLearningOutcomeFirstPageId(currentLessonId, currentLearningOutcomeId) {
+          let currentLessonDetails = lessonsJson.lessons.filter(lesson => lesson.lessonId == currentLessonId)[0];
+          let nextLearningOutcomeDetails = currentLessonDetails.rootLearningOutcome.subLearningOutcomes.filter(lo => lo.learningOutcomeId == currentLearningOutcomeId + 1)[0];
+          return nextLearningOutcomeDetails.pages[0].pageId;
+      }
+
+      function getNextLearningOutcomeIdUsingBinarySearch(currentLessonId, currentLearningOutcomeNumber) {
+          let currentLessonDetails = lessonsJson.lessons.filter(lesson => lesson.lessonId == currentLessonId)[0];
+          let currentLessonTotalLearningOutcomes = currentLessonDetails.rootLearningOutcome.subLearningOutcomes.length;
+
+          if (currentLearningOutcomeNumber == 0) {
+              return Math.ceil(currentLessonTotalLearningOutcomes / 2);
+          }
+          else if (currentLearningOutcomeNumber == 1) {
+              return 1;
+          }
+          return Math.ceil(currentLearningOutcomeNumber / 2);
+      }
 
 	function SubmitSparc() {	
-		let _isSparcPassed = true;
+		let _isSparcPassed = false;
 		let sessionKeyIsSparcPassed ="isSparcPassed";
 		var sparcConsoleOutput = removeTags(sessionStorage.getItem(currentConsoleOutput));
 		_isSparcPassed = evaluateSparcConsoleOutput(sparcConsoleOutput);
-		if(_isSparcPassed==false){
-			//validate sparc program    
-			return;
-		}
 		console.log(_isSparcPassed);
 		sessionStorage.setItem(sessionKeyIsSparcPassed, _isSparcPassed);
 		let currentLessonNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber));
@@ -516,24 +531,24 @@ padding-right: 624px;
         let isAssessmentPassed = sessionStorage.getItem(sessionKeyIsAssessmentPassed) === 'true';
 		_isSparcPassed = sessionStorage.getItem(sessionKeyIsSparcPassed) === 'true';
 		let message = document.getElementById('next-step-link');
-		if (isAssessmentPassed && _isSparcPassed) {
+		if (_isSparcPassed) {
 			sessionStorage.removeItem(sessionKeyShowPageId);
 			//let pageIdToShow = sessionStorage.getItem(sessionKeyShowPageId);
 			//message.innerHTML = "Congratulations on completing the programming task. Please click <a href='" + nextLessonUrl + "'> here </a> to go to next steps."
 			
 			// student passed root assessment, so allow student to go to next lesson
-			if (isAssessmentPassed && currentLearningOutcomeNumber == 0) {
+			if (_isSparcPassed && currentLearningOutcomeNumber == 0) {
 				let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber + 1) + ".jsp";
 				window.location.href = nextLessonUrl;
 				// message.innerHTML = "You have passed the root assessment. please click <a href='" + nextLessonUrl + "'> here </a> to go to next lesson";
 			}
 			// passed all learning outcomes in the lesson
-			else if (isAssessmentPassed && currentLearningOutcomeNumber == currentLessonDetails.rootLearningOutcome.subLearningOutcomes.length) {
+			else if (_isSparcPassed && currentLearningOutcomeNumber == currentLessonDetails.rootLearningOutcome.subLearningOutcomes.length) {
 				let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber + 1) + ".jsp";
 				window.location.href = nextLessonUrl;
 				//message.innerHTML = "You have passed all the assessments. please click <a href='" + nextLessonUrl + "'> here </a> to go to next lesson";
 			}
-			else if (isAssessmentPassed && currentLearningOutcomeNumber > 0) {
+			else if (_isSparcPassed && currentLearningOutcomeNumber > 0) {
 				let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber) + ".jsp";
 				let nextLearningOutcomeDetails = currentLessonDetails.rootLearningOutcome.subLearningOutcomes.filter(x=> x.learningOutcomeId ==  currentLearningOutcomeNumber+1)[0];
 				let showPageId = nextLearningOutcomeDetails.pages[0].pageId;
@@ -541,7 +556,22 @@ padding-right: 624px;
 				window.location.href = nextLessonUrl;
 				//message.innerHTML = "You have passed assessment Please click <a href='" + nextLessonUrl + "'> here </a> to go to next learning outcome";
 			}
-		}
+		} else {
+            let nextLearningOutcomeNumber = getNextLearningOutcomeIdUsingBinarySearch(currentLessonNumber, currentLearningOutcomeNumber);
+            let nextLearningOutcomeDetails = currentLessonDetails.rootLearningOutcome.subLearningOutcomes.filter(x => x.learningOutcomeId == nextLearningOutcomeNumber)[0];
+            let nextPageId = nextLearningOutcomeDetails.pages[0].pageId;//getNextLearningOutcomeFirstPageId(currentLessonId, currentLearningOutcomeNumber);
+            sessionStorage.setItem(sessionKeyShowPageId, nextPageId);
+
+            let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber) + ".jsp";
+            window.location.href = nextLessonUrl;
+	 
+	/* messageAlert.classList.remove('alert-success');
+	messageAlert.classList.remove('alert-danger');
+	     
+	messageAlert.classList.add('alert-danger'); 
+	     
+            message.innerHTML = "You have not passed the assessment. Please click <a href='" + nextLessonUrl + "'> here </a> to go to next step";
+        */ }
     }	
 	
 	
