@@ -13,6 +13,17 @@
 	    sessionStorage.setItem(sessionKeyShowPageId, previousPageId);
 	    let LessonUrl = "../jsp/lesson" + (currentLessonNumber) + ".jsp";
         window.location.href = LessonUrl;
+	}	
+	
+	function skipToLearningOutcome01(){
+		let currentLessonNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber));
+        let currentLearningOutcomeNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber));
+        let currentLessonDetails = lessonsJson.lessons.filter(lesson => lesson.lessonId == currentLessonNumber)[0];
+		let firstLearningOutcomeDetails = currentLessonDetails.rootLearningOutcome.subLearningOutcomes.filter(x => x.learningOutcomeId == 1)[0];
+        let nextPageId = firstLearningOutcomeDetails.pages[0].pageId;
+        sessionStorage.setItem(sessionKeyShowPageId, nextPageId);
+        let firstLessonUrl = "../jsp/lesson" + (currentLessonNumber) + ".jsp";
+        window.location.href = firstLessonUrl;
 	}
 </script>
 <meta charset="UTF-8">
@@ -43,6 +54,8 @@
  	</div>
  	<div class="col-md-4"> 	
  	  <div id="sparcFooterNextBtn">
+ 	  	 <a id= "sparc-footer-skip-btn" class="btn btn-primary pull-right"  style="margin-top: 0px;margin-right: 76px;margin-left: -232px;background-color: lightcoral;"
+	                    onclick="skipToLearningOutcome01()">Skip Pre-Assessment</a>
  	     <button class="btn btn-primary pull-right" onclick="SubmitSparc()" id="sparc-footer-next-btn"> Next</button>
  	  </div>
  	</div>

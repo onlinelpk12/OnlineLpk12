@@ -27,6 +27,7 @@
 #editor {
 	position: fixed;
 	margin: 0;
+	left: 545px;
 	float: left;
 	width: 32%;
 	height: 100%;
@@ -96,8 +97,8 @@
     border-color: #337ab7;
 }
 #fileSystem{
-padding-left: 528px;
-padding-right: 624px;
+	padding-left: 525px;
+    padding-right: 451px;
 }
 
 
@@ -280,7 +281,7 @@ padding-right: 624px;
 								</select>
 							</div>
 						</div>
-						<div  class="combined" id="editor" style="left: 545px;"></div>
+						<div  class="combined" id="editor"></div>
 					</div>
 					<div class="combined" id="column-resizer" style="left: 1030.8px;"></div>
 					<div class="combined" id="results" style="width: 450.49px;"></div>
@@ -295,6 +296,9 @@ padding-right: 624px;
 	let currentConsoleOutput = "currentConsoleOutput";
 	window.onload = function(){
 		document.getElementById("sparc-footer-next-btn").disabled = true;
+		if(currentLearningOutcomeNumber != 0){
+			document.getElementById("sparc-footer-skip-btn").style.display="none";
+		}
 		let response = getSparcProgram(currentLearningOutcomeNumber);
 		console.log(response);
 		editor.setValue(response);
@@ -591,6 +595,7 @@ padding-right: 624px;
     	    elementEditor.style.marginLeft ='-485px';
     	}
     });
+
 </script>
 	<%@ include file="sparc-footer.jsp"%>
 </body>
