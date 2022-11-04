@@ -54,32 +54,32 @@ $(document).ready(function() {
         
         $("#menu-toggle").click(function(e) {
             e.preventDefault();
-            let percent1 = (($('#editor').width())+262)*100 / ($('#page-content-wrapper').width());
-            let percent2 = (($('#editor').width()+12))*100 / ($('#page-content-wrapper').width());
+            //let percent1 = (($('#editor').width())+262)*100 / ($('#page-content-wrapper').width());
+            //let percent2 = (($('#editor').width()+12))*100 / ($('#page-content-wrapper').width());
         
             $("#wrapper").toggleClass("toggled");
         
-            let startP = $('#editor').width();
+            //let startP = $('#editor').width();
             if ($("#wrapper").hasClass("toggled") == false) {
-                $('#column-resizer').css('left', $('#editor').width()+262+'px')         
-                $('#results').css('left', 100 + 'px');
+                //$('#column-resizer').css('left', $('#editor').width()+262+'px')         
+                //$('#results').css('left', 100 + 'px');
             } else {
         
-                $('#column-resizer').css('left', $('#editor').width()+12+'px');
-                $('#results').css('left', 12 + 'px'); 
+                //$('#column-resizer').css('left', $('#editor').width()+12+'px');
+                //$('#results').css('left', 12 + 'px'); 
             }
         });
         
         $( window ).resize(function() {
-            let percent1 = (($('#editor').width())+262)*100 / ($('#page-content-wrapper').width());
-            let percent2 = (($('#editor').width()+12))*100 / ($('#page-content-wrapper').width());
+            //let percent1 = (($('#editor').width())+262)*100 / ($('#page-content-wrapper').width());
+            //let percent2 = (($('#editor').width()+12))*100 / ($('#page-content-wrapper').width());
             //$("#wrapper").toggleClass("toggled");
             if ($("#wrapper").hasClass("toggled") == false) {
-                $('#column-resizer').css('left', $('#editor').width()+262+'px');
+                //$('#column-resizer').css('left', $('#editor').width()+262+'px');
             } else {
-                $('#column-resizer').css('left', $('#editor').width()+12+'px');
+                //$('#column-resizer').css('left', $('#editor').width()+12+'px');
             }
-            $('#results').css('width', ($('#page-content-wrapper').width() - $('#editor').width()) - 12 + 'px');
+            //$('#results').css('width', ($('#page-content-wrapper').width() - $('#editor').width()) - 12 + 'px');
         });
         
 });

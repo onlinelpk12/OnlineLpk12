@@ -27,6 +27,7 @@
 #editor {
 	position: fixed;
 	margin: 0;
+	left: 545px;
 	float: left;
 	width: 32%;
 	height: 100%;
@@ -96,8 +97,8 @@
     border-color: #337ab7;
 }
 #fileSystem{
-padding-left: 528px;
-padding-right: 624px;
+	padding-left: 525px;
+    padding-right: 451px;
 }
 
 
@@ -280,7 +281,7 @@ padding-right: 624px;
 								</select>
 							</div>
 						</div>
-						<div  class="combined" id="editor" style="left: 545px;"></div>
+						<div  class="combined" id="editor"></div>
 					</div>
 					<div class="combined" id="column-resizer" style="left: 1030.8px;"></div>
 					<div class="combined" id="results" style="width: 450.49px;"></div>
@@ -292,12 +293,16 @@ padding-right: 624px;
 <script type="text/javascript">	
 	let currentLearningOutcomeNumber = sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber);
 	let currentLessonNumber = sessionStorage.getItem(sessionKeyCurrentLessonNumber);
+	let currentConsoleOutput = "currentConsoleOutput";
 	window.onload = function(){
 		document.getElementById("sparc-footer-next-btn").disabled = true;
+		if(currentLearningOutcomeNumber != 0){
+			document.getElementById("sparc-footer-skip-btn").style.display="none";
+		}
 		let response = getSparcProgram(currentLearningOutcomeNumber);
 		console.log(response);
 		editor.setValue(response);
-		let titleQuestion =  getActivityInformation();
+		let titleQuestion =  getActivityInformation(currentLessonNumber,currentLearningOutcomeNumber);
 	    document.getElementById("activityTitle").innerHTML = titleQuestion.title;
 	    document.getElementById("question").innerHTML = titleQuestion.question;
 	}
@@ -314,39 +319,9 @@ padding-right: 624px;
     
 	var clearResults=function(){
 		$('#results').empty();
-	}
+	}	
 	
-	function getActivityInformation(){
-		let currentLessonNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber));
-		let currentLearningOutcomeNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber));
-		
-		if(currentLessonNumber == 5)
-	    {
-	    	let elementName = sessionStorage.getItem("elementName");
-	        if(currentLearningOutcomeNumber == 0){
-	            title = 'Activity : Extend and Test Model as You Like';
-	            question = "Extend model: add knowledge to model about element(s) of your choice. The element has to be one of the first 20 in the periodic table."   
-	        }
-	        else if(currentLearningOutcomeNumber == 1){
-	        	title = 'Activity : Extend Periodic Table Model - hydrogen';
-	            question = "Add to the model the knowledge: The chemical symbol for hydrogen is H."   
-	        }
-	        else if(currentLearningOutcomeNumber == 2){
-	        	title = "Activity : Extend and Test Model -- Carbon";
-	        	question = "Extend model: add the knowledge about symbol for Carbon to the model";
-	        }
-	        else if(currentLearningOutcomeNumber == 3)
-	        {
-	            title = "Activity : Extend and Test Model -- Phosphorus";
-	            question = "Extend model: add the knowledge about symbol for Phosphorus to the model";
-	        }
-	        else if(currentLearningOutcomeNumber == 4){
-	        	title = "Activity : Extend and Test Model as You Like";
-	        	question = "Extend model: add the knowledge about symbol <b>"+elementName+"</b> to the model";        
-	        }
-	    }
-		return {"title" : title, "question" : question};
-	}
+	
 	
 	function execute(){
 		let program = editor.getValue(); 
@@ -432,7 +407,7 @@ padding-right: 624px;
             success: function(data){
             	console.log('response content: ',data.content);
             	showResults(data.content);
-            	
+            	sessionStorage.setItem(currentConsoleOutput,data.content);
             },
             error: function(data){
             	console.log(data);
@@ -440,14 +415,89 @@ padding-right: 624px;
         });
 	}
 </script>
-<script type="text/javascript">	    
-	function SubmitSparc() {	
-		let _isSparcPassed = true;
-		let sessionKeyIsSparcPassed ="isSparcPassed";
-		if(_isSparcPassed==false){
-			//validate sparc program    
-			return;
+<script type="text/javascript">	
+	function removeTags(str) {
+	    if ((str===null) || (str===''))
+	        return false;
+	    else
+	        str = str.toString();
+	          
+	    // Regular expression to identify HTML tags in 
+	    // the input string. Replacing the identified 
+	    // HTML tag with a null string.
+	    return str.replace( /(<([^>]+)>)/ig, '');
+	}
+	
+	function evaluateSparcConsoleOutput(consoleResponse){
+		if(consoleResponse.toLowerCase().includes("answer to query") && consoleResponse.toLowerCase().includes("yes")){
+			return true;
+		} 
+		else if(consoleResponse.toLowerCase().includes("answer to query") && consoleResponse.toLowerCase().includes("=")){
+			let combinationsMap = processConstVaraiableCombination(consoleResponse);
+			if(combinationsMap.size > 0){ // datastructure is a valid one having combination of varables and constants
+				return true;
+			}
 		}
+		else return false;
+		
+	}
+	
+	function getPosition(string, subString, index) {
+		  return string.split(subString, index).join(subString).length;
+	} 
+	
+	function processConstVaraiableCombination(outputString){
+		outputString = outputString.replace('\n','');
+		let combinationsMap = new Map();
+		const searchTerm = '  ';
+		const indexOfFirst = outputString.indexOf(searchTerm);
+		var combinationCombinedString = outputString.substring(indexOfFirst, outputString.length).trim();
+		console.log(combinationCombinedString);
+		var numberOfCombinations = outputString.match(/[=]/g).length;
+		if(numberOfCombinations > 1){
+			const dividerIndexPosition = getPosition(combinationCombinedString, ' ', 3);
+			var variable1 = combinationCombinedString.substring(0, dividerIndexPosition).trim();
+			console.log(variable1);
+			var variable2 = combinationCombinedString.substring(dividerIndexPosition, combinationCombinedString.length).trim();
+			console.log(variable2);
+			combinationsMap.set(variable1.substring(0,variable1.indexOf('=')).trim(),
+  				    variable1.substring(variable1.indexOf('=')+1,variable1.length).trim());
+			combinationsMap.set(variable2.substring(0,variable2.indexOf('=')).trim(),
+			  				    variable2.substring(variable2.indexOf('=')+1,variable2.length).trim());
+		} else if(numberOfCombinations == 1){
+			var variable1 = combinationCombinedString.trim();
+			console.log(variable1);
+			combinationsMap.set(variable1.substring(0,variable1.indexOf('=')).trim(),
+  				    variable1.substring(variable1.indexOf('=')+1,variable1.length).trim());
+		}
+		return combinationsMap;		
+	}
+	
+	  function getNextLearningOutcomeFirstPageId(currentLessonId, currentLearningOutcomeId) {
+          let currentLessonDetails = lessonsJson.lessons.filter(lesson => lesson.lessonId == currentLessonId)[0];
+          let nextLearningOutcomeDetails = currentLessonDetails.rootLearningOutcome.subLearningOutcomes.filter(lo => lo.learningOutcomeId == currentLearningOutcomeId + 1)[0];
+          return nextLearningOutcomeDetails.pages[0].pageId;
+      }
+
+      function getNextLearningOutcomeIdUsingBinarySearch(currentLessonId, currentLearningOutcomeNumber) {
+          let currentLessonDetails = lessonsJson.lessons.filter(lesson => lesson.lessonId == currentLessonId)[0];
+          let currentLessonTotalLearningOutcomes = currentLessonDetails.rootLearningOutcome.subLearningOutcomes.length;
+
+          if (currentLearningOutcomeNumber == 0) {
+              return Math.ceil(currentLessonTotalLearningOutcomes / 2);
+          }
+          else if (currentLearningOutcomeNumber == 1) {
+              return 1;
+          }
+          return Math.ceil(currentLearningOutcomeNumber / 2);
+      }
+
+	function SubmitSparc() {	
+		let _isSparcPassed = false;
+		let sessionKeyIsSparcPassed ="isSparcPassed";
+		var sparcConsoleOutput = removeTags(sessionStorage.getItem(currentConsoleOutput));
+		_isSparcPassed = evaluateSparcConsoleOutput(sparcConsoleOutput);
+		console.log(_isSparcPassed);
 		sessionStorage.setItem(sessionKeyIsSparcPassed, _isSparcPassed);
 		let currentLessonNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber));
 		let currentLearningOutcomeNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber));
@@ -455,24 +505,24 @@ padding-right: 624px;
         let isAssessmentPassed = sessionStorage.getItem(sessionKeyIsAssessmentPassed) === 'true';
 		_isSparcPassed = sessionStorage.getItem(sessionKeyIsSparcPassed) === 'true';
 		let message = document.getElementById('next-step-link');
-		if (isAssessmentPassed && _isSparcPassed) {
+		if (_isSparcPassed) {
 			sessionStorage.removeItem(sessionKeyShowPageId);
 			//let pageIdToShow = sessionStorage.getItem(sessionKeyShowPageId);
 			//message.innerHTML = "Congratulations on completing the programming task. Please click <a href='" + nextLessonUrl + "'> here </a> to go to next steps."
 			
 			// student passed root assessment, so allow student to go to next lesson
-			if (isAssessmentPassed && currentLearningOutcomeNumber == 0) {
+			if (_isSparcPassed && currentLearningOutcomeNumber == 0) {
 				let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber + 1) + ".jsp";
 				window.location.href = nextLessonUrl;
 				// message.innerHTML = "You have passed the root assessment. please click <a href='" + nextLessonUrl + "'> here </a> to go to next lesson";
 			}
 			// passed all learning outcomes in the lesson
-			else if (isAssessmentPassed && currentLearningOutcomeNumber == currentLessonDetails.rootLearningOutcome.subLearningOutcomes.length) {
+			else if (_isSparcPassed && currentLearningOutcomeNumber == currentLessonDetails.rootLearningOutcome.subLearningOutcomes.length) {
 				let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber + 1) + ".jsp";
 				window.location.href = nextLessonUrl;
 				//message.innerHTML = "You have passed all the assessments. please click <a href='" + nextLessonUrl + "'> here </a> to go to next lesson";
 			}
-			else if (isAssessmentPassed && currentLearningOutcomeNumber > 0) {
+			else if (_isSparcPassed && currentLearningOutcomeNumber > 0) {
 				let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber) + ".jsp";
 				let nextLearningOutcomeDetails = currentLessonDetails.rootLearningOutcome.subLearningOutcomes.filter(x=> x.learningOutcomeId ==  currentLearningOutcomeNumber+1)[0];
 				let showPageId = nextLearningOutcomeDetails.pages[0].pageId;
@@ -480,7 +530,22 @@ padding-right: 624px;
 				window.location.href = nextLessonUrl;
 				//message.innerHTML = "You have passed assessment Please click <a href='" + nextLessonUrl + "'> here </a> to go to next learning outcome";
 			}
-		}
+		} else {
+            let nextLearningOutcomeNumber = getNextLearningOutcomeIdUsingBinarySearch(currentLessonNumber, currentLearningOutcomeNumber);
+            let nextLearningOutcomeDetails = currentLessonDetails.rootLearningOutcome.subLearningOutcomes.filter(x => x.learningOutcomeId == nextLearningOutcomeNumber)[0];
+            let nextPageId = nextLearningOutcomeDetails.pages[0].pageId;//getNextLearningOutcomeFirstPageId(currentLessonId, currentLearningOutcomeNumber);
+            sessionStorage.setItem(sessionKeyShowPageId, nextPageId);
+
+            let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber) + ".jsp";
+            window.location.href = nextLessonUrl;
+	 
+	/* messageAlert.classList.remove('alert-success');
+	messageAlert.classList.remove('alert-danger');
+	     
+	messageAlert.classList.add('alert-danger'); 
+	     
+            message.innerHTML = "You have not passed the assessment. Please click <a href='" + nextLessonUrl + "'> here </a> to go to next step";
+        */ }
     }	
 	
 	
@@ -500,6 +565,7 @@ padding-right: 624px;
     	    elementEditor.style.marginLeft ='-485px';
     	}
     });
+
 </script>
 	<%@ include file="sparc-footer.jsp"%>
 </body>

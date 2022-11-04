@@ -322,11 +322,13 @@ else if(lessonNumber == 7){
 	%% Description:
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	sorts
-		#element = {hydrogen, 1} & {hydrogen, 1}.
-	predicates
-		 ProtonNumber(#element, #element),atomicNumber(#element, #element).
-	rules
-		protonNumber(H, 1)= atomicNumber(H,1).`;
+	#element = {h, 1}.
+predicates
+	 protonNumber(#element, #element).
+	 atomicNumber(#element, #element).
+rules
+	protonNumber(h, 1).
+	atomicNumber(h,1).`;
 		}
 	else if(id == 3){
 			return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -335,11 +337,13 @@ else if(lessonNumber == 7){
 	%% Description:
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	sorts
-		#element = {hydrogen, 1} & {hydrogen, 1}.
-	predicates
-		 atomicNumber(#element, #element),ProtonNumber(#element, #element).
-	rules
-		atomicNumber(H,1) = protonNumber(H, 1).`;
+	#element = {h, 1}.
+predicates
+	 protonNumber(#element, #element).
+	 atomicNumber(#element, #element).
+rules
+	protonNumber(h, 1).
+	atomicNumber(h,1).`;
 		}
 		else if(id == 4){
 			return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -348,12 +352,86 @@ else if(lessonNumber == 7){
 	%% Description:
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	sorts
-		#element = {N, E}.
+		#element = {n, e}.
 	predicates
 		atomicNumber(#element, #element).
 	rules
-		atomicNumber(N, E).`;
+		atomicNumber(n, e).`;
 		}
 	}
     return null;
-}
+};
+
+
+
+
+//for sparc workbook activity questions :
+function getActivityInformation(currentLessonNumber, currentLearningOutcomeNumber) {
+	if (currentLessonNumber == 5) {
+		let elementName = sessionStorage.getItem("elementName");
+		if (currentLearningOutcomeNumber == 0) {
+			title = 'Activity : Extend and Test Model as You Like';
+			question = "Extend model: add knowledge to model about element(s) of your choice. The element has to be one of the first 20 in the periodic table."
+		}
+		else if (currentLearningOutcomeNumber == 1) {
+			title = 'Activity : Extend Periodic Table Model - hydrogen';
+			question = "Add to the model the knowledge: The chemical symbol for hydrogen is H."
+		}
+		else if (currentLearningOutcomeNumber == 2) {
+			title = "Activity : Extend and Test Model -- Carbon";
+			question = "Extend model: add the knowledge about symbol for Carbon to the model";
+		}
+		else if (currentLearningOutcomeNumber == 3) {
+			title = "Activity : Extend and Test Model -- Phosphorus";
+			question = "Extend model: add the knowledge about symbol for Phosphorus to the model";
+		}
+		else if (currentLearningOutcomeNumber == 4) {
+			title = "Activity : Extend and Test Model as You Like";
+			question = "Extend model: add the knowledge about symbol <b>" + elementName + "</b> to the model";
+		}
+	}
+	else if (currentLessonNumber == 6) {
+		let elementName = sessionStorage.getItem("elementName");
+		if (currentLearningOutcomeNumber == 0) {
+			title = 'Activity : Extend Periodic Table Model -- Atomic Numbers';
+			question = "Add to the model the knowledge needed to answer your question (on atomic number of carbon)."
+		}
+		else if (currentLearningOutcomeNumber == 1) {
+			title = 'Activity : Extend Periodic Table Model -- Atomic Numbers';
+			question = "Expand model: Add to the model the knowledge needed to answer your question (on atomic number of hydrogen)."
+		}
+		else if (currentLearningOutcomeNumber == 2) {
+			title = "Activity : Extend Periodic Table Model -- Atomic Numbers";
+			question = "Expand model: Add to the model the knowledge needed to answer your question (on atomic number of oxygen).";
+		}
+		else if (currentLearningOutcomeNumber == 3) {
+			title = "Activity : Extend and Test Model as You Like";
+			question = "Extend model: add the knowledge about symbol <b>" + elementName + "</b> to the model";
+		}
+
+	}
+	else if(currentLessonNumber == 7){
+    	let symbolSelected = sessionStorage.getItem("elementSymbol");
+		if (currentLearningOutcomeNumber == 0) {
+			title = 'Activity : Extend and Test Model as You Like';
+			question = "Assume we use atomicNumber(X, Y) and protonsOf(X, Y) to denote the symbol for element X is Y. Build a model for the relationship between proton and atomic number of hydrogen"
+		}
+		else if (currentLearningOutcomeNumber == 1) {
+			title = 'Activity : Extend Atomic Number of Model - hydrogen';
+			question = "Expand model: Add to the model the knowledge needed to answer your question (on atomic number of hydrogen)."
+		}
+		else if (currentLearningOutcomeNumber == 2) {
+			title = "Activity : Extend Relation between Proton and Atomic Number of Model - hydrogen";
+			question = "Expand model: Add to the model the knowledge of the relation between protron and atomic number of hydorgen?";
+		}
+		else if (currentLearningOutcomeNumber == 3) {
+			title = "Activity : Extend and Test Model -- Hydrogen";
+			question = "Extend model: add the knowledge describing the relation between atomic and proton number of element H?.";
+		}
+		else if (currentLearningOutcomeNumber == 4) {
+			title = "Activity : Extend and Test Model as You Like";
+			question = "Extend model: add knowledge about the relation between atomic and proton number of the element <b>" + symbolSelected + "</b> to the model";
+		}
+	}
+	return { "title": title, "question": question };
+};

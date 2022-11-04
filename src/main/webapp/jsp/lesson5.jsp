@@ -159,7 +159,7 @@ $(function(){
     </section>
 	
 	<!-- Lesson 5 assement 1 - program 1 -->
-	<section id="version-1-course-x-lesson-5-page-8" class="container" hidden>
+	<!-- <section id="version-1-course-x-lesson-5-page-8" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
                 <h3><b>Activity : Extend Periodic Table Model - hydrogen</b></h3>
@@ -183,7 +183,7 @@ $(function(){
                 </form>
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- onlineSPARC -->
     <!-- skipped 9,10 pages -->
 

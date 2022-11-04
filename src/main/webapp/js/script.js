@@ -34,16 +34,23 @@ let quizContent = null;
 function gotoNext(currentLessonNumber, currentLearningOutcomeNumber, currentPageId, isNextPageQuiz, nextAssessmentNumber) {
     sessionStorage.setItem(sessionKeyCurrentLessonNumber, currentLessonNumber.toString());
     sessionStorage.setItem(sessionKeyCurrentLearningOutcomeNumber, currentLearningOutcomeNumber.toString()); 
+    sessionStorage.setItem(sessionKeyShowPageId, currentPageId.toString())
 
     let currentPageDetails = getCurrentPageDetailsFromJSON(currentLessonNumber, currentLearningOutcomeNumber,currentPageId);
     let nextPageId = currentPageDetails.nextPageId;
-
-    let currentPage = document.getElementById(currentPageId);
-    let nextPage = document.getElementById(nextPageId);
-
-    currentPage.hidden = true;
-    nextPage.hidden = false;
     
+    //#119 Workbook Integration
+    let nextPageDetails = getNextPageDetailsFromJSON(currentLessonNumber, currentLearningOutcomeNumber,nextPageId);
+    if(nextPageDetails.pageType!="SparcPage"){		
+	    let currentPage = document.getElementById(currentPageId);
+	    let nextPage = document.getElementById(nextPageId);
+	
+	    currentPage.hidden = true;
+	    nextPage.hidden = false;	
+	}else{
+		sessionStorage.setItem(sessionKeyShowPageId, nextPageId.toString())
+		window.open(sparcPage, "_self");
+	}
     SaveStudentLessonsProgressThroughAPI(currentLessonNumber, currentLearningOutcomeNumber, currentPageId);
 }
 
@@ -54,7 +61,6 @@ function gotoPrevious(currentLessonNumber, currentLearningOutcomeNumber, current
     
     let currentPageDetails = getCurrentPageDetailsFromJSON(currentLessonNumber, currentLearningOutcomeNumber,currentPageId);
     let previousPageId = currentPageDetails.previousPageId;
-   
    
     let currentSection = document.getElementById(currentPageId);
     let previousSection = document.getElementById(previousPageId);
@@ -87,6 +93,20 @@ function getCurrentPageDetailsFromJSON(currentLessonNumber, currentLearningOutco
         currentPageDetails =  learningOutcomeDetails.pages.filter(page => page.pageId == currentPageId)[0];
     }
     return currentPageDetails;
+}
+
+//119 
+function getNextPageDetailsFromJSON(currentLessonNumber, currentLearningOutcomeNumber,nextPageId){
+    let nextPageDetails = null;
+    let currentLessonDetails = lessonsJson.lessons.filter(lesson => lesson.lessonId == currentLessonNumber)[0];
+    if (currentLearningOutcomeNumber == currentLessonDetails.rootLearningOutcome.learningOutcomeId) {
+        nextPageDetails = currentLessonDetails.rootLearningOutcome.pages.filter(page => page.pageId == nextPageId)[0];
+    }
+    else{
+        let learningOutcomeDetails = currentLessonDetails.rootLearningOutcome.subLearningOutcomes.filter(x=> x.learningOutcomeId == currentLearningOutcomeNumber)[0];
+        nextPageDetails =  learningOutcomeDetails.pages.filter(page => page.pageId == nextPageId)[0];
+    }
+    return nextPageDetails;
 }
 
 
