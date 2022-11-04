@@ -1133,19 +1133,208 @@ const course =
 		    },
 		    {
 		    	"lessonId": 8,
-			      "lessonTitle": "Model Proton Numbers",
-			      "rootLearningOutcome": {
-			        "description": "Root Learning Outcome : outline",
-			        "learningOutcomeId": 0,
-			        "pages": [
-			          {
-			            "pageId": "version-1-course-x-lesson-8-page-1",
-			            "previousPageId": null,
-			            "nextPageId": "version-1-course-x-lesson-8-page-2",
-			            "pageType": "ContentPage"
-			          }
+			     "lessonTitle": "Model Mass Numbers",
+			     "rootLearningOutcome": {
+			    	 "description": "Root Learning Outcome : outline",
+			    	 "learningOutcomeId": 0,
+			    	 "pages": [
+			    		 {
+				            "pageId": "version-1-course-x-lesson-8-page-1",
+				            "previousPageId": null,
+				            "nextPageId": "version-1-course-x-lesson-8-page-2",
+				            "pageType": "ContentPage"
+				          },
+				          {
+				            "pageId": "version-1-course-x-lesson-8-page-2",
+				            "previousPageId": "version-1-course-x-lesson-8-page-1",
+				            "nextPageId": "version-1-course-x-lesson-8-page-5",
+				            "pageType": "ContentPage"
+				          },
+				          /*{
+				            "pageId": "version-1-course-x-lesson-8-page-3",
+				            "previousPageId": "version-1-course-x-lesson-8-page-2",
+				            "nextPageId": "version-1-course-x-lesson-8-page-6",
+				            "submitPageId": "version-1-course-x-lesson-8-page-4",
+				            "pageType": "AssessmentPage"
+				          },
+				          {
+				            "pageId": "version-1-course-x-lesson-8-page-4",
+				            "previousPageId": null,
+				            "nextPageId": null,
+				            "adaptivePageId1": "version-1-course-x-lesson-8-page-5",
+				            "adaptivePageId2": "version-1-course-x-lesson-8-page-10",
+				            "pageType": "StatusPage"
+				          },*/
+				          {
+				            "pageId": "version-1-course-x-lesson-8-page-5",
+				            "previousPageId": "version-1-course-x-lesson-8-page-2",
+				            "nextPageId": "version-1-course-x-lesson-9-page-1",
+				            "pageType": "SparcPage"
+				          }
 			          ],
-			          "subLearningOutcomes": []
+			          "subLearningOutcomes": [
+			        	  {
+					            "learningOutcomeId": 1,
+					            "description": "Learning outcome 1: Mass Number",
+					            "pages": [
+					              {
+					                "pageId": "version-1-course-x-lesson-8-page-6",
+					                "previousPageId": "version-1-course-x-lesson-8-page-2",
+					                "nextPageId": "version-1-course-x-lesson-8-page-9",
+					                "pageType": "ContentPage"
+					              },					              
+					              /*{
+					                "pageId": "version-1-course-x-lesson-8-page-7",
+					                "previousPageId": "version-1-course-x-lesson-8-page-6",
+					                "nextPageId": null,
+					                "submitPageId": "version-1-course-x-lesson-8-page-8",
+					                "pageType": "AssessmentPage"
+					              },
+					              {
+					                "pageId": "version-1-course-x-lesson-8-page-8",
+					                "previousPageId": null,
+					                "nextPageId": null,
+					                "adaptivePageId1": "version-1-course-x-lesson-8-page-6",
+					                "adaptivePageId2": "version-1-course-x-lesson-8-page-9",
+					                "pageType": "StatusPage"
+					              },*/
+					              {
+					                "pageId": "version-1-course-x-lesson-8-page-9",
+					                "previousPageId": "version-1-course-x-lesson-8-page-6",
+					                "nextPageId": "version-1-course-x-lesson-8-page-10",
+					                "pageType": "SparcPage"
+					              }
+					            ]
+					          },
+					          {
+						            "learningOutcomeId": 2,
+						            "description": "Learning outcome 2: Isotopes",
+						            "pages": [
+						              {
+						                "pageId": "version-1-course-x-lesson-8-page-10",
+						                "previousPageId": "version-1-course-x-lesson-8-page-7",
+						                "nextPageId": "version-1-course-x-lesson-8-page-11",
+						                "pageType": "ContentPage"
+						              },
+						              {
+						                "pageId": "version-1-course-x-lesson-8-page-11",
+						                "previousPageId": "version-1-course-x-lesson-8-page-10",
+						                "nextPageId": "version-1-course-x-lesson-8-page-12",
+						                "pageType": "ContentPage"
+						              },
+						              {
+						                "pageId": "version-1-course-x-lesson-8-page-12",
+						                "previousPageId": "version-1-course-x-lesson-8-page-11",
+						                "nextPageId": "version-1-course-x-lesson-8-page-13",
+						                "pageType": "ContentPage"
+						              },
+						              {
+						                "pageId": "version-1-course-x-lesson-8-page-13",
+						                "previousPageId": "version-1-course-x-lesson-8-page-12",
+						                "nextPageId": "version-1-course-x-lesson-8-page-16",
+						                "pageType": "ContentPage"
+						              },
+						              /*{
+						                "pageId": "version-1-course-x-lesson-8-page-14",
+						                "previousPageId": "version-1-course-x-lesson-8-page-13",
+						                "nextPageId": null,
+						                "submitPageId": "version-1-course-x-lesson-8-page-15",
+						                "pageType": "AssessmentPage"
+						              },
+						              {
+						                "pageId": "version-1-course-x-lesson-8-page-15",
+						                "previousPageId": null,
+						                "nextPageId": null,
+						                "adaptivePageId1": "version-1-course-x-lesson-8-page-16",
+						                "adaptivePageId2": "version-1-course-x-lesson-8-page-6",
+						                "pageType": "StatusPage"
+						              },*/
+						              {
+						                "pageId": "version-1-course-x-lesson-8-page-16",
+						                "previousPageId": "version-1-course-x-lesson-8-page-13",
+						                "nextPageId": "version-1-course-x-lesson-8-page-17",
+						                "pageType": "SparcPage"
+						              }
+						            ]
+						          },
+						          {
+							            "learningOutcomeId": 3,
+							            "description": "Learning outcome 3: From mass number and protons to neutrons of an atom",
+							            "pages": [
+							              {
+							                "pageId": "version-1-course-x-lesson-8-page-17",
+							                "previousPageId": "version-1-course-x-lesson-8-page-13",
+							                "nextPageId": "version-1-course-x-lesson-8-page-18",
+							                "pageType": "ContentPage"
+							              },
+							              {
+							                "pageId": "version-1-course-x-lesson-8-page-18",
+							                "previousPageId": "version-1-course-x-lesson-8-page-17",
+							                "nextPageId": "version-1-course-x-lesson-8-page-21",
+							                "pageType": "ContentPage"
+							              },
+							              /*{
+							                "pageId": "version-1-course-x-lesson-8-page-19",
+							                "previousPageId": "version-1-course-x-lesson-8-page-18",
+							                "nextPageId": null,
+							                "submitPageId": "version-1-course-x-lesson-8-page-20",
+							                "pageType": "AssessmentPage"
+							              },
+							              {
+							                "pageId": "version-1-course-x-lesson-8-page-20",
+							                "previousPageId": null,
+							                "nextPageId": null,
+							                "adaptivePageId1": "version-1-course-x-lesson-8-page-21",
+							                "adaptivePageId2": "version-1-course-x-lesson-8-page-10",
+							                "pageType": "StatusPage"
+							              },*/
+							              {
+							                "pageId": "version-1-course-x-lesson-8-page-21",
+							                "previousPageId": "version-1-course-x-lesson-8-page-18",
+							                "nextPageId": "version-1-course-x-lesson-8-page-22",
+							                "pageType": "SparcPage"
+							              }
+							            ]
+							          },
+							          {
+								            "learningOutcomeId": 4,
+								            "pages": [
+								              {
+								                "pageId": "version-1-course-x-lesson-8-page-22",
+								                "previousPageId": "version-1-course-x-lesson-8-page-18",
+								                "nextPageId": "version-1-course-x-lesson-8-page-23",
+								                "pageType": "ContentPage"
+								              },
+								              {
+								                "pageId": "version-1-course-x-lesson-8-page-23",
+								                "previousPageId": "version-1-course-x-lesson-8-page-22",
+								                "nextPageId": "version-1-course-x-lesson-8-page-26",
+								                "pageType": "ContentPage"
+								              },
+								              /*{
+								                "pageId": "version-1-course-x-lesson-8-page-24",
+								                "previousPageId": "version-1-course-x-lesson-8-page-23",
+								                "nextPageId": null,
+								                "submitPageId": "version-1-course-x-lesson-8-page-25",
+								                "pageType": "AssessmentPage"
+								              },
+								              {
+								                "pageId": "version-1-course-x-lesson-8-page-25",
+								                "previousPageId": null,
+								                "nextPageId": null,
+								                "adaptivePageId1": "version-1-course-x-lesson-8-page-26",
+								                "adaptivePageId2": "version-1-course-x-lesson-8-page-10",
+								                "pageType": "StatusPage"
+								              },*/
+								              {
+								                "pageId": "version-1-course-x-lesson-8-page-26",
+								                "previousPageId": "version-1-course-x-lesson-8-page-23",
+								                "nextPageId": "version-1-course-x-lesson-9-page-1",
+								                "pageType": "SparcPage"
+								              }
+								            ]
+								          }
+			          ]
 			      }
 		    }
 		  ]
