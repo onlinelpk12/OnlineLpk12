@@ -302,7 +302,7 @@
 		let response = getSparcProgram(currentLearningOutcomeNumber);
 		console.log(response);
 		editor.setValue(response);
-		let titleQuestion =  getActivityInformation();
+		let titleQuestion =  getActivityInformation(currentLessonNumber,currentLearningOutcomeNumber);
 	    document.getElementById("activityTitle").innerHTML = titleQuestion.title;
 	    document.getElementById("question").innerHTML = titleQuestion.question;
 	}
@@ -321,37 +321,7 @@
 		$('#results').empty();
 	}	
 	
-	function getActivityInformation(){
-		let currentLessonNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber));
-		let currentLearningOutcomeNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber));
-		
-		if(currentLessonNumber == 5)
-	    {
-	    	let elementName = sessionStorage.getItem("elementName");
-	        if(currentLearningOutcomeNumber == 0){
-	            title = 'Activity : Extend and Test Model as You Like';
-	            question = "Extend model: add knowledge to model about element(s) of your choice. The element has to be one of the first 20 in the periodic table."   
-	        }
-	        else if(currentLearningOutcomeNumber == 1){
-	        	title = 'Activity : Extend Periodic Table Model - hydrogen';
-	            question = "Add to the model the knowledge: The chemical symbol for hydrogen is H."   
-	        }
-	        else if(currentLearningOutcomeNumber == 2){
-	        	title = "Activity : Extend and Test Model -- Carbon";
-	        	question = "Extend model: add the knowledge about symbol for Carbon to the model";
-	        }
-	        else if(currentLearningOutcomeNumber == 3)
-	        {
-	            title = "Activity : Extend and Test Model -- Phosphorus";
-	            question = "Extend model: add the knowledge about symbol for Phosphorus to the model";
-	        }
-	        else if(currentLearningOutcomeNumber == 4){
-	        	title = "Activity : Extend and Test Model as You Like";
-	        	question = "Extend model: add the knowledge about symbol <b>"+elementName+"</b> to the model";        
-	        }
-	    }
-		return {"title" : title, "question" : question};
-	}
+	
 	
 	function execute(){
 		let program = editor.getValue(); 
