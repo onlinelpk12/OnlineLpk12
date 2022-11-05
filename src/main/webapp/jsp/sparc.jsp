@@ -169,6 +169,9 @@
 						<div class="container-fluid">
 							<div class="collapse navbar-collapse">
 								<ul class="nav navbar-nav navbar-left">
+									<!-- <li>
+										<a href="#" id="goBackButton" onclick="history.back()" style="margin-top: -30px;margin-left: -55px;margin-bottom: -15px;"><img height="30" width="40" src="../images/back.png" style="margin-top:25px" ></a>
+									</li> -->
 									<li>
 										<button type="button" class="btn btn-default navbar-btn"
 											id="menu-toggle" value="getAccessibleDirectory">Directory</button>
@@ -503,49 +506,24 @@
 		let currentLearningOutcomeNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber));
 		let currentLessonDetails = lessonsJson.lessons.filter(lesson => lesson.lessonId == currentLessonNumber)[0];
         let isAssessmentPassed = sessionStorage.getItem(sessionKeyIsAssessmentPassed) === 'true';
-		_isSparcPassed = sessionStorage.getItem(sessionKeyIsSparcPassed) === 'true';
+        let messageAlert = document.getElementById('message-div');
 		let message = document.getElementById('next-step-link');
-		if (_isSparcPassed) {
-			sessionStorage.removeItem(sessionKeyShowPageId);
-			//let pageIdToShow = sessionStorage.getItem(sessionKeyShowPageId);
-			//message.innerHTML = "Congratulations on completing the programming task. Please click <a href='" + nextLessonUrl + "'> here </a> to go to next steps."
-			
-			// student passed root assessment, so allow student to go to next lesson
-			if (_isSparcPassed && currentLearningOutcomeNumber == 0) {
-				let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber + 1) + ".jsp";
-				window.location.href = nextLessonUrl;
-				// message.innerHTML = "You have passed the root assessment. please click <a href='" + nextLessonUrl + "'> here </a> to go to next lesson";
-			}
-			// passed all learning outcomes in the lesson
-			else if (_isSparcPassed && currentLearningOutcomeNumber == currentLessonDetails.rootLearningOutcome.subLearningOutcomes.length) {
-				let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber + 1) + ".jsp";
-				window.location.href = nextLessonUrl;
-				//message.innerHTML = "You have passed all the assessments. please click <a href='" + nextLessonUrl + "'> here </a> to go to next lesson";
-			}
-			else if (_isSparcPassed && currentLearningOutcomeNumber > 0) {
-				let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber) + ".jsp";
-				let nextLearningOutcomeDetails = currentLessonDetails.rootLearningOutcome.subLearningOutcomes.filter(x=> x.learningOutcomeId ==  currentLearningOutcomeNumber+1)[0];
-				let showPageId = nextLearningOutcomeDetails.pages[0].pageId;
-				sessionStorage.setItem(sessionKeyShowPageId,showPageId);
-				window.location.href = nextLessonUrl;
-				//message.innerHTML = "You have passed assessment Please click <a href='" + nextLessonUrl + "'> here </a> to go to next learning outcome";
-			}
-		} else {
-            let nextLearningOutcomeNumber = getNextLearningOutcomeIdUsingBinarySearch(currentLessonNumber, currentLearningOutcomeNumber);
-            let nextLearningOutcomeDetails = currentLessonDetails.rootLearningOutcome.subLearningOutcomes.filter(x => x.learningOutcomeId == nextLearningOutcomeNumber)[0];
-            let nextPageId = nextLearningOutcomeDetails.pages[0].pageId;//getNextLearningOutcomeFirstPageId(currentLessonId, currentLearningOutcomeNumber);
-            sessionStorage.setItem(sessionKeyShowPageId, nextPageId);
-
-            let nextLessonUrl = "../jsp/lesson" + (currentLessonNumber) + ".jsp";
-            window.location.href = nextLessonUrl;
-	 
-	/* messageAlert.classList.remove('alert-success');
-	messageAlert.classList.remove('alert-danger');
-	     
-	messageAlert.classList.add('alert-danger'); 
-	     
-            message.innerHTML = "You have not passed the assessment. Please click <a href='" + nextLessonUrl + "'> here </a> to go to next step";
-        */ }
+        if (_isSparcPassed) {
+		     messageAlert.classList.remove('alert-success');
+		    messageAlert.classList.remove('alert-danger');
+		     
+		     messageAlert.classList.add('alert-success')
+                message.innerHTML = "You have passed the assessment. Please click on Next below to Proceed"
+            }
+        else{
+        	messageAlert.classList.remove('alert-success');
+    		messageAlert.classList.remove('alert-danger');
+    		     
+    		messageAlert.classList.add('alert-danger'); 
+    		     
+            message.innerHTML = "You have not passed the assessment. Please click on Next below to go to next step";
+                 
+        }
     }	
 	
 	

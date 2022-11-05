@@ -10,6 +10,10 @@
     $(function(){
       verifytoken();
     });
+    
+    function reInitiateFreshPage(){
+    	sessionStorage.setItem("pageIdToShow",'');
+    }
   </script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -28,19 +32,19 @@ a.disabled {
 <h2>Click below links to view the lessons:</h2>
 <ul>
 <p></p>
-<li><a href="../jsp/lesson2.jsp">Click here to View Lesson 2!</a></li>
+<li><a href="../jsp/lesson2.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 2!</a></li>
 <p></p>
-<li><a href="../jsp/lesson3.jsp">Click here to View Lesson 3!</a></li>
+<li><a href="../jsp/lesson3.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 3!</a></li>
 <p></p>
-<li><a href="../jsp/lesson4.jsp">Click here to View Lesson 4!</a></li>
+<li><a href="../jsp/lesson4.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 4!</a></li>
 <p></p>
-<li><a href="../jsp/lesson5.jsp">Click here to View Lesson 5!</a></li>
+<li><a href="../jsp/lesson5.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 5!</a></li>
 <p></p>
-<li><a href="../jsp/lesson6.jsp">Click here to View Lesson 6!</a></li>
+<li><a href="../jsp/lesson6.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 6!</a></li>
 <p></p>
-<li><a href="../jsp/lesson7.jsp">Click here to View Lesson 7!</a></li>
+<li><a href="../jsp/lesson7.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 7!</a></li>
 <p></p>
-<li><a href="../jsp/lesson8.jsp">Click here to View Lesson 8!</a></li>
+<li><a href="../jsp/lesson8.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 8!</a></li>
 </ul>
 </div>
 

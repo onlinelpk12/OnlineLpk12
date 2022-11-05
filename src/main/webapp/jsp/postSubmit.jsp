@@ -26,9 +26,9 @@
     <section id="nextbutton" class="container">
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-   <div id="message-div" class="alert" role="alert">
- <p id="next-step-link"></p>
-</div>
+			   <div id="message-div" class="alert" role="alert">
+			 		<p id="next-step-link"></p>
+				</div>
             </div>
         </div>
     </section>

@@ -177,7 +177,7 @@ rules
 }
 else if(lessonNumber == 5)
 {
-    if(id == 0 || id == 4)
+    if(id == 0)
     {
     	return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Template for a SPARC file
@@ -189,7 +189,8 @@ sorts
 predicates
 	symbolFor(#element, #element).
 rules
-	%Please write your fact here`;
+	%Please write your fact here
+	symbolFor(helium, he).`;
     }
     else if(id == 1)
     {
@@ -203,7 +204,8 @@ sorts
 predicates
 	symbolFor(#element, #element).
 rules
-	%Please write your fact here`;
+	%Please write your fact here
+	symbolFor(hydrogen, h).`;
     }
     else if(id == 2)
     {
@@ -217,7 +219,8 @@ sorts
 predicates
 	symbolFor(#element, #element).
 rules
-	%Please write your fact here`;
+	%Please write your fact here
+	symbolFor(carbon, c).`;
     }
     else if(id == 3)
     {
@@ -231,7 +234,25 @@ sorts
 predicates
 	symbolFor(#element, #element).
 rules
-	%Please write your fact here`;
+	%Please write your fact here
+	symbolFor(phosphorus, p).`;
+    }
+    else if(id == 4)
+    {
+	let elementName = sessionStorage.getItem("elementName").toLowerCase();
+	let symbolSelected = sessionStorage.getItem("elementSymbol").toLowerCase();
+    	return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Template for a SPARC file
+%% Author: 
+%% Description:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sorts
+	#element = {`+elementName+`, `+symbolSelected+`}.
+predicates
+	symbolFor(#element, #element).
+rules
+	%Please write your fact here
+	symbolFor(`+elementName+`, `+symbolSelected+`).`;
     }
 }
 else if(lessonNumber == 6){
@@ -275,17 +296,19 @@ rules
 	atomicNumber(oxygen, 8).`;
 	}
 	else if(id == 3){
+		let elementName = sessionStorage.getItem("elementName").toLowerCase();
+    	let atomicNumberOfSymbol = sessionStorage.getItem("elementSymbol");
 		return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Template for a SPARC file
 %% Author: 
 %% Description:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sorts
-	#element = {helium, 2}.
+	#element = {`+elementName+`, `+atomicNumberOfSymbol+`}.
 predicates
 	atomicNumber(#element, #element).
 rules
-	atomicNumber(helium, 2).`;
+	atomicNumber(`+elementName+`, `+atomicNumberOfSymbol+`).`;
 	}
 }
 else if(lessonNumber == 7){
@@ -311,52 +334,72 @@ else if(lessonNumber == 7){
 	sorts
 		#element = {hydrogen, 1}.
 	predicates
-		PrtonNumber(#element, #element).
+		protonNumber(#element, #element).
 	rules
 		protonNumber(hydrogen, 1).`;
 		}
 		else if(id == 2){
 			return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	%% Template for a SPARC file
-	%% Author: 
-	%% Description:
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	sorts
-	#element = {h, 1}.
+%% Template for a SPARC file
+%% Author:
+%% Description:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sorts
+    #element = {h, 1}.
 predicates
-	 protonNumber(#element, #element).
-	 atomicNumber(#element, #element).
+   atomicNumber(#element, #element).
+   protonOf(#element, #element).
 rules
-	protonNumber(h, 1).
-	atomicNumber(h,1).`;
+    protonOf(h,1) :-
+        atomicNumber(h,1).
+
+   atomicNumber(h,1).
+   
+   %query:protonOf(h,1)
+   %query:atomicNumber(h,1).`;
 		}
 	else if(id == 3){
 			return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	%% Template for a SPARC file
-	%% Author: 
-	%% Description:
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	sorts
-	#element = {h, 1}.
+%% Template for a SPARC file
+%% Author:
+%% Description:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sorts
+    #element = {h, 1}.
 predicates
-	 protonNumber(#element, #element).
-	 atomicNumber(#element, #element).
+   atomicNumber(#element, #element).
+   protonOf(#element, #element).
 rules
-	protonNumber(h, 1).
-	atomicNumber(h,1).`;
+    atomicNumber(h,1) :-
+        protonOf(h,1).
+
+   protonOf(h,1).
+   
+   %query : protonOf(h,1). or atomicNumber(h,1)`;
 		}
 		else if(id == 4){
 			return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	%% Template for a SPARC file
-	%% Author: 
-	%% Description:
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	sorts
-		#element = {n, e}.
-	predicates
-		atomicNumber(#element, #element).
-	rules
-		atomicNumber(n, e).`;
+%% Template for a SPARC file
+%% Author:
+%% Description:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sorts
+    #element = {h, 1}.
+predicates
+   atomicNumber(#element, #element).
+   protonOf(#element, #element).
+rules
+    protonOf(h,1) :-
+        atomicNumber(h,1).
+
+   atomicNumber(h,1).
+   
+    atomicNumber(h,1) :-
+        protonOf(h,1).
+
+   protonOf(h,1).
+   
+   %query : atomicNumber(h,1)`;
 		}
 	}
 else if(lessonNumber == 8){
@@ -409,32 +452,50 @@ else if(id == 3)
    {
        return  `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Template for a SPARC file
-%% Author: 
+%% Author:
 %% Description:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sorts
-   #element = {e,n}.
+   #element = {hydrogen, 1, 2}.
 predicates
-   massNumber(#element, #element).
+   massNumberOf(#element, #element).
    protonsOf(#element, #element).
-   neutronsOf(#element, #element).
+   neutronOf(#element, #element).
 rules
-  neutronsOf(e, n).`;
+   neutronOf(E, N) :-
+        massNumberOf(E, M),
+        protonsOf(E, P),
+        N = M - P.
+
+  massNumberOf(hydrogen, 2).
+  protonsOf(hydrogen, 1).
+   
+%query : neutronOf(hydrogen,  N)`;
    }
 
 else if(id == 4)
    {
        return  `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Template for a SPARC file
-%% Author: 
+%% Author:
 %% Description:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sorts
-   #element = {e, p}.
+   #element = {hydrogen, 1, 2}.
 predicates
+   massNumberOf(#element, #element).
    protonsOf(#element, #element).
+   neutronOf(#element, #element).
 rules
-   protonsOf(e, p).`;
+   massNumberOf(E, M) :- 
+        neutronOf(E, N),
+        protonsOf(E, P),
+        M = N + P.
+
+   neutronOf(hydrogen,1).
+   protonsOf(hydrogen,1).
+   
+%query : massNumberOf(hydrogen,  M)`;
    }
 }
     return null;
@@ -445,7 +506,61 @@ rules
 
 //for sparc workbook activity questions :
 function getActivityInformation(currentLessonNumber, currentLearningOutcomeNumber) {
-	if (currentLessonNumber == 5) {
+	if (currentLessonNumber == 2) {
+		if (currentLearningOutcomeNumber == 0) {
+			title = 'Activity : Model for the relation of mom';
+			question = "Extent your model for the relation of mom"
+		}
+		else if (currentLearningOutcomeNumber == 1) {
+			title = 'Activity : Extend Family Model for Parent of Peter';
+			question = "Extend your model by the following "
+		}
+		else if (currentLearningOutcomeNumber == 2) {
+			title = "Activity : Extending the model for Dad relation ";
+			question = "Extend your Model for dad of peter";
+		}
+		else if (currentLearningOutcomeNumber == 3) {
+			title = "Activity : Extend Family Model for mother relation";
+			question = "Extend your Model for the relation of mother";
+		}
+	}
+	else if (currentLessonNumber == 3) {
+		if (currentLearningOutcomeNumber == 0) {
+			title = 'Activity : Model for the relation of mother';
+			question = "Extent your model for 'who is the mother of Peter?'"
+		}
+		else if (currentLearningOutcomeNumber == 1) {
+			title = 'Activity : Extending the model for Father relation';
+			question = "Extent your model for 'who is the father of Peter?'"
+		}
+		else if (currentLearningOutcomeNumber == 2) {
+			title = "Activity : Extending the model for father relation ";
+			question = "Extend your Model for 'Whom is John the father of?'";
+		}
+		else if (currentLearningOutcomeNumber == 3) {
+			title = "Activity : Extending the model for Dad relation";
+			question = "Extend your Model for 'Who is the Dad of Peter?'";
+		}
+	}
+	else if (currentLessonNumber == 4) {
+		if (currentLearningOutcomeNumber == 0) {
+			title = 'Activity : Model for the relation of Parent';
+			question = "Extend your model for <b>'parent'</b> rule"
+		}
+		else if (currentLearningOutcomeNumber == 1) {
+			title = 'Activity : Extend the Model for parent relation';
+			question = "Extend your model for dad rule"
+		}
+		else if (currentLearningOutcomeNumber == 2) {
+			title = "Activity : Extending the model for dad relation";
+			question = "Extend your Model for mom rule";
+		}
+		else if (currentLearningOutcomeNumber == 3) {
+			title = "Activity : Extending the model for father relation ";
+			question = "Extend your Model for parent rule ";
+		}
+	}
+	else if (currentLessonNumber == 5) {
 		let elementName = sessionStorage.getItem("elementName");
 		if (currentLearningOutcomeNumber == 0) {
 			title = 'Activity : Extend and Test Model as You Like';
