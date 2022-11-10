@@ -510,8 +510,8 @@ rules
 function getActivityInformation(currentLessonNumber, currentLearningOutcomeNumber) {
 	if (currentLessonNumber == 2) {
 		if (currentLearningOutcomeNumber == 0) {
-			title = 'Activity : Model for the relation of mom';
-			question = "Extent your model for the relation of mom"
+			title = 'Activity : Model for the relation of mother';
+			question = "Assume we use mother(X, Y) to denote the mother of X is Y. Build a model for the relation of mom"
 		}
 		else if (currentLearningOutcomeNumber == 1) {
 			title = 'Activity : Extend Family Model for Parent of Peter';
@@ -529,7 +529,7 @@ function getActivityInformation(currentLessonNumber, currentLearningOutcomeNumbe
 	else if (currentLessonNumber == 3) {
 		if (currentLearningOutcomeNumber == 0) {
 			title = 'Activity : Model for the relation of mother';
-			question = "Extent your model for 'who is the mother of Peter?'"
+			question = "Assume we use mother(X, Y) to denote the mother of X is Y. Build a model for the 'who is the mother of Peter?"
 		}
 		else if (currentLearningOutcomeNumber == 1) {
 			title = 'Activity : Extending the model for Father relation';
@@ -547,7 +547,7 @@ function getActivityInformation(currentLessonNumber, currentLearningOutcomeNumbe
 	else if (currentLessonNumber == 4) {
 		if (currentLearningOutcomeNumber == 0) {
 			title = 'Activity : Model for the relation of Parent';
-			question = "Extend your model for <b>'parent'</b> rule"
+			question = "Assume we use parent(X, Y) to denote the parent of X is Y. Build a model for <b>'parent'</b> rule."
 		}
 		else if (currentLearningOutcomeNumber == 1) {
 			title = 'Activity : Extend the Model for parent relation';
