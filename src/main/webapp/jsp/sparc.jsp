@@ -524,6 +524,8 @@
             message.innerHTML = "You have not passed the assessment. Please click on Next below to go to next step";
                  
         }
+		submitAssessment(sessionStorage.getItem("pageIdToShow"),sparcConsoleOutput ,_isSparcPassed);
+
     }	
 	
 	

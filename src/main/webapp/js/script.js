@@ -124,10 +124,10 @@ function getGrading(studentLevel, input, answer) {
     //return result[getRandomInt(result.length)]
 }
 
-function submitAssessment(currentPageId, programId){
+function submitAssessment(currentPageId, consoleOutput, isSparcPassed){
  SaveStudentLessonsProgressThroughAPI(parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber)), parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber)), currentPageId);
      
-  let submittedAnswer = document.getElementById(programId).value;
+  let submittedAnswer = consoleOutput;
   let isAssessmentPassed = null;
   let assessmentStatus = null;
   let score = 0;
@@ -137,9 +137,12 @@ function submitAssessment(currentPageId, programId){
   }
   else{
     let currentLessonNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber));
-    actualQuestionAns =  getAssessmentQuestionAndAnswer(currentLessonNumber, programId);
+    let currentLearningOutcomeNumber =  parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber));
+    //actualQuestionAns =  getAssessmentQuestionAndAnswer(currentLessonNumber, programId);
+    actualQuestionAns =  getActivityInformation(currentLessonNumber, currentLearningOutcomeNumber);
     
-    score = getGrading(studentLevel[getRandomInt(studentLevel.length)], submittedAnswer, actualQuestionAns.answer);
+    //score = getGrading(studentLevel[getRandomInt(studentLevel.length)], submittedAnswer, actualQuestionAns.answer);
+    score = isSparcPassed ? 100 : 50;
       if(score >= 70){
         isAssessmentPassed = true;
         assessmentStatus = "pass"
@@ -162,7 +165,7 @@ function submitAssessment(currentPageId, programId){
             // console.log(error);
         });
     
-    window.open(nextStepPage, "_self");
+    //window.open(nextStepPage, "_self");
 }
 
 function getAssessmentQuestionAndAnswer(currentLessonNumber, programId)
