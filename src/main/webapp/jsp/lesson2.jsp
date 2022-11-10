@@ -9,6 +9,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 	 <script src="../js/verifytoken.js" type="text/javascript">  </script>
+	 <link rel="stylesheet" href="../styles/lesson2.css">
 <script type="text/javascript">
 $(function(){
     verifytoken();
@@ -90,7 +91,23 @@ $(function(){
     <section id="version-1-course-x-lesson-2-page-3" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <img src="../images/image1.png" alt="Image" width="500" height="400">
+            <h1 class="text-primary"> Extend Our Model for Parent of Peter -- 1  </h1>
+                <ul>
+                    <li> Extend your model: </li>
+                    <ul>
+                        <li> Assume the relation you will use is</li>
+                        <li> parent(P1, P2)means that person P1 is the parent of person P2.</li>
+                    </ul>
+                </ul>
+                <li>Write your knowledge as a comment </li>
+               		<div id="knowledgeAssignment" class="form-group">
+					  <input id="iBox" type="text" class="form-control" required>
+					</div>
+					<div id="uAnswer"></div>
+               		<li>Represent your knowledge as a fact </li>
+               		<div id="ruleAssignment" class="form-group">
+					  <input id="exBox" type="text" class="form-control" required></div>
+					<div id="exAnswer"></div>		  
                 <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(2, 0, 'version-1-course-x-lesson-2-page-3', false, -1)"> Previous
                 </a>
@@ -212,6 +229,11 @@ $(function(){
                         <li> Represent the knowledge into facts </li>
                     </ul>
                 </ul>
+                <li>Write the dad relation between John and Peter?</li>
+               		<div id="knowledgeAssignment" class="form-group">
+					  <input id="yBox" type="text" class="form-control" required>
+					</div>
+					<div id="zAnswer"></div>
                 <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(2, 2, 'version-1-course-x-lesson-2-page-15', false, -1)"> Previous </a>
                 <a class="btn btn-primary pull-right"
@@ -286,9 +308,13 @@ $(function(){
             <li> Assume we have the following relations </li>
             <ul>
                 <li> mother(X, Y)means person X is the mother of Y </li>
-                <li> mom(X, Y)means person X is the mom of Y </li>
+                <li> mom(X, Y)means person X is the mom of Y </li> 
             </ul>
         </ul>
+        <li>Write the Mom relation between joaan and Peter?</li>
+        <div id="motherrelation" class="form-group">
+					  <input id="fBox" type="text" class="form-control" required></div>
+					<div id="cAnswer"></div>
         <a class="btn btn-primary pull-left"
             onclick="gotoPrevious(2, 3, 'version-1-course-x-lesson-2-page-21', false, -1)"> Previous </a>
         <a class="btn btn-primary pull-right"
@@ -321,6 +347,8 @@ $(function(){
 <!-- onlineSPARC -->
 <!-- skipped 23,24,25 pages -->
 <%@ include file = "footer.jsp" %>
+ <%@ include file = "footer.jsp" %>
+<script src="../js/lesson2/validations.js" type="text/javascript">  </script>
    </body>
 
 </html>

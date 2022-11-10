@@ -1,6 +1,5 @@
-<!DOCTYPE html>
 <html lang="en">
-    
+
 <head>
     <title>Lesson 4</title>
     <meta charset="utf-8">
@@ -10,6 +9,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 	 <script src="../js/verifytoken.js" type="text/javascript">  </script>
+	 <link rel="stylesheet" href="../styles/lesson4.css">
 <script type="text/javascript">
 $(function(){
     verifytoken();
@@ -25,7 +25,8 @@ $(function(){
         $( document ).ready(function() { 
             sessionStorage.removeItem(sessionKeyIsAssessmentPassed);
             sessionStorage.removeItem(sessionKeyIsSparcPassed);
-            //sessionStorage.removeItem(sessionKeyShowPageId); //60
+            
+
         let pageIdToShow= sessionStorage.getItem(sessionKeyShowPageId);
   		if(pageIdToShow== null || pageIdToShow == '' || pageIdToShow == undefined){
               let firstPageIdOfCurrentLesson = GetFirstPageIdOfCurrentLessonFromJSON(4);
@@ -55,14 +56,14 @@ $(function(){
             <div class="col-md-6 content" style="margin-left:20rem">
                     <li> What we know </li>
                         <ul>
-                            <li> John is the father of Peter,Sarah and Linda </li>
-                            <li> Joann is also the mother of Peter,Sarah and Linda </li>
+                            <li> John is the father of Peter&sbquo;Sarah and Linda </li>
+                            <li> Joann is also the mother of Peter&sbquo;Sarah and Linda </li>
                         </ul>
                     <li> Questions </li>
                         <ul>
                             <li> Is John the father of Peter? </li>
-                            <li> Who is Peter's father? </li>
-                            <li> Who is Peter's dad? </li>
+                            <li> Who is Peter&rsquo;s father? </li>
+                            <li> Who is Peter&rsquo;s dad? </li>
                             <li> Who is the mother of Peter? </li>
                         </ul>
 
@@ -78,9 +79,20 @@ $(function(){
 
     <section id="version-1-course-x-lesson-4-page-3" class="container" hidden>
         <div class="row">
-            <div class="col-md-6 content" style="margin-left:20rem">
-                <img src="../images/Lesson4image1.png" alt="Image" width="500" height="250">
+            <div class="col-md-6 content" style="margin-left:20rem">   
+                <li>Question: Who is the dad of Peter?</li> 
+                <ul>    
+                <input id="fBox" type="text" class="form-control" required>
+					<div id="cAnswer"></div>
+				</ul>  
                 
+            	<li>Knowledge</li> 
+            	<ul>
+		            <li> We manually added all facts about dad although we have all information about the father relation already in the model.</li>
+		            <li>Can we reuse the information about father in our abstraction?</li> 
+		            <li>As human beings&sbquo;once we know the father relation&sbquo;we know the dad relation because we have the knowledge:</li>   
+             	</ul>
+		            <li>A person is the dad of another person if he is the father of the other.</li>
                 <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(4, 0, 'version-1-course-x-lesson-4-page-3', false, -1)"> Previous
                 </a>
@@ -127,7 +139,7 @@ $(function(){
     <section id="version-1-course-x-lesson-4-page-6" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <h4>Extend your model for "parent" rule</h4>
+                <h4>Extend your model for &ldquo;parent&rdquo; rule</h4>
                 <br>
                 <form action="">
                     <label for="ques1"> Representing knowledge as comment and fact  </label><br />
@@ -152,7 +164,13 @@ $(function(){
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
             <h2> Learning outcome 1: Extend the Model for parent relation</h2>
-            <img src="../images/Lesson4image4.png" alt="Image" width="500" height="300">
+            <ul>     
+               <li>Knowledge For every X and Y, X is the dad of Y if X is the father of Y.</li>
+               <li>To represent the knowledge, we identify objects or variables and relations in the sentence</li>
+               </ul>
+             <li>Write the query between dad and father relation?</li>
+              <input id="yBox" type="text" class="form-control" required>
+					<div id="zAnswer"></div>
 
             <a class="btn btn-primary pull-left"
                 onclick="gotoPrevious(4, 1, 'version-1-course-x-lesson-4-page-10', false, -1)"> Previous </a>
@@ -192,9 +210,22 @@ $(function(){
     <section id="version-1-course-x-lesson-4-page-15" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <h2>Learning outcome 2: Extending the model for dad relation </h2>
-                <img src="../images/Lesson4image5.png" alt="Image" width="500" height="200">
-
+                <h2>Learning outcome 2: Extending the model for dad relation</h2>
+                <li>We add for all to each variable in the rule, and read each relation according to its intended meaning.</li>
+               
+                <li>For example, dad(X, Y) :- father(X, Y).</li>
+                <ul>       
+            	<li>it is read as For all X and Y, X is the dad of Y if X is the father of Y.</li> 
+            	</ul>
+            	<li>How to read: father(X, Y) :- dad(X, Y).?</li>
+            	<li>Assume inLubbock(X) means person X is in Lubbock and inTexas(X) means person X is in Texas. How to read</li>
+            	<ul>
+		            <li>inTexas(X) :- inLubbock(X).?</li>
+		            <li>inLubbock(X) :- inTexas(X).?</li>  
+             	</ul>
+             	<li>Do the two rules mean the same?</li>  
+             	 <input id="iBox" type="text" class="form-control" required>
+					<div id="uAnswer"></div>
                 <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(4, 2, 'version-1-course-x-lesson-4-page-15', false, -1)"> Previous </a>
                 <a class="btn btn-primary pull-right"
@@ -234,14 +265,27 @@ $(function(){
         <section id="version-1-course-x-lesson-4-page-20" class="container" hidden>
             <div class="row">
                 <div class="col-md-6 content" style="margin-left:20rem">
-        <h2>Learning outcome 3: Extending the model for father relation </h2>
-        <img src="../images/Lesson4image4.png" alt="Image" width="500" height="300">
+        <h2>Learning outcome 3: Extending the model for father relation</h2>
+         
+                <li>We add for all to each variable in the rule, and read each relation according to its intended meaning.</li>
+                
+                <li>For example, dad(X, Y) :- father(X, Y).</li>
+                <ul>       
+            		<li>it is read as For all X and Y, X is the dad of Y if X is the father of Y.</li> 
+            	</ul>
+            	<li>How to read: father(X, Y) :- dad(X, Y).?</li>
+            	<li>Assume inLubbock(X) means person X is in Lubbock and inTexas(X) means person X is in Texas.</li>
+             	Write  the rule for the above situation?
+             	<div id="mothername" class="form-group">
+					  <input id="exBox" type="text" class="form-control" required></div>
+					<div id="exAnswer"></div>
         
         <a class="btn btn-primary pull-left"
             onclick="gotoPrevious(4, 3, 'version-1-course-x-lesson-4-page-20', false, -1)"> Previous </a>
         <a class="btn btn-primary pull-right"
             onclick="gotoNext(4, 3, 'version-1-course-x-lesson-4-page-20', false, -1)"> Next </a>
-    </div></div>
+    </div>
+    </div>
 </section>
 
     <section id="version-1-course-x-lesson-4-page-21" class="container" hidden>
@@ -280,6 +324,8 @@ $(function(){
         
 <!-- onlineSPARC -->
 <!-- skipped 23,24,25 pages -->
-	<%@ include file = "footer.jsp" %>
+<%@ include file = "footer.jsp" %>
+<script src="../js/lesson4/validations.js" type="text/javascript">  </script>
    </body>
+
 </html>

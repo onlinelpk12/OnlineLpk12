@@ -146,7 +146,7 @@ $(function(){
             <div class="col-md-6 content" style="margin-left:20rem">
             <h2> Learning outcome 1</h2>
             
-            <ul>
+           
                		<li>Question</li>
                		<ul>
                			<li>How to write the query using variables?</li>
@@ -154,11 +154,11 @@ $(function(){
                				<li>Here we will learn how to write the query and rules and regulations for it by considering an example of a query as protonsOf(h, M).</li>
 
                				<li>Here in protonsOf(h, M) query h denotes the element first letter and M denotes the variable it varies from element to element (Ex: H as As )</li>
-               				<li>Generally, we can use any name for a variable if its first letter is capital.(Ex: protonsOf(h, What) or protonsOf(h, TheProtonNumber) ).</li>
+               				</ul>
+               			<li>Generally, we can use any name for a variable if its first letter is capital.(Ex: protonsOf(h, What) or protonsOf(h, TheProtonNumber) ).</li>
                				<li>Note: No spaces are allowed in the middle of variables for example in the name TheProtonNumber if you observe there is no space.</li>
-               			</ul>
+               			
                		</ul>                		
-                </ul>   
             <a class="btn btn-primary pull-left"
                 onclick="gotoPrevious(7, 1, 'version-1-course-x-lesson-7-page-7', false, -1)"> Previous </a>
             <a class="btn btn-primary pull-right"
@@ -166,42 +166,46 @@ $(function(){
             </div>
         </div>  
     </section>
-    <section id="version-1-course-x-lesson-7-page-8" class="container" hidden>
-        <div class="row">
-            <div class="col-md-6 content" style="margin-left:20rem">
-            <h2> Learning outcome 1</h2>
-            
-            <ul>
-               		<li>Relations</li>
-               		</ul>
-               		<ul>
-               			<li>What is the relation between E & N  in the relation protonsOf(E, N)?</li>
-               			<li>Here in the relation protonsOf(E, N) E indicates the first letter where as N indicates the proton number of element </li>
-               			</ul>
-               			<ul>
-						<li>For your computer model to answer this relation, how would you expand your model </li>
-						</ul>
-               		<li>Type the knowledge as fact </li>
-               		<div id="knowledgeAssignment" class="form-group">
-					  <input id="hBox" type="text" class="form-control" required>
-					</div>
-					<div id="eAnswer"></div>
-               		<li>Type the fact/rule to represent that knowledge </li>
-               		<div id="ruleAssignment" class="form-group">
-					  <input id="pBox" type="text" class="form-control" required></div>
-					<div id="pAnswer"></div>
-               </ul>
-               		</ul>
-               		</ul>                		
-                </ul>   
-            <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(7, 1, 'version-1-course-x-lesson-7-page-8', false, -1)"> Previous </a>
-            <a class="btn btn-primary pull-right"
-                onclick="gotoNext(7, 1, 'version-1-course-x-lesson-7-page-8', false, -1)"> Next </a>
-            </div>
-        </div>  
-    </section>
-     <!-- Lesson 7 assement 1 - program 1 -->
+	<section id="version-1-course-x-lesson-7-page-8" class="container"
+		hidden>
+		<div class="row">
+			<div class="col-md-6 content" style="margin-left: 20rem">
+				<h2>Learning outcome 1 : Relations</h2>
+				<li>What is the relation between E & N in the relation
+						protonsOf(E, N)?</li>
+				<ul>					
+					<li>Here in the relation protonsOf(E, N) E indicates the first
+						letter where as N indicates the proton number of element</li>
+				</ul>
+				
+				<li>For your computer model to answer this relation, how would
+						you expand your model</li>	
+				<ul>					
+				<li>Type the knowledge as fact</li>
+				
+				<div id="knowledgeAssignment" class="form-group">
+					<input id="hBox" type="text" class="form-control" required>
+				</div>
+				<div id="eAnswer"></div>
+				<li>Type the fact/rule to represent that knowledge</li>
+				<div id="ruleAssignment" class="form-group">
+					<input id="pBox" type="text" class="form-control" required>
+				</div>
+				<div id="pAnswer"></div>
+				</ul>
+				</ul>
+				</ul>
+				</ul>
+				</ul>
+				<a class="btn btn-primary pull-left"
+					onclick="gotoPrevious(7, 1, 'version-1-course-x-lesson-7-page-8', false, -1)">
+					Previous </a> <a class="btn btn-primary pull-right"
+					onclick="gotoNext(7, 1, 'version-1-course-x-lesson-7-page-8', false, -1)">
+					Next </a>
+			</div>
+		</div>
+	</section>
+	<!-- Lesson 7 assement 1 - program 1 -->
 	<section id="version-1-course-x-lesson-7-page-9" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">

@@ -170,7 +170,7 @@ $(function(){
             <div class="col-md-6 content" style="margin-left:20rem">
             <h2>Learning outcome 2:Isotopes</h2>
             <img  class = "massNumberAtom" id="massNumberAtom" src="../images/lesson8/Picture6.png" alt="Image">
-            <ul>
+            
                		<li>Isotopes</li>
                		<ul>
                			<li>Substances whose atoms have the same proton numbers but possibly different neutron numbers are called isotopes.  </li>
@@ -179,12 +179,12 @@ $(function(){
                				<li>For example,</li>
                				<li>we have following substances with :</li>
                				<li> atoms with 6 protons and 6 neutrons</li>
-               				<li>atoms with 6 protons and 7 neutrons</li> 
+               				<li>atoms with 6 protons and 7 neutrons</li> <br/>
+               				Are these two atoms Isotopes 
                				<div id="ruleAssignment" class="form-group">
 					  <input id="fBox" type="text" class="form-control" required></div>
 					<div id="cAnswer"></div>
                				</ul>                			
-               		</ul>      
                 <br><br>   
             <a class="btn btn-primary pull-left"
                 onclick="gotoPrevious(8, 2, 'version-1-course-x-lesson-8-page-10', false, -1)"> Previous </a>
@@ -233,7 +233,6 @@ $(function(){
     <section id="version-1-course-x-lesson-8-page-13" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-            <h2>Learning outcome 2</h2>
             <img src="../images/lesson8/picture 3.png" alt="Image" width="500" height="250">
                 <br><br>   
             <a class="btn btn-primary pull-left"
@@ -277,7 +276,6 @@ $(function(){
     <section id="version-1-course-x-lesson-8-page-17" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-            <h2>Learning outcome 3</h2>
             <img src="../images/lesson8/picture 4.png" alt="Image" width="500" height="250">
                 <br><br>   
             <a class="btn btn-primary pull-left"
@@ -342,9 +340,8 @@ $(function(){
 	 <section id="version-1-course-x-lesson-8-page-22" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-            <h2>Learning outcome 4</h2>
             <ul>
-            		<img src="../images/lesson8/picture 5.png" alt="Image" width="500" height="250">
+            		<img src="../images/lesson8/picture 5.png" alt="Image" width="500" height="250" style="margin-left: -37px;">
             </ul>
                 <br><br>   
             <a class="btn btn-primary pull-left"

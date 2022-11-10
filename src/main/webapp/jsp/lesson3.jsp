@@ -1,6 +1,5 @@
-<!DOCTYPE html>
 <html lang="en">
-    
+
 <head>
     <title>Lesson 3</title>
     <meta charset="utf-8">
@@ -10,6 +9,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 	 <script src="../js/verifytoken.js" type="text/javascript">  </script>
+	 <link rel="stylesheet" href="../styles/lesson3.css">
 <script type="text/javascript">
 $(function(){
     verifytoken();
@@ -26,6 +26,7 @@ $(function(){
             sessionStorage.removeItem(sessionKeyIsAssessmentPassed);
             sessionStorage.removeItem(sessionKeyIsSparcPassed);
             
+
         let pageIdToShow= sessionStorage.getItem(sessionKeyShowPageId);
   		if(pageIdToShow== null || pageIdToShow == '' || pageIdToShow == undefined){
               let firstPageIdOfCurrentLesson = GetFirstPageIdOfCurrentLessonFromJSON(3);
@@ -82,9 +83,17 @@ $(function(){
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
                 <h2> What-questions </h2>
-                    <ul> 
+                       <ul>
                         <li> Who is the father of Peter? </li>
+                      <div id="fathername" class="form-group">
+					  <input id="iBox" type="text" class="form-control" required>
+					</div>
+					<div id="uAnswer"></div>
                         <li> Who is Peter's mother? </li>
+                        <div id="mothername" class="form-group">
+					  <input id="exBox" type="text" class="form-control" required>
+					  </div>
+					<div id="exAnswer"></div>
                     </ul>
                 <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(3, 0, 'version-1-course-x-lesson-3-page-3', false, -1)"> Previous
@@ -156,7 +165,21 @@ $(function(){
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
             <h2> Learning outcome 1: Extend the Model for father relation</h2>
-            <img src="../images/Lesson3image1.png" alt="Image" width="500" height="400">
+            <li>Who is the father of peter?</li>   
+            <ul>                         
+            	<li>We don&rsquo;t know the father of Peter&sbquo; and we want to know it&sbquo; so we introduce variable X to represent Peter&rsquo;s father.</li> 
+            </ul>
+            <li>The query to our model for that question is</li>
+            	<ul>		            
+		            <li>father(X&sbquo; peter)? </li> 
+		            <li>means what is the value of X such that X is the father of Peter?</li>   
+             	</ul>
+             	<li>In this case&sbquo; the answer from our model will be of the form X = john</li>
+             	 	<li>Write the query for the father relation of peter?</li>
+             	 	<div id="knowledgeAssignment" class="form-group">
+					  <input id="yBox" type="text" class="form-control" required>
+					</div>
+					<div id="zAnswer"></div>			
 
             <a class="btn btn-primary pull-left"
                 onclick="gotoPrevious(3, 1, 'version-1-course-x-lesson-3-page-9', false, -1)"> Previous </a>
@@ -195,8 +218,22 @@ $(function(){
     <section id="version-1-course-x-lesson-3-page-13" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <h2>Learning outcome 2: Extending the model for father relation </h2>
-                <img src="../images/Lesson3image3.png" alt="Image" width="500" height="200">
+                <h2>Learning outcome 2: Extending the model for father relation</h2>
+            <li>Whom is John the father of?</li> 
+            <ul>                      
+            	</ul>
+            	<li>We introduce a variable (X or Whom or AKidOfJohn ...) for &ldquo;Whom&rdquo;in the question and then write query with this variable:</li> 
+            	<ul>
+		            <li>(query) father(john&sbquo; X)? or</li>
+		            <li>(query) father(john&sbquo; Whom)? or</li> 
+		            <li>(query) father(john&sbquo; AKidOfJohn)?</li>   
+             	</ul>
+		            <li>Note: no space is allowed in the name AKidOfJohn</li>
+		            <li>Note the order of the parameters</li>
+             	 	Write the relation between john and AKidOfJohn?
+             	 	 <div id="motherrelation" class="form-group">
+					<input id="fBox" type="text" class="form-control" required></div>
+					<div id="cAnswer"></div>
 
                 <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(3, 2, 'version-1-course-x-lesson-3-page-13', false, -1)"> Previous </a>
@@ -234,21 +271,29 @@ $(function(){
     <!-- page-16 onlineSPARC -->
 
     <!-- learning outcome 3 -->
-        <section id="version-1-course-x-lesson-3-page-17" class="container" hidden>
-            <div class="row">
-                <div class="col-md-6 content" style="margin-left:20rem">
-        <h2>Learning outcome 3: Extending the model for Dad relation </h2>
-        <img src="../images/Lesson3image4.png" alt="Image" width="500" height="100">
-        <img src="../images/Lesson3image5.png" alt="Image" width="500" height="100">
-        
-        <a class="btn btn-primary pull-left"
-            onclick="gotoPrevious(3, 3, 'version-1-course-x-lesson-3-page-17', false, -1)"> Previous </a>
-         <a class="btn btn-primary pull-right"
-            onclick="gotoNext(3, 3, 'version-1-course-x-lesson-3-page-17', false, -1)"> Next </a>
-    </div></div>
-</section>
+	<section id="version-1-course-x-lesson-3-page-17" class="container"
+		hidden>
+		<div class="row">
+			<div class="col-md-6 content" style="margin-left: 20rem">
+				<h2>Learning outcome 3: Extending the model for Dad relation</h2>
+				<li>Who is the dad of peter?</li>
+				<ul>
+					<li>Assume we have a relation dad(p1,p2) where p1 is the dad
+						person of p2 variable</li>
+				</ul>
+				<li>Who is the dad of peter?</li> <input id="gBox" type="text"
+					class="form-control" required>
+				<div id="nAnswer"></div>
+				<a class="btn btn-primary pull-left"
+					onclick="gotoPrevious(3, 3, 'version-1-course-x-lesson-3-page-17', false, -1)">
+					Previous </a> <a class="btn btn-primary pull-right"
+					onclick="gotoNext(3, 3, 'version-1-course-x-lesson-3-page-17', false, -1)">
+					Next </a>
+			</div>
+		</div>
+	</section>
 
-<section id="version-1-course-x-lesson-3-page-18" class="container" hidden>
+	<section id="version-1-course-x-lesson-3-page-18" class="container" hidden>
     <div class="row">
         <div class="col-md-6 content" style="margin-left:20rem">
             <h2>Learning outcome 3: Extending the model for Dad relation </h2>
@@ -265,12 +310,14 @@ $(function(){
                 <div class="text-center">
                     <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-3-page-18', 'program3')"> Submit</a>
         
-    </div></div>
+    </div>
 </section>
 
     <!-- page-19 status page -->
     <!-- page-20 onlineSPARC -->
 
-	<%@ include file = "footer.jsp" %> 
+<%@ include file = "footer.jsp" %>
+<script src="../js/lesson3/validations.js" type="text/javascript">  </script>
    </body>
+
 </html>

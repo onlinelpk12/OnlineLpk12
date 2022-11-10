@@ -378,28 +378,30 @@ rules
    %query : protonOf(h,1). or atomicNumber(h,1)`;
 		}
 		else if(id == 4){
+			let elementProtonNumber = sessionStorage.getItem("elementProtonNumber");
+	    	let symbolSelected = sessionStorage.getItem("elementSymbol").toLowerCase();
 			return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Template for a SPARC file
 %% Author:
 %% Description:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sorts
-    #element = {h, 1}.
+    #element = {`+symbolSelected+`, `+elementProtonNumber+`}.
 predicates
    atomicNumber(#element, #element).
    protonOf(#element, #element).
 rules
-    protonOf(h,1) :-
-        atomicNumber(h,1).
+    protonOf(`+symbolSelected+`, `+elementProtonNumber+`) :-
+        atomicNumber(`+symbolSelected+`, `+elementProtonNumber+`).
 
-   atomicNumber(h,1).
+   atomicNumber(`+symbolSelected+`, `+elementProtonNumber+`).
    
-    atomicNumber(h,1) :-
-        protonOf(h,1).
+    atomicNumber(`+symbolSelected+`, `+elementProtonNumber+`) :-
+        protonOf(`+symbolSelected+`, `+elementProtonNumber+`).
 
-   protonOf(h,1).
+   protonOf(`+symbolSelected+`, `+elementProtonNumber+`).
    
-   %query : atomicNumber(h,1)`;
+   %query : atomicNumber(`+symbolSelected+`, `+elementProtonNumber+`)`;
 		}
 	}
 else if(lessonNumber == 8){
