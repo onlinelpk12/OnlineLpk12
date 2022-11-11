@@ -82,7 +82,7 @@ $(function(){
     <section id="version-1-course-x-lesson-3-page-3" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <h2> What-questions </h2>
+                <h2> What-questions</h2>
                        <ul>
                         <li> Who is the father of Peter? </li>
                       <div id="fathername" class="form-group">
@@ -108,8 +108,17 @@ $(function(){
     <section id="version-1-course-x-lesson-3-page-4" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <img src="../images/Lesson3image1.png" alt="Image" width="500" height="300">
-                
+                <!-- <img src="../images/Lesson3image1.png" alt="Image" width="500" height="300"> -->
+                <h2>Variables and Queries</h2>
+                <li>(English) <b>Who</b> is the father of Peter?</li>
+                <ul>
+                	<li>We don&rsquo;t know the father of Peter, and we want to know it, so we introduce variable X to represent Peter&rsquo;s father.</li>
+                	<li>The <b>query to our model for that question is</b><br>
+                		father(<FONT COLOR="#ff0000">X</FONT>, peter)?<br>
+                		means what is the value of X such that X is the father of Peter?
+                	</li>
+                	<li>In this case, the <b>answer from our model</b> will be of the form <FONT COLOR="#ff0000">X</FONT> = john.</li>                	
+                </ul>
                 <br>
                 <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(3, 0, 'version-1-course-x-lesson-3-page-4', false, -1)"> Previous
@@ -124,7 +133,18 @@ $(function(){
     <section id="version-1-course-x-lesson-3-page-5" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <img src="../images/Lesson3image2.png" alt="Image" width="500" height="300">
+                <!-- <img src="../images/Lesson3image2.png" alt="Image" width="500" height="300"> -->
+                <h2>Variables and Queries</h2>
+                <li>(English) <b>Who</b> is the father of Peter?</li>
+                <li><b>Query to our model</b></li>
+                <ul>
+                	<li>
+                		Alternatively, we can use a better name for the variable Who.Then our query becomes have<br>
+                		father(<FONT COLOR="#ff0000">W</FONT>ho, peter)?
+                	</li>
+                	<li>The answer will be <FONT COLOR="#ff0000">Who</FONT> = john.</li>
+                	<li>Note: the name for a variable must start with a capital letter!</li>
+                </ul>
                
                 <br>
                 <a class="btn btn-primary pull-left"

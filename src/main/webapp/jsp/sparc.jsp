@@ -505,23 +505,24 @@
 		let currentLessonNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber));
 		let currentLearningOutcomeNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber));
 		let currentLessonDetails = lessonsJson.lessons.filter(lesson => lesson.lessonId == currentLessonNumber)[0];
+		let titleQuestion =  getActivityInformation(currentLessonNumber,currentLearningOutcomeNumber);
         let isAssessmentPassed = sessionStorage.getItem(sessionKeyIsAssessmentPassed) === 'true';
         let messageAlert = document.getElementById('message-div');
 		let message = document.getElementById('next-step-link');
         if (_isSparcPassed) {
 		     messageAlert.classList.remove('alert-success');
-		    messageAlert.classList.remove('alert-danger');
-		     
+		    messageAlert.classList.remove('alert-danger');		     
 		     messageAlert.classList.add('alert-success')
-                message.innerHTML = "You have passed the assessment. Please click on Next below to Proceed"
+                message.innerHTML = "You have passed the assessment. Please click on Next below to Proceed";
             }
         else{
         	messageAlert.classList.remove('alert-success');
     		messageAlert.classList.remove('alert-danger');
     		     
     		messageAlert.classList.add('alert-danger'); 
-    		     
-            message.innerHTML = "You have not passed the assessment. Please click on Next below to go to next step";
+    		var hint = titleQuestion.hint;
+            message.innerHTML = "You have not passed the assessment. Please click on Next below to go to next step or try again with<br>"+
+            "<b>Hint</b> : <i>"+hint+"</i>";
                  
         }
 		submitAssessment(sessionStorage.getItem("pageIdToShow"),sparcConsoleOutput ,_isSparcPassed);

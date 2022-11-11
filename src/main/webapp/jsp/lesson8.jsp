@@ -113,7 +113,7 @@ $(function(){
 	<!-- skipped 4,5 pages -->
 	
 	<!-- learning outcome 1 -->
-    <section id="version-1-course-x-lesson-8-page-6" class="container" hidden>
+    <!-- <section id="version-1-course-x-lesson-8-page-6" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
             <h2> Learning outcome 1:Mass Number</h2>
@@ -136,7 +136,7 @@ $(function(){
                 onclick="gotoNext(8, 1, 'version-1-course-x-lesson-8-page-6', false, -1)"> Next </a>
             </div>
         </div>  
-    </section>
+    </section> -->
     
      <!-- Lesson 8 assement 1 - program 1 -->
 	<section id="version-1-course-x-lesson-8-page-7" class="container" hidden>
@@ -164,44 +164,60 @@ $(function(){
 	<!-- onlineSPARC -->
 	<!-- skipped 8,9 pages -->
 	
-	<!-- learning outcome 2 -->
+	<!-- learning outcome 1  -->
     <section id="version-1-course-x-lesson-8-page-10" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-            <h2>Learning outcome 2:Isotopes</h2>
+            <h2>Learning outcome 1:Isotopes</h2>
             <img  class = "massNumberAtom" id="massNumberAtom" src="../images/lesson8/Picture6.png" alt="Image">
-            
-               		<li>Isotopes</li>
-               		<ul>
-               			<li>Substances whose atoms have the same proton numbers but possibly different neutron numbers are called isotopes.  </li>
-               			</ul>
-               			<ul>
-               				<li>For example,</li>
-               				<li>we have following substances with :</li>
-               				<li> atoms with 6 protons and 6 neutrons</li>
-               				<li>atoms with 6 protons and 7 neutrons</li> <br/>
-               				Are these two atoms Isotopes 
-               				<div id="ruleAssignment" class="form-group">
-					  <input id="fBox" type="text" class="form-control" required></div>
+
+				<li>Isotopes</li>
+				<ul>
+					<li>Substances whose atoms have the same proton numbers but
+						possibly different neutron numbers are called isotopes.</li>
+				</ul>
+				<ul>
+					<li>For example,</li>
+					<li>we have following substances with :</li>
+					<li>atoms with 6 protons and 6 neutrons</li>
+					<li>atoms with 6 protons and 7 neutrons</li>
+					<div id="ruleAssignment" class="form-group">
+						<input id="fBox" type="text" class="form-control" required>
+					</div>
 					<div id="cAnswer"></div>
-               				</ul>                			
-                <br><br>   
+				</ul>
+				<br><br>   
             <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(8, 2, 'version-1-course-x-lesson-8-page-10', false, -1)"> Previous </a>
+                onclick="gotoPrevious(8, 1, 'version-1-course-x-lesson-8-page-10', false, -1)"> Previous </a>
             <a class="btn btn-primary pull-right"
-                onclick="gotoNext(8, 2, 'version-1-course-x-lesson-8-page-10', false, -1)"> Next </a>
+                onclick="gotoNext(8, 1, 'version-1-course-x-lesson-8-page-10', false, -1)"> Next </a>
             </div>
         </div>  
     </section>
     <section id="version-1-course-x-lesson-8-page-11" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-            <img src="../images/lesson8/picture 2.png" alt="Image" width="500" height="250"> 
-                <br><br>   
+            <!-- <img src="../images/lesson8/picture 2.png" alt="Image" width="500" height="250">  -->
+             <h2>Isotopes and Elements</h2>
+             	<li>Isotopes</li>
+           		<ul>
+           			<li>(example) Substances with</li>
+           			<ul>
+           				<li>atom with 6 protons and 6 neutrons</li>
+           				<li>atom with 6 protons and 7 neutrons</li>
+           			</ul>
+           			are isotopes  
+           		</ul>
+             	<li>Elements</li>
+             	<ul>
+             		<li>We take all substances that are  isotopes as the same element.</li>
+             		<li>In the example above, those both isotopes are called Carbon element (because of the proton number 6).</li>
+             	</ul>
+             <br><br>   
             <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(8, 2, 'version-1-course-x-lesson-8-page-11', false, -1)"> Previous </a>
+                onclick="gotoPrevious(8, 1, 'version-1-course-x-lesson-8-page-11', false, -1)"> Previous </a>
             <a class="btn btn-primary pull-right"
-                onclick="gotoNext(8, 2, 'version-1-course-x-lesson-8-page-11', false, -1)"> Next </a>
+                onclick="gotoNext(8, 1, 'version-1-course-x-lesson-8-page-11', false, -1)"> Next </a>
             </div>
         </div>  
     </section>
@@ -224,21 +240,27 @@ $(function(){
 			
                 <br><br>   
             <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(8, 2, 'version-1-course-x-lesson-8-page-12', false, -1)"> Previous </a>
+                onclick="gotoPrevious(8, 1, 'version-1-course-x-lesson-8-page-12', false, -1)"> Previous </a>
             <a class="btn btn-primary pull-right"
-                onclick="gotoNext(8, 2, 'version-1-course-x-lesson-8-page-12', false, -1)"> Next </a>
+                onclick="gotoNext(8, 1, 'version-1-course-x-lesson-8-page-12', false, -1)"> Next </a>
             </div>
         </div>  
     </section>
     <section id="version-1-course-x-lesson-8-page-13" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-            <img src="../images/lesson8/picture 3.png" alt="Image" width="500" height="250">
+            <h2>Atomic Mass of an Element</h2>
+            <!-- <img src="../images/lesson8/picture 3.png" alt="Image" width="500" height="250"> -->
+            <ul>
+            	<li>The periodic table has one cell for each element. But we could have several isotopes of this element.</li>
+            	<li>The atomic mass of an element is the weighted average of the mass number of the atoms of all isotopes of this element.</li>
+            	<li>For example, for Carbon element, assume it has two isotopes: Carbon-12 and Carbon-13. Assume the portion of Carbon-12 among all Carbon isotopes is 30% and that of Carbon-13 is 70%. Then the atomic mass of Carbon element is 12*0.3 + 13*0.7 = 12.7</li>
+            </ul>
                 <br><br>   
             <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(8, 2, 'version-1-course-x-lesson-8-page-13', false, -1)"> Previous </a>
+                onclick="gotoPrevious(8, 1, 'version-1-course-x-lesson-8-page-13', false, -1)"> Previous </a>
             <a class="btn btn-primary pull-right"
-                onclick="gotoNext(8, 2, 'version-1-course-x-lesson-8-page-13', false, -1)"> Next </a>
+                onclick="gotoNext(8, 1, 'version-1-course-x-lesson-8-page-13', false, -1)"> Next </a>
             </div>
         </div>  
     </section>
@@ -261,7 +283,7 @@ $(function(){
                     <br><br>
                     <br>
                     <a class="btn btn-primary pull-left"
-                    onclick="gotoPrevious(8, 2, 'version-1-course-x-lesson-8-page-14', false, -1)"> Previous </a>
+                    onclick="gotoPrevious(8, 1, 'version-1-course-x-lesson-8-page-14', false, -1)"> Previous </a>
                     <div class="text-center">
                         <a class="btn btn-primary" style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-8-page-14', 'program2')"> Submit </a>
                     </div>
@@ -272,23 +294,33 @@ $(function(){
     <!-- onlineSPARC -->
 	<!-- skipped 15,16 pages -->
     
-    <!-- learning outcome 3 -->
+    <!-- learning outcome 2  -->
     <section id="version-1-course-x-lesson-8-page-17" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-            <img src="../images/lesson8/picture 4.png" alt="Image" width="500" height="250">
+            <h2>Learning outcome 2 : From mass number and protons to neutrons of an atom</h2>
+            <!-- <img src="../images/lesson8/picture 4.png" alt="Image" width="500" height="250"> -->
+            <li>Questions</li>
+            <ul>
+            	<li>We know a hydrogen atom has 1 proton.</li>
+            	<li>We know its mass number is 2.</li>
+            	<li>What is the number of neutrons in a hydrogen atom?</li>
+            </ul>
+            <li>By definition: Mass number = proton number + neutron number.</li>
+            <li>So, Neutron number = Mass number - proton number.</li>
+            <li>Therefore, the neutron number of hydrogen = 2 - 1 = 1</li>
                 <br><br>   
             <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(8, 3, 'version-1-course-x-lesson-8-page-17', false, -1)"> Previous </a>
+                onclick="gotoPrevious(8, 2, 'version-1-course-x-lesson-8-page-17', false, -1)"> Previous </a>
             <a class="btn btn-primary pull-right"
-                onclick="gotoNext(8, 3, 'version-1-course-x-lesson-8-page-17', false, -1)"> Next </a>
+                onclick="gotoNext(8, 2, 'version-1-course-x-lesson-8-page-17', false, -1)"> Next </a>
             </div>
         </div>  
     </section>
     <section id="version-1-course-x-lesson-8-page-18" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-            <h2>Learning outcome 3</h2>
+            <h2>Learning outcome 2</h2>
         			<li>Type the knowledge as fact </li>
                		<div id="knowledgeAssignment" class="form-group">
 					  <input id="yBox" type="text" class="form-control" required>
@@ -300,15 +332,15 @@ $(function(){
 					<div id="nAnswer"></div>		  
                 <br><br>   
             <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(8, 3, 'version-1-course-x-lesson-8-page-18', false, -1)"> Previous </a>
+                onclick="gotoPrevious(8, 2, 'version-1-course-x-lesson-8-page-18', false, -1)"> Previous </a>
             <a class="btn btn-primary pull-right"
-                onclick="gotoNext(8, 3, 'version-1-course-x-lesson-8-page-18', false, -1)"> Next </a>
+                onclick="gotoNext(8, 2, 'version-1-course-x-lesson-8-page-18', false, -1)"> Next </a>
             </div>
         </div>  
     </section>
     
    
-	<!-- learning outcome 3 program 3--->
+	<!-- learning outcome 2 program 2--->
 	<section id="version-1-course-x-lesson-8-page-19" class="container" hidden>
 	    <div class="row">
 	        <div class="col-md-6 content" style="margin-left:20rem">
@@ -325,7 +357,7 @@ $(function(){
 	                <br><br>
 	                <br>
 	                <a class="btn btn-primary pull-left"
-	                onclick="gotoPrevious(8, 3, 'version-1-course-x-lesson-8-page-19', false, -1)"> Previous </a>
+	                onclick="gotoPrevious(8, 2, 'version-1-course-x-lesson-8-page-19', false, -1)"> Previous </a>
 	                <div class="text-center">
 	                    <a class="btn btn-primary" style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-8-page-19', 'program3')"> Submit </a>
 	                </div>
@@ -336,25 +368,36 @@ $(function(){
 	</section>
 	<!-- onlineSPARC -->
 	<!-- skipped 20,21 pages -->
-	<!-- #learning outcome 4 -->
+	<!-- #learning outcome 3//4 -->
 	 <section id="version-1-course-x-lesson-8-page-22" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-            <ul>
-            		<img src="../images/lesson8/picture 5.png" alt="Image" width="500" height="250" style="margin-left: -37px;">
-            </ul>
+            <h2>Learning Outcome 3</h2>
+            <h3>Practice: From protons and neutrons to mass number</h3>
+       		<!-- <img src="../images/lesson8/picture 5.png" alt="Image" width="500" height="250"> -->
+       		<li>New Questions</li>
+       		<ul>
+       			<li>We know a carbon atom has</li>
+       			<ul>
+       				<li>6 protons, and</li>
+       				<li>11 neutrons.</li>
+       			</ul>
+       			<li>What is the mass number of this carbon atom?</li>
+       			<li>What knowledge did we use to answer this question?</li>       			       			
+       		</ul>
+       		
                 <br><br>   
             <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(8, 4, 'version-1-course-x-lesson-8-page-22', false, -1)"> Previous </a>
+                onclick="gotoPrevious(8, 3, 'version-1-course-x-lesson-8-page-22', false, -1)"> Previous </a>
             <a class="btn btn-primary pull-right"
-                onclick="gotoNext(8, 4, 'version-1-course-x-lesson-8-page-22', false, -1)"> Next </a>
+                onclick="gotoNext(8, 3, 'version-1-course-x-lesson-8-page-22', false, -1)"> Next </a>
             </div>
         </div>  
     </section>
     <section id="version-1-course-x-lesson-8-page-23" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-            <h2>Learning outcome 4</h2>
+            <h2>Learning outcome 3</h2>
         			<li>Type the knowledge as fact </li>
                		<div id="knowledgeAssignment" class="form-group">
 					  <input id="iBox" type="text" class="form-control" required>
@@ -366,9 +409,9 @@ $(function(){
 					<div id="exAnswer"></div>		  
                 <br><br>   
             <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(8, 4, 'version-1-course-x-lesson-8-page-23', false, -1)"> Previous </a>
+                onclick="gotoPrevious(8, 3, 'version-1-course-x-lesson-8-page-23', false, -1)"> Previous </a>
             <a class="btn btn-primary pull-right"
-                onclick="gotoNext(8, 4, 'version-1-course-x-lesson-8-page-23', false, -1)"> Next </a>
+                onclick="gotoNext(8, 3, 'version-1-course-x-lesson-8-page-23', false, -1)"> Next </a>
             </div>
         </div>  
     </section>
@@ -385,7 +428,7 @@ $(function(){
 	                <br><br>
 	                <br>
 	                <a class="btn btn-primary pull-left"
-	                onclick="gotoPrevious(8, 4, 'version-1-course-x-lesson-8-page-24', false, -1)"> Previous </a>
+	                onclick="gotoPrevious(8, 3, 'version-1-course-x-lesson-8-page-24', false, -1)"> Previous </a>
 	                <div class="text-center">
 	                    <a class="btn btn-primary" style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-8-page-24', 'program4')"> Submit </a>
 	                </div>

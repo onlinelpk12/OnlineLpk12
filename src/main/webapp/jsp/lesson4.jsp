@@ -54,6 +54,7 @@ $(function(){
     <section id="version-1-course-x-lesson-4-page-2" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
+            <h2>Recall the family</h2>
                     <li> What we know </li>
                         <ul>
                             <li> John is the father of Peter&sbquo;Sarah and Linda </li>
@@ -66,7 +67,6 @@ $(function(){
                             <li> Who is Peter&rsquo;s dad? </li>
                             <li> Who is the mother of Peter? </li>
                         </ul>
-
                 <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(4, 0, 'version-1-course-x-lesson-4-page-2', false, -1)"> Previous
                 </a>
@@ -80,6 +80,7 @@ $(function(){
     <section id="version-1-course-x-lesson-4-page-3" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">   
+            <h2>Knowledge on &ldquo;Dad&rdquo;</h2>
                 <li>Question: Who is the dad of Peter?</li> 
                 <ul>    
                 <input id="fBox" type="text" class="form-control" required>
@@ -93,6 +94,7 @@ $(function(){
 		            <li>As human beings&sbquo;once we know the father relation&sbquo;we know the dad relation because we have the knowledge:</li>   
              	</ul>
 		            <li>A person is the dad of another person if he is the father of the other.</li>
+		        <br>
                 <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(4, 0, 'version-1-course-x-lesson-4-page-3', false, -1)"> Previous
                 </a>
@@ -106,8 +108,14 @@ $(function(){
     <section id="version-1-course-x-lesson-4-page-4" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <img src="../images/Lesson4image2.png" alt="Image" width="500" height="300">
-                
+                <!-- <img src="../images/Lesson4image2.png" alt="Image" width="500" height="300"> -->
+                <h2>Knowledge on &ldquo;Dad&rdquo;: Using Variables</h2>
+                <ul>
+                	<li>&ldquo;A person is the dad of another person if he is the father of the other.&rdquo;</li>
+                	<li>&lsquo;A person&rsquo;, &lsquo;another person&rsquo;, &lsquo;he&rsquo;, &lsquo;the other: a bit uneasy.</li>
+                	<li>We would like to use variables to replace that information such as &ldquo;A person&rdquo; and &ldquo;another one&rdquo;: X for &lsquo;a person&rsquo;, and Y for another one. Then &ldquo;he&rdquo; is X, and &ldquo;the other&rdquo; is Y.</li>
+                	<li>The knowledge becomes: &ldquo;For every X and Y, X is the dad of Y if X is the father of Y.&rdquo;</li>
+                </ul>
                 <br>
                 <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(4, 0, 'version-1-course-x-lesson-4-page-4', false, -1)"> Previous
@@ -122,7 +130,14 @@ $(function(){
     <section id="version-1-course-x-lesson-4-page-5" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-                <img src="../images/Lesson4image3.png" alt="Image" width="500" height="200">
+                <!-- <img src="../images/Lesson4image3.png" alt="Image" width="500" height="200"> -->
+                <h2>Abstraction with Variables</h2>
+                <li>A variable is used to refer to something.</li>
+                <ul>
+                	<li>Sometimes, you use it to refer something you don&lsquo;t know but you want to know. E.g., the variables we used earlier.</li>
+                	<li>Sometimes, you just use it to refer to something more general than a specific object, e.g., &ldquo;a person&rdquo; or &ldquo;another person&rdquo;</li>
+                </ul>
+                <li>There are many ways to name a variable. In SPARC, a variable is a name starting with a capital letter. (This is called the syntax of how to write a variable in SPARC.)</li>
                
                 <br>
                 <a class="btn btn-primary pull-left"
@@ -288,20 +303,42 @@ $(function(){
     </div>
 </section>
 
-    <section id="version-1-course-x-lesson-4-page-21" class="container" hidden>
-        <div class="row">
-            <div class="col-md-6 content" style="margin-left:20rem">
-    <h2>Learning outcome 3: Extending the model for father relation </h2>
-    <img src="../images/Lesson4image5.png" alt="Image" width="500" height="300">
+	<section id="version-1-course-x-lesson-4-page-21" class="container"
+		hidden>
+		<div class="row">
+			<div class="col-md-6 content" style="margin-left: 20rem">
+				<h2>Learning outcome 3: Extending the model for father relation
+				</h2>
+				<!-- <img src="../images/Lesson4image5.png" alt="Image" width="500" height="300"> -->
+				<li>We add for all to each variable in the rule, and read each
+					relation according to its intended meaning.</li>
 
-    <a class="btn btn-primary pull-left"
-        onclick="gotoPrevious(4, 3, 'version-1-course-x-lesson-4-page-21', false, -1)"> Previous </a>
-    <a class="btn btn-primary pull-right"
-        onclick="gotoNext(4, 3, 'version-1-course-x-lesson-4-page-21', false, -1)"> Next </a>
-    </div></div>
-</section>
+				<li>For example, dad(X, Y) :- father(X, Y).</li>
+				<ul>
+					<li>it is read as For all X and Y, X is the dad of Y if X is
+						the father of Y.</li>
+				</ul>
+				<li>How to read: father(X, Y) :- dad(X, Y).?</li>
+				<li>Assume inLubbock(X) means person X is in Lubbock and inTexas(X) means person X is in Texas. How to read </li>
+				<ul>
+					<li>inTexas(X) :- inLubbock(X).?</li>
+					<li>inLubbock(X) :- inTexas(X).?</li>
+					<li>Do the two rules mean the same?</li>
+						
+					<input type="radio" name="yes_no" checked>Yes</input>						
+					<input type="radio" name="yes_no">No</input>
+				</ul>
+				<a
+					class="btn btn-primary pull-left"
+					onclick="gotoPrevious(4, 3, 'version-1-course-x-lesson-4-page-21', false, -1)">
+					Previous </a> <a class="btn btn-primary pull-right"
+					onclick="gotoNext(4, 3, 'version-1-course-x-lesson-4-page-21', false, -1)">
+					Next </a>
+			</div>
+		</div>
+	</section>
 
-<section id="version-1-course-x-lesson-4-page-22" class="container" hidden>
+	<section id="version-1-course-x-lesson-4-page-22" class="container" hidden>
     <div class="row">
         <div class="col-md-6 content" style="margin-left:20rem">
             <h2>Learning outcome 3: Extending the model for father relation </h2>

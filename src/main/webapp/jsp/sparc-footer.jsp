@@ -94,7 +94,7 @@
       </div>
       <div class="modal-body">
         <div id="message-div" class="alert" role="alert">
-			<p id="next-step-link"></p>
+			<p id="next-step-link"></p>			
 		</div>
       </div>
       <div class="modal-footer">

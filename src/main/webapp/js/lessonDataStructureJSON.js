@@ -1201,7 +1201,7 @@ const course =
 				          }
 			          ],
 			          "subLearningOutcomes": [
-			        	  {
+			        	  /*{
 					            "learningOutcomeId": 1,
 					            "description": "Learning outcome 1: Mass Number",
 					            "pages": [
@@ -1211,7 +1211,7 @@ const course =
 					                "nextPageId": "version-1-course-x-lesson-8-page-9",
 					                "pageType": "ContentPage"
 					              },					              
-					              /*{
+					              {
 					                "pageId": "version-1-course-x-lesson-8-page-7",
 					                "previousPageId": "version-1-course-x-lesson-8-page-6",
 					                "nextPageId": null,
@@ -1225,7 +1225,7 @@ const course =
 					                "adaptivePageId1": "version-1-course-x-lesson-8-page-6",
 					                "adaptivePageId2": "version-1-course-x-lesson-8-page-9",
 					                "pageType": "StatusPage"
-					              },*/
+					              },
 					              {
 					                "pageId": "version-1-course-x-lesson-8-page-9",
 					                "previousPageId": "version-1-course-x-lesson-8-page-6",
@@ -1233,14 +1233,14 @@ const course =
 					                "pageType": "SparcPage"
 					              }
 					            ]
-					          },
+					          },*/
 					          {
-						            "learningOutcomeId": 2,
-						            "description": "Learning outcome 2: Isotopes",
+						            "learningOutcomeId": 1,
+						            "description": "Learning outcome 1: Isotopes",
 						            "pages": [
 						              {
 						                "pageId": "version-1-course-x-lesson-8-page-10",
-						                "previousPageId": "version-1-course-x-lesson-8-page-7",
+						                "previousPageId": "version-1-course-x-lesson-8-page-2",
 						                "nextPageId": "version-1-course-x-lesson-8-page-11",
 						                "pageType": "ContentPage"
 						              },
@@ -1286,7 +1286,7 @@ const course =
 						            ]
 						          },
 						          {
-							            "learningOutcomeId": 3,
+							            "learningOutcomeId": 2,
 							            "description": "Learning outcome 3: From mass number and protons to neutrons of an atom",
 							            "pages": [
 							              {
@@ -1325,7 +1325,7 @@ const course =
 							            ]
 							          },
 							          {
-								            "learningOutcomeId": 4,
+								            "learningOutcomeId": 3,
 								            "pages": [
 								              {
 								                "pageId": "version-1-course-x-lesson-8-page-22",
