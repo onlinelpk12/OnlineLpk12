@@ -264,9 +264,27 @@ $(function(){
             </div>
         </div>  
     </section>
+    <section id="version-1-course-x-lesson-8-page-14" class="container" hidden>
+        <div class="row">
+            <div class="col-md-6 content" style="margin-left:20rem">
+            <h2>Elements and atoms</h2>
+            <li>Questions</li>
+            <ul>            
+            	<li>Is 1 the mass number of a typical hydrogen atom ?</li> 
+            	<li>We use approximation and the periodic table to answer this question. The approximation is by the standard rounding rule. So, the answer is yes.</li>  
+             	</ul>				
+			
+                <br><br>   
+            <a class="btn btn-primary pull-left"
+                onclick="gotoPrevious(8, 1, 'version-1-course-x-lesson-8-page-14', false, -1)"> Previous </a>
+            <a class="btn btn-primary pull-right"
+                onclick="gotoNext(8, 1, 'version-1-course-x-lesson-8-page-14', false, -1)"> Next </a>
+            </div>
+        </div>  
+    </section>
     
      <!-- Lesson 8 assement 2 - program 2 -->
-	<section id="version-1-course-x-lesson-8-page-14" class="container" hidden>
+	<section id="version-1-course-x-lesson-8-page-15" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
                 <h3><b>Activity : Extend and test as you like</b></h3>
@@ -283,16 +301,16 @@ $(function(){
                     <br><br>
                     <br>
                     <a class="btn btn-primary pull-left"
-                    onclick="gotoPrevious(8, 1, 'version-1-course-x-lesson-8-page-14', false, -1)"> Previous </a>
+                    onclick="gotoPrevious(8, 1, 'version-1-course-x-lesson-8-page-15', false, -1)"> Previous </a>
                     <div class="text-center">
-                        <a class="btn btn-primary" style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-8-page-14', 'program2')"> Submit </a>
+                        <a class="btn btn-primary" style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-8-page-15', 'program2')"> Submit </a>
                     </div>
                 </form>
             </div>
         </div>
     </section>
     <!-- onlineSPARC -->
-	<!-- skipped 15,16 pages -->
+	<!-- skipped 16,17 pages -->
     
     <!-- learning outcome 2  -->
     <section id="version-1-course-x-lesson-8-page-17" class="container" hidden>
@@ -333,7 +351,7 @@ $(function(){
                 <br><br>   
             <a class="btn btn-primary pull-left"
                 onclick="gotoPrevious(8, 2, 'version-1-course-x-lesson-8-page-18', false, -1)"> Previous </a>
-            <a class="btn btn-primary pull-right"
+            <a class="btn btn-primary pull-right" 
                 onclick="gotoNext(8, 2, 'version-1-course-x-lesson-8-page-18', false, -1)"> Next </a>
             </div>
         </div>  
@@ -367,7 +385,7 @@ $(function(){
 	
 	</section>
 	<!-- onlineSPARC -->
-	<!-- skipped 20,21 pages -->
+	<!-- skipped 21,22 pages -->
 	<!-- #learning outcome 3//4 -->
 	 <section id="version-1-course-x-lesson-8-page-22" class="container" hidden>
         <div class="row">
@@ -439,7 +457,7 @@ $(function(){
 	</section>
 
 <!-- onlineSPARC -->
-<!-- skipped 25.26 pages -->
+<!-- skipped 26.27 pages -->
 <%@ include file = "footer.jsp" %>
 <script src="../js/lesson8/validations.js" type="text/javascript">  </script>
    </body>
