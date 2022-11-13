@@ -99,7 +99,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Stay in Assessment</button>
-        <button type="button" class="btn btn-primary" onclick="onSparcResultGoToDestination()">Go to Next Lesson</button>
+        <button type="button" class="btn btn-primary" onclick="onSparcResultGoToDestination()">Go to Next Page</button>
       </div>
     </div>
   </div>
