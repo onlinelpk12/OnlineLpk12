@@ -8,7 +8,7 @@ public class MainController {
 
 
     @GetMapping("/home")
-    public String testThisController()
+    public String mainPath()
     {
         return "home";
     }
