@@ -47,7 +47,8 @@
       var password=document.getElementById('password').value;
       //fetch post request
       const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
-      const signInAPI = corsProxy+"https://onlinelpk12nodeservice.herokuapp.com/api/auth/signin";
+      //const signInAPI = corsProxy+"https://onlinelpk12nodeservice.herokuapp.com/api/auth/signin";
+      const signInAPI = "http://localhost:8083/api/auth/signin";
       fetch(signInAPI,{
         method:'POST',
         body: JSON.stringify({
