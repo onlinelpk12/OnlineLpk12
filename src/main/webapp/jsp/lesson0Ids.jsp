@@ -5,6 +5,11 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
+	<link rel="stylesheet" href="../styles/style.css">
+	
+	<!-- Include Bootstrap CSS for the Carousel -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	
 	<script src="../js/verifytoken.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(function() {
@@ -12,39 +17,11 @@
 		});
 	</script>
 	
-	<link rel="stylesheet" href="../styles/style.css">
-	
 	<script src="../js/ldslessonDataStructureJSON.js"></script>
 	<script src="../js/script.js"></script>
-
-	<!-- Include Bootstrap CSS for the Carousel -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
-	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
-							sessionStorage
-									.removeItem(sessionKeyIsAssessmentPassed);
-							sessionStorage.removeItem(sessionKeyIsSparcPassed);
-
-							let pageIdToShow = sessionStorage
-									.getItem(sessionKeyShowPageId);
-							if (pageIdToShow == null || pageIdToShow == ''
-									|| pageIdToShow == undefined) {
-								let firstPageIdOfCurrentLesson = GetFirstPageIdOfCurrentLessonFromJSON(4);
-								let currentSection = document
-										.getElementById(firstPageIdOfCurrentLesson);
-								currentSection.hidden = false;
-							} else {
-								let currentSection = document
-										.getElementById(pageIdToShow);
-								currentSection.hidden = false;
-							}
-						});
-	</script>
 	<%@ include file="header.jsp"%>
 	
 	<!-- Input for PDF file -->
@@ -82,13 +59,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
 
     <style>
-        /* Add some basic styling for the carousel controls */
-        /* Customize the transition duration for smoother animations */
+	    #imageCarousel {
+		    border: 1px solid black; 
+		    padding: 10px;
+		    max-width: 50%;
+		}
+		
         .carousel-item {
             transition: transform 0.5s ease-in-out;
         }
 
-        /* Center images within carousel items */
         .carousel-item img {
             display: block;
             margin: 0 auto;
@@ -214,9 +194,8 @@
 	</script>
 		
 	<!-- onlineSPARC -->
-	<!-- skipped 23,24,25 pages 
+	<!-- skipped 23,24,25 pages -->
 	<%@ include file="footer.jsp"%>
-	<%@ include file="footer.jsp"%>-->
 </body>
 
 </html>
