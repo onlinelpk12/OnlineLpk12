@@ -43,8 +43,14 @@ a.disabled {
 					<li><a href="../jsp/lesson4lds.jsp"
 						onclick="reInitiateFreshPage()">Click here to View Lesson 4!</a></li>
 					<p></p>
+					<li><a href="../jsp/lesson4ReviewIds.jsp"
+						onclick="reInitiateFreshPage()">Click here to View Lesson 4: Quick Review</a></li>
+					<p></p>
 					<li><a href="../jsp/lesson5lds.jsp"
 						onclick="reInitiateFreshPage()">Click here to View Lesson 5!</a></li>
+					<p></p>
+					<li><a href="../jsp/lesson4N5ReviewIds.jsp"
+						onclick="reInitiateFreshPage()">Click here to View Lesson 4, 5: Review of Computing and R</a></li>
 					<p></p>
 				</ul>
 			</div>
