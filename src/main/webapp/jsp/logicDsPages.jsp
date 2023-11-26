@@ -40,6 +40,18 @@ a.disabled {
 					<li><a href="../jsp/lesson0Ids.jsp"
 						onclick="reInitiateFreshPage()">Click here to View Lesson 0!</a></li>
 					<p></p>
+					<li><a href="../jsp/lesson1Part1Ids.jsp"
+						onclick="reInitiateFreshPage()">Click here to View Lesson 1: Part I</a></li>
+					<p></p>
+					<li><a href="../jsp/lesson1Part2Ids.jsp"
+						onclick="reInitiateFreshPage()">Click here to View Lesson 1: Part II</a></li>
+					<p></p>
+					<li><a href="../jsp/lesson2Ids.jsp"
+						onclick="reInitiateFreshPage()">Click here to View Lesson 2!</a></li>
+					<p></p>
+					<li><a href="../jsp/lesson3Ids.jsp"
+						onclick="reInitiateFreshPage()">Click here to View Lesson 3!</a></li>
+					<p></p>
 					<li><a href="../jsp/lesson4lds.jsp"
 						onclick="reInitiateFreshPage()">Click here to View Lesson 4!</a></li>
 					<p></p>
@@ -51,6 +63,9 @@ a.disabled {
 					<p></p>
 					<li><a href="../jsp/lesson4N5ReviewIds.jsp"
 						onclick="reInitiateFreshPage()">Click here to View Lesson 4, 5: Review of Computing and R</a></li>
+					<p></p>
+					<li><a href="../jsp/lesson6Ids.jsp"
+						onclick="reInitiateFreshPage()">Click here to View Lesson 6!</a></li>
 					<p></p>
 				</ul>
 			</div>
