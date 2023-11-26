@@ -34,14 +34,11 @@ a.disabled {
 	<div class="container pt-5">
 		<div class="row">
 			<div class="col-sm-6">
-				<h2>Click below links to view the Logic ds lessons:</h2>
+				<h2>Click below links to view the LogicDS lessons:</h2>
 				<ul>
 					<p></p>
-					<li><a href="../jsp/lesson2.jsp"
-						onclick="reInitiateFreshPage()">Click here to View Lesson 2!</a></li>
-					<p></p>
-					<li><a href="../jsp/lesson3.jsp"
-						onclick="reInitiateFreshPage()">Click here to View Lesson 3!</a></li>
+					<li><a href="../jsp/lesson0Ids.jsp"
+						onclick="reInitiateFreshPage()">Click here to View Lesson 0!</a></li>
 					<p></p>
 					<li><a href="../jsp/lesson4lds.jsp"
 						onclick="reInitiateFreshPage()">Click here to View Lesson 4!</a></li>
@@ -49,14 +46,6 @@ a.disabled {
 					<li><a href="../jsp/lesson5lds.jsp"
 						onclick="reInitiateFreshPage()">Click here to View Lesson 5!</a></li>
 					<p></p>
-					<li><a href="../jsp/lesson6.jsp"
-						onclick="reInitiateFreshPage()">Click here to View Lesson 6!</a></li>
-					<p></p>
-					<li><a href="../jsp/lesson7.jsp"
-						onclick="reInitiateFreshPage()">Click here to View Lesson 7!</a></li>
-					<p></p>
-					<li><a href="../jsp/lesson8.jsp"
-						onclick="reInitiateFreshPage()">Click here to View Lesson 8!</a></li>
 				</ul>
 			</div>
 		</div>
