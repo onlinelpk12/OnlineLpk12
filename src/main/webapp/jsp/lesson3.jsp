@@ -17,7 +17,14 @@ $(function(){
 </script>
     <link rel="stylesheet" href="../styles/style.css">
     <script src="../js/lessonDataStructureJSON.js"></script>
-    <script src="../js/script.js"></script>    
+    <script src="../js/script.js"></script>  
+<style>
+        /* Applying colors and reducing margins for H1 and H2 */
+   
+ 
+ 
+    </style>
+   
 </head>
 
 <body>
@@ -39,11 +46,12 @@ $(function(){
   		}           
     });    
     </script>
-	<%@ include file = "header.jsp" %>
+	<%@ include file = "header1.jsp" %>
     <section id="version-1-course-x-lesson-3-page-1" class="container" hidden>
         <div class="row">
             <div class="col-md-8 content" style="margin-left:20rem">
-            <h1 style="text-align:center">  Lesson 3: Variables and Queries </h1> <br>
+            <h1 style="text-align:center">  <b>Lesson 3</b></h1> 
+             <h1 style="text-align:center"> Variables and Queries </h1> </br>
             <a class="btn btn-primary pull-right"
                 onclick="gotoNext(3, 0, 'version-1-course-x-lesson-3-page-1', false, -1)"> Next </a>
             </div>
@@ -53,15 +61,15 @@ $(function(){
 
     <section id="version-1-course-x-lesson-3-page-2" class="container" hidden>
         <div class="row">
-            <div class="col-md-6 content" style="margin-left:20rem">
-                <h2> Recall the family </h2>
+            <div class="col-md-6 content" style="margin-left:35rem">
+                <h2 class="text-primary" style="text-align:center"> Recall the family </h2>
                 <ul>
-                    <li> What we know </li>
+                    <li> <b>What we know?</b> </li>
                         <ul>
                             <li> John is the father of Peter </li>
                             <li> John is also the father of Sara and Linda </li>
                         </ul>
-                    <li> Questions </li>
+                    <li> <b>Questions</b> </li>
                         <ul>
                             <li> Is John the father of Peter? </li>
                             <li> Who is Peter's father? </li>
@@ -81,8 +89,8 @@ $(function(){
 
     <section id="version-1-course-x-lesson-3-page-3" class="container" hidden>
         <div class="row">
-            <div class="col-md-6 content" style="margin-left:20rem">
-                <h2> What-questions</h2>
+            <div class="col-md-6 content" style="margin-left:35rem">
+                <h2 class="text-primary" style="text-align:center"> What-questions</h2>
                        <ul>
                         <li> Who is the father of Peter? </li>
                       <div id="fathername" class="form-group">
@@ -107,9 +115,9 @@ $(function(){
 
     <section id="version-1-course-x-lesson-3-page-4" class="container" hidden>
         <div class="row">
-            <div class="col-md-6 content" style="margin-left:20rem">
+            <div class="col-md-6 content" style="margin-left:35rem">
                 <!-- <img src="../images/Lesson3image1.png" alt="Image" width="500" height="300"> -->
-                <h2>Variables and Queries</h2>
+                <h2 class="text-primary" style="text-align:center">Variables and Queries</h2>
                 <li>(English) <b>Who</b> is the father of Peter?</li>
                 <ul>
                 	<li>We don&rsquo;t know the father of Peter, and we want to know it, so we introduce variable X to represent Peter&rsquo;s father.</li>
@@ -132,9 +140,9 @@ $(function(){
 
     <section id="version-1-course-x-lesson-3-page-5" class="container" hidden>
         <div class="row">
-            <div class="col-md-6 content" style="margin-left:20rem">
+            <div class="col-md-6 content" style="margin-left:35rem">
                 <!-- <img src="../images/Lesson3image2.png" alt="Image" width="500" height="300"> -->
-                <h2>Variables and Queries</h2>
+                <h2 class="text-primary" style="text-align:center">Variables and Queries</h2>
                 <li>(English) <b>Who</b> is the father of Peter?</li>
                 <li><b>Query to our model</b></li>
                 <ul>
@@ -160,8 +168,8 @@ $(function(){
 
     <section id="version-1-course-x-lesson-3-page-6" class="container" hidden>
         <div class="row">
-            <div class="col-md-6 content" style="margin-left:20rem">
-                <h4>Extent your model for "who is the mother of Peter?"</h4>
+            <div class="col-md-6 content" style="margin-left:35rem">
+                <h4 class="text-primary" style="text-align:center" >Extent your model for "who is the mother of Peter?"</h4>
                 <br>
                 <form action="">
                     <label for="ques1"> Representing knowledge as comment and fact  </label><br />
@@ -183,8 +191,9 @@ $(function(){
     <!-- learning outcome 1 -->
     <section id="version-1-course-x-lesson-3-page-9" class="container" hidden>
         <div class="row">
-            <div class="col-md-6 content" style="margin-left:20rem">
-            <h2> Learning outcome 1: Extend the Model for father relation</h2>
+            <div class="col-md-6 content" style="margin-left:35rem">
+            <h2 class="text-primary" > Learning outcome 1: Extend the Model for father relation</h2>
+            <h2></h2>
             <li>Who is the father of peter?</li>   
             <ul>                         
             	<li>We don&rsquo;t know the father of Peter&sbquo; and we want to know it&sbquo; so we introduce variable X to represent Peter&rsquo;s father.</li> 
@@ -195,9 +204,9 @@ $(function(){
 		            <li>means what is the value of X such that X is the father of Peter?</li>   
              	</ul>
              	<li>In this case&sbquo; the answer from our model will be of the form X = john</li>
-             	 	<li>Write the query for the father relation of peter?</li>
+             	 	<li>Write the query to determine who is Peter's father?</li>
              	 	<div id="knowledgeAssignment" class="form-group">
-					  <input id="yBox" type="text" class="form-control" required>
+					  <input id="yBox" type="text" class="form-control" style="margin-left:2rem" required>
 					</div>
 					<div id="zAnswer"></div>			
 
@@ -211,8 +220,8 @@ $(function(){
 
     <section id="version-1-course-x-lesson-3-page-10" class="container" hidden>
         <div class="row">
-            <div class="col-md-6 content" style="margin-left:20rem">
-                <h2>Learning outcome 1: Extending the model for Father relation </h2>
+            <div class="col-md-6 content" style="margin-left:35rem">
+                <h2 class="text-primary" >Learning outcome 1: Extending the model for Father relation </h2>
                 <br>
                 <h4>Extent your model for "who is the father of Peter?"</h4>
                 <br>
@@ -237,8 +246,8 @@ $(function(){
     <!-- learning outcome 2 -->
     <section id="version-1-course-x-lesson-3-page-13" class="container" hidden>
         <div class="row">
-            <div class="col-md-6 content" style="margin-left:20rem">
-                <h2>Learning outcome 2: Extending the model for father relation</h2>
+            <div class="col-md-6 content" style="margin-left:35rem">
+                <h2 class="text-primary"  >Learning outcome 2: Extending the model for father relation</h2>
             <li>Whom is John the father of?</li> 
             <ul>                      
             	</ul>
@@ -252,7 +261,7 @@ $(function(){
 		            <li>Note the order of the parameters</li>
              	 	Write the relation between john and AKidOfJohn?
              	 	 <div id="motherrelation" class="form-group">
-					<input id="fBox" type="text" class="form-control" required></div>
+					<input id="fBox" type="text" class="form-control"required></div>
 					<div id="cAnswer"></div>
 
                 <a class="btn btn-primary pull-left"
@@ -265,8 +274,8 @@ $(function(){
                 
     <section id="version-1-course-x-lesson-3-page-14" class="container" hidden>
         <div class="row">
-            <div class="col-md-6 content" style="margin-left:20rem">
-            <h2>Learning outcome 2: Extending the model for father relation </h2>
+            <div class="col-md-6 content" style="margin-left:35rem">
+            <h2 class="text-primary" >Learning outcome 2: Extending the model for father relation </h2>
             <br>
             <h4> Extend your Model for "Whom is John the father of?" </h4>
             <br>
@@ -294,15 +303,15 @@ $(function(){
 	<section id="version-1-course-x-lesson-3-page-17" class="container"
 		hidden>
 		<div class="row">
-			<div class="col-md-6 content" style="margin-left: 20rem">
-				<h2>Learning outcome 3: Extending the model for Dad relation</h2>
+			<div class="col-md-6 content" style="margin-left: 35rem">
+				<h2 class="text-primary"  >Learning outcome 3: Extending the model for Dad relation</h2>
 				<li>Who is the dad of peter?</li>
 				<ul>
-					<li>Assume we have a relation dad(p1,p2) where p1 is the dad
-						person of p2 variable</li>
+					<li>Assume we have a relation dad(p1,p2) where person p1 is the dad
+						of person person p2</li>
 				</ul>
-				<li>Who is the dad of peter?</li> <input id="gBox" type="text"
-					class="form-control" required>
+				<li>Who is the dad of peter?</li> <input id="gBox" type="text" style="margin-left:2rem"
+					class="form-control" required><br>
 				<div id="nAnswer"></div>
 				<a class="btn btn-primary pull-left"
 					onclick="gotoPrevious(3, 3, 'version-1-course-x-lesson-3-page-17', false, -1)">
@@ -315,8 +324,8 @@ $(function(){
 
 	<section id="version-1-course-x-lesson-3-page-18" class="container" hidden>
     <div class="row">
-        <div class="col-md-6 content" style="margin-left:20rem">
-            <h2>Learning outcome 3: Extending the model for Dad relation </h2>
+        <div class="col-md-6 content" style="margin-left:35rem">
+            <h2 style="text-align:center">Learning outcome 3: Extending the model for Dad relation </h2>
             <br>
             <h4> Extend your Model for "Who is the Dad of Peter?" </h4>
             <br>
@@ -336,7 +345,7 @@ $(function(){
     <!-- page-19 status page -->
     <!-- page-20 onlineSPARC -->
 
-<%@ include file = "footer.jsp" %>
+<%@ include file = "footer1.jsp" %>
 <script src="../js/lesson3/validations.js" type="text/javascript">  </script>
    </body>
 

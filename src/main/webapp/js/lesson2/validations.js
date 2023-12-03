@@ -2,6 +2,7 @@ const elementSelected = false;
 const elementName = ""; 
 const elementSymbol = "";
 
+var iNextBtn = document.getElementById("iNextBtn");
 var yunBox = document.getElementById("iBox");
 console.log(yunBox)
     yunBox.addEventListener('keydown', function(e){
@@ -12,14 +13,28 @@ console.log(yunBox)
         	if(answer.toLowerCase() == originalAnswer.toLowerCase()){
         		yunBox.className = 'form-control-xoBox-correct';
         		correctAnswerComment.innerHTML = "";
+        		iNextBtn.removeAttribute("disabled");
         	}
         	else {
         		yunBox.className = 'form-control-xoBox-incorrect';
         		correctAnswerComment.innerHTML = originalAnswer;
+        		iNextBtn.setAttribute("disabled", "disabled");
         	}
     	}
     	
 }); 
+
+yunBox.addEventListener('input', function()
+{
+	var correctAnswerComment = document.getElementById("uAnswer");
+	if(yunBox.value === "")
+	{
+		yunBox.className = 'form-control';
+		correctAnswerComment.innerHTML = "";
+	}	
+});
+
+
 var factBox = document.getElementById("exBox");
 factBox.addEventListener('keydown', function(e){
 	if (e.key === "Enter") { 
@@ -29,33 +44,58 @@ factBox.addEventListener('keydown', function(e){
     	if(answer.toLowerCase() == originalAnswer.toLowerCase()){
     		factBox.className = 'form-control-exBox-correct';
     		correctAnswerComment.innerHTML = "";
+    		iNextBtn.removeAttribute("disabled");
     	}
     	else {
     		factBox.className = 'form-control-exBox-incorrect';
     		correctAnswerComment.innerHTML = originalAnswer;
+    		iNextBtn.setAttribute("disabled", "disabled");
     	}
 	}
 	
 }); 
 
+factBox.addEventListener('input', function()
+{
+	var correctAnswerComment = document.getElementById("exAnswer");
+	if(factBox.value === "")
+	{
+		factBox.className = 'form-control';
+		correctAnswerComment.innerHTML = "";
+	}	
+});
 
+
+var fNextBtn = document.getElementById("fNextBtn");
 var funBox = document.getElementById("fBox");
 console.log(funBox)
     funBox.addEventListener('keydown', function(e){
     	if (e.key === "Enter") {  
     		var correctAnswerComment = document.getElementById("cAnswer");
         	let answer = funBox.value;
-        	let originalAnswer = "mother(joaan, peter)";
+        	let originalAnswer = "mom(joaan, peter)";
         	if(answer.toLowerCase() == originalAnswer.toLowerCase()){
         		funBox.className = 'form-control-sBox-correct';
         		correctAnswerComment.innerHTML = "";
+        		fNextBtn.removeAttribute("disabled");
         	}
         	else {
         		funBox.className = 'form-control-sBox-incorrect';
         		correctAnswerComment.innerHTML = originalAnswer;
+        		fNextBtn.setAttribute("disabled", "disabled");
         	}
     	}
     	
+});
+
+funBox.addEventListener('input', function()
+{
+	var correctAnswerComment = document.getElementById("cAnswer");
+	if(funBox.value === "")
+	{
+		funBox.className = 'form-control';
+		correctAnswerComment.innerHTML = "";
+	}	
 });
 
 var zunBox = document.getElementById("yBox");
@@ -68,14 +108,28 @@ console.log(zunBox)
         	if(answer == originalAnswer){
         		zunBox.className = 'form-control-tBox-correct';
         		correctAnswerComment.innerHTML = "";
+        		fNextBtn.removeAttribute("disabled");
         	}
         	else {
         		zunBox.className = 'form-control-tBox-incorrect';
         		correctAnswerComment.innerHTML = originalAnswer;
+        		fNextBtn.setAttribute("disabled", "disabled");
         	}
     	}
     	
 }); 
+
+zunBox.addEventListener('input', function()
+{
+	var correctAnswerComment = document.getElementById("zAnswer");
+	if(zunBox.value === "")
+	{
+		zunBox.className = 'form-control';
+		correctAnswerComment.innerHTML = "";
+	}	
+});
+
+
 
 
 
