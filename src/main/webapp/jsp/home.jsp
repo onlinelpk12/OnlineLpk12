@@ -9,6 +9,12 @@
 <meta charset="UTF-8">
 <title>Home</title>
 <%@ include file = "header.jsp" %>
+<style>
+    .card {
+                width: 275px;
+                margin: 0 auto; /* Center the card horizontally */
+            }
+    </style>
 </head>
 <body>
 
@@ -16,7 +22,7 @@
 <div class="row">
 <div class="col-md-6">
 <h2>Lessons</h2>
-<div class="card" style="width:400px">
+<div class="card" style="width:275px">
 <form action="lessonnumber.jsp">
 <img class="card-img-top" src="../images/lessons.png" alt="lessons" style="width:100%">
 <div class="card-body">
@@ -29,7 +35,7 @@
 
 <div class="col-sm-6">
 <h2>My Progress</h2>
-<div class="card" style="width:400px">
+<div class="card" style="width:275px">
 <form action="progress.jsp">
 
 

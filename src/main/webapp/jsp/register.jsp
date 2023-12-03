@@ -9,6 +9,7 @@
          rel="stylesheet">
       <link href="../styles/style-login-register.css" rel="stylesheet"
          type="text/css" />
+      <script type="text/javascript" src="../static/global.js"></script>
    </head>
    <body>
       <%@ include file="headerlog.jsp"%>
@@ -23,7 +24,7 @@
                   <option value="Teacher">Teacher</option>
                </select>
                <br> &nbsp;
-               <label for="course" required>Course:</label> 
+			   <label for="course" required>Course:</label> 
                <select id="course"
                   name="course">
                   <option value="3">LPK12</option>
@@ -37,7 +38,7 @@
                <p>UserName</p>
                <input type="text" placeholder="Username" id="username" required>
                <p>Useremail</p>
-               <input type="text" placeholder="Useremail" id="email" required>
+               <input type="email" placeholder="Useremail" id="email" required>
                <p>Password</p>
                <input type="password" placeholder="Password" id="password" required>
                <input type="submit" value="Register"> <a href="login.jsp">Already
@@ -91,17 +92,15 @@
 	
 	        //fetch post request
 			 const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
-             const signUpAPI = "http://localhost:8083/api/auth/signup";
+             const signUpAPI = dotnet_endpoint+"api/User/Register";
 	        fetch(signUpAPI,{
 	            method:'POST',
 	            body: JSON.stringify({
 					"firstname":firstname,
 					"lastname":lastname,
 	                "username":username,
-	                "email":email,
-					"role":roles,
+	                "EmailId":email,
 					"isactive":isactive,
-					"roles":[roles],
 	                "password":pwdObj,
 	            }),
 		        headers:{
@@ -112,8 +111,8 @@
 	       		if(response.status==200){
 	       			//US-13
 	       			resp.then((data)=>{       			 
-	       			 var userid = data.userId;
-	       			 const createRootFolderAPI = "https://localhost:7155/api/SparcFileSystem/createrootfolder";
+	       			 var userid = parseInt(data.content);
+	       			 const createRootFolderAPI = dotnet_endpoint+"api/SparcFileSystem/createrootfolder";
 	       			 var createRootFolderApi = new URL(createRootFolderAPI);
 	       			 var body = {
 	       					 		userId :userid
@@ -130,7 +129,7 @@
 	       			 }).then(function(response){
 	       				if(response.status==200){
 	       					console.log(data)
-	       					fetch("https://localhost:7155/api/User/"+userid+"/course/"+courseId,{
+	       					fetch(dotnet_endpoint+"api/User/"+userid+"/course/"+courseId,{
 	       						method: 'GET',
 	       						headers: {
 	    	       				    'Content-type': 'application/json; charset=UTF-8',

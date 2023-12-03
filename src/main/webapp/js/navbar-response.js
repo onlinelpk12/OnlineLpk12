@@ -1,3 +1,4 @@
+import {dotnet_endpoint} from "../static/global.js"
 //let ajaxurl = 'ajax.php';
 
 /* Fluents for navigation of file system 
@@ -20,7 +21,7 @@ const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
 */
 var refreshDirectory = function() {
 	let userid = getUserId();
-	const getAllFilesForldersAPI = "https://localhost:7155/api/SparcFileSystem/getallfoldersfiles";
+	const getAllFilesForldersAPI = dotnet_endpoint+"api/SparcFileSystem/getallfoldersfiles";
     //var data = {'action': "getAccessibleDirectory"};
 	//US-13
 	$.ajax({
@@ -28,6 +29,9 @@ var refreshDirectory = function() {
 	        url: getAllFilesForldersAPI,
 	        jsonpCallback: 'jsonCallback',
 	        dataType: 'json',
+            headers: {
+                'Authorization': "Bearer "+ sessionStorage.getItem("token")
+            },
 	        data : "userId="+userid+"",
 	        jsonp: false,
 	        success: function (response) {
@@ -156,8 +160,8 @@ var deleteFileOrFolder = function(name) {
 				   		'parentUrl': ApiParentURIParam
     			    	};
     		
-    		//const folderDeletionAPI = "http://localhost:7155/api/SparcFileSystem/deletefolder"+decodeURIComponent($.param(data,encodeData=false));
-    		const folderDeletionAPI = "https://localhost:7155/api/SparcFileSystem/deletefolder";
+    		//const folderDeletionAPI = dotnet_endpoint+"api/SparcFileSystem/deletefolder"+decodeURIComponent($.param(data,encodeData=false));
+    		const folderDeletionAPI = dotnet_endpoint+"api/SparcFileSystem/deletefolder";
     		
     		postSparcData(folderDeletionAPI, data).then(resp =>{
     			console.log('response from post method: ', resp);
@@ -183,7 +187,7 @@ var deleteFileOrFolder = function(name) {
 			   		'folderUrl': ApiFolderNameParam
 			    	};
         	
-        	const fileDeletionAPI = "https://localhost:7155/api/SparcFileSystem/deletefile?"+decodeURIComponent($.param(data,encodeData=false));
+        	const fileDeletionAPI = dotnet_endpoint+"api/SparcFileSystem/deletefile?"+decodeURIComponent($.param(data,encodeData=false));
         	postSparcData(fileDeletionAPI, data).then(resp =>{
     			console.log('response from post method: ', resp);
     			if (resp.errors.length==0) {
@@ -339,7 +343,12 @@ var setEditorToFile = function(fileName) {
                  'folderUrl':folderurl,
                };   
     
-    const getFileAPI = "https://localhost:7155/api/SparcFileSystem/getfile?"+($.param(data,encodeData=false));
+    const getFileAPI = dotnet_endpoint+"api/SparcFileSystem/getfile?"+($.param(data,encodeData=false));
+    $.ajaxSetup({
+        headers:{
+           'Authorization': "Bearer "+ sessionStorage.getItem("token")
+        }
+     });
     $.get(getFileAPI, data, function(response) {
     	console.log((response.content.program)?response.content.program:"empty program");
         let editor = ace.edit("editor");
@@ -491,6 +500,11 @@ $(document).ready(function() {
                     'editor': editorValue};
 
         // Expected response : answer sets
+        $.ajaxSetup({
+            headers:{
+               'Authorization': "Bearer "+ sessionStorage.getItem("token")
+            }
+         });
         $.post(ajaxurl, data, function(response) {
             setResultsToString(response);
         });
@@ -539,7 +553,7 @@ $(document).ready(function() {
             	'folderName': folderName,
             	'parentUrl': parentURL
             	};
-        const folderCreationAPI = "https://localhost:7155/api/SparcFileSystem/createfolder";
+        const folderCreationAPI = dotnet_endpoint+"api/SparcFileSystem/createfolder";
         
         postSparcData(folderCreationAPI, data).then(resp =>{
 			console.log('response from post method: ', resp);
@@ -573,7 +587,7 @@ $(document).ready(function() {
                 'folderUrl': folderUrl
                };
 
-        const fileCreationAPI = "https://localhost:7155/api/SparcFileSystem/createfile";
+        const fileCreationAPI = dotnet_endpoint+"api/SparcFileSystem/createfile";
         // Expected response : success message
         postSparcData(fileCreationAPI, data).then(resp =>{
 			console.log('response from post method: ', resp);
@@ -723,7 +737,7 @@ $(document).ready(function() {
                };
         
         console.log("data : ",data);
-        const saveFileAPI = "https://localhost:7155/api/SparcFileSystem/savefile";
+        const saveFileAPI = dotnet_endpoint+"api/SparcFileSystem/savefile";
         postSparcData(saveFileAPI, data).then(resp =>{
 			console.log('response from post method: ', resp);
 			if (resp.errors.length==0) {
@@ -819,6 +833,9 @@ function postSparcData(url, data){
           type:'POST',
           url:url,
           data:JSON.stringify(data),
+          headers: {
+            'Authorization': "Bearer "+ sessionStorage.getItem("token")
+        },
           contentType: "application/json; charset=utf-8",
           success: function (response) {
             resolve(response);

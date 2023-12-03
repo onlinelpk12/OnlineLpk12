@@ -9,6 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>	
     <link href="../styles/style-login-register.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="../static/global.js"></script>
     <link href="../styles/style.css" rel="stylesheet" type="text/css"/>
   </head>
   <body>
@@ -22,8 +23,8 @@
         <div class="form-group">
           <h1>Forgot password</h1>
   	  <form id="form" method="post" >
- 	    <label for="email">Email id</label>
-	    <input type="text"  name="email" placeholder="email" id="email" required>
+ 	    <label for="userName">UserName</label>
+	    <input type="text"  name="user" placeholder="userName" id="userName" required>
 	    <br>
  	    <label for="newPassword">New Password</label><br>
 	    <input type="Password" placeholder="New Password" id="newPassword" required>
@@ -42,19 +43,20 @@
     var form=document.getElementById('form');
     form.addEventListener('submit',function(e){
       e.preventDefault()
-      var email=document.getElementById('email').value;
+      var userName=document.getElementById('userName').value;
       var newPassword=document.getElementById('newPassword').value;
       //fetch post request
       //const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
-      const forgotPasswordAPI = "http://localhost:8083/api/auth/forgotPassword";
+      const forgotPasswordAPI = dotnet_endpoint+"api/User/ForgotPassword";
       fetch(forgotPasswordAPI,{
         method:'POST',
         body: JSON.stringify({
-            "email_id":email,
+            "username":userName,
             "password":newPassword
         }),
         headers:{
-          'Content-Type':'application/json; charset=UTF-8'
+          'Content-Type':'application/json; charset=UTF-8',
+          'Authorization': "Bearer "+ sessionStorage.getItem("token")
         }
       }).then(function(response){
         var resp=response.json();
