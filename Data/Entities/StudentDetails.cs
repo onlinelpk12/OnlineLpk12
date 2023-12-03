@@ -1,0 +1,10 @@
+﻿namespace OnlineLpk12.Data.Entities
+{
+    public class StudentDetails
+    {
+        public int UserId { get; set; }
+        public string UserName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+    }
+}
