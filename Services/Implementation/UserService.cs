@@ -117,6 +117,39 @@ namespace OnlineLpk12.Services.Implementation
             catch (Exception ex)
             {
                 throw;
+                }
+           return result;
+        }
+        public async Task<Result<string>> CourseMap(int userId, int courseId)
+        {
+            Result<string> result = new();
+            bool isTeacher = await IsUserTeacher(userId);
+            if (isTeacher)
+            {
+                await _context.CourseTeacher.AddAsync(new Data.Models.CourseTeacher()
+                {
+                    CourseId = courseId,
+                    TeacherId = userId,
+                });
+                //save changes
+                await _context.SaveChangesAsync();
+
+                result.Success = true;
+                result.Content = "Created a Teacher Course map successfully!";
+            }
+            else
+            {
+                int teacherId = await GetTeacherIdByCourseId(courseId);
+                await _context.CoursesStudents.AddAsync(new Data.Models.CoursesStudent()
+                {
+                    CourseId = courseId,
+                    StudentId = userId,
+                    TeacherId = teacherId
+                });
+                //save changes
+                await _context.SaveChangesAsync();
+                result.Success = true;
+                result.Content = "Created a  Student Teacher Course map successfully!";
             }
             return result;
         }
@@ -203,7 +236,7 @@ namespace OnlineLpk12.Services.Implementation
                         result.Success = false;
                         result.Message = "User is inactive. Contact support for activation.";
                     }
-                    
+
                     else
                     {
                         userFromDb.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, 8);
@@ -223,6 +256,21 @@ namespace OnlineLpk12.Services.Implementation
                 throw;
             }
             return result;
+        }
+        public async Task<int> GetTeacherIdByCourseId(int courseId)
+        {
+            try
+            {
+                var user = await (from usr in _context.CourseTeacher
+                                  where usr.CourseId == courseId
+                                  select usr).FirstOrDefaultAsync();
+                return user.TeacherId;
+            }
+            catch (Exception ex)
+            {
+                _logService.LogError(courseId, "GetUserNameByUserId", "UserService", ex.Message, ex);
+                return 0;
+            }
         }
     }
 }

@@ -22,6 +22,7 @@ namespace OnlineLpk12.Data.Context
         public virtual DbSet<AssessmentSubmission> AssessmentSubmissions { get; set; } = null!;
         public virtual DbSet<Content> Contents { get; set; } = null!;
         public virtual DbSet<Course> Courses { get; set; } = null!;
+        public virtual DbSet<CourseTeacher> CourseTeacher { get; set; } = null!;
         public virtual DbSet<CoursesStudent> CoursesStudents { get; set; } = null!;
         public virtual DbSet<Lesson> Lessons { get; set; } = null!;
         public virtual DbSet<LessonStatus> LessonStatuses { get; set; } = null!;
@@ -44,11 +45,11 @@ namespace OnlineLpk12.Data.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-//            if (!optionsBuilder.IsConfigured)
-//            {
+           if (!optionsBuilder.IsConfigured)
+           {
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                optionsBuilder.UseMySql("server=onlinelpk12database.mysql.database.azure.com;database=onlinelpk12;user=onlinelpk12admin@onlinelpk12database;password=Paswd@1234", Microsoft.EntityFrameworkCore.ServerVersion.Parse("5.7.32-mysql"));
-//            }
+               optionsBuilder.UseMySql("server=onlinelpk12database.mysql.database.azure.com;database=onlinelpk12;user=onlinelpk12admin@onlinelpk12database;password=Paswd@1234", Microsoft.EntityFrameworkCore.ServerVersion.Parse("5.7.32-mysql"));
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -210,6 +211,23 @@ namespace OnlineLpk12.Data.Context
                 entity.Property(e => e.StudentId)
                     .HasColumnType("int(11)")
                     .HasColumnName("student_id");
+
+                entity.Property(e => e.TeacherId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("teacher_id");
+            });
+
+            modelBuilder.Entity<CourseTeacher>(entity =>
+            {
+                entity.ToTable("course_teacher");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.CourseId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("course_id");
 
                 entity.Property(e => e.TeacherId)
                     .HasColumnType("int(11)")
