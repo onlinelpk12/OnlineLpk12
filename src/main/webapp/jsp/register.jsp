@@ -53,6 +53,7 @@
 	        var username=document.getElementById('username').value;
 	
 	        var email=document.getElementById('email').value;
+	        var courseId=document.getElementById('course').value;
 	        
 	        var pwdObj = document.getElementById('password').value;
 	       	if (roles=='Student'){
@@ -123,7 +124,20 @@
 	       			 }).then(function(response){
 	       				if(response.status==200){
 	       					console.log(data)
-							location.href="login.jsp"
+	       					fetch(dotnet_endpoint+"api/User/"+userid+"/course/"+courseId,{
+	       						method: 'GET',
+	       						headers: {
+	    	       				    'Content-type': 'application/json; charset=UTF-8',
+	    	       				  }
+	       					}).then(function(response)
+	       							{
+	       						if(response.status==200){
+	       							console.log(data)
+	       							location.href="login.jsp"
+	       						}
+	       							}
+	       							)
+							
 	       				}
 	       			 });	       			
 	       			});
