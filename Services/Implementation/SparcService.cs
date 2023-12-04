@@ -267,6 +267,20 @@ namespace OnlineLpk12.Services.Implementation
             var result = new Result<string>();
             try
             {
+                var mostRecentTimestamp = _context.Sparcs.Where(sp => sp.UserId == sparcRequest.UserId &&
+                 sp.LearningOutcome == sparcRequest.LearningOutcome &&
+                 sp.LessonId == sparcRequest.LessonId).Max(sp => sp.ActivityTimeStamp);
+
+                var sparc = (from sp in _context.Sparcs
+                             where sp.UserId == sparcRequest.UserId &&
+                                   sp.LearningOutcome == sparcRequest.LearningOutcome &&
+                                   sp.LessonId == sparcRequest.LessonId &&
+                                   sp.ActivityTimeStamp == mostRecentTimestamp
+                             select sp).FirstOrDefault();
+
+                dynamic sparc_id = sparc?.Id;
+
+                //If the record already present in sparc grade table then it will be update the grade
                 var datafromdb = await (from gr in _context.SparcGrades
                                         where gr.StudentId == sparcRequest.UserId &&
                                         gr.LessonId == sparcRequest.LessonId &&
@@ -280,7 +294,8 @@ namespace OnlineLpk12.Services.Implementation
                         LearningOutcome = sparcRequest.LearningOutcome,
                         StudentId = sparcRequest.UserId,
                         Grade = sparcRequest.Grade,
-                        ActivityTimeStamp = DateTime.Now
+                        ActivityTimeStamp = DateTime.Now,
+                        SparcId = Convert.ToInt32(sparc_id)
                     };
                     await _context.SparcGrades.AddAsync(data);
                 }

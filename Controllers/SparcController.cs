@@ -207,7 +207,7 @@ namespace OnlineLpk12.Controllers
                 if (request.LessonId < 1)
                     response.Errors.Add("Invalid Lesson Id");
                 if (request.LearningOutcome < 1)
-                    response.Errors.Add("Invalid Learning Outcome");
+                    //response.Errors.Add("Invalid Learning Outcome");
                 if (request.UserId < 1)
                     response.Errors.Add("Invalid User Id");
 

@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineLpk12.Data.Entities;
+using OnlineLpk12.Data.Models;
 using OnlineLpk12.Helpers;
-using OnlineLpk12.Services.Implementation;
 using OnlineLpk12.Services.Interface;
-using System.Diagnostics;
 using System.Net;
+using System.Diagnostics;
 using System.Reflection;
 using System.Text;
 
@@ -19,97 +20,138 @@ namespace OnlineLpk12.Controllers
     {
         private readonly IUserService _userService;
         private readonly ILogService _logService;
-
         public UserController(IUserService userService, ILogService logService)
         {
             this._userService = userService;
             _logService = logService;
         }
 
-        //[HttpPost("Register")]
-        //[ProducesResponseType(typeof(Response<EmptyResult>),(int)HttpStatusCode.OK)]
-        //[ProducesResponseType(typeof(Response<EmptyResult>),(int)HttpStatusCode.BadRequest)]
-        //[ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.InternalServerError)]
-        //public async Task<IActionResult> Register([FromBody] RegistrationUser user)
-        //{
-        //    Response<EmptyResult> response = new();
-        //    try
-        //    {
-        //        var validationMessages = Helper.ValidateUserWhileRegistering(user);
-        //        if (validationMessages.Any())
-        //        {
-        //            response.Errors = validationMessages;
-        //            response.Message = "One or more validation errors occurred.";
-        //            return BadRequest(response);
-        //        }
-        //        var isUsernameExists = await _userService.IsUserNameExists(user.UserName);
-        //        var isEmailIdExists = await _userService.IsEmailIdExists(user.EmailId);
-        //        if (isUsernameExists)
-        //        {
-        //            validationMessages.Add("UserName already exists.");
-        //        }
-        //        if (isEmailIdExists)
-        //        {
-        //            validationMessages.Add("Email Address already exists.");
-        //        }
-        //        if (validationMessages.Any())
-        //        {
-        //            response.Errors = validationMessages;
-        //            //response.Message = "One or more validation errors occurred.";
-        //            return BadRequest(response);
-        //        }
+        [HttpPost("Register")]
+        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.InternalServerError)]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register([FromBody] RegistrationUser user)
+        {
+            Response<EmptyResult> response = new();
+            try
+            {
+                var validationMessages = Helper.ValidateUserWhileRegistering(user);
+                if (validationMessages.Any())
+                {
+                    response.Errors = validationMessages;
+                    response.Message = "One or more validation errors occurred.";
+                    return BadRequest(response);
+                }
+                var isUsernameExists = await _userService.IsUserNameExists(user.UserName);
+                var isEmailIdExists = await _userService.IsEmailIdExists(user.EmailId);
+                if (isUsernameExists)
+                {
+                    validationMessages.Add("UserName already exists.");
+                }
+                if (isEmailIdExists)
+                {
+                    validationMessages.Add("Email Address already exists.");
+                }
+                if (validationMessages.Any())
+                {
+                    response.Errors = validationMessages;
+                    //response.Message = "One or more validation errors occurred.";
+                    return BadRequest(response);
+                }
 
-        //        var result = await _userService.RegisterUser(user);
-        //        response.Message = result.Message;
-        //        return Ok(response);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        response.Errors.Add("Error occurred while fetching the data.");
-        //        response.Message = "One or more errors occurred.";
-        //        return StatusCode((int)HttpStatusCode.InternalServerError, response);
-        //    }
-        //}
+                var result = await _userService.RegisterUser(user);
+                response.Message = result.Message;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response.Errors.Add("Error occurred while fetching the data.");
+                response.Message = "One or more errors occurred.";
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
+            }
+        }
 
 
-        //[HttpPost("Login")]
-        //[ProducesResponseType(typeof(Response<LoginResponse>), (int)HttpStatusCode.OK)]
-        //[ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.BadRequest)]
-        //[ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.InternalServerError)]
-        //public async Task<IActionResult> Login([FromBody] LoginUser user)
-        //{
-        //    Response<LoginResponse> response = new();
-        //    try
-        //    {
-        //        var validationMessages = Helper.ValidateUserWhileLogin(user);
-        //        if (validationMessages.Any())
-        //        {
-        //            response.Errors = validationMessages;
-        //            response.Message = "One or more validation errors occurred.";
-        //            return BadRequest(response);
-        //        }
-        //        var result = await _userService.Login(user);
-        //        if (result.Success)
-        //        {
-        //            response.Message = result.Message;
-        //            response.Content = result.Content;
-        //            return Ok(response);
-        //        }
-        //        else
-        //        {
-        //            response.Message = "One or more validation errors occurred.";
-        //            response.Errors.Add(result.Message);
-        //            return BadRequest(response);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        response.Message = "One or more validation errors occurred.";
-        //        response.Errors.Add("Error occurred while fetching the data.");
-        //        return StatusCode((int)HttpStatusCode.InternalServerError, response);
-        //    }
-        //}
+        [HttpPost("Login")]
+        [ProducesResponseType(typeof(Response<LoginResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.InternalServerError)]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login([FromBody] LoginUser user)
+        {
+            Response<Token> response = new();
+            try
+            {
+                var validationMessages = Helper.ValidateUserWhileLogin(user);
+                if (validationMessages.Any())
+                {
+                    response.Errors = validationMessages;
+                    response.Message = "One or more validation errors occurred.";
+                    return BadRequest(response);
+                }
+                var result = await _userService.Login(user);
+                if (result.Success)
+                {
+                    response.Message = result.Message;
+                    response.Content = result.Content;
+                    return Ok(response);
+                }
+                else
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add(result.Message);
+                    return BadRequest(response);
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("Error occurred while fetching the data.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
+            }
+        }
 
+
+
+        [HttpPost("ForgotPassword")]
+        [ProducesResponseType(typeof(Response<LoginResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.InternalServerError)]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword([FromBody] LoginUser user)
+        {
+            Response<EmptyResult> response = new();
+            try
+            {
+                var validationMessages = Helper.ValidateUserWhileLogin(user);
+                if (validationMessages.Any())
+                {
+                    response.Errors = validationMessages;
+                    response.Message = "One or more validation errors occurred.";
+                    return BadRequest(response);
+                }
+                var result = await _userService.ForgotPassword(user);
+                if (result.Success)
+                {
+                    response.Message = result.Message;
+                    return Ok(response);
+                }
+                else
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add(result.Message);
+                    return BadRequest(response);
+                }
+            }
+            catch (Exception ex)
+            {
+                 response.Message = "One or more validation errors occurred.";
+               response.Errors.Add("Error occurred while fetching the data.");
+               return StatusCode((int)HttpStatusCode.InternalServerError, response);
+           }
+        }
+        
         [HttpGet("{userId}/course/{courseId}")]
         public async Task<IActionResult> TeacherStudentsForCourse(int userId, int courseId)
         {
