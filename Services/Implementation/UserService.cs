@@ -93,9 +93,9 @@ namespace OnlineLpk12.Services.Implementation
             return result;
         }
 
-        public async Task<Result<EmptyResult>> RegisterUser(RegistrationUser inputUser)
+        public async Task<Result<string>> RegisterUser(RegistrationUser inputUser)
         {
-            Result<EmptyResult> result = new Result<EmptyResult>();
+            Result<string> result = new Result<string>();
             try
             {
                 Data.Models.User DbUser = new Data.Models.User()
@@ -106,11 +106,12 @@ namespace OnlineLpk12.Services.Implementation
                     EmailId = inputUser.EmailId,
                     Username = inputUser.UserName,
                     UserType = Helper.GetUserType(inputUser.IsStudent),
-                    IsActive = inputUser.IsStudent
+                    IsActive = true
                 };
                 await _context.Users.AddAsync(DbUser);
                 await _context.SaveChangesAsync();
-
+                Data.Models.User user = GetUserDetailsByUserName(inputUser.UserName);
+                result.Content = user.Id.ToString();
                 result.Success = true;
                 result.Message = "User registered successfully.";
             }
