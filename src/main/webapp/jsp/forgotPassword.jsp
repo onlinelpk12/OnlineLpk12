@@ -25,7 +25,7 @@
  	    <label for="email">Email id</label>
 	    <input type="text"  name="email" placeholder="email" id="email" required>
 	    <br>
- 	    <label for="newPassword">New Password</label>
+ 	    <label for="newPassword">New Password</label><br>
 	    <input type="Password" placeholder="New Password" id="newPassword" required>
  	    <br>
 	    <br>
