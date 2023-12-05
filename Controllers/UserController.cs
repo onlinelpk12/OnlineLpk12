@@ -100,7 +100,7 @@ namespace OnlineLpk12.Controllers
                 }
                 else
                 {
-                    response.Message = "One or more validation errors occurred.";
+                    response.Message = result.Message;
                     response.Errors.Add(result.Message);
                     return BadRequest(response);
                 }
