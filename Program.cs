@@ -1,9 +1,14 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineLpk12.Data.Context;
 using OnlineLpk12.Services.Implementation;
 using OnlineLpk12.Services.Interface;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,7 +36,20 @@ builder.Services.AddTransient<ITeacherService, TeacherService>();
 builder.Services.AddTransient<IStudentService, StudentService>();
 builder.Services.AddTransient<ISparcFileSystemService, SparcFileSystemService>();
 
-builder.Services.AddCors();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+            builder =>
+            {
+                builder.WithOrigins("http://localhost:8080", "http://localhost:8081",
+                    "http://localhost:8082", "http://localhost:8083",
+                    "http://localhost:8084", "http://localhost:8085",
+                    "http://localhost:8086", "http://127.0.0.1:5500",
+                    "https://127.0.0.1:5500")
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            });
+});
 
 builder.Services.AddHttpClient("Sparc", httpClient =>
 {
@@ -41,6 +59,26 @@ builder.Services.AddHttpClient("Sparc", httpClient =>
     httpClient.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
 });
 
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(o =>
+{
+    o.TokenValidationParameters = new TokenValidationParameters
+    {
+        IssuerSigningKey = new SymmetricSecurityKey
+        (Encoding.UTF8.GetBytes(builder.Configuration["Key"])),
+        ValidateLifetime = false,
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateIssuerSigningKey = true
+    };
+});
+
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -49,16 +87,13 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 //}
-app.UseCors(options =>
-            options.AllowAnyMethod()
-            .AllowAnyHeader()
-            .SetIsOriginAllowed(origin => true)
-            .WithOrigins("http://localhost:8080")
-              .AllowCredentials());
+app.UseCors();
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+
+app.MapControllers().RequireAuthorization();
 
 app.Run();
