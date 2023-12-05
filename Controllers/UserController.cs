@@ -33,7 +33,7 @@ namespace OnlineLpk12.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegistrationUser user)
         {
-            Response<EmptyResult> response = new();
+            Response<string> response = new();
             try
             {
                 var validationMessages = Helper.ValidateUserWhileRegistering(user);
@@ -62,6 +62,7 @@ namespace OnlineLpk12.Controllers
 
                 var result = await _userService.RegisterUser(user);
                 response.Message = result.Message;
+                response.Content = result.Content;
                 return Ok(response);
             }
             catch (Exception ex)
@@ -153,6 +154,7 @@ namespace OnlineLpk12.Controllers
         }
         
         [HttpGet("{userId}/course/{courseId}")]
+        [AllowAnonymous]
         public async Task<IActionResult> TeacherStudentsForCourse(int userId, int courseId)
         {
             Response<List<Student>> response = new();

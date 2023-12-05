@@ -6,7 +6,7 @@ namespace OnlineLpk12.Services.Interface
 {
     public interface IUserService
     {
-        Task<Result<EmptyResult>> RegisterUser(RegistrationUser user);
+        Task<Result<string>> RegisterUser(RegistrationUser user);
         Task<Result<EmptyResult>> ForgotPassword(LoginUser user);
         Task<Result<Token>> Login(LoginUser user);
         public Data.Models.User GetUserDetailsByUserName(string username);
