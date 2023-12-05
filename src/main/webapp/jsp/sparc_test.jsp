@@ -203,6 +203,9 @@
         $.ajax({
        	 contentType:'application/x-www-form-urlencoded',
             data: request,
+			headers:{
+      'Authorization': "Bearer "+ sessionStorage.getItem("token")
+   		},
             success: function (data) {
                 res= data;
             },

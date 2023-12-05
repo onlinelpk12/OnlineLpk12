@@ -6,8 +6,10 @@
     <title>Online LPK12</title>
     <link href="https://fonts.googleapis.com/css?family=ZCOOL+XiaoWei" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="../styles/style-login-register.css" rel="stylesheet" type="text/css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>	
+    <script type="text/javascript" src="../static/global.js"></script>
     <link href="../styles/style-login-register.css" rel="stylesheet" type="text/css"/>
     <link href="../styles/style.css" rel="stylesheet" type="text/css"/>
   </head>
@@ -47,7 +49,7 @@
       var password=document.getElementById('password').value;
       //fetch post request
       const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
-      const signInAPI = "http://localhost:8083/api/auth/signin";
+      const signInAPI = dotnet_endpoint+"api/User/Login";
       fetch(signInAPI,{
         method:'POST',
         body: JSON.stringify({
@@ -59,18 +61,21 @@
         }
       }).then(function(response){
         var resp=response.json();
-        console.log(resp)
+        console.log(response)
         if(response.status==200){
             resp.then((data)=>{
-                sessionStorage.setItem("username",data.username)
-                sessionStorage.setItem("userId",data.id)
-		sessionStorage.setItem("token",data.accessToken)
+            	console.log(data)
+                sessionStorage.setItem("username",data.content.username)
+                sessionStorage.setItem("userId",data.content.id)
+		sessionStorage.setItem("token",data.content.accessToken)
                 console.log(sessionStorage.getItem("userId"))	
-              	if(data.roles=="ROLE_TEACHER"){
+                console.log(data.roles)
+              	if(data.content.roles=="Teacher"){
 		  sessionStorage.setItem("userRole","Teacher")
               	  location.href='hometeacher.jsp'
               	}
-              	else if(data.roles=='ROLE_STUDENT'){
+              	else if(data.content.roles=='Student'){
+              		console.log(data.roles)
 		  sessionStorage.setItem("userRole","Student")
               	  location.href='home.jsp'
               	}

@@ -129,7 +129,9 @@ body {
 
 .box input[type="text"],
 
-.box input[type="password"] {
+.box input[type="password"],
+
+.box input[type="email"] {
 
     border: none;
 
@@ -254,7 +256,9 @@ body {
 
 .regbox input[type="text"],
 
-.regbox input[type="password"] {
+.regbox input[type="password"],
+
+.regbox input[type="email"] {
 
     border: none;
 

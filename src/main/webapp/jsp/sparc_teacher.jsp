@@ -9,7 +9,10 @@
 <script src="../js/mode-sparc.js" type="text/javascript"></script>
 <script src="../js/sparc_programs.js" type="text/javascript"></script>
 <script src="../js/script.js" type="text/javascript"></script>
+<script type="text/javascript" src="../static/global.js"></script>
  <script src="../js/verifytoken.js" type="text/javascript"></script>
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="sparc_teacher.jsp"></script>
 
 <title>Online SPARC</title>
 <style type="text/css" media="screen">
@@ -99,7 +102,7 @@ color: white;
   </select>
 </li>
 <li>
-<button type="submit" class="btn btn-default navbar-btn" id="btn_submit_grade" value="submitGrade" onclick="submitGrade()">
+<button type="submit" class="btn btn-default navbar-btn" id="btn_submit_grade" value="getQuery" onclick="submitGrade()">
 Submit Grade
 </button>
 </li>
@@ -137,16 +140,16 @@ var studentid=sessionStorage.getItem("studentid");
 var lessonid=sessionStorage.getItem("lessonID");
 var lessonoutcome=sessionStorage.getItem("lessonOutcome");
 var userRole = sessionStorage.getItem('userRole');
-const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
-const apiBaseurl = "https://localhost:7155/api/sparc/";
+//const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
+const apiBaseurl = dotnet_endpoint+"api/sparc/";
 
 var editor = ace.edit("editor");
 editor.session.setMode("ace/mode/sparc");
 
-var showResults=function(response){
-	$('#results').html('<center> <button onclick="clearResults()">Clear the Results</button> </center>');
-	$('#results').append(response);
-}
+// var showResults=function(response){
+// 	$('#results').html('<center> <button onclick="clearResults()">Clear the Results</button> </center>');
+// 	$('#results').append(response);
+// }
 	
 var clearResults=function(){
 	$('#results').empty();
@@ -176,8 +179,12 @@ function getApiData()
 {
 	let lessonid=sessionStorage.getItem("lessonID");
 	let lessonoutcome=sessionStorage.getItem("lessonOutcome");
-	const teacher_url = "https://localhost:7155/api/Teacher/"+studentid+"/sparc/lessson/"+lessonid+"/learningoutcome/"+lessonoutcome;
-
+	const teacher_url = dotnet_endpoint+"api/Teacher/"+studentid+"/sparc/lessson/"+lessonid+"/learningoutcome/"+lessonoutcome;
+	$.ajaxSetup({
+   headers:{
+      'Authorization': "Bearer "+ sessionStorage.getItem("token")
+   }
+	});	
 	$.get(teacher_url, function(data, status){
 		editor.setValue(data.content.program);
 	});
@@ -222,6 +229,9 @@ function PostSparc(request,suburl) {
 	$.ajax({
 		contentType:'application/x-www-form-urlencoded',
 		data: request,
+		headers:{
+      'Authorization': "Bearer "+ sessionStorage.getItem("token")
+   		},
 		success: function (data) {
 			res= data;
 		},
