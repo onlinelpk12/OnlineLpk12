@@ -264,7 +264,7 @@ namespace OnlineLpk12.Services.Implementation
             {
                 var user = await (from usr in _context.CourseTeacher
                                   where usr.CourseId == courseId
-                                  select usr).FirstOrDefaultAsync();
+                                  select usr).LastOrDefaultAsync();
                 return user.TeacherId;
             }
             catch (Exception ex)
