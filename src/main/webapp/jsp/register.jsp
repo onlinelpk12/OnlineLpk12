@@ -24,6 +24,13 @@
                   <option value="Teacher">Teacher</option>
                </select>
                <br> &nbsp;
+			   <label for="course" required>Course:</label> 
+               <select id="course"
+                  name="course">
+                  <option value="3">LPK12</option>
+                  <option value="4">Online Lpk12</option>
+               </select>
+               <br> &nbsp;
                <p>FirstName</p>
                <input type="text" placeholder="FirstName" id="firstname" required>
                <p>LastName</p>
@@ -92,10 +99,8 @@
 					"firstname":firstname,
 					"lastname":lastname,
 	                "username":username,
-	                "email":email,
-					"role":roles,
+	                "EmailId":email,
 					"isactive":isactive,
-					"roles":[roles],
 	                "password":pwdObj,
 	            }),
 		        headers:{
@@ -106,7 +111,7 @@
 	       		if(response.status==200){
 	       			//US-13
 	       			resp.then((data)=>{       			 
-	       			 var userid = data.userId;
+	       			 var userid = parseInt(data.content);
 	       			 const createRootFolderAPI = dotnet_endpoint+"api/SparcFileSystem/createrootfolder";
 	       			 var createRootFolderApi = new URL(createRootFolderAPI);
 	       			 var body = {
