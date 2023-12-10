@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineLpk12.Data.Entities;
+using OnlineLpk12.Data.Models;
 using OnlineLpk12.Services.Interface;
 using System.Diagnostics;
 using System.Net;
@@ -80,6 +81,83 @@ namespace OnlineLpk12.Controllers
                     Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while saving the data.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
+            }
+        }
+
+        [HttpPost("{userId}/quizresults")]
+        public async Task<IActionResult> SaveQuizQuestionAnswer(int userId, [FromBody] QuizQuestionAnswer quizQuestionAnswer)
+        {
+            Response<SuccessResponse> response = new();
+            try
+            {
+                // Basic user validation
+                if (userId <= 0)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Enter a valid User Id.");
+                    return BadRequest(response);
+                }
+
+                // Check if the quizQuestionAnswer object is null
+                if (quizQuestionAnswer == null)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Invalid request");
+                    return BadRequest(response);
+                }
+
+                // The UserId in the quizQuestionAnswer should match the userId parameter
+                if (quizQuestionAnswer.UserId != userId)
+                {
+                    response.Errors.Add("User Id mismatch.");
+                }
+
+                // Validate the primary key
+                //if (quizQuestionAnswer.QuizQuestionAnswerId < 1)
+                //{
+                  //  response.Errors.Add("Invalid Quiz Question Answer Id.");
+                //}
+
+                // Validate the foreign key to Question
+                if (quizQuestionAnswer.QuestionId < 1)
+                {
+                    response.Errors.Add("Invalid Question Id.");
+                }
+
+                // Validate the Lesson
+                if (quizQuestionAnswer.Lesson <=0)
+                {
+                    response.Errors.Add("Invalid Lesson");
+                }
+
+                // Additional validation can be performed here...
+
+                // If there are any errors in the validation, return a BadRequest
+                if (response.Errors.Any())
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    return BadRequest(response);
+                }
+
+                // Assuming _quizService is a service to handle quiz operations
+                bool isSuccess =  _studentService.SaveQuizQuestionAnswer(quizQuestionAnswer);
+
+                if (isSuccess)
+                {
+                    response.Content = new SuccessResponse { IsSuccess = isSuccess };
+                    return Ok(response);
+                }
+
+                response.Message = "An error occurred while saving the quiz answer.";
+                return BadRequest(response);
+            }
+            catch (Exception ex)
+            {
+                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
+                response.Message = "An internal error occurred.";
+                response.Errors.Add("Error occurred while saving the quiz answer.");
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }
