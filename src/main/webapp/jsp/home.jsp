@@ -42,7 +42,6 @@
 					</form>
 				</div>
 			</div>
-
 			<div class="col-sm-6">
 				<h2>My Progress</h2>
 				<div class="card" style="width: 400px">
@@ -90,6 +89,7 @@
 					</form>
 				</div>
 			</div>
+								 
 
 			<div class="col-sm-6">
 				<h2>My Progress</h2>

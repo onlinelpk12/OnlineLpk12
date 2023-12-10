@@ -44,6 +44,27 @@ const elementSelected = false;
 const elementName = ""; 
 const elementSymbol = "";
 
+//added by Susmitha Reddy Bodam
+let elements = new Map();
+  elements.set("Hydrogen",1);
+  elements.set("Helium",2);
+  elements.set("Lithium",3);
+  elements.set("Beryllium", 4);
+  elements.set("Boron",5);
+  elements.set("Carbon", 6);
+  elements.set("Nitrogen", 7);
+  elements.set("Oxygen", 8);
+  elements.set("Fluorine", 9);
+  elements.set("Neon", 10);
+  elements.set("Sodium",11);
+  elements.set("Magnesium", 12);
+  elements.set("Aluminium", 13);
+  elements.set("Silicon", 14);
+  elements.set("Phosphorus", 15);
+  elements.set("Sulphur", 16);
+  elements.set("Chlorine", 17);
+
+  
 
 
 function changeImageRandomly(){
@@ -59,4 +80,17 @@ function changeImageRandomly(){
 
 function getRandomInt(max) {
 	  return Math.floor(Math.random() * max);
+}
+
+
+
+function getElementName(){
+	var elementBox = document.getElementById("eBox");
+	
+	let elementNameEntered = elementBox.value;
+	let elementAtomicNumber = elements.get(elementNameEntered);
+	
+	document.getElementById("randomImageDisplay").src = "../images/lesson5/elements/"+ elementAtomicNumber +".png";
+	document.getElementById("chosenElement").innerHTML = "Extend model: add the knowledge about atomic number of <b>"+elementMap.get(elementAtomicNumber)+"</b> to the model";
+    	
 }
