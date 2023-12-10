@@ -36,7 +36,7 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
             builder =>
             {
-                builder.WithOrigins("http://localhost:8080", "http://localhost:8081",
+                builder.WithOrigins("http://wave.ttu.edu:8080", "http://localhost:8081",
                     "http://localhost:8082", "http://localhost:8083",
                     "http://localhost:8084", "http://localhost:8085",
                     "http://localhost:8086", "http://127.0.0.1:5500",
@@ -44,6 +44,12 @@ builder.Services.AddCors(options =>
                 .AllowAnyMethod()
                 .AllowAnyHeader();
             });
+});
+
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.Listen(System.Net.IPAddress.Parse("129.118.152.81"), 5000);
+
 });
 
 builder.Services.AddHttpClient("Sparc", httpClient =>
@@ -57,11 +63,11 @@ builder.Services.AddHttpClient("Sparc", httpClient =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-app.UseSwagger();
-app.UseSwaggerUI();
-//}
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 app.UseCors();
 app.UseHttpsRedirection();
 
