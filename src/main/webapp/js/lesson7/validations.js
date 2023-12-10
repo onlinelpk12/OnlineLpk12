@@ -65,7 +65,7 @@ const elementName = "";
 const elementSymbol = "";
 
 
-var knowledgeCommentBox = document.getElementById("knowledge");
+/*var knowledgeCommentBox = document.getElementById("knowledge");
 console.log(knowledgeCommentBox)
     knowledgeCommentBox.addEventListener('keydown', function(e){
     	if (e.key === "Enter") {  
@@ -84,8 +84,9 @@ console.log(knowledgeCommentBox)
         	}
     	}
     	
-}); 
+}); */
 // 
+var nextButton = document.getElementById("nextButton");
 var funBox = document.getElementById("fBox");
 console.log(funBox)
     funBox.addEventListener('keydown', function(e){
@@ -96,14 +97,25 @@ console.log(funBox)
         	if(answer.toLowerCase() == originalAnswer.toLowerCase()){
         		funBox.className = 'form-control-sBox-correct';
         		correctAnswerComment.innerHTML = "";
+        		nextButton.removeAttribute("disabled");
         	}
         	else {
         		funBox.className = 'form-control-sBox-incorrect';
         		correctAnswerComment.innerHTML = "The atomic number of hydrogen is 1";
+        		nextButton.setAttribute("disabled", "disabled");
         	}
     	}
     	
 }); 
+funBox.addEventListener('input', function()
+{
+	var correctAnswerComment = document.getElementById("cAnswer");
+	if(funBox.value === "")
+	{
+		funBox.className = 'form-control';
+		correctAnswerComment.innerHTML = "";
+	}	
+});
 var comBox = document.getElementById("cBox");
 console.log(comBox)
     comBox.addEventListener('keydown', function(e){
@@ -114,14 +126,26 @@ console.log(comBox)
         	if(answer.toLowerCase() == originalAnswer.toLowerCase()){
         		comBox.className = 'form-control-dBox-correct';
         		correctAnswerComment.innerHTML = "";
+        		nextButton.removeAttribute("disabled");
         	}
         	else {
         		comBox.className = 'form-control-dBox-incorrect';
         		correctAnswerComment.innerHTML = "The proton number of hydrogen is 1";
+        		nextButton.setAttribute("disabled", "disabled");
         	}
     	}
     	
 }); 
+comBox.addEventListener('input', function()
+{
+	var correctAnswerComment = document.getElementById("fAnswer");
+	if(comBox.value === "")
+	{
+		comBox.className = 'form-control';
+		correctAnswerComment.innerHTML = "";
+	}	
+});
+var yBoxNextButton = document.getElementById("yBoxNextButton");
 var sunBox = document.getElementById("hBox");
 console.log(funBox)
     sunBox.addEventListener('keydown', function(e){
@@ -132,14 +156,25 @@ console.log(funBox)
         	if(answer.toLowerCase() == originalAnswer.toLowerCase()){
         		sunBox.className = 'form-control-eBox-correct';
         		correctAnswerComment.innerHTML = "";
+        		yBoxNextButton.removeAttribute("disabled");
         	}
         	else {
         		sunBox.className = 'form-control-eBox-incorrect';
         		correctAnswerComment.innerHTML = "% The proton number of element E is N";
+        		yBoxNextButton.setAttribute("disabled", "disabled");
         	}
     	}
     	
 }); 
+sunBox.addEventListener('input', function()
+{
+	var correctAnswerComment = document.getElementById("eAnswer");
+	if(sunBox.value === "")
+	{
+		sunBox.className = 'form-control';
+		correctAnswerComment.innerHTML = "";
+	}	
+});
 
 var hunBox = document.getElementById("pBox");
 console.log(hunBox)
@@ -151,14 +186,25 @@ console.log(hunBox)
         	if(answer.toLowerCase() == originalAnswer.toLowerCase()){
         		hunBox.className = 'form-control-xBox-correct';
         		correctAnswerComment.innerHTML = "";
+        		yBoxNextButton.removeAttribute("disabled");
         	}
         	else {
         		hunBox.className = 'form-control-xBox-incorrect';
         		correctAnswerComment.innerHTML = "protonsOf(E,N)";
+        		yBoxNextButton.setAttribute("disabled", "disabled");
         	}
     	}
     	
 }); 
+hunBox.addEventListener('input', function()
+{
+	var correctAnswerComment = document.getElementById("pAnswer");
+	if(hunBox.value === "")
+	{
+		hunBox.className = 'form-control';
+		correctAnswerComment.innerHTML = "";
+	}	
+});
 var dunBox = document.getElementById("wBox");
 console.log(dunBox)
     dunBox.addEventListener('keydown', function(e){

@@ -8,7 +8,7 @@ console.log(yunBox)
     	if (e.key === "Enter") {  
     		var correctAnswerComment = document.getElementById("uAnswer");
         	let answer = yunBox.value;
-        	let originalAnswer = "peter";
+        	let originalAnswer = "john";
         	if(answer.toLowerCase() == originalAnswer.toLowerCase()){
         		yunBox.className = 'form-control-xoBox-correct';
         		correctAnswerComment.innerHTML = "";
