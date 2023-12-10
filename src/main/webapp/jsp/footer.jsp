@@ -20,7 +20,7 @@
 </head>
 <body>
 <div class="footer">
-  <h4>Online LPK12 Course</h4>
+  <h4 style="color:white">Online LPK12 Course</h4>
 </div>
 
 </body>
