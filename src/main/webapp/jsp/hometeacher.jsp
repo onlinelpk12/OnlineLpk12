@@ -18,11 +18,11 @@
 <body>
 <div class="container pt-5">
 <div class="row">
-<div class="col-sm-6">
+<div class="col-sm-4" style="text-align: center;">
 <h2>Lessons</h2>
 <div class="card" style="width:400px">
 <form action="lessonnumber.jsp">
-<img class="card-img-top" src="../images/lessons.png" alt="lessons" style="width:100%">
+<img class="card-img-top" src="../images/lessons.png" alt="lessons" style="width:80%">
 <div class="card-body">
 <p class="card-text">Click below to view lessons</p>
 <a href="../jsp/lesson.jsp" class="btn btn-primary">Lessons</a>
@@ -30,16 +30,27 @@
 </form>
 </div>
 </div>
-<div class="col-sm-6">
+<div class="col-sm-4" style="text-align: center;">
 <h2>Student's Progress</h2>
 <div class="card" style="width:400px">
 <form action="progress.jsp">
-<img class="card-img-top" src="../images/progress.jpg" alt="progress" style="width:100%">
+<img class="card-img-top" src="../images/progress.jpg" alt="progress" style="width:80%">
 <div class="card-body">
 <p class="card-text">Click below to view progress</p>
 <a href="../jsp/courseList.jsp" class="btn btn-primary">Student's progress</a>
 </div>
 </form>
+</div>
+</div>
+
+<div class="col-sm-4" style="text-align: center;">
+<h2>Upload Lessons</h2>
+<div class="card" style="width:400px">
+<img class="card-img-top" src="../images/uploadlesson.jpg" alt="progress" style="width:72%">
+<div class="card-body">
+<p class="card-text">Click below to upload new lessons</p>
+<a href="../jsp/uploadLesson.jsp" class="btn btn-primary">Upload Lessons</a>
+</div>
 </div>
 </div>
 </div>
