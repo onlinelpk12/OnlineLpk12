@@ -1,0 +1,116 @@
+.form-control:valid {
+  background-color:  #96d3ec!important;
+}
+.form-control-correct {
+  background-color:  #90EE90;
+}
+.form-control-incorrect {
+  background-color:  #FCAC98;
+}
+
+.form-control-sBox:valid {
+  background-color:  #96d3ec!important;
+}
+.form-control-sBox-correct {
+  background-color:  #90EE90;
+}
+.form-control-sBox-incorrect {
+  background-color:  #FCAC98;
+}
+.form-control-dBox:valid {
+  background-color:  #96d3ec!important;
+}
+.form-control-dBox-correct {
+  background-color:  #90EE90;
+}
+.form-control-dBox-incorrect {
+  background-color:  #FCAC98;
+}
+.form-control-eBox:valid {
+  background-color:  #96d3ec!important;
+}
+.form-control-eBox-correct {
+  background-color:  #90EE90;
+}
+.form-control-eBox-incorrect {
+  background-color:  #FCAC98;
+}
+
+.form-control-xBox-correct {
+  background-color:  #90EE90;
+}
+.form-control-xBox-incorrect {
+  background-color:  #FCAC98;
+}
+
+.form-control-zBox-correct {
+  background-color:  #90EE90;
+}
+.form-control-zBox-incorrect {
+  background-color:  #FCAC98;
+}
+.form-control-tBox-correct {
+  background-color:  #90EE90;
+}
+.form-control-tBox-incorrect {
+  background-color:  #FCAC98;
+}
+.form-control-oBox-correct {
+  background-color:  #90EE90;
+}
+.form-control-oBox-incorrect {
+  background-color:  #FCAC98;
+}
+.form-control-xoBox-correct{
+  background-color:  #90EE90;
+}
+.form-control-xoBox-incorrect {
+  background-color:  #FCAC98;
+}
+.form-control-exBox-correct{
+  background-color:  #90EE90;
+}
+.form-control-exBox-incorrect {
+  background-color:  #FCAC98;
+}
+.form-control-carbon-correct {
+  background-color:  #90EE90;
+}
+.form-control-carbon-incorrect {
+  background-color:  #FCAC98;
+}
+.form-control-p-correct {
+  background-color:  #90EE90;
+}
+.form-control-p-incorrect {
+  background-color:  #FCAC98;
+}
+.carbon{
+	margin-right: 15px;
+    float: right;
+}
+#identifySymbolC{
+	width: 200px;
+}
+#identifySymbolP{
+	width: 200px;
+}
+.element{
+	margin-left: auto;
+    margin-right: auto;
+    width: 25%;
+    display: block;
+}
+#outer
+{
+    text-align: center;
+}
+.inner
+{
+    display: inline-block;
+}
+#massNumberAtom{
+	float : right;
+	width: 249px;
+    height: 233px;
+}
