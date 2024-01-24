@@ -18,7 +18,8 @@
 <body>
 <div class="container pt-5">
 <div class="row">
-<div class="col-sm-4" style="text-align: center;">
+<div class="col-sm-6">
+<!-- <div class="col-sm-4" style="text-align: center;"> -->
 <h2>Lessons</h2>
 <div class="card" style="width:400px">
 <form action="lessonnumber.jsp">
@@ -30,7 +31,8 @@
 </form>
 </div>
 </div>
-<div class="col-sm-4" style="text-align: center;">
+<div class="col-sm-6">
+<!-- <div class="col-sm-4" style="text-align: center;"> -->
 <h2>Student's Progress</h2>
 <div class="card" style="width:400px">
 <form action="progress.jsp">
@@ -43,7 +45,7 @@
 </div>
 </div>
 
-<div class="col-sm-4" style="text-align: center;">
+<!-- <div class="col-sm-4" style="text-align: center;">
 <h2>Upload Lessons</h2>
 <div class="card" style="width:400px">
 <img class="card-img-top" src="../images/uploadlesson.jpg" alt="progress" style="width:72%">
@@ -52,7 +54,7 @@
 <a href="../jsp/uploadLesson.jsp" class="btn btn-primary">Upload Lessons</a>
 </div>
 </div>
-</div>
+</div> -->
 </div>
 </div>
 <%@ include file = "footer.jsp" %>

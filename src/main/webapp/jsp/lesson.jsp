@@ -61,13 +61,13 @@ a.disabled {
 <li><a href="../jsp/lesson6.1.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 6.1!</a></li>
 </ul>
 
-<ul id="lessonList"></ul>
+<!-- <ul id="lessonList"></ul> -->
 </div>
 
 </div>
 </div>
 
-<script src="../js/lesson.js"></script>
+<!-- <script src="../js/lesson.js"></script> -->
 
 <%@ include file = "footer.jsp" %>
 </body>
