@@ -42,7 +42,8 @@ namespace OnlineLpk12.Data.Context
         public virtual DbSet<StudentQuiz> StudentQuizzes { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
         public virtual DbSet<UserRole> UserRoles { get; set; } = null!;
-
+        public virtual DbSet<SlideData> SlideData { get; set; } = null!;
+        public virtual DbSet<AssessmentData> AssessmentData { get; set; } = null!;
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
            if (!optionsBuilder.IsConfigured)
@@ -194,6 +195,59 @@ namespace OnlineLpk12.Data.Context
                 entity.Property(e => e.Year)
                     .HasColumnType("int(11)")
                     .HasColumnName("year");
+            });
+
+            modelBuilder.Entity<SlideData>(entity =>
+            {
+                entity.ToTable("slide_data");
+
+                entity.Property(e => e.Id)
+                   .HasColumnType("int(11)")
+                   .HasColumnName("id");
+
+                entity.Property(e => e.CourseName)
+                    .HasMaxLength(100)
+                    .HasColumnName("course_name");
+
+                entity.Property(e => e.LessonName)
+                    .HasMaxLength(100)
+                    .HasColumnName("lesson_name");
+
+                entity.Property(e => e.Pdf)
+                    .HasMaxLength(1000)
+                    .HasColumnName("pdf");
+            });
+            modelBuilder.Entity<AssessmentData>(entity =>
+            {
+                entity.ToTable("assessment_data");
+
+                entity.Property(e => e.Id)
+                   .HasColumnType("int(11)")
+                   .HasColumnName("id");
+
+                entity.Property(e => e.CourseName)
+                    .HasMaxLength(100)
+                    .HasColumnName("course_name");
+
+                entity.Property(e => e.LessonName)
+                    .HasMaxLength(100)
+                    .HasColumnName("lesson_name");
+
+                entity.Property(e => e.PageNum)
+                    .HasMaxLength(100)
+                    .HasColumnName("page_num");
+                entity.Property(e => e.Header)
+                    .HasMaxLength(100)
+                    .HasColumnName("header");
+                entity.Property(e => e.Data)
+                    .HasMaxLength(100)
+                    .HasColumnName("data");
+                entity.Property(e => e.Questions)
+                    .HasMaxLength(100)
+                    .HasColumnName("questions");
+                entity.Property(e => e.Answers)
+                    .HasMaxLength(100)
+                    .HasColumnName("answers");
             });
 
             modelBuilder.Entity<CoursesStudent>(entity =>
