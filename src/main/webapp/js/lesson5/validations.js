@@ -44,57 +44,103 @@ const elementSelected = false;
 const elementName = ""; 
 const elementSymbol = "";
 
-
+var factBox = document.getElementById("fact");
+var identifyNextBtn = document.getElementById("identifyNextBtn");
+var kNextBtn = document.getElementById("kNextBtn");
 var knowledgeCommentBox = document.getElementById("knowledgeComment");
 console.log(knowledgeCommentBox)
     knowledgeCommentBox.addEventListener('keydown', function(e){
     	if (e.key === "Enter") {  
     		var correctAnswerComment = document.getElementById("correctAnswerComment");
+    		
+    		let originalFactAnswer = "symbolFor(hydrogen, H)";
+    		let answerFact = factBox.value;
         	let answer = knowledgeCommentBox.value;
         	let originalAnswer = "% The chemical symbol for hydrogen is H";
         	if(answer.toLowerCase() == originalAnswer.toLowerCase()){
         		knowledgeCommentBox.className = 'form-control-correct';
         		correctAnswerComment.innerHTML = "";
+        		if(answer.toLowerCase() == originalAnswer.toLowerCase()
+        	   && answerFact.toLowerCase() == originalFactAnswer.toLowerCase())
+        	   {
+        			kNextBtn.removeAttribute("disabled");
+        		}
         	}
         	else {
         		knowledgeCommentBox.className = 'form-control-incorrect';
         		correctAnswerComment.innerHTML = "% The chemical symbol for hydrogen is H";
+        		kNextBtn.setAttribute("disabled", "disabled");
         	}
     	}
     	
 }); 
+knowledgeCommentBox.addEventListener('input', function()
+{
+	var correctAnswerComment = document.getElementById("correctAnswerComment");
+	if(knowledgeCommentBox.value === "")
+	{
+		knowledgeCommentBox.className = 'form-control';
+		correctAnswerComment.innerHTML = "";
+	}	
+});
 // 
 
-var factBox = document.getElementById("fact");
+
 factBox.addEventListener('keydown', function(e){
 	if (e.key === "Enter") { 
+		
+		
+		let answerKc = knowledgeCommentBox.value;
+		let originalKcAnswer = "% The chemical symbol for hydrogen is H";
     	var correctAnswerComment = document.getElementById("correctAnswerFact");
     	let answer = factBox.value;
     	let originalAnswer = "symbolFor(hydrogen, H)";
     	if(answer.toLowerCase() == originalAnswer.toLowerCase()){
     		factBox.className = 'form-control-fact-correct';
     		correctAnswerComment.innerHTML = "";
+    		if(answer.toLowerCase() == originalAnswer.toLowerCase() && 
+    	answerKc.toLowerCase() == originalKcAnswer.toLowerCase())
+    	{
+    		kNextBtn.removeAttribute("disabled");
+    		}
     	}
     	else {
     		factBox.className = 'form-control-fact-incorrect';
     		correctAnswerComment.innerHTML = "symbolFor(hydrogen, H)";
+    		kNextBtn.setAttribute("disabled", "disabled");
     	}
 	}
 	
 }); 
 
+factBox.addEventListener('input', function()
+{
+	var correctAnswerComment = document.getElementById("correctAnswerFact");
+	if(factBox.value === "")
+	{
+		factBox.className = 'form-control';
+		correctAnswerComment.innerHTML = "";
+	}	
+});
 
+var icnextbutton=document.getElementById("icnextbutton");
 var symbolCBox = document.getElementById("identifySymbolC");
+
 symbolCBox.addEventListener('keyup', function(){
 	    //do some stuff
 	    //alert("hello");
     	let answer = symbolCBox.value;
     	let originalAnswer = "C";
+    	var correctAnswerC=document.getElementById("correctAnswerC");
     	if(answer.toLowerCase() == originalAnswer.toLowerCase()){
     		symbolCBox.className = 'form-control-carbon-correct';
+    		icnextbutton.removeAttribute("disabled");
+    		correctAnswerC.innerHTML="";
     	}
     	else {
     		symbolCBox.className = 'form-control-carbon-incorrect';
+    		icnextbutton.setAttribute("disabled","disabled");
+    		correctAnswerC.innerHTML="C";
     	}
 }); 
 
@@ -107,9 +153,11 @@ symbolPBox.addEventListener('keyup', function(){
     	let originalAnswer = "P";
     	if(answer.toLowerCase() == originalAnswer.toLowerCase()){
     		symbolPBox.className = 'form-control-p-correct';
+    		identifyNextBtn.removeAttribute("disabled");
     	}
     	else {
     		symbolPBox.className = 'form-control-p-incorrect';
+    		identifyNextBtn.setAttribute("disabled", "disabled");
     	}
 });
 

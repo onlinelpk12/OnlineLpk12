@@ -46,11 +46,12 @@ function gotoNext(currentLessonNumber, currentLearningOutcomeNumber, currentPage
 	    let nextPage = document.getElementById(nextPageId);
 	
 	    currentPage.hidden = true;
-	    nextPage.hidden = false;	
+	    nextPage.hidden = false;	    
+	       	
 	}else{
-		sessionStorage.setItem(sessionKeyShowPageId, nextPageId.toString())
 		window.open(sparcPage, "_self");
 	}
+	sessionStorage.setItem(sessionKeyShowPageId, nextPageId.toString())	 
     SaveStudentLessonsProgressThroughAPI(currentLessonNumber, currentLearningOutcomeNumber, currentPageId);
 }
 
@@ -66,6 +67,7 @@ function gotoPrevious(currentLessonNumber, currentLearningOutcomeNumber, current
     let previousSection = document.getElementById(previousPageId);
     currentSection.hidden = true;
     previousSection.hidden = false;
+    sessionStorage.setItem(sessionKeyShowPageId, previousPageId.toString())	
 }
 
 function gotoOnlineSparc(currentLessonNumber, learningOutcomeNumber, currentPageId, isNextSectionQuiz, nextAssessmentNumber, sparcPageValue) {

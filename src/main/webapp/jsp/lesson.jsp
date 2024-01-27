@@ -45,16 +45,31 @@ a.disabled {
 <li><a href="../jsp/lesson7.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 7!</a></li>
 <p></p>
 <li><a href="../jsp/lesson8.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 8!</a></li>
+<p></p>
+<li><a href="../jsp/lesson10.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 10!</a></li>
+<p></p>
+<li><a href="../jsp/lesson11.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 11!</a></li>
+<p></p>
+<li><a href="../jsp/lesson12.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 12!</a></li>
+<p></p>
+<li><a href="../jsp/lesson18.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 18!</a></li>
+<p></p>
+<li><a href="../jsp/Lesson4.1.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 4.1!</a></li>
+<p></p>
+<li><a href="../jsp/lesson1.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 1!</a></li>
+<p></p>
+<li><a href="../jsp/lesson6.1.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 6.1!</a></li>
 </ul>
+
+<ul id="lessonList"></ul>
 </div>
-
-
-
-
 
 </div>
 </div>
-<br>
+
+<script src="../js/lesson.js"></script>
+
 <%@ include file = "footer.jsp" %>
 </body>
 </html>
+

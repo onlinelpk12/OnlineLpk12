@@ -97,7 +97,7 @@ predicates
 rules
     %write your comment here
 	%write the fact here
-	%father(john, peter).`;
+	%father(X, peter).`;
     }
     else if(id == 2)
     {
@@ -113,7 +113,7 @@ predicates
 rules
    	%write your comment here
 	%write the fact here
-	%father(john, peter).`;
+	%father(john, Y).`;
     }
     else if(id == 3)
     {
