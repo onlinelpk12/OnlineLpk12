@@ -26,25 +26,35 @@ const pdffile = document.querySelector('#pdfFile');
     });    
     
     
+    const toBase64 = file => new Promise((resolve, reject) => {
+				    const reader = new FileReader();
+				    reader.readAsDataURL(file);
+				    reader.onload = () => resolve(reader.result);
+				    reader.onerror = reject;
+					});
+
     
-        function submitPDF() {
+    async function submitPDF() {
             document.querySelector('.uploadPdf').textContent = "Uploading Content....Please wait.....";
             var form = document.getElementById("uploadForm");
             const fileInput = document.getElementById('pdfFile');
             const selectedFile = fileInput.files[0];
             const fileName = fileInput.files[0].name.split("_");
-            var formData = new FormData();
             
-            formData.append("course_name",fileName[0]);
-            formData.append("lesson_name",fileName[1].split(".")[0]);
-            
-            formData.append("file",selectedFile);
-            
-			//return 0;
-            fetch("http://localhost:8083/api/auth/uploadLesson", {
+		    try {
+		      const result = await toBase64(selectedFile);
+		      console.log(result)
+		      fetch("https://localhost:7155/api/Lesson/uploadLesson", {
                 method: 'POST',
-                body: formData,
-            })
+                body: JSON.stringify({
+		            "courseName":fileName[0],
+		            "lessonName":fileName[1].split(".")[0],
+		            "pdf": result.split('base64,')[1]}),
+		        headers:{
+	          			'Content-Type':'application/json; charset=UTF-8',
+	          			'Authorization': "Bearer "+ sessionStorage.getItem("token")
+	        			},
+	            })
             .then(response => response.json())
             .then(data => {
                 document.querySelector('.uploadPdf').textContent = "Content Upload successfull";
@@ -55,6 +65,13 @@ const pdffile = document.querySelector('#pdfFile');
             .catch(error => {
                 console.error("Error during fetch:", error);
             });
+		      
+		   	} catch(error) {
+		      console.error(error);
+		      
+		   	};
+			//return 0;
+            
         }
 	
         
@@ -91,21 +108,22 @@ const pdffile = document.querySelector('#pdfFile');
                     var answers = jsonData[i][6] || '';
                     
                     var data = JSON.stringify({
-                        "course_name":course_name,
-                        "lesson_name":lesson_name,
-                        "page_num":page_num,
+                        "courseName":course_name,
+                        "lessonName":lesson_name,
+                        "pageNum":page_num,
                         "header":header,
                         "data":data,
                         "questions":questions,
                         "answers":answers
                     });
                    
-                const uploadAssessmentAPI = "http://localhost:8083/api/auth/uploadAssessmentDetails";
+                const uploadAssessmentAPI = "https://localhost:7155/api/Lesson/uploadAssessmentDetails";
                 fetch(uploadAssessmentAPI,{
                   method:'POST',
                   body: data,
                   headers:{
-  		            "Content-Type":"application/json"
+  		            "Content-Type":"application/json",
+  		            'Authorization': "Bearer "+ sessionStorage.getItem("token")
   		        }
                 }).then(response => response.json())
                 .then(data => {

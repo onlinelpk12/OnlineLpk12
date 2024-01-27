@@ -37,8 +37,8 @@ var response = getApiData();
 function getApiData()
 {
 let azureResponse = null;
-//let userId = sessionStorage.getItem("userId");
-let userId = "9";
+let userId = sessionStorage.getItem("userId");
+//let userId = "9";
 var response = null;
 let apiUrl = "https://onlinelpk12appservice.azurewebsites.net/api/StudentProgress/lessons/"+userId;
 $.get(apiUrl, function(data, status){

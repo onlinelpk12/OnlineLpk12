@@ -32,7 +32,6 @@
 						</select>
 					 </div>
 					</div>
-
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
@@ -120,46 +119,48 @@
 	        var username=document.getElementById('username').value;
 	
 	        var email=document.getElementById('email').value;
+	        var courseId=document.getElementById('course').value;
 	        
 	        var pwdObj = document.getElementById('password').value;
-	        var rpwdObj = document.getElementById('repeatpassword').value;
 	       	if (roles=='Student'){
 	    	   var isactive=true;
 	       	}
-	       //var hashObj = new jsSHA("SHA-512", "TEXT", {numRounds: 1});
-	        //hashObj.update(pwdObj.value);
-	        //var hash = hashObj.getHash("HEX");
-	        //pwdObj.value = hash;
-	        //console.log(pwdObj)-->
+	       /*--  var hashObj = new jsSHA("SHA-512", "TEXT", {numRounds: 1});
+	        hashObj.update(pwdObj.value);
+	        var hash = hashObj.getHash("HEX");
+	        pwdObj.value = hash;
+	        console.log(pwdObj)-- */
 	
-	     
-			// var role=[];
-	        //for(var i=0;i<roles.length;i++){
-	        //	role.push({roles[i]})
-	        // }   
-      
+	      /*--  var role=[];
+	        for(var i=0;i<roles.length;i++){
+	        	role.push({roles[i]})
+	        }-- */
+	        
 	
-	     //  var isStudent=false;
-	       // if(role=="Student"){
-	         //   isStudent=true;
-	        //}
-	        //console.log(isStudent)-->
+	     /*   var isStudent=false;
+	
+	        if(role=="Student"){
+	
+	            isStudent=true;
+	
+	        }
+	
+	        console.log(isStudent)--
+	        */
 	
 	        console.log([roles])
 	
 	        //fetch post request
-			 //const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
-             const signUpAPI = "http://localhost:8083/api/auth/signup";
+			 const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
+             const signUpAPI = dotnet_endpoint+"api/User/Register";
 	        fetch(signUpAPI,{
 	            method:'POST',
 	            body: JSON.stringify({
 					"firstname":firstname,
 					"lastname":lastname,
 	                "username":username,
-	                "email":email,
-					"role":roles,
+	                "EmailId":email,
 					"isactive":isactive,
-					"roles":[roles],
 	                "password":pwdObj,
 	            }),
 		        headers:{
@@ -170,8 +171,8 @@
 	       		if(response.status==200){
 	       			//US-13
 	       			resp.then((data)=>{       			 
-	       			 var userid = data.userId;
-	       			 const createRootFolderAPI= "https://localhost:7155/api/SparcFileSystem/createrootfolder";
+	       			 var userid = parseInt(data.content);
+	       			 const createRootFolderAPI = dotnet_endpoint+"api/SparcFileSystem/createrootfolder";
 	       			 var createRootFolderApi = new URL(createRootFolderAPI);
 	       			 var body = {
 	       					 		userId :userid
@@ -188,7 +189,20 @@
 	       			 }).then(function(response){
 	       				if(response.status==200){
 	       					console.log(data)
-							location.href="index.html"
+	       					fetch(dotnet_endpoint+"api/User/"+userid+"/course/"+courseId,{
+	       						method: 'GET',
+	       						headers: {
+	    	       				    'Content-type': 'application/json; charset=UTF-8',
+	    	       				  }
+	       					}).then(function(response)
+	       							{
+	       						if(response.status==200){
+	       							console.log(data)
+	       							location.href="login.jsp"
+	       						}
+	       							}
+	       							)
+							
 	       				}
 	       			 });	       			
 	       			});
@@ -197,7 +211,7 @@
 	                if(response.status==400){
 	                	resp.then((data)=>{
 	                		alert(data.message)
-	                        location.href="register.html"
+	                        location.href="register.jsp"
 	                    })
 	                }
 	            }   

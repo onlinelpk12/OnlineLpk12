@@ -1,21 +1,18 @@
 window.onload = function () {
 	
-    const getLessonsListAPI = "http://localhost:8083/api/auth/lessonsList";
+    const getLessonsListAPI ="https://localhost:7155/api/Lesson/getLessonList?course=Onlinelpk12";
     const cn = "Onlinelpk12";
     fetch(getLessonsListAPI, {
-        method: 'POST',
-        body: JSON.stringify({
-            "course_name": cn,
-            "lesson_name": "Lesson2"
-        }),
+        method: 'GET',
         headers: {
-            'Content-Type': 'application/json; charset=UTF-8'
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': "Bearer "+ sessionStorage.getItem("token")
         }
     }).then(function (response) {
         var resp = response.json();
         if (response.status == 200) {
             resp.then((lessonsList) => {
-            	generateLessonLinks(lessonsList.lessons);
+            	generateLessonLinks(lessonsList.content);
             });
         } else {
             if (response.status == 404) {
@@ -43,8 +40,8 @@ function generateLessonLinks(lessons) {
         var liElement = document.createElement('li');
         var aElement = document.createElement('a');
 
-        aElement.href = 'renderLesson.jsp?lesson=' + lesson.lesson_name;
-        aElement.textContent = 'Click here to View ' + lesson.lesson_name + '!';	
+        aElement.href = 'renderLesson.jsp?lesson=' + lesson;
+        aElement.textContent = 'Click here to View ' + lesson + '!';	
 		
 
         liElement.appendChild(aElement);

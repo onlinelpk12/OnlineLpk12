@@ -8,7 +8,13 @@
 <!-- <script src="../js/verifytoken.js" type="text/javascript"></script> -->
 <meta charset="UTF-8">
 <title>Home</title>
-<%@ include file="header.jsp"%>
+<%@ include file = "header.jsp" %>
+<style>
+    .card {
+                width: 275px;
+                margin: 0 auto; /* Center the card horizontally */
+            }
+    </style>
 </head>
 <body>
 <div class="container">

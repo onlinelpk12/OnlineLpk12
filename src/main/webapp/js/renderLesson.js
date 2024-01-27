@@ -7,24 +7,25 @@
         	const queryString = window.location.search;
         	const urlParams = new URLSearchParams(queryString);
         	const lesson = urlParams.get('lesson');
-            const getLessonAPI = "http://localhost:8083/api/auth/getLesson";
+            const getLessonAPI = "https://localhost:7155/api/Lesson/getLesson";
             const cn = "Onlinelpk12";
          
             
             fetch(getLessonAPI, {
                 method: 'POST',
                 body: JSON.stringify({
-                    "course_name": cn,
-                    "lesson_name": lesson
+                    "courseName": cn,
+                    "lessonName": lesson
                 }),
                 headers: {
-                    'Content-Type': 'application/json; charset=UTF-8'
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Authorization': "Bearer "+ sessionStorage.getItem("token")
                 }
             }).then(function (response) {
                 var resp = response.json();
                 if (response.status == 200) {
                     resp.then((lessonData) => {
-                        fetchAssessment(lessonData.pdf,lesson,cn);
+                        fetchAssessment(lessonData.content.pdf,lesson,cn);
                     });
                 } else {
                     if (response.status == 404) {
@@ -43,15 +44,16 @@
         function fetchAssessment(data,lesson,cn)
         {
             
-            const getAssessmentAPI = "http://localhost:8083/api/auth/fetchAssessmentDetails";
+            const getAssessmentAPI = "https://localhost:7155/api/Lesson/fetchAssessmentDetails";
             fetch(getAssessmentAPI, {
                 method: 'POST',
                 body: JSON.stringify({
-                    "course_name": cn,
-                    "lesson_name": lesson
+                    "courseName": cn,
+                    "lessonName": lesson
                 }),
                 headers: {
-                    'Content-Type': 'application/json; charset=UTF-8'
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Authorization': "Bearer "+ sessionStorage.getItem("token")
                 }
             }).then(function (response) {
                 var resp = response.json();
@@ -77,7 +79,7 @@
         function displayPdf(base64Data,assessmentData) {
             var pdfContainer = document.getElementById('pdfContainer');
             var currentPage = 1;
-            
+            console.log(base64Data)
 
             // Decode Base64 string
             var binaryData = atob(base64Data);
