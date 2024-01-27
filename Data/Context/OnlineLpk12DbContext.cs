@@ -39,6 +39,7 @@ namespace OnlineLpk12.Data.Context
         public virtual DbSet<SparcGrade> SparcGrades { get; set; } = null!;
         public virtual DbSet<StudentLessonProgress> StudentLessonProgresses { get; set; } = null!;
         public virtual DbSet<StudentProgress> StudentProgresses { get; set; } = null!;
+        public virtual DbSet<QuizQuestionAnswer> QuizQuestionAnswers { get; set; } = null!;
         public virtual DbSet<StudentQuiz> StudentQuizzes { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
         public virtual DbSet<UserRole> UserRoles { get; set; } = null!;
@@ -641,6 +642,54 @@ namespace OnlineLpk12.Data.Context
                 entity.Property(e => e.StudentId)
                     .HasColumnType("int(11)")
                     .HasColumnName("student_id");
+            });
+            modelBuilder.Entity<QuizQuestionAnswer>(entity =>
+            {
+                entity.ToTable("QuizQuestionAnswers");
+
+                modelBuilder.Entity<QuizQuestionAnswer>()
+                .HasKey(q => q.QuizQuestionAnswerId);
+
+                modelBuilder.Entity<QuizQuestionAnswer>()
+                           .Property(q => q.QuizQuestionAnswerId)
+                           .ValueGeneratedOnAdd();
+                entity.Property(e => e.QuizQuestionAnswerId)
+                    .HasColumnName("QuizQuestionAnswerId")
+                    .HasColumnType("int")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.QuestionId)
+                    .HasColumnName("QuestionId")
+                    .HasColumnType("int");
+
+                entity.Property(e => e.QuestionName)
+                    .HasColumnName("QuestionName")
+                    .HasMaxLength(255) // Or appropriate length based on your requirements
+                    .IsRequired();
+
+                entity.Property(e => e.AnswerText)
+                    .HasColumnName("AnswerText")
+                    .HasColumnType("text") // Or appropriate type based on your requirements
+                    .IsRequired();
+
+                entity.Property(e => e.CorrectOrIncorrect)
+                    .HasColumnName("CorrectOrIncorrect")
+                    .HasColumnType("bit"); // Or appropriate type based on your database
+
+                entity.Property(e => e.Timestamp)
+                    .HasColumnName("Timestamp")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.UserId)
+                    .HasColumnName("UserId")
+                    .HasColumnType("int");
+
+                entity.Property(e => e.UserRole)
+                    .HasColumnName("UserRole")
+                    .HasMaxLength(50) // Or appropriate length based on your requirements
+                    .IsRequired();
+
             });
 
             modelBuilder.Entity<StudentProgress>(entity =>

@@ -55,6 +55,7 @@ namespace OnlineLpk12.Services.Implementation
                 throw;
             }
         }
+        
 
         public bool SaveAssessmentScore(AssessmentOverview assessmentOverview)
         {
@@ -94,6 +95,31 @@ namespace OnlineLpk12.Services.Implementation
                 throw;
             }
         }
+        public bool SaveQuizQuestionAnswer(QuizQuestionAnswer quizQuestionAnswer)
+        {
+            try
+            {
+                // Assuming we do not need to check for existing answers and save every answer as a new record.
+                // Create a new record for the quiz answer
+                quizQuestionAnswer.Timestamp = DateTime.Now; // Set the current timestamp or use a method like GetCurrentCSTTime()
+
+                // Add the new QuizQuestionAnswer to the DbSet in the context
+                _context.QuizQuestionAnswers.Add(quizQuestionAnswer);
+
+                // Save the changes to the database
+                _context.SaveChanges();
+
+                return true; // If successful, return true
+            }
+            catch (Exception ex)
+            {
+                // If an error occurs, log the error and rethrow the exception
+                _logService.LogError(quizQuestionAnswer.UserId, MethodBase.GetCurrentMethod().Name,
+                                     Process.GetCurrentProcess().MainModule?.FileName ?? "Unknown", ex.Message, ex);
+                throw;
+            }
+        }
+
 
         public bool SaveAssessmentSubmission(Assessment assessment)
         {
