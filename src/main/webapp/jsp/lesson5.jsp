@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
@@ -17,7 +18,63 @@ $(function(){
 </script>
     <link rel="stylesheet" href="../styles/style.css">
     <script src="../js/lessonDataStructureJSON.js"></script>
-    <script src="../js/script.js"></script>    
+    <script src="../js/script.js"></script>   
+    <style>
+    	    body
+    	{
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            overflow-x:hidden;
+        }
+ 
+        .container {
+           
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
+            max-width: 600px;
+        }
+ 
+        h2 
+        {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #0056b3;
+        }
+ 
+        ul 
+        {
+            margin-bottom: 30px;
+        }
+        
+        section 
+        {
+	        margin-top:0!important;
+	        margin-left:0!important;
+	        min-height:100vh;
+        }
+ 
+        button.btn 
+        {
+            width: 100px;
+        }
+         .row
+          {
+			    border-radius: 10px; /* Rounded corners */
+			    
+			   
+			   .lesson-list 
+			   {
+			    	padding-left: 0; /* Remove default left padding */
+			   }
+			 
+			.lesson-list .sub-points 
+			{
+			    padding-left: 20px; /* Add some padding to the sub-points for hierarchy */
+	        }
+   
+          }
+    </style> 
 </head>
 
 <body>
@@ -39,35 +96,40 @@ $(function(){
   		}           
     });     
     </script>
-	<%@ include file = "header.jsp" %>
-    <section id="version-1-course-x-lesson-5-page-1" class="container" hidden>
+	<%@ include file = "header1.jsp" %>
+    <section id="version-1-course-x-lesson-5-page-1" hidden>
         <div class="row">
-            <div class="col-md-8 content" style="margin-left:20rem">
+            <div class="container">
             <h1 style="text-align:center">  Lesson 5: Model periodic table - chemical symbols </h1> <br>
-            <a class="btn btn-primary pull-right"
-                onclick="gotoNext(5, 0, 'version-1-course-x-lesson-5-page-1', false, -1)"> Next </a>
+            <div class="d-flex pull-right">
+        			<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
+        			onclick="gotoNext(5, 0, 'version-1-course-x-lesson-5-page-1', false, -1)">Next</button>
+        	</div>
+            
             </div>
         </div>
     </section>
 
 
-    <section id="version-1-course-x-lesson-5-page-2" class="container" hidden>
+    <section id="version-1-course-x-lesson-5-page-2" hidden>
         <div class="row">
-            <div class="col-md-6 content" style="margin-left:20rem">
+            <div class="container">
                 <h1 class="text-primary"> Periodic Table </h1>
-                <ul>
-                    <li>What is the periodic table for? </li>
+                <ul class="lesson-list">
+                    <li class="main-point"><strong>What is the periodic table for?</strong> </li>
                     <p> a periodic table tells us important information of an element (i.e., chemical symbol, mass number, atomic number)  and helps up to predicate 
 	properties of elements. </p>
-					<li>We will develop computer model for the basic information of a periodic table. 
+					<li class="main-point">We will develop computer model for the basic information of a periodic table. 
 					</li>
                 </ul>
-                <a class="btn btn-primary pull-left"
-                    onclick="gotoPrevious(5, 0, 'version-1-course-x-lesson-5-page-2', false, -1)"> Previous
-                </a>
-                <a class="btn btn-primary pull-right"
-                    onclick="gotoNext(5, 0, 'version-1-course-x-lesson-5-page-2', false, -1)"> Next 
-                </a>
+                <br>
+				<div class="d-flex justify-content-between">
+					<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
+					onclick="gotoPrevious(5, 0, 'version-1-course-x-lesson-5-page-2', false, -1)">Previous</button>
+					<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
+					onclick="gotoNext(5, 0, 'version-1-course-x-lesson-5-page-2', false, -1)">Next</button>
+				</div> 
+ 
             </div>
         </div>
     </section>
@@ -107,39 +169,41 @@ $(function(){
     <!-- skipped 4,5 pages -->
 
     <!-- learning outcome 1 -->
-    <section id="version-1-course-x-lesson-5-page-6" class="container" hidden>
+    <section id="version-1-course-x-lesson-5-page-6" hidden>
         <div class="row">
-            <div class="col-md-6 content" style="margin-left:20rem">
+            <div class="container">
             <h2> Learning outcome 1</h2>
             <img src="../images/lesson5/HydrogenSlide.png" alt="Image" width="500" height="300">
-            <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(5, 1, 'version-1-course-x-lesson-5-page-6', false, -1)"> Previous </a>
-            <a class="btn btn-primary pull-right"
-                onclick="gotoNext(5, 1, 'version-1-course-x-lesson-5-page-6', false, -1)"> Next </a>
+			<div class="d-flex justify-content-between">
+				<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
+				onclick="gotoPrevious(5, 1, 'version-1-course-x-lesson-5-page-6', false, -1)">Previous</button>
+				<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
+				onclick="gotoNext(5, 1, 'version-1-course-x-lesson-5-page-6', false, -1)">Next</button>
+			</div> 
             </div>
         </div>  
     </section>
 
-    <section id="version-1-course-x-lesson-5-page-7" class="container" hidden>
+    <section id="version-1-course-x-lesson-5-page-7" hidden>
         <div class="row">
-            <div class="col-md-6 content" style="margin-left:20rem">
-               <h4><b>Computer Model for Chemical symbols</b></h4>
-               <ol>
+            <div class="container" >
+               <h4 style="text-align:center;color: #0056b3;"><b>Computer Model for Chemical symbols</b></h4>
+               <ol class="lesson-list">
                		<li>Assume symbolFor(E, S)means that the chemical symbol for element E is S.  
                		</li>
                		<li>For your computer model to answer the earlier question, how would you expand your model 
                		</li>
                </ol>
                
-               <ul>
-               		<li>Type the knowledge as comments 
+               <ul class="lesson-list">
+               		<li class="main-point">Type the knowledge as comments 
                		</li>
                		
                		<div id="hydrogenAssessment" class="form-group">
 					  <input id="knowledgeComment" type="text" class="form-control" required>
 					</div>
 					<div id="correctAnswerComment"></div>
-               		<li>Type the fact/rule to represent that knowledge 
+               		<li class="main-point">Type the fact/rule to represent that knowledge 
                		</li>
                		<div id="factAssessmentHydrogen" class="form-group">
 					  <input id="fact" type="text" class="form-control" required>
@@ -148,12 +212,13 @@ $(function(){
                </ul>
                 
                 <br>
-                <a class="btn btn-primary pull-left"
-                    onclick="gotoPrevious(5, 1, 'version-1-course-x-lesson-5-page-7', false, -1)"> Previous
-                </a>
-                <a class="btn btn-primary pull-right"
-                    onclick="gotoNext(5, 1, 'version-1-course-x-lesson-5-page-7', false, -1)"> Next
-                </a>
+             <div class="d-flex justify-content-between">
+				<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
+				onclick="gotoPrevious(5, 1, 'version-1-course-x-lesson-5-page-7', false, -1)">Previous</button>
+				<button class="btn btn-lg btn-primary" style="background-color:#1b84f5" id="kNextBtn"
+				onclick="gotoNext(5, 1, 'version-1-course-x-lesson-5-page-7', false, -1)" disabled>Next</button>
+			</div> 
+			
             </div>
         </div>
     </section>
@@ -189,13 +254,13 @@ $(function(){
 
 
     <!-- learning outcome 2 -->
-    <section id="version-1-course-x-lesson-5-page-11" class="container" hidden>
+    <section id="version-1-course-x-lesson-5-page-11" hidden>
         <div class="row">
-            <div class="col-md-6 content" style="margin-left:20rem">
+            <div class="container">
                 <h2>Learning outcome 2: A cell in a periodic table - a new element </h2>
-                <ul>
-                		<li>Question</li>
-                		<ul>
+                <ul class="lesson-list">
+                		<li class="main-point">Question</li>
+                		<ul class="sub-points">
                 			<li>What is the chemical symbol of Carbon?</li>
                 		</ul>
                 		<div>
@@ -209,20 +274,20 @@ $(function(){
 				</div>
                
                 <br>
-                <a class="btn btn-primary pull-left"
-                    onclick="gotoPrevious(5, 2, 'version-1-course-x-lesson-5-page-11', false, -1)"> Previous
-                </a>
-                <a class="btn btn-primary pull-right"
-                    onclick="gotoNext(5, 2, 'version-1-course-x-lesson-5-page-11', false, -1)"> Next
-                </a>
+            <div class="d-flex justify-content-between">
+				<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
+				onclick="gotoPrevious(5, 2, 'version-1-course-x-lesson-5-page-11', false, -1)">Previous</button>
+				<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
+				onclick="gotoNext(5, 2, 'version-1-course-x-lesson-5-page-11', false, -1">Next</button>
+			</div> 
             </div>
         </div>
     </section>
                 
     <!-- Lesson 5 assement 2 - program 2 -->
-	<section id="version-1-course-x-lesson-5-page-12" class="container" hidden>
+	<section id="version-1-course-x-lesson-5-page-12" hidden>
         <div class="row">
-            <div class="col-md-6 content" style="margin-left:20rem">
+            <div class="container">
                 <h3><b>Activity : Extend and Test Model -- Carbon</b></h3>
                 <ul>
                 		<li>Extend model: add the knowledge about symbol for Carbon to the model</li>
@@ -250,13 +315,13 @@ $(function(){
 
 
     <!-- learning outcome 3 -->
-    <section id="version-1-course-x-lesson-5-page-15" class="container" hidden>
+    <section id="version-1-course-x-lesson-5-page-15" hidden>
             <div class="row">
-            <div class="col-md-6 content" style="margin-left:20rem">
+            <div class="container">
         	<h2>Learning outcome 3: Continue to expand your model </h2>
-            <ul>
-            		<li>Question</li>
-            		<ul>
+            <ul class="lesson-list">
+            		<li class="main-point">Question</li>
+            		<ul class="sub-points">
             			<li>What is the chemical symbol of Phosphorus?</li>
             		</ul>
             		<div>
@@ -268,18 +333,20 @@ $(function(){
             <div id="phosphorousSymbol" class="form-group">
 		  		<input id="identifySymbolP" type="text" class="form-control" required>
 			</div>
-        <a class="btn btn-primary pull-left"
-            onclick="gotoPrevious(5, 3, 'version-1-course-x-lesson-5-page-15', false, -1)"> Previous </a>
-         <a class="btn btn-primary pull-right"
-            onclick="gotoNext(5, 3, 'version-1-course-x-lesson-5-page-15', false, -1)"> Next </a>
+			<div class="d-flex justify-content-between">
+				<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
+				onclick="gotoPrevious(5, 3, 'version-1-course-x-lesson-5-page-15', false, -1)">Previous</button>
+				<button class="btn btn-lg btn-primary" style="background-color:#1b84f5" id="identifyNextBtn"
+				onclick="gotoNext(5, 3, 'version-1-course-x-lesson-5-page-15', false, -1)" disabled>Next</button>
+			</div> 
               </div>
           </div>
     </section>
     <!-- learning outcome 3 assigment 3--->
 
-    <section id="version-1-course-x-lesson-5-page-16" class="container" hidden>
+    <section id="version-1-course-x-lesson-5-page-16" hidden>
         <div class="row">
-            <div class="col-md-6 content" style="margin-left:20rem">
+            <div class="container">
                 <form action="">
                     <h3><b>Activity : Extend and Test Model -- Phosphorus</b></h3>
                 	<ul>
@@ -305,12 +372,12 @@ $(function(){
     </section>
 <!-- onlineSPARC pages 17,18,19-->
      <!-- learning outcome 4 -->
-    <section id="version-1-course-x-lesson-5-page-20" class="container" hidden>
+    <section id="version-1-course-x-lesson-5-page-20" hidden>
         <div class="row">
-            <div class="col-md-6 content" style="margin-left:20rem">
+            <div class="container">
    <h2>Learning outcome 3: A cell in a periodic table </h2>
-            <ul>
-            		<li>Can you ask a question similar to our earlier ones?</li> 
+            <ul class="lesson-list">
+            		<li class="main-point">Can you ask a question similar to our earlier ones?</li> 
             		<div id="elementSymbol" class="form-group">
 				  		<input id="elementBox" type="text" class="form-control" required>
 					</div>     
@@ -326,10 +393,12 @@ $(function(){
             	</p>
             </div>
             <br>
-    <a class="btn btn-primary pull-left"
-        onclick="gotoPrevious(5, 4, 'version-1-course-x-lesson-5-page-20', false, -1)"> Previous </a>
-     <a class="btn btn-primary pull-right"
-        onclick="gotoNext(5, 4, 'version-1-course-x-lesson-5-page-20', false, -1)"> Next </a>
+            <div class="d-flex justify-content-between">
+				<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
+				onclick="gotoPrevious(5, 4, 'version-1-course-x-lesson-5-page-20', false, -1)">Previous</button>
+				<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
+				onclick="gotoNext(5, 4, 'version-1-course-x-lesson-5-page-20', false, -1)">Next</button>
+			</div> 
           </div>
       </div>
 </section>
@@ -362,7 +431,7 @@ $(function(){
 
 </section>
 <!-- sparc  22,23,24 pages -->
-<%@ include file = "footer.jsp" %>
+<%@ include file = "footer1.jsp" %>
 	<script src="../js/lesson5/validations.js" type="text/javascript">  </script>
 	    
 	

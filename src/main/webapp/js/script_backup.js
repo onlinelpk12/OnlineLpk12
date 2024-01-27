@@ -194,6 +194,9 @@ function getApiData(lessonNumber, assessmentNumber) {
             url: getQuizApiUrl,
             async: false,
             type: 'GET',
+            headers: {
+				'Authorization': "Bearer "+ sessionStorage.getItem("token")
+        	},
             success: function (data) {
                 quizContent = data.content;
                 ShowQuizzesInUI(data.content);
@@ -356,6 +359,9 @@ function PostQuiz(submitQuizRequest) {
         contentType: 'application/json',
         data: JSON.stringify(submitQuizRequest),
         dataType: 'json',
+        headers: {
+            'Authorization': "Bearer "+ sessionStorage.getItem("token")
+        },
         success: function (data) {
             let score = isNullOrUndefined(data.content.quizScore) ? 0 : data.content.quizScore;
             score = score * 100;

@@ -20,6 +20,7 @@
 <script src="../js/easytree-response.js" type="text/javascript"></script>
 <script src="../js/resizer.js" type="text/javascript"></script>
 <script src="../js/init.js" type="text/javascript"></script>
+<script type="text/javascript" src="../static/global.js"></script>
 <script type="text/javascript" src="../js/jquery.xslt.js"></script>
 
 <title>Online SPARC</title>
@@ -172,6 +173,7 @@
 									<!-- <li>
 										<a href="#" id="goBackButton" onclick="history.back()" style="margin-top: -30px;margin-left: -55px;margin-bottom: -15px;"><img height="30" width="40" src="../images/back.png" style="margin-top:25px" ></a>
 									</li> -->
+									<a href="#" onclick="redirectToLessonPage()"><img src="../images/back.png" ></a>
 									<li>
 										<button type="button" class="btn btn-default navbar-btn"
 											id="menu-toggle" value="getAccessibleDirectory">Directory</button>
@@ -294,6 +296,11 @@
 	</div>
 
 <script type="text/javascript">	
+window.addEventListener('popstate', function (event) {
+ // Redirect to your desired JSP file
+ window.location.href = 'lesson.jsp';
+
+});
 	let currentLearningOutcomeNumber = sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber);
 	let currentLessonNumber = sessionStorage.getItem(sessionKeyCurrentLessonNumber);
 	let currentConsoleOutput = "currentConsoleOutput";
@@ -310,7 +317,7 @@
 	    document.getElementById("question").innerHTML = titleQuestion.question;
 	}
 	let userid = sessionStorage.getItem("userId");
-	const apiBaseurl = "https://onlinelpk12-corsproxy.herokuapp.com/"+"https://onlinelpk12api.herokuapp.com/api/sparc/";
+	const apiBaseurl = dotnet_endpoint+"api/sparc/";
 	//var input="getAnswerSets";
     var editor = ace.edit("editor");
     editor.session.setMode("ace/mode/sparc");
@@ -324,7 +331,9 @@
 		$('#results').empty();
 	}	
 	
-	
+	function redirectToLessonPage() {
+ 		window.location.href = 'lesson.jsp';
+	}
 	
 	function execute(){
 		let program = editor.getValue(); 
@@ -405,8 +414,12 @@
             success: function (data) {
                 res= data;
             },
+			headers: {
+				'Authorization': "Bearer "+ sessionStorage.getItem("token")
+        	},
             type: 'POST',
             url: apiBaseurl + url,
+
             success: function(data){
             	console.log('response content: ',data.content);
             	showResults(data.content);

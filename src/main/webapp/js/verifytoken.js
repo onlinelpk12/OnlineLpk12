@@ -3,7 +3,7 @@
 
 	if(sessionStorage.getItem("userRole")=="Student"){
 		
-        const studentAPI = corsProxy+"https://onlinelpk12nodeservice.herokuapp.com/api/test/student";		
+        const studentAPI = "http://localhost:8083/api/test/student";		
 	fetch(studentAPI,{
 
 				headers:{
@@ -37,7 +37,7 @@
     });
     }
     else if(sessionStorage.getItem("userRole")=="Teacher"){
-        const teacherAPI = corsProxy+"https://onlinelpk12nodeservice.herokuapp.com/api/test/teacher";
+        const teacherAPI = "http://localhost:8083/api/test/teacher";
 	fetch(teacherAPI,{
 
 				headers:{

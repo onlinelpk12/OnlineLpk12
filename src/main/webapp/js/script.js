@@ -8,7 +8,7 @@ function disableElement(id) {
     }
 }
 
-const apiBaseUrl = "https://onlinelpk12-corsproxy.herokuapp.com/"+"https://onlinelpk12api.herokuapp.com/api";
+const apiBaseUrl = "https://localhost:7155/api";
 const lessonsUrl = "/onlineSystem/lessonnumber.jsp"
 
 let userIdFromSession = 0;
@@ -46,11 +46,12 @@ function gotoNext(currentLessonNumber, currentLearningOutcomeNumber, currentPage
 	    let nextPage = document.getElementById(nextPageId);
 	
 	    currentPage.hidden = true;
-	    nextPage.hidden = false;	
+	    nextPage.hidden = false;	    
+	       	
 	}else{
-		sessionStorage.setItem(sessionKeyShowPageId, nextPageId.toString())
 		window.open(sparcPage, "_self");
 	}
+	sessionStorage.setItem(sessionKeyShowPageId, nextPageId.toString())	 
     SaveStudentLessonsProgressThroughAPI(currentLessonNumber, currentLearningOutcomeNumber, currentPageId);
 }
 
@@ -66,6 +67,7 @@ function gotoPrevious(currentLessonNumber, currentLearningOutcomeNumber, current
     let previousSection = document.getElementById(previousPageId);
     currentSection.hidden = true;
     previousSection.hidden = false;
+    sessionStorage.setItem(sessionKeyShowPageId, previousPageId.toString())	
 }
 
 function gotoOnlineSparc(currentLessonNumber, learningOutcomeNumber, currentPageId, isNextSectionQuiz, nextAssessmentNumber, sparcPageValue) {
@@ -155,15 +157,19 @@ function submitAssessment(currentPageId, consoleOutput, isSparcPassed){
     
     Promise.all(
         [SaveStudentAssessmentStatusThroughAPI(score, 100, assessmentStatus),
-        SaveStudentAssessmentSubmissionThroughAPI(actualQuestionAns.question, submittedAnswer)])
+        SaveStudentAssessmentSubmissionThroughAPI(actualQuestionAns.question, submittedAnswer),
+        saveSparcGrade(score,actualQuestionAns,submittedAnswer,assessmentStatus)])
         .then(function (responses) {
             return Promise.all(responses.map(function (response) { return response; }));
         }).then(function (data) {
             //	console.log(data);
+            return data;
         })
         .catch(function (error) {
             // console.log(error);
+            return error;
         });
+
     
     //window.open(nextStepPage, "_self");
 }
@@ -324,6 +330,9 @@ function SaveStudentAssessmentSubmissionThroughAPI(question, submittedAnswer) {
         data: JSON.stringify(assessmentSubmissionRequest),
         dataType: 'json',
         type: 'POST',
+        headers: {
+            'Authorization': "Bearer "+ sessionStorage.getItem("token")
+        },
         url: saveStudentAssessmentSubmissionAPIUrl,
         success: function (data) {
             return data;
@@ -345,6 +354,68 @@ function SaveStudentAssessmentSubmissionThroughAPI(question, submittedAnswer) {
     });
 }
 
+
+function saveSparcGrade(score,actualQuestionAns,submittedAnswer,assessmentStatus)
+{
+    let grades = null;
+    let sparcGrade = null;
+    if(score >= 95)
+    {
+        grades = "A+";
+    }
+    if(score >= 90 && score <= 94)
+    {
+        grades = "A";
+    }
+    if(score >= 70 && score <= 89)
+    {
+        grades = "B";
+    }
+    if(score >= 50 && score <= 69)
+    {
+        grades = "C";
+    }
+    if(score <=49){
+        grades = "D";
+    }
+    sparcGrade =  {
+        grade: grades,
+        userId: parseInt(sessionStorage.getItem("userId")),
+        lessonId: parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber)),
+        learningOutcome:  parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber)),
+        action: actualQuestionAns.question,
+        editor: null,
+        query : submittedAnswer,
+        fileUrl: null,
+        isGrading : assessmentStatus != null ? true : false
+      }
+      const submitSpracGradeAPIUrl = apiBaseUrl+ "/Sparc/submitgrade";
+  $.ajax({
+      contentType: 'application/x-www-form-urlencoded',
+      data : sparcGrade,
+      dataType: 'json',
+      type: 'POST',
+      url: submitSpracGradeAPIUrl,
+     success: function (data) {
+            return data;
+        },
+        statusCode: {
+            400: function (error) {
+                return error;
+            },
+            404: function (error) {
+                return error;
+            },
+            500: function (error) {
+                return error;
+            }
+        },
+        error: function (error) {
+            return error;
+        }  
+  });
+}
+
 function SaveStudentAssessmentStatusThroughAPI(score, totalScore, assessmentStatus){   
     let assessmentStatusRequest =  {
         assessmentId: 0,
@@ -362,21 +433,28 @@ function SaveStudentAssessmentStatusThroughAPI(score, totalScore, assessmentStat
       data: JSON.stringify(assessmentStatusRequest),
       dataType: 'json',
       type: 'POST',
+      headers: {
+        'Authorization': "Bearer "+ sessionStorage.getItem("token")
+        },
       url: saveStudentAssessmentStatusAPIUrl,
       success: function (data) {
-         
-      },
-      statusCode: {
-          400: function (error) {
-          },
-          404: function (error) {
-          },
-          500: function (error) {
-          }
-      },
-      error: function (error) {
-      }       
-  });
+        return data;
+    },
+    statusCode: {
+        400: function (error) {
+            return error;
+        },
+        404: function (error) {
+            return error;
+        },
+        500: function (error) {
+            return error;
+        }
+    },
+    error: function (error) {
+        return error;
+    }
+});
 }
 
 
@@ -439,6 +517,9 @@ function similarity(s1, s2) {
         data: JSON.stringify(studentLessonProgressRequest),
         dataType: 'json',
         type: 'POST',
+        headers: {
+            'Authorization': "Bearer "+ sessionStorage.getItem("token")
+        },
         url: saveStudentProgressAPIUrl,
         success: function (data) {
            
