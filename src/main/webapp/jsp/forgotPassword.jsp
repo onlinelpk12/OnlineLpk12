@@ -26,7 +26,7 @@
  	    <label for="userName">UserName</label>
 	    <input type="text"  name="user" placeholder="userName" id="userName" required>
 	    <br>
- 	    <label for="newPassword">New Password</label>
+ 	    <label for="newPassword">New Password</label><br>
 	    <input type="Password" placeholder="New Password" id="newPassword" required>
  	    <br>
 	    <br>
