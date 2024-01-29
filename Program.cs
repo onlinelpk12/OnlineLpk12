@@ -52,11 +52,11 @@ builder.Services.AddCors(options =>
             });
 });
 
-builder.WebHost.ConfigureKestrel(serverOptions =>
-{
-    serverOptions.Listen(System.Net.IPAddress.Parse("129.118.152.81"), 5000);
+//builder.WebHost.ConfigureKestrel(serverOptions =>
+//{
+//    serverOptions.Listen(System.Net.IPAddress.Parse("129.118.152.81"), 5000);
 
-});
+//});
 
 builder.Services.AddHttpClient("Sparc", httpClient =>
 {
