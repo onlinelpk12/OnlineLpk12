@@ -6,6 +6,7 @@ using OnlineLpk12.Services.Interface;
 using System.Net;
 using System.Reflection;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Cors;
 
 namespace OnlineLpk12.Controllers
 {
@@ -206,7 +207,7 @@ namespace OnlineLpk12.Controllers
                 if (request.LessonId < 1)
                     response.Errors.Add("Invalid Lesson Id");
                 if (request.LearningOutcome < 1)
-                    response.Errors.Add("Invalid Learning Outcome");
+                    //response.Errors.Add("Invalid Learning Outcome");
                 if (request.UserId < 1)
                     response.Errors.Add("Invalid User Id");
 

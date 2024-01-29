@@ -6,6 +6,7 @@ using System.Net;
 using System.Reflection;
 using System.Diagnostics;
 using OnlineLpk12.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OnlineLpk12.Controllers
 {
@@ -27,6 +28,7 @@ namespace OnlineLpk12.Controllers
         }
 
         [HttpPost("createrootfolder")]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateRootFolder([FromBody] SparcInput sparc)
         {
             Response<string> response = new();

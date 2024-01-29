@@ -22,6 +22,7 @@ namespace OnlineLpk12.Data.Context
         public virtual DbSet<AssessmentSubmission> AssessmentSubmissions { get; set; } = null!;
         public virtual DbSet<Content> Contents { get; set; } = null!;
         public virtual DbSet<Course> Courses { get; set; } = null!;
+        public virtual DbSet<CourseTeacher> CourseTeacher { get; set; } = null!;
         public virtual DbSet<CoursesStudent> CoursesStudents { get; set; } = null!;
         public virtual DbSet<Lesson> Lessons { get; set; } = null!;
         public virtual DbSet<LessonStatus> LessonStatuses { get; set; } = null!;
@@ -38,17 +39,19 @@ namespace OnlineLpk12.Data.Context
         public virtual DbSet<SparcGrade> SparcGrades { get; set; } = null!;
         public virtual DbSet<StudentLessonProgress> StudentLessonProgresses { get; set; } = null!;
         public virtual DbSet<StudentProgress> StudentProgresses { get; set; } = null!;
+        public virtual DbSet<QuizQuestionAnswer> QuizQuestionAnswers { get; set; } = null!;
         public virtual DbSet<StudentQuiz> StudentQuizzes { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
         public virtual DbSet<UserRole> UserRoles { get; set; } = null!;
-
+        public virtual DbSet<SlideData> SlideData { get; set; } = null!;
+        public virtual DbSet<AssessmentData> AssessmentData { get; set; } = null!;
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-//            if (!optionsBuilder.IsConfigured)
-//            {
+           if (!optionsBuilder.IsConfigured)
+           {
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                optionsBuilder.UseMySql("server=onlinelpk12database.mysql.database.azure.com;database=onlinelpk12;user=onlinelpk12admin@onlinelpk12database;password=Paswd@1234", Microsoft.EntityFrameworkCore.ServerVersion.Parse("5.7.32-mysql"));
-//            }
+               optionsBuilder.UseMySql("server=onlinelpk12database.mysql.database.azure.com;database=onlinelpk12;user=onlinelpk12admin@onlinelpk12database;password=Paswd@1234", Microsoft.EntityFrameworkCore.ServerVersion.Parse("5.7.32-mysql"));
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -195,6 +198,59 @@ namespace OnlineLpk12.Data.Context
                     .HasColumnName("year");
             });
 
+            modelBuilder.Entity<SlideData>(entity =>
+            {
+                entity.ToTable("slide_data");
+
+                entity.Property(e => e.Id)
+                   .HasColumnType("int(11)")
+                   .HasColumnName("id");
+
+                entity.Property(e => e.CourseName)
+                    .HasMaxLength(100)
+                    .HasColumnName("course_name");
+
+                entity.Property(e => e.LessonName)
+                    .HasMaxLength(100)
+                    .HasColumnName("lesson_name");
+
+                entity.Property(e => e.Pdf)
+                    .HasMaxLength(1000)
+                    .HasColumnName("pdf");
+            });
+            modelBuilder.Entity<AssessmentData>(entity =>
+            {
+                entity.ToTable("assessment_data");
+
+                entity.Property(e => e.Id)
+                   .HasColumnType("int(11)")
+                   .HasColumnName("id");
+
+                entity.Property(e => e.CourseName)
+                    .HasMaxLength(100)
+                    .HasColumnName("course_name");
+
+                entity.Property(e => e.LessonName)
+                    .HasMaxLength(100)
+                    .HasColumnName("lesson_name");
+
+                entity.Property(e => e.PageNum)
+                    .HasMaxLength(100)
+                    .HasColumnName("page_num");
+                entity.Property(e => e.Header)
+                    .HasMaxLength(100)
+                    .HasColumnName("header");
+                entity.Property(e => e.Data)
+                    .HasMaxLength(100)
+                    .HasColumnName("data");
+                entity.Property(e => e.Questions)
+                    .HasMaxLength(100)
+                    .HasColumnName("questions");
+                entity.Property(e => e.Answers)
+                    .HasMaxLength(100)
+                    .HasColumnName("answers");
+            });
+
             modelBuilder.Entity<CoursesStudent>(entity =>
             {
                 entity.ToTable("courses_students");
@@ -210,6 +266,23 @@ namespace OnlineLpk12.Data.Context
                 entity.Property(e => e.StudentId)
                     .HasColumnType("int(11)")
                     .HasColumnName("student_id");
+
+                entity.Property(e => e.TeacherId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("teacher_id");
+            });
+
+            modelBuilder.Entity<CourseTeacher>(entity =>
+            {
+                entity.ToTable("course_teacher");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.CourseId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("course_id");
 
                 entity.Property(e => e.TeacherId)
                     .HasColumnType("int(11)")
@@ -569,6 +642,54 @@ namespace OnlineLpk12.Data.Context
                 entity.Property(e => e.StudentId)
                     .HasColumnType("int(11)")
                     .HasColumnName("student_id");
+            });
+            modelBuilder.Entity<QuizQuestionAnswer>(entity =>
+            {
+                entity.ToTable("QuizQuestionAnswers");
+
+                modelBuilder.Entity<QuizQuestionAnswer>()
+                .HasKey(q => q.QuizQuestionAnswerId);
+
+                modelBuilder.Entity<QuizQuestionAnswer>()
+                           .Property(q => q.QuizQuestionAnswerId)
+                           .ValueGeneratedOnAdd();
+                entity.Property(e => e.QuizQuestionAnswerId)
+                    .HasColumnName("QuizQuestionAnswerId")
+                    .HasColumnType("int")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.QuestionId)
+                    .HasColumnName("QuestionId")
+                    .HasColumnType("int");
+
+                entity.Property(e => e.QuestionName)
+                    .HasColumnName("QuestionName")
+                    .HasMaxLength(255) // Or appropriate length based on your requirements
+                    .IsRequired();
+
+                entity.Property(e => e.AnswerText)
+                    .HasColumnName("AnswerText")
+                    .HasColumnType("text") // Or appropriate type based on your requirements
+                    .IsRequired();
+
+                entity.Property(e => e.CorrectOrIncorrect)
+                    .HasColumnName("CorrectOrIncorrect")
+                    .HasColumnType("bit"); // Or appropriate type based on your database
+
+                entity.Property(e => e.Timestamp)
+                    .HasColumnName("Timestamp")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.UserId)
+                    .HasColumnName("UserId")
+                    .HasColumnType("int");
+
+                entity.Property(e => e.UserRole)
+                    .HasColumnName("UserRole")
+                    .HasMaxLength(50) // Or appropriate length based on your requirements
+                    .IsRequired();
+
             });
 
             modelBuilder.Entity<StudentProgress>(entity =>
