@@ -9,7 +9,8 @@ namespace OnlineLpk12.Services.Implementation
         private readonly OnlineLpk12DbContext _context;
         public LogService(OnlineLpk12DbContext context)
         {
-            _context = context; 
+            _context = context;
+
         }
 
         public async Task LogError(int userId, string methodName, string fileName, string message, Exception exception)

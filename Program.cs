@@ -1,9 +1,14 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineLpk12.Data.Context;
 using OnlineLpk12.Services.Implementation;
 using OnlineLpk12.Services.Interface;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +35,7 @@ builder.Services.AddTransient<ILogService, LogService>();
 builder.Services.AddTransient<ITeacherService, TeacherService>();
 builder.Services.AddTransient<IStudentService, StudentService>();
 builder.Services.AddTransient<ISparcFileSystemService, SparcFileSystemService>();
+builder.Services.AddTransient<ILessonService, LessonService>();
 
 builder.Services.AddCors(options =>
 {
@@ -46,11 +52,11 @@ builder.Services.AddCors(options =>
             });
 });
 
-builder.WebHost.ConfigureKestrel(serverOptions =>
-{
-    serverOptions.Listen(System.Net.IPAddress.Parse("129.118.152.81"), 5000);
+//builder.WebHost.ConfigureKestrel(serverOptions =>
+//{
+//    serverOptions.Listen(System.Net.IPAddress.Parse("129.118.152.81"), 5000);
 
-});
+//});
 
 builder.Services.AddHttpClient("Sparc", httpClient =>
 {
@@ -59,6 +65,26 @@ builder.Services.AddHttpClient("Sparc", httpClient =>
     httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
     httpClient.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
 });
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(o =>
+{
+    o.TokenValidationParameters = new TokenValidationParameters
+    {
+        IssuerSigningKey = new SymmetricSecurityKey
+        (Encoding.UTF8.GetBytes(builder.Configuration["Key"])),
+        ValidateLifetime = false,
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateIssuerSigningKey = true
+    };
+});
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -71,8 +97,10 @@ if (app.Environment.IsDevelopment())
 app.UseCors();
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+
+app.MapControllers().RequireAuthorization();
 
 app.Run();
