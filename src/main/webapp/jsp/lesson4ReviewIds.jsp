@@ -8,13 +8,6 @@
 	<!-- Include Bootstrap CSS for the Carousel -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	
-	<script src="../js/verifytoken.js" type="text/javascript"></script>
-	<script type="text/javascript">
-		$(function() {
-			verifytoken();
-		});
-	</script>
-	
 	<script src="../js/ldslessonDataStructureJSON.js"></script>
 	<script src="../js/script.js"></script>
 </head>

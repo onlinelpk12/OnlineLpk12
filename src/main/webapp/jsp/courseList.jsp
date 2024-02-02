@@ -11,7 +11,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="../static/global.js"></script>
- <script src="../js/verifytoken.js" type="text/javascript"></script>
+
 <style>
 .table-styled {
 border-collapse: collapse
@@ -34,10 +34,6 @@ border-collapse: collapse
 window.onload = function() {
 	getApiData();
 }
-
-$(function() {
-	 verifytoken();
-});
 
 
 function getApiData()
