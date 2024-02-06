@@ -17,15 +17,9 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
 	type="text/javascript"></script>
-<script src="../js/verifytoken.js" type="text/javascript">
-	
-</script>
+
 <link rel="stylesheet" href="../styles/lesson4lds.css">
-<script type="text/javascript">
-	$(function() {
-		verifytoken();
-	});
-</script>
+
 <link rel="stylesheet" href="../styles/style.css">
 <script src="../js/ldslessonDataStructureJSON.js"></script>
 <script src="../js/script.js">

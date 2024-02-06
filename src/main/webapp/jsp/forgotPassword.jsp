@@ -31,7 +31,7 @@
  	    <br>
 	    <br>
             <input type="submit"  value="Change Password" >  <br>
-            <a href="login.jsp">Return to Login</a>  <br>
+            <a href="login.html">Return to Login</a>  <br>
           </form>
           <br>
 	</div>
@@ -63,7 +63,7 @@
         console.log(resp)
         if(response.status==200){
             resp.then((data)=>{
-                location.href='login.jsp'
+                location.href='login.html'
               	
             })
         }
