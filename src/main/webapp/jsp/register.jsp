@@ -62,9 +62,12 @@
 	        var email=document.getElementById('email').value;
 	        var courseId=document.getElementById('course').value;
 	        
+	        
 	        var pwdObj = document.getElementById('password').value;
+	        
+	        var isactive=false;
 	       	if (roles=='Student'){
-	    	   var isactive=true;
+	    	   isactive=true;
 	       	}
 	       <%--  var hashObj = new jsSHA("SHA-512", "TEXT", {numRounds: 1});
 	        hashObj.update(pwdObj.value);
@@ -89,6 +92,7 @@
 	        console.log(isStudent)--%>
 	
 	        console.log([roles])
+	        console.log(isactive)
 	
 	        //fetch post request
 			 const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
@@ -100,7 +104,7 @@
 					"lastname":lastname,
 	                "username":username,
 	                "EmailId":email,
-					"isactive":isactive,
+					"isStudent":isactive,
 	                "password":pwdObj,
 	            }),
 		        headers:{

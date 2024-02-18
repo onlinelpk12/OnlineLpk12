@@ -6,9 +6,9 @@
     <title>Online LPK12 Course</title>
     <!-- BootStrap 5 CDN Link -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
+	<script type="text/javascript" src="../static/global.js"></script>
     <!-- Custom CSS link -->
-    <link rel="stylesheet" href="newstyle.css">
+    <<!-- link rel="stylesheet" href="newstyle.css"> -->
 </head>
 <body>
 <section class="vh-100" style="background-color: #eee;">
@@ -119,25 +119,28 @@
 	        var username=document.getElementById('username').value;
 	
 	        var email=document.getElementById('email').value;
-	        var courseId=document.getElementById('course').value;
+	        /* var courseId='Online Lpk12'; */
+	        
 	        
 	        var pwdObj = document.getElementById('password').value;
+	        
+	        var isactive=false;
 	       	if (roles=='Student'){
-	    	   var isactive=true;
+	    	   isactive=true;
 	       	}
-	       /*--  var hashObj = new jsSHA("SHA-512", "TEXT", {numRounds: 1});
+	       /* var hashObj = new jsSHA("SHA-512", "TEXT", {numRounds: 1});
 	        hashObj.update(pwdObj.value);
 	        var hash = hashObj.getHash("HEX");
 	        pwdObj.value = hash;
-	        console.log(pwdObj)-- */
+	        console.log(pwdObj)
 	
-	      /*--  var role=[];
+	      var role=[];
 	        for(var i=0;i<roles.length;i++){
 	        	role.push({roles[i]})
-	        }-- */
+	        }
 	        
 	
-	     /*   var isStudent=false;
+	      var isStudent=false;
 	
 	        if(role=="Student"){
 	
@@ -145,12 +148,13 @@
 	
 	        }
 	
-	        console.log(isStudent)--
-	        */
+	        console.log(isStudent) */
 	
 	        console.log([roles])
+	        console.log(isactive)
 	
 	        //fetch post request
+	   
 			 const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
              const signUpAPI = dotnet_endpoint+"api/User/Register";
 	        fetch(signUpAPI,{
@@ -160,7 +164,7 @@
 					"lastname":lastname,
 	                "username":username,
 	                "EmailId":email,
-					"isactive":isactive,
+					"isStudent":isactive,
 	                "password":pwdObj,
 	            }),
 		        headers:{
@@ -186,25 +190,16 @@
 	       				headers: {
 	       				    'Content-type': 'application/json; charset=UTF-8',
 	       				  }
-	       			 }).then(function(response){
-	       				if(response.status==200){
-	       					console.log(data)
-	       					fetch(dotnet_endpoint+"api/User/"+userid+"/course/"+courseId,{
-	       						method: 'GET',
-	       						headers: {
-	    	       				    'Content-type': 'application/json; charset=UTF-8',
-	    	       				  }
-	       					}).then(function(response)
+	       			 }).then(function(response)
 	       							{
 	       						if(response.status==200){
 	       							console.log(data)
-	       							location.href="login.jsp"
+	       							location.href="login.html"
 	       						}
 	       							}
 	       							)
 							
-	       				}
-	       			 });	       			
+	       				       			
 	       			});
 	           	}
 	            else{
@@ -221,5 +216,4 @@
 	        })
 	    })
 	</script>
-
 </html>
