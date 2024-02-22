@@ -40,7 +40,8 @@
                <p>Useremail</p>
                <input type="email" placeholder="Useremail" id="email" required>
                <p>Password</p>
-               <input type="password" placeholder="Password" id="password" required>
+               <input type="password" placeholder="Password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
+               
                <input type="submit" value="Register"> <a href="login.jsp">Already
                have Account?</a>
             </form>
@@ -61,7 +62,6 @@
 	
 	        var email=document.getElementById('email').value;
 	        var courseId=document.getElementById('course').value;
-	        
 	        
 	        var pwdObj = document.getElementById('password').value;
 	        
