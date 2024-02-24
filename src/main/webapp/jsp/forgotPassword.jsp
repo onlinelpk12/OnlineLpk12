@@ -76,7 +76,7 @@
             }
             else if (response.status=401){
             	resp.then((data)=>{
-            		alert(data.message)
+            		alert(data.errors)
             		location.href='forgotPassword.jsp'
             	})
             }
