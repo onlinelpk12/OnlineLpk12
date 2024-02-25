@@ -67,7 +67,7 @@
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="password" id="password" class="form-control" />
+                      <input type="password" id="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"/>
                       <label class="form-label" for="password">Password</label>
                     </div>
                   </div>
@@ -76,7 +76,7 @@
                     <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
                       <input type="password" id="repeatpassword" class="form-control" />
-                      <label class="form-label" for="repeatpassword">Repeat your password</label>
+                      <label class="form-label" for="repeatpassword">Confirm Password</label>
                     </div>
                   </div>
 
@@ -123,7 +123,12 @@
 	        
 	        
 	        var pwdObj = document.getElementById('password').value;
-	        
+	        var repeat_pwd = document.getElementById('repeatpassword').value;
+	        if(pwdObj!= repeat_pwd) {
+	        	alert("Password and Confirm Password doesn't match");
+	        	location.href="register.html";
+	        }
+	        console.log("testing");
 	        var isactive=false;
 	       	if (roles=='Student'){
 	    	   isactive=true;
