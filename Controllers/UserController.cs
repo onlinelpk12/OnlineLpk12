@@ -73,7 +73,6 @@ namespace OnlineLpk12.Controllers
             }
         }
 
-
         [HttpPost("Login")]
         [ProducesResponseType(typeof(Response<LoginResponse>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.BadRequest)]
@@ -131,7 +130,7 @@ namespace OnlineLpk12.Controllers
                     response.Errors = validationMessages;
                     response.Message = "One or more validation errors occurred.";
                     return BadRequest(response);
-                }
+                }   
                 var result = await _userService.ForgotPassword(user);
                 if (result.Success)
                 {
@@ -140,7 +139,7 @@ namespace OnlineLpk12.Controllers
                 }
                 else
                 {
-                    response.Message = "One or more validation errors occurred.";
+                    response.Message = "New Password should be different from Old Password.";  //error message added for a bug fix
                     response.Errors.Add(result.Message);
                     return BadRequest(response);
                 }

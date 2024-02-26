@@ -237,7 +237,12 @@ namespace OnlineLpk12.Services.Implementation
                         result.Success = false;
                         result.Message = "User is inactive. Contact support for activation.";
                     }
-
+                    //Validation to check if new and old passwords match.
+                    else if (BCrypt.Net.BCrypt.Verify(user.Password, userFromDb.Password))
+                    {
+                        result.Success = false;
+                        result.Message = "New password should not match old password.";
+                    }
                     else
                     {
                         userFromDb.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, 8);
@@ -273,5 +278,6 @@ namespace OnlineLpk12.Services.Implementation
                 return 0;
             }
         }
+
     }
 }
