@@ -10,7 +10,7 @@
 <script src="../js/sparc_programs.js" type="text/javascript"></script>
 <script src="../js/script.js" type="text/javascript"></script>
 <script type="text/javascript" src="../static/global.js"></script>
- <script src="../js/verifytoken.js" type="text/javascript"></script>
+
  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="sparc_teacher.jsp"></script>
 
@@ -156,7 +156,6 @@ var clearResults=function(){
 }
 
 $(function(){
-	verifytoken();
 	getApiData();
 	if(userRole == 'Student'){
 		$('#dropdown').hide();

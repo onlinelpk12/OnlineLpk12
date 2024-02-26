@@ -54,7 +54,7 @@
 	function sessionclear() {
 
 		sessionStorage.clear();
-		window.location.href = "login.jsp"
+		window.location.href = "login.html"
 	}
 </script>
 </html>

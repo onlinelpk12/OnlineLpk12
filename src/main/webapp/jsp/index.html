@@ -18,7 +18,7 @@
                 <form class="rounded bg-white shadow p-5" id="form" method="post">
                     <h3 class="text-dark fw-bolder fs-4 mb-2">Online LPK12</h3>
                     <div class="fw-normal text-muted mb-4">
-                        New to Online LPK12? <a href="Register.html" class="text-primary fw-bold text-decoration-none">Create an Account</a>
+                        New to Online LPK12? <a href="register.html" class="text-primary fw-bold text-decoration-none">Create an Account</a>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="username" placeholder="UserName">
@@ -53,7 +53,7 @@
       var password=document.getElementById('password').value;
       //fetch post request
       //const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
-      const signInAPI = "http://localhost:8083/api/auth/signin";
+      const signInAPI = "https://localhost:7155/api/auth/signin";
       fetch(signInAPI,{
         method:'POST',
         body: JSON.stringify({
@@ -68,9 +68,9 @@
         console.log(resp)
         if(response.status==200){
             resp.then((data)=>{
-                sessionStorage.setItem("username",data.username)
-                sessionStorage.setItem("userId",data.id)
-		sessionStorage.setItem("token",data.accessToken)
+                sessionStorage.setItem("username",data.content.username)
+                sessionStorage.setItem("userId",data.content.id)
+		sessionStorage.setItem("token",data.content.accessToken)
                 console.log(sessionStorage.getItem("userId"))	
               	if(data.roles=="ROLE_TEACHER"){
 		  sessionStorage.setItem("userRole","Teacher")
