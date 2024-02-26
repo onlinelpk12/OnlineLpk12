@@ -32,15 +32,21 @@ a.disabled {
 <h2>Click below links to view the lessons:</h2>
 <ul>
 <p></p>
+<li><a href="../jsp/lesson1.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 1!</a></li>
+<p></p>
 <li><a href="../jsp/lesson2.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 2!</a></li>
 <p></p>
 <li><a href="../jsp/lesson3.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 3!</a></li>
 <p></p>
 <li><a href="../jsp/lesson4.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 4!</a></li>
 <p></p>
+<li><a href="../jsp/Lesson4.1.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 4.1!</a></li>
+<p></p>
 <li><a href="../jsp/lesson5.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 5!</a></li>
 <p></p>
 <li><a href="../jsp/lesson6.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 6!</a></li>
+<p></p>
+<li><a href="../jsp/lesson6.1.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 6.1!</a></li>
 <p></p>
 <li><a href="../jsp/lesson7.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 7!</a></li>
 <p></p>
@@ -53,12 +59,6 @@ a.disabled {
 <li><a href="../jsp/lesson12.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 12!</a></li>
 <p></p>
 <li><a href="../jsp/lesson18.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 18!</a></li>
-<p></p>
-<li><a href="../jsp/Lesson4.1.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 4.1!</a></li>
-<p></p>
-<li><a href="../jsp/lesson1.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 1!</a></li>
-<p></p>
-<li><a href="../jsp/lesson6.1.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 6.1!</a></li>
 </ul>
 
 <!-- <ul id="lessonList"></ul> -->
