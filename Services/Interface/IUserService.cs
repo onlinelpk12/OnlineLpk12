@@ -14,6 +14,7 @@ namespace OnlineLpk12.Services.Interface
         Task<bool> IsEmailIdExists(string emailId);
         Task<bool> IsUserNameExists(string userName);
         Task<bool> IsUserTeacher(int userId);
+        Task<bool> IsPasswordStrong(string password);
         Task<string> GetUserNameByUserId(int userId);
         Task<int> GetTeacherIdByCourseId(int courseId);
         Task<Result<string>> CourseMap(int userId, int courseId);
