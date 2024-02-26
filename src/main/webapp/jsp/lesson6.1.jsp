@@ -11,9 +11,9 @@
 	<script src="../js/verifytoken.js" type="text/javascript">  </script>
 	<link rel="stylesheet" href="../styles/lesson6.css">
 <script type="text/javascript">
-$(function(){
+ $(function(){
     verifytoken();
-});
+}); 
 </script>
     <link rel="stylesheet" href="../styles/style.css">
     <script src="../js/lessonDataStructureJSON.js"></script>
@@ -190,10 +190,10 @@ $(function(){
            		</div>   
                 <br>
                 <button class="btn btn-primary pull-left" style="background-color :#1b84f5;"
-                    onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-4', false, -1)"> Previous
+                    onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-5', false, -1)"> Previous
                 </button>
                 <button class="btn btn-primary pull-right" style="background-color :#1b84f5;"
-                    onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-6', false, -1)"> Next
+                    onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-5', false, -1)"> Next
                 </button>   
                 </div> 
             </div>
@@ -220,10 +220,10 @@ $(function(){
                 <br><br><br><br>
                 <br><br><br><br><br>
                 <button class="btn btn-primary pull-left" style="background-color :#1b84f5;"
-                    onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-5', false, -1)"> Previous
+                    onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-6', false, -1)"> Previous
                 </button>
                 <button class="btn btn-primary pull-right" style="background-color :#1b84f5;"
-                    onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-7', false, -1)"> Next
+                    onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-6', false, -1)"> Next
                 </button>    
             </div>
         </div>
@@ -261,10 +261,10 @@ $(function(){
                 </ul>   
                 <br><br>
                 <button class="btn btn-primary pull-left" style="background-color :#1b84f5;"
-                    onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-6', false, -1)"> Previous
+                    onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-7', false, -1)"> Previous
                 </button>
                 <button class="btn btn-primary pull-right" style="background-color :#1b84f5;"
-                    onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-8', false, -1)"> Next
+                    onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-7', false, -1)"> Next
                 </button>    
             </div>
             </div>
@@ -290,10 +290,10 @@ $(function(){
                 <br><br><br><br>
                 <br><br><br><br><br>
                 <button class="btn btn-primary pull-left" style="background-color :#1b84f5;"
-                    onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-7', false, -1)"> Previous
+                    onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-8', false, -1)"> Previous
                 </button>
                 <button class="btn btn-primary pull-right" style="background-color :#1b84f5;"
-                    onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-9', false, -1)"> Next
+                    onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-8', false, -1)"> Next
                 </button>
                 </div>    
             </div>
@@ -321,10 +321,10 @@ $(function(){
                 <br><br><br><br>
                 <br><br><br><br><br>
                 <button class="btn btn-primary pull-left" style="background-color :#1b84f5;"
-                    onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-8', false, -1)"> Previous
+                    onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-9', false, -1)"> Previous
                 </button>
                 <button class="btn btn-primary pull-right" style="background-color :#1b84f5;"
-                    onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-10', false, -1)"> Next
+                    onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-9', false, -1)"> Next
                 </button>    
             </div>
             </div>
@@ -354,10 +354,10 @@ $(function(){
                 <br><br><br><br>
                 <br><br><br><br><br>
                 <button class="btn btn-primary pull-left" style="background-color :#1b84f5;"
-                    onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-9', false, -1)"> Previous
+                    onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-10', false, -1)"> Previous
                 </button>
                 <button class="btn btn-primary pull-right" style="background-color :#1b84f5;"
-                    onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-11', false, -1)"> Next
+                    onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-10', false, -1)"> Next
                 </button>  
                 </div>  
             </div>
@@ -387,10 +387,10 @@ $(function(){
                 <br><br><br><br>
                 <br><br><br><br><br>
                 <button class="btn btn-primary pull-left" style="background-color :#1b84f5;"
-                    onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-10', false, -1)"> Previous
+                    onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-11', false, -1)"> Previous
                 </button>
                 <button class="btn btn-primary pull-right" style="background-color :#1b84f5;"
-                    onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-12', false, -1)"> Next
+                    onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-11', false, -1)"> Next
                 </button>    
             </div>
             </div>
@@ -421,10 +421,10 @@ $(function(){
                 <br><br><br><br>
                 <br><br><br><br><br>
                 <button class="btn btn-primary pull-left" style="background-color :#1b84f5;"
-                    onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-11', false, -1)"> Previous
+                    onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-12', false, -1)"> Previous
                 </button>
                 <button class="btn btn-primary pull-right" style="background-color :#1b84f5;"
-                    onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-13', false, -1)"> Next
+                    onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-12', false, -1)"> Next
                 </button>    
             </div>
         </div>
@@ -458,10 +458,10 @@ $(function(){
                 <br><br><br><br>
                 <br><br><br><br><br>
                 <button class="btn btn-primary pull-left" style="background-color :#1b84f5;"
-                    onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-12', false, -1)"> Previous
+                    onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-13', false, -1)"> Previous
                 </button>
                 <button class="btn btn-primary pull-right" style="background-color :#1b84f5;"
-                    onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-14', false, -1)"> Next
+                    onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-13', false, -1)"> Next
                 </button>    
             </div>
             </div>
@@ -485,10 +485,10 @@ $(function(){
                 <br><br><br><br>
                 <br><br><br><br><br>
                 <button class="btn btn-primary pull-left" style="background-color :#1b84f5;"
-                    onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-13', false, -1)"> Previous
+                    onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-14', false, -1)"> Previous
                 </button>
                 <button class="btn btn-primary pull-right" style="background-color :#1b84f5;"
-                    onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-15', false, -1)"> Next
+                    onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-14', false, -1)"> Next
                 </button>  
                 </div>  
             </div>
@@ -508,7 +508,7 @@ $(function(){
                 <br><br><br><br>
                 <br><br><br><br><br>
                 <button class="btn btn-primary pull-left" style="background-color :#1b84f5;"
-                    onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-14', false, -1)"> Previous
+                    onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-15', false, -1)"> Previous
                 </button>
                 <button class="btn btn-primary pull-right" style="background-color :#1b84f5;"
                     onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-15', false, -1)"> Next
