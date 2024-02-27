@@ -210,8 +210,7 @@
 	            else{
 	                if(response.status==400){
 	                	resp.then((data)=>{
-	                		alert(data.message)
-	                        location.href="register.jsp"
+	                		alert(data.errors)
 	                    })
 	                }
 	            }   
