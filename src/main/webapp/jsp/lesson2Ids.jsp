@@ -27,7 +27,7 @@
 	<!-- Input for PDF file -->
     <input type="hidden" id="pdfUrl" value="../pdfs/Lesson2Ids.pdf">
     
-    <!-- Center the Carousel and Add Space Around It -->
+    !-- Center the Carousel and Add Space Around It -->
     <div class="d-flex justify-content-center mt-5">
         <div id="imageCarousel" class="carousel slide" data-interval="false">
             <div class="carousel-inner" id="carouselInner">
