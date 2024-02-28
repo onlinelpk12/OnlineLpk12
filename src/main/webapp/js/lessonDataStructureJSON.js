@@ -383,9 +383,9 @@ const course =
 		        "learningOutcomeId": 0,
 		        "pages": [
 		          {
-		            "pageId": "version-1-course-lds-lesson-4-page-1",
+		            "pageId": "version-1-course-x-lesson-4-page-1",
 		            "previousPageId": null,
-		            "nextPageId": "version-1-course-lds-lesson-4-page-2",
+		            "nextPageId": "version-1-course-x-lesson-4-page-2",
 		            "pageType": "ContentPage"
 		          },
 		          {
