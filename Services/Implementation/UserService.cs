@@ -75,8 +75,8 @@ namespace OnlineLpk12.Services.Implementation
                            email = userFromDb.EmailId,
                            id = userFromDb.Id,
                            username = userFromDb.Username,
-                           roles = userFromDb.UserType
-
+                           roles = userFromDb.UserType,
+                           enrolledCourses = userFromDb.EnrolledCourses
                         };
                     }
                 }
@@ -106,7 +106,8 @@ namespace OnlineLpk12.Services.Implementation
                     EmailId = inputUser.EmailId,
                     Username = inputUser.UserName,
                     UserType = Helper.GetUserType(inputUser.IsStudent),
-                    IsActive = true
+                    IsActive = true,
+                    EnrolledCourses = inputUser.EnrolledCourses
                 };
                 await _context.Users.AddAsync(DbUser);
                 await _context.SaveChangesAsync();

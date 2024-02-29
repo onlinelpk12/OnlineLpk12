@@ -20,6 +20,7 @@ namespace OnlineLpk12.Data.Models
         public bool? IsActive { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public string? EnrolledCourses { get; set; }    
 
         public virtual ICollection<UserRole> UserRoles { get; set; }
     }

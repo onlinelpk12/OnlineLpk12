@@ -9,6 +9,7 @@ namespace OnlineLpk12.Data.Models
         public string username { get; set; }
         public string roles { get; set; }
         public string email { get; set; }
+        public string? enrolledCourses { get; set; }
     }
 }
 

@@ -27,5 +27,8 @@ namespace OnlineLpk12.Data.Entities
 
         [Required(ErrorMessage = "Enter valid data.")]
         public bool IsStudent { get; set; }
+
+        [Required(ErrorMessage = "Enter valid course")]
+        public string? EnrolledCourses { get; set; }
     }
 }
