@@ -475,8 +475,8 @@ atomicNumber(E, N) means the atomic number of element E is N.
             <a class="btn btn-primary pull-right" id="nextButton" disabled
                 onclick="gotoNext(11, 2, 'version-1-course-x-lesson-11-page-9', false, -1)"> Next </a> -->
              <div class="d-flex justify-content-between">
-        			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(11, 2, 'version-1-course-x-lesson-11-page-9', false, -1)">Previous</button>
-        			<button class="btn btn-primary" onclick="gotoNext(11, 2, 'version-1-course-x-lesson-11-page-9', false, -1)">Next</button>
+        			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(11, 0, 'version-1-course-x-lesson-11-page-9', false, -1)">Previous</button>
+        			<!-- <button class="btn btn-primary" onclick="gotoNext(11, 2, 'version-1-course-x-lesson-11-page-9', false, -1)">Next</button> -->
     			</div>
             </div>
             

@@ -201,7 +201,7 @@
                     onclick="gotoNext(12, 0, 'version-1-course-x-lesson-12-page-3', false, -1)"> Next 
                 </a> -->
                  <div class="d-flex justify-content-between">
-        			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(12, 0, 'version-1-course-x-lesson-11-page-3', false, -1)">Previous</button>
+        			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(12, 0, 'version-1-course-x-lesson-12-page-3', false, -1)">Previous</button>
         		<!-- 	<button class="btn btn-primary" onclick="gotoNext(12, 0, 'version-1-course-x-lesson-11-page-3', false, -1)">Next</button> -->
     			</div>
             </div>
