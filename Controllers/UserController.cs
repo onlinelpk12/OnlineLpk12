@@ -45,6 +45,8 @@ namespace OnlineLpk12.Controllers
                 }
                 var isUsernameExists = await _userService.IsUserNameExists(user.UserName);
                 var isEmailIdExists = await _userService.IsEmailIdExists(user.EmailId);
+
+                var ispasswordstrong = await _userService.IsPasswordStrong(user.Password);
                 if (isUsernameExists)
                 {
                     validationMessages.Add("UserName already exists.");
@@ -53,6 +55,12 @@ namespace OnlineLpk12.Controllers
                 {
                     validationMessages.Add("Email Address already exists.");
                 }
+
+                if (!ispasswordstrong)
+                {
+                    validationMessages.Add("Password should be at least 8 characters long and include atleast one Upper case and one lowercase combination of letters, numbers, and special characters.");
+                }
+
                 if (validationMessages.Any())
                 {
                     response.Errors = validationMessages;
@@ -72,7 +80,6 @@ namespace OnlineLpk12.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }
-
 
         [HttpPost("Login")]
         [ProducesResponseType(typeof(Response<LoginResponse>), (int)HttpStatusCode.OK)]
@@ -131,7 +138,7 @@ namespace OnlineLpk12.Controllers
                     response.Errors = validationMessages;
                     response.Message = "One or more validation errors occurred.";
                     return BadRequest(response);
-                }
+                }   
                 var result = await _userService.ForgotPassword(user);
                 if (result.Success)
                 {
@@ -140,7 +147,7 @@ namespace OnlineLpk12.Controllers
                 }
                 else
                 {
-                    response.Message = "One or more validation errors occurred.";
+                    response.Message = "New Password should be different from Old Password.";  //error message added for a bug fix
                     response.Errors.Add(result.Message);
                     return BadRequest(response);
                 }

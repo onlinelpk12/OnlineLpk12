@@ -191,7 +191,53 @@ namespace OnlineLpk12.Services.Implementation
                 return false;
             }
         }
+        public async Task<bool> IsPasswordStrong(string password)
+        {
+            // Require at least 8 characters
+            if (password.Length < 8)
+            {
+                return false;
+            }
 
+            // Require at least one uppercase letter
+            bool hasUppercase = false;
+
+            // Require at least one lowercase letter
+            bool hasLowercase = false;
+
+            // Require a combination of letters, numbers, and special characters
+            bool hasLetter = false;
+            bool hasDigit = false;
+            bool hasSpecialCharacter = false;
+
+            foreach (char character in password)
+            {
+                if (char.IsLetter(character))
+                {
+                    hasLetter = true;
+
+                    if (char.IsUpper(character))
+                    {
+                        hasUppercase = true;
+                    }
+                    else if (char.IsLower(character))
+                    {
+                        hasLowercase = true;
+                    }
+                }
+                else if (char.IsDigit(character))
+                {
+                    hasDigit = true;
+                }
+                else if (char.IsSymbol(character) || char.IsPunctuation(character))
+                {
+                    hasSpecialCharacter = true;
+                }
+            }
+
+            // Check if the password meets all criteria
+            return hasLetter && hasDigit && hasSpecialCharacter && hasUppercase && hasLowercase;
+        }
         public async Task<bool> IsUserTeacher(int userId)
         {
             try
@@ -238,7 +284,12 @@ namespace OnlineLpk12.Services.Implementation
                         result.Success = false;
                         result.Message = "User is inactive. Contact support for activation.";
                     }
-
+                    //Validation to check if new and old passwords match.
+                    else if (BCrypt.Net.BCrypt.Verify(user.Password, userFromDb.Password))
+                    {
+                        result.Success = false;
+                        result.Message = "New password should not match old password.";
+                    }
                     else
                     {
                         userFromDb.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, 8);
@@ -274,5 +325,6 @@ namespace OnlineLpk12.Services.Implementation
                 return 0;
             }
         }
+
     }
 }
