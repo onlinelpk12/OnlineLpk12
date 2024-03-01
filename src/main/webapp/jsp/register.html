@@ -32,6 +32,17 @@
 						</select>
 					 </div>
 					</div>
+			<div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+							<h6> COURSE </h6>
+							<input type="checkbox"  id="LPK12" name = "Course"  value=" LPK12"> LPK12
+							<input type="checkbox" id="OnlineLPK12" name = "Course"  value="OnlineLPK12"> OnlineLPK12
+							
+							
+						
+					 </div>
+					</div>
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
@@ -119,6 +130,18 @@
 	        var username=document.getElementById('username').value;
 	
 	        var email=document.getElementById('email').value;
+		if(document.getElementById('LPK12').checked && document.getElementById('OnlineLPK12').checked){
+	        	let str1 = document.getElementById('LPK12').value;
+	        	let str2 = ';';
+	        	let str3 = document.getElementById('OnlineLPK12').value
+	        	var course = str1.concat(str2, str3);	
+	        }
+	        else if(document.getElementById('LPK12').checked){
+	        	var course = document.getElementById('LPK12').value;
+	        }
+	        else if(document.getElementById('OnlineLPK12').checked){
+	        	var course = document.getElementById('OnlineLPK12').value;
+	        }
 	        /* var courseId='Online Lpk12'; */
 	        
 	        
@@ -130,7 +153,7 @@
 	        }
 	        
 	        var isactive=false;
-	       	if (roles=='Student'){
+	       	if (roles=="Student"){
 	    	   isactive=true;
 	       	}
 	       /* var hashObj = new jsSHA("SHA-512", "TEXT", {numRounds: 1});
@@ -165,12 +188,13 @@
 	        fetch(signUpAPI,{
 	            method:'POST',
 	            body: JSON.stringify({
-					"firstname":firstname,
-					"lastname":lastname,
+			"firstname":firstname,
+			"lastname":lastname,
 	                "username":username,
 	                "EmailId":email,
-					"isStudent":isactive,
+			"isStudent":isactive,
 	                "password":pwdObj,
+			"enrolledCourses": course, 
 	            }),
 		        headers:{
 		            "Content-Type":"application/json"
