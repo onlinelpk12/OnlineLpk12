@@ -82,4 +82,40 @@ $(document).ready(function() {
             //$('#results').css('width', ($('#page-content-wrapper').width() - $('#editor').width()) - 12 + 'px');
         });
         
+        var getUserId = function(){
+		return sessionStorage.getItem("userId");
+		}
+
+		var refreshDirectory = function() {
+			let userid = getUserId();
+			const getAllFilesForldersAPI = dotnet_endpoint+"api/SparcFileSystem/getallfoldersfiles";
+		    //var data = {'action': "getAccessibleDirectory"};
+			//US-13
+			$.ajax({
+			        type: 'GET',
+			        url: getAllFilesForldersAPI,
+			        jsonpCallback: 'jsonCallback',
+			        dataType: 'json',
+		            headers: {
+		                'Authorization': "Bearer "+ sessionStorage.getItem("token")
+		            },
+			        data : "userId="+userid+"",
+			        jsonp: false,
+			        success: function (response) {
+			         console.log(response.content);
+			         $('#directory').empty();
+			         $('#directory').append("<ul>" + response.content + "</ul>");
+			         $('.easy-tree').EasyTree({
+			             selectable: true,
+			             deletable: true,
+			             editable: true
+			         });
+			        },
+			        error: function (e) {
+			            $("#divResult").html("WebSerivce unreachable");
+			        }
+		    	});
+		};
+
+        
 });
