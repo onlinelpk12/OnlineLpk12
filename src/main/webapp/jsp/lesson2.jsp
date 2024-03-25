@@ -100,6 +100,9 @@
             <div class="container" >
             <h2 style="text-align:center">  Lesson 2:  </h2> <br>
             <h2 style="text-align:center">  Extend the family model</h2>
+            <div class="text-center">
+        		<p>Page 1 of 15</p>
+    		</div>
             <button class="btn btn-primary btn-lg mx-auto" onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-1', false, -1)" style="display:flex; margin-top:50px;"> <p style="width:100%; text-align:center;margin:0">Next </p> </button>
             </div>
         </div>
@@ -132,7 +135,9 @@
                         </ul>
                     </ul>
                 </ul>
-                
+                <div class="text-center">
+        			<p>Page 2 of 15</p>
+    			</div>
                 <div class="d-flex justify-content-between">
         			<button class="btn btn-primary" onclick="gotoPrevious(2, 0, 'version-1-course-x-lesson-2-page-2', false, -1)">Previous</button>
         			<button class="btn btn-primary" onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-2', false, -1)">Next</button>
@@ -161,7 +166,9 @@
                     </ul>
                 </li>
             </ul>
-          
+          		<div class="text-center">
+	        		<p>Page 3 of 15</p>
+	    		</div>
            		<div class="d-flex justify-content-between">
         			<button class="btn btn-primary" onclick="gotoPrevious(2, 0, 'version-1-course-x-lesson-2-page-2.1', false, -1)">Previous</button>
         			<button class="btn btn-primary" onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-2.1', false, -1)">Next</button>
@@ -195,7 +202,9 @@
 				            <div id="exAnswer"></div>
 				        </li>
 				    </ul>			  
-                
+                <div class="text-center">
+	        		<p>Page 4 of 15</p>
+	    		</div>
                	<div class="d-flex justify-content-between">
         			<button class="btn btn-primary" onclick="gotoPrevious(2, 0, 'version-1-course-x-lesson-2-page-3', false, -1)">Previous</button>
         			<button class="btn btn-primary"  id="iNextBtn"onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-3', true, 1)" >Next</button>
@@ -222,10 +231,12 @@
 				    </ol>
 				</div>    
                 <br>
-                
+                <div class="text-center">
+	        		<p>Page 5 of 15</p>
+	    		</div>
                 <div class="d-flex justify-content-between">
         			<button class="btn btn-primary" onclick="gotoPrevious(2, 0, 'version-1-course-x-lesson-2-page-4', false, -1)">Previous</button>
-        			<button class="btn btn-primary" onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-4', true, 1)">Next</button>
+        			<button class="btn btn-primary" onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-4', false, -1)">Next</button>
     			</div> 
     			
             </div>
@@ -251,10 +262,12 @@
 				        </li>
     			</ul>
                 <br>
-                
+                <div class="text-center">
+	        		<p>Page 6 of 15</p>
+	    		</div>
                 <div class="d-flex justify-content-between">
         			<button class="btn btn-primary" onclick="gotoPrevious(2, 0, 'version-1-course-x-lesson-2-page-5', false, -1)">Previous</button>
-        			<button class="btn btn-primary" onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-5', true, 1)">Next</button>
+        			<button class="btn btn-primary" onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-5', false, -1)">Next</button>
     			</div> 
     			
             </div>
@@ -297,10 +310,12 @@
                     </li>
                     
                 </ul>
-             
+               <div class="text-center">
+	        		<p>Page 7 of 15</p>
+	    		</div>	
                <div class="d-flex justify-content-between">
         			<button class="btn btn-primary" onclick="gotoPrevious(2, 0, 'version-1-course-x-lesson-2-page-5.1', false, -1)">Previous</button>
-        			<button class="btn btn-primary" onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-5.1', false, -1)">Next</button>
+        			<button class="btn btn-primary" onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-5.1', true, 1)">Next</button>
     			</div> 
     			 
             </div>
@@ -316,6 +331,9 @@
                     <label for="ques1"> Representing knowledge as comment and fact  </label><br />
                     <textarea id="program0" name="program0" rows="4" cols="50" class="knowledge-check-input"></textarea>
                     <br><br>
+                    <div class="text-center">
+		        		<p>Page 8 of 15</p>
+		    		</div>
                     <br>
                     <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(2, 0, 'version-1-course-x-lesson-2-page-6', false, -1)"> Previous </a>
@@ -336,7 +354,9 @@
             <div class="container" >
             <h2 class="text-primary"> Learning outcome 1: Extend the Model for Parent relation</h2>
             <img src="../images/image1.png" alt="Image" style="display:block; margin:auto"width="350" height="300">
-
+			<div class="text-center">
+        		<p>Page 9 of 15</p>
+    		</div>
             	<div class="d-flex justify-content-between">
         			<button class="btn btn-primary" onclick="gotoPrevious(2, 1, 'version-1-course-x-lesson-2-page-10', false, -1)">Previous</button>
         			<button class="btn btn-primary" onclick="gotoNext(2, 1, 'version-1-course-x-lesson-2-page-10', false, -1)">Next</button>
@@ -355,12 +375,15 @@
             <form action="">
                 <label for="ques1"> Representing knowledge as comment and fact </label>
                 <textarea id="program1" name="program1" rows="4" cols="50" class="knowledge-check-input"></textarea><br><br>
+                <div class="text-center">
+	        		<p>Page 10 of 15</p>
+	    		</div>
                 <br>
                 <a class="btn btn-primary pull-left"
                 onclick="gotoPrevious(2, 1, 'version-1-course-x-lesson-2-page-11', false, -1)"> Previous </a>
-                <div class="text-center">
-                <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-2-page-11', 'program1')"> Submit</a>
-            </div>
+                 <div class="text-center">
+	                <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-2-page-11', 'program1')"> Submit</a>
+	            </div>
            
             </form>
           </div>
@@ -390,7 +413,9 @@
 					</div>
 					</ul>
 					<div id="zAnswer"></div>
-                
+                <div class="text-center">
+	        		<p>Page 11 of 15</p>
+	    		</div>
                 <div class="d-flex justify-content-between">
         			<button class="btn btn-primary" onclick="gotoPrevious(2, 2, 'version-1-course-x-lesson-2-page-15', false, -1)">Previous</button>
         			<button class="btn btn-primary" onclick="gotoNext(2, 2, 'version-1-course-x-lesson-2-page-15', false, -1)">Next</button>
@@ -411,6 +436,9 @@
                 <label for="ques1"> Representing knowledge as comment and fact </label>
                 <textarea id="program2" name="program2" rows="4" cols="50" class="knowledge-check-input"></textarea><br><br>
                 <br>
+                <div class="text-center">
+	        		<p>Page 12 of 15</p>
+	    		</div>
                 <br>
                 <a class="btn btn-primary pull-left"
                 onclick="gotoPrevious(2, 2, 'version-1-course-x-lesson-2-page-16', false, -1)"> Previous </a>
@@ -451,7 +479,9 @@
                 </ul>
             </ul>
         </ul>
-        
+        		<div class="text-center">
+	        		<p>Page 13 of 15</p>
+	    		</div>
        			<div class="d-flex justify-content-between">
         			<button class="btn btn-primary" onclick="gotoPrevious(2, 3, 'version-1-course-x-lesson-2-page-20', false, -1)">Previous</button>
         			<button class="btn btn-primary" onclick="gotoNext(2, 3, 'version-1-course-x-lesson-2-page-20', false, -1)">Next</button>
@@ -477,7 +507,9 @@
 					  <input id="fBox" type="text" class="form-control" required></div>
 					<div id="cAnswer"></div>
 	    </ul>
-        
+        		<div class="text-center">
+	        		<p>Page 14 of 15</p>
+	    		</div>
         		<div class="d-flex justify-content-between">
         			<button class="btn btn-primary" onclick="gotoPrevious(2, 3, 'version-1-course-x-lesson-2-page-21', false, -1)">Previous</button>
         			<button class="btn btn-primary" id="fNextBtn" onclick="gotoNext(2, 3, 'version-1-course-x-lesson-2-page-21', false, -1)" disabled>Next</button>
@@ -497,6 +529,9 @@
             <label for="ques1"> Representing knowledge as comment and fact </label>
             <textarea id="program3" name="program3" rows="4" cols="50" class="knowledge-check-input"></textarea><br><br>
             <br>
+            <div class="text-center">
+        		<p>Page 15 of 15</p>
+    		</div>
             <br>
             <a class="btn btn-primary pull-left"
             onclick="gotoPrevious(2, 3, 'version-1-course-x-lesson-2-page-22', false, -1)"> Previous </a>
