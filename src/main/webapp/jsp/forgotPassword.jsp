@@ -45,6 +45,12 @@
       e.preventDefault()
       var userName=document.getElementById('userName').value;
       var newPassword=document.getElementById('newPassword').value;
+      // Password validation
+      var passwordValidation = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      if (!passwordValidation.test(newPassword)) {
+          alert("Password must contain at least 8 characters,  one uppercase letter, one lowercase letter, one numeric , and one special character");
+          return;
+      }
       //fetch post request
       //const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
       const forgotPasswordAPI = dotnet_endpoint+"api/User/ForgotPassword";
