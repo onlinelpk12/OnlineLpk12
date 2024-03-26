@@ -2289,9 +2289,7 @@ Input/parameters of function <code>matrix:</code></p>
 				<div class="d-flex justify-content-between">
 					<a class="btn btn-primary"
 						onclick="gotoPrevious(5, 0, 'version-1-course-lds-lesson-5-page-40', false, -1)">
-						Previous </a> <a class="btn btn-primary"
-						onclick="gotoNext(5, 0, 'version-1-course-lds-lesson-5-page-40', false, -1)">
-						Next </a>
+						Previous </a>
 				</div>
 			</div>
 		</div>
