@@ -64,7 +64,13 @@
 	        var courseId=document.getElementById('course').value;
 	        
 	        var pwdObj = document.getElementById('password').value;
-	        
+	        //password validation 
+	        var passwordValidation = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+	        if (!passwordValidation.test(pwdObj)) {
+	            alert("Password must contain at least 8 characters,  one uppercase letter, one lowercase letter, one numeric , and one special character");
+	            return; 
+	        }
 	        var isactive=false;
 	       	if (roles=='Student'){
 	    	   isactive=true;
