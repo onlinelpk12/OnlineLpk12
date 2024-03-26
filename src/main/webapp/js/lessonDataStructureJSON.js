@@ -1419,19 +1419,13 @@ const course =
 		            "nextPageId": "version-1-course-x-lesson-10-page-6",
 		            "pageType": "ContentPage"
 		          },
-		          {
-		            "learningOutcomeId": 1,
-		            "description": "Learning outcome 1: Computer Models",
-		            "pages": [
-						{
-						"pageId": "version-1-course-x-lesson-10-page-6",
-		                "previousPageId": "version-1-course-x-lesson-10-page-5",
-		                "nextPageId": "version-1-course-x-lesson-10-page-7",
-		                "pageType": "ContentPage"
-							
-						}
-						]
-						},
+		          
+			 {
+			   "pageId": "version-1-course-x-lesson-10-page-6",
+		            "previousPageId": "version-1-course-x-lesson-10-page-5",
+		            "nextPageId": "version-1-course-x-lesson-10-page-7",
+		            "pageType": "ContentPage"			
+			},
 		           
 		          {
 		            "pageId": "version-1-course-x-lesson-10-page-7",
@@ -1506,7 +1500,15 @@ const course =
 		            "nextPageId": "version-1-course-x-lesson-11-page-10",
 		            "pageType": "ContentPage"
 		          
-				  }
+				  },
+				 {
+                                         "pageId": "version-1-course-x-lesson-11-page-10",
+                            "previousPageId": "version-1-course-x-lesson-11-page-9",
+                            "nextPageId": "version-1-course-x-lesson-12-page-1",
+                            "pageType": "ContentPage"
+                          
+                                  }
+                                  }
 		    
 		    
 		    
