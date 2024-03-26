@@ -1507,6 +1507,13 @@ const course =
                             "nextPageId": "version-1-course-x-lesson-12-page-1",
                             "pageType": "ContentPage"
                           
+                                  },
+                                 {
+                                         "pageId": "version-1-course-x-lesson-11-page-10",
+                            "previousPageId": "version-1-course-x-lesson-11-page-9",
+                            "nextPageId": "version-1-course-x-lesson-12-page-1",
+                            "pageType": "ContentPage"
+                          
                                   }
                                   }
 		    
@@ -1546,19 +1553,57 @@ const course =
 		            "nextPageId": "version-1-course-x-lesson-12-page-5",
 		            "pageType": "ContentPage"
 		          },
-		           {
-		            "learningOutcomeId": 1,
+		          {
+		            "pageId": "version-1-course-x-lesson-12-page-5",
+		            "previousPageId": "version-1-course-x-lesson-12-page-4",
+		            "nextPageId": "version-1-course-x-lesson-12-page-6",
+		            "pageType": "ContentPage"
+		          },
+		          {
+		            "pageId": "version-1-course-x-lesson-12-page-6",
+		            "previousPageId": "version-1-course-x-lesson-12-page-5",
+		            "nextPageId": "version-1-course-x-lesson-12-page-7",
+		            "pageType": "ContentPage"
+		          },
+		          {
+		            "pageId": "version-1-course-x-lesson-12-page-7",
+		            "previousPageId": "version-1-course-x-lesson-12-page-6",
+		            "nextPageId": "version-1-course-x-lesson-12-page-10",
+		            "pageType": "ContentPage"
+		          },
+		          {
+		            "pageId": "version-1-course-x-lesson-12-page-10",
+		            "previousPageId": "version-1-course-x-lesson-12-page-7",
+		            "nextPageId": "version-1-course-x-lesson-12-page-11",
+		            "pageType": "ContentPage"
+		          },
+		          {
+		            "pageId": "version-1-course-x-lesson-12-page-11",
+		            "previousPageId": "version-1-course-x-lesson-12-page-10",
+		            "nextPageId": "version-1-course-x-lesson-12-page-12",
+		            "pageType": "ContentPage"
+		          },
+		          {
+		            "pageId": "version-1-course-x-lesson-12-page-12",
+		            "previousPageId": "version-1-course-x-lesson-12-page-11",
+		            "nextPageId": null,
+		            "pageType": "ContentPage"
+		          },
+		          
+		          
+		         /* {
+		            "learningOutcomeId": 20,
 		            "description": "Learning outcome 1: Computer Models",
 		            "pages": [
 						{
-						"pageId": "version-1-course-x-lesson-12-page-6",
-		                "previousPageId": "version-1-course-x-lesson-12-page-5",
-		                "nextPageId": "version-1-course-x-lesson-12-page-7",
+						"pageId": "version-1-course-x-lesson-12-page-50",
+		                "previousPageId": "version-1-course-x-lesson-12-page-49",
+		                "nextPageId": "version-1-course-x-lesson-12-page-51",
 		                "pageType": "ContentPage"
 							
 						}
 						]
-						}
+						}*/
 						
 		          ]
 		          }
