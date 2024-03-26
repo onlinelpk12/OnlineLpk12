@@ -15,7 +15,12 @@
     <script src="../js/lessonDataStructureJSON.js"></script>
     <script src="../js/script.js"></script>  
     
-     
+     <script type="text/javascript">
+    function reInitiateFreshPage(){
+            sessionStorage.setItem("pageIdToShow",'version-1-course-x-lesson-12-page-1');
+    }
+    
+  </script>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
@@ -476,11 +481,28 @@ atomicNumber(E, N) means the atomic number of element E is N.
                 onclick="gotoNext(11, 2, 'version-1-course-x-lesson-11-page-9', false, -1)"> Next </a> -->
              <div class="d-flex justify-content-between">
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(11, 0, 'version-1-course-x-lesson-11-page-9', false, -1)">Previous</button>
-        			<!-- <button class="btn btn-primary" onclick="gotoNext(11, 2, 'version-1-course-x-lesson-11-page-9', false, -1)">Next</button> -->
+        			 <button class="btn btn-primary" onclick="gotoNext(11, 0, 'version-1-course-x-lesson-11-page-9', false, -1)">Next</button>
     			</div>
             </div>
             
         </div>  
+</section>
+ 
+<section id="version-1-course-x-lesson-11-page-10"  hidden>
+        <div class="row">
+            <div class="container" >
+                <h1 class="text-primary" style="text-align:center"> Summary </h1>
+                        <ul class="sub-points">
+                    <li>We have reviewed the unknown variables and studied the methodology for using unknown variables and queries to answer questions.
+                    </li>                    
+                                         </ul>
+                <div class="d-flex justify-content-between">
+                                <button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(11, 0, 'version-1-course-x-lesson-11-page-10', false, -1)">Previous</button>
+    
+                                <a class="btn btn-primary" href="../jsp/lesson12.jsp" onclick="reInitiateFreshPage()">Next</a>
+                            </div>
+            </div>
+        </div>
     </section>
     
   <%@ include file = "footer1.jsp" %>
