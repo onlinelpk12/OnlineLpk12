@@ -1430,7 +1430,7 @@ const course =
 		          {
 		            "pageId": "version-1-course-x-lesson-10-page-7",
 		            "previousPageId": "version-1-course-x-lesson-10-page-6",
-		            "nextPageId": "version-1-course-x-lesson-10-page-8",
+		            "nextPageId": "version-1-course-x-lesson-11-page-1",
 		            "pageType": "ContentPage"
 		          }
 		    
