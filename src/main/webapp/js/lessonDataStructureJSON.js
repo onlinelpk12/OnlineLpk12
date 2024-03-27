@@ -1515,7 +1515,7 @@ const course =
                             "pageType": "ContentPage"
                           
                                   }
-                                  }
+                                  
 		    
 		    
 		    
@@ -1588,7 +1588,7 @@ const course =
 		            "previousPageId": "version-1-course-x-lesson-12-page-11",
 		            "nextPageId": null,
 		            "pageType": "ContentPage"
-		          },
+		          }
 		          
 		          
 		         /* {
