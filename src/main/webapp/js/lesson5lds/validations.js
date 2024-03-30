@@ -1,15 +1,15 @@
 //best name validatin
-function validateBestName(){
+function validateBestName() {
 	var best_name = document.bestPerformer.children;
-	var a= best_name[0].children[0];
-	var b= best_name[0].children[1];
-	if(a.value.toLowerCase() == "sam"){
+	var a = best_name[0].children[0];
+	var b = best_name[0].children[1];
+	if (a.value.toLowerCase() == "sam") {
 		a.classList.remove("is-invalid");
 		a.classList.add("is-valid");
 		b.classList.remove("invalid-feedback");
-		b.classList.add("valid-feedback");		
+		b.classList.add("valid-feedback");
 		b.innerText = 'Yes! Your answer is correct';
-	}else{
+	} else {
 		a.classList.remove("is-valid");
 		a.classList.add("is-invalid");
 		b.classList.remove("valid-feedback");
@@ -19,17 +19,17 @@ function validateBestName(){
 }
 
 /*Worst Name Validator*/
-function validateWorstName(){
+function validateWorstName() {
 	var best_name = document.worstPerformer.children;
-	var a= best_name[0].children[0];
-	var b= best_name[0].children[1];
-	if(a.value.toLowerCase() == "kate"){
+	var a = best_name[0].children[0];
+	var b = best_name[0].children[1];
+	if (a.value.toLowerCase() == "kate") {
 		a.classList.remove("is-invalid");
 		a.classList.add("is-valid");
 		b.classList.remove("invalid-feedback");
-		b.classList.add("valid-feedback");		
+		b.classList.add("valid-feedback");
 		b.innerText = 'Yes! Your answer is correct';
-	}else{
+	} else {
 		a.classList.remove("is-valid");
 		a.classList.add("is-invalid");
 		b.classList.remove("valid-feedback");

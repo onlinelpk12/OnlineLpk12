@@ -1,56 +1,67 @@
 .form-control:valid {
-  background-color:  #96d3ec!important;
+	background-color: #96d3ec !important;
 }
+
 .form-control-correct {
-  background-color:  #90EE90;
+	background-color: #90EE90;
 }
+
 .form-control-incorrect {
-  background-color:  #FCAC98;
+	background-color: #FCAC98;
 }
 
 .form-control-fact:valid {
-  background-color:  #96d3ec!important;
+	background-color: #96d3ec !important;
 }
+
 .form-control-fact-correct {
-  background-color:  #90EE90;
+	background-color: #90EE90;
 }
+
 .form-control-fact-incorrect {
-  background-color:  #FCAC98;
+	background-color: #FCAC98;
 }
 
 .form-control-carbon-correct {
-  background-color:  #90EE90;
+	background-color: #90EE90;
 }
+
 .form-control-carbon-incorrect {
-  background-color:  #FCAC98;
+	background-color: #FCAC98;
 }
+
 .form-control-p-correct {
-  background-color:  #90EE90;
+	background-color: #90EE90;
 }
+
 .form-control-p-incorrect {
-  background-color:  #FCAC98;
+	background-color: #FCAC98;
 }
-.carbon{
+
+.carbon {
 	margin-right: 15px;
-    float: right;
+	float: right;
 }
-#identifySymbolC{
+
+#identifySymbolC {
 	width: 200px;
 }
-#identifySymbolP{
+
+#identifySymbolP {
 	width: 200px;
 }
-.element{
+
+.element {
 	margin-left: auto;
-    margin-right: auto;
-    width: 25%;
-    display: block;
+	margin-right: auto;
+	width: 25%;
+	display: block;
 }
-#outer
-{
-    text-align: center;
+
+#outer {
+	text-align: center;
 }
-.inner
-{
-    display: inline-block;
+
+.inner {
+	display: inline-block;
 }

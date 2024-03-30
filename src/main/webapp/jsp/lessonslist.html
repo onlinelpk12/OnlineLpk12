@@ -1,328 +1,329 @@
-
 <!-- Navya -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lessons</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    
-    <style>
-        body {
-    font-family: 'Arial', sans-serif;
-}
-.row.equal-height > .col-md-3 {
-            display: flex;
-            flex-flow: column;
-        }
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Lessons</title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
-.card {
-    margin-bottom: 30px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: 0.3s;
+	<style>
+		body {
+			font-family: 'Arial', sans-serif;
+		}
 
-    margin: 15px;
-            border-radius: 10px;
-            overflow: hidden;
-            flex: 1; 
-    
-    
-}
+		.row.equal-height>.col-md-3 {
+			display: flex;
+			flex-flow: column;
+		}
 
-.card:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
+		.card {
+			margin-bottom: 30px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			transition: 0.3s;
 
-.card img {
-    width: 100%;
-    height: 200px;  /* adjust based on your design */
-    object-fit: cover;
-    
-    
-}
+			margin: 15px;
+			border-radius: 10px;
+			overflow: hidden;
+			flex: 1;
 
-.card-title {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-}
 
-.card-text {
-    font-size: 1em;
-    color: #777;
-    margin-bottom: 15px;
-}
+		}
 
-    </style>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		.card:hover {
+			box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+		}
+
+		.card img {
+			width: 100%;
+			height: 200px;
+			/* adjust based on your design */
+			object-fit: cover;
+
+
+		}
+
+		.card-title {
+			font-size: 1.2em;
+			margin-bottom: 10px;
+		}
+
+		.card-text {
+			font-size: 1em;
+			color: #777;
+			margin-bottom: 15px;
+		}
+	</style>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
+
 <body>
 	<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">Online LPK12 Course</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="home.jsp">Home</a></li>
-    </ul>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="lessonslist.html">Lessons</a></li>
-    </ul>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#">About</a></li>
-    </ul>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Contact Us</a></li>
-    </ul>
-   <!--<ul class="nav navbar-nav navbar-right">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Online LPK12 Course</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="home.jsp">Home</a></li>
+			</ul>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="lessonslist.html">Lessons</a></li>
+			</ul>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="#">About</a></li>
+			</ul>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="#">Contact Us</a></li>
+			</ul>
+			<!--<ul class="nav navbar-nav navbar-right">
       <li><a href="#"><span class="glyphicon glyphicon-user"></span> Susmitha Reddy</a></li>
     </ul>-->
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="index.html"><span class="glyphicon glyphicon-log-in"></span> LogOut</a></li>
-    </ul>
-  </div>
-</nav>
-	
-    <div class="container mt-5">
-        <h2 class="mb-4">Get Started with These Lessons:</h2>
-        <div class="row">
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="index.html"><span class="glyphicon glyphicon-log-in"></span> LogOut</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container mt-5">
+		<h2 class="mb-4">Get Started with These Lessons:</h2>
+		<div class="row">
 			<div class="col-md-3">
-         		<div class="card">
-              		<img src="../images/Screenshot 2023-10-29 180624.png" class="card-img-top" alt="Lesson Image">
-                   	<div class="card-body">
-                       <h5 class="card-title">A central CS/AI task and model development</h5>
-                       <p class="card-text">Lesson 1</p>
-                       <a href="../jsp/lesson1.jsp" class="btn btn-primary">View Lesson</a>
-                    </div>
-         	</div>
-     	</div>
-            <!-- You can repeat this block for each lesson -->
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="../images/Screenshot 2023-10-29 180624.png" class="card-img-top" alt="Lesson Image">
-                    <div class="card-body">
-                        <h5 class="card-title">Extend the family model</h5>
-                        <p class="card-text">Lesson 2</p>
-                        <!--<button id="view-lesson2-btn" class="btn btn-primary">View Lesson</button>-->
+				<div class="card">
+					<img src="../images/Screenshot 2023-10-29 180624.png" class="card-img-top" alt="Lesson Image">
+					<div class="card-body">
+						<h5 class="card-title">A central CS/AI task and model development</h5>
+						<p class="card-text">Lesson 1</p>
+						<a href="../jsp/lesson1.jsp" class="btn btn-primary">View Lesson</a>
+					</div>
+				</div>
+			</div>
+			<!-- You can repeat this block for each lesson -->
+			<div class="col-md-3">
+				<div class="card">
+					<img src="../images/Screenshot 2023-10-29 180624.png" class="card-img-top" alt="Lesson Image">
+					<div class="card-body">
+						<h5 class="card-title">Extend the family model</h5>
+						<p class="card-text">Lesson 2</p>
+						<!--<button id="view-lesson2-btn" class="btn btn-primary">View Lesson</button>-->
 
-                        <a href="../jsp/lesson2.jsp" class="btn btn-primary">View Lesson</a> 
-                    </div>
-                </div>
-            </div>
-            
-            
-            <!-- End of block -->
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="../images/Lesson2.jpg" class="card-img-top" alt="Lesson Image">
-                    <div class="card-body">
-                        <h5 class="card-title">Variables and Queries</h5>
-                        <p class="card-text">Lesson 3</p>
-                        <a href="../jsp/lesson3.jsp" class="btn btn-primary">View Lesson</a>
-                       
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="../images/puzzle.png" class="card-img-top" alt="Lesson Image">
-                    <div class="card-body">
-                        <h5 class="card-title">Modelling Dad using rules and variables</h5>
-                        <p class="card-text">Lesson 4</p>
-                        <a href="../jsp/lesson4.jsp" class="btn btn-primary">View Lesson</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="../images/puzzle.png" class="card-img-top" alt="Lesson Image">
-                    <div class="card-body">
-                        <h5 class="card-title">Variables and Rules</h5>
-                        <p class="card-text">Lesson 4.1</p>
-                        <a href="../jsp/Lesson4.1.jsp" class="btn btn-primary">View Lesson</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="../images/Lesson5.jpg" class="card-img-top" alt="Lesson Image">
-                    <div class="card-body">
-                        <h5 class="card-title">Model Periodic Table-Chemical Symbols</h5>
-                        <p class="card-text">Lesson 5</p>
-                        <a href="../jsp/lesson5.jsp" class="btn btn-primary">View Lesson</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="../images/Lesson6.png" class="card-img-top" alt="Lesson Image">
-                    <div class="card-body">
-                        <h5 class="card-title">Model Periodic Table-Aromic Number</h5>
-                        <p class="card-text">Lesson 6</p>
-                        <a href="../jsp/lesson6.jsp" class="btn btn-primary">View Lesson</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="../images/Lesson6.png" class="card-img-top" alt="Lesson Image">
-                    <div class="card-body">
-                        <h5 class="card-title">Model Periodic table - Atomic Number</h5>
-                        <p class="card-text">Lesson 6.1</p>
-                        <a href="../jsp/lesson6.1.jsp" class="btn btn-primary">View Lesson</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="../images/Lesson7.jpg" class="card-img-top" alt="Lesson Image">
-                    <div class="card-body">
-                        <h5 class="card-title">Model Proton Numbers</h5>
-                        <p class="card-text">Lesson 7</p>
-                        <a href="../jsp/lesson7.jsp" class="btn btn-primary">View Lesson</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="../images/white-Lesson8.png" class="card-img-top" alt="Lesson Image">
-                    <div class="card-body">
-                        <h5 class="card-title">Model Mass Numbers</h5>
-                        <p class="card-text">Lesson 8</p>
-                        <a href="../jsp/lesson8.jsp" class="btn btn-primary">View Lesson</a>
-                    </div>
-                </div>
-            </div>
-            
-            
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="../images/Lesson5.jpg" class="card-img-top" alt="Lesson Image">
-                    <div class="card-body">
-                        <h5 class="card-title">Modeling Periodic table</h5>
-                        <p class="card-text">Lesson 10</p>
-                        <a href="../jsp/lesson10.jsp" class="btn btn-primary">View Lesson</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="../images/Lesson7.jpg" class="card-img-top" alt="Lesson Image">
-                    <div class="card-body">
-                        <h5 class="card-title">Modeling Proton Numbers</h5>
-                        <p class="card-text">Lesson 11</p>
-                        <a href="../jsp/lesson11.jsp" class="btn btn-primary">View Lesson</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="../images/Lesson2.jpg" class="card-img-top" alt="Lesson Image">
-                    <div class="card-body">
-                        <h5 class="card-title">Variables and Queries</h5>
-                        <p class="card-text">Lesson 12</p>
-                        <a href="../jsp/lesson12.jsp" class="btn btn-primary">View Lesson</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="../images/white-Lesson8.png" class="card-img-top" alt="Lesson Image">
-                    <div class="card-body">
-                        <h5 class="card-title">Modeling mass number</h5>
-                        <p class="card-text">Lesson 18</p>
-                        <a href="../jsp/lesson18.jsp" class="btn btn-primary">View Lesson</a>
-                    </div>
-                </div>
-            </div>
-            
-            
-        </div>
-    </div>
-    <div class="container mt-5">
-        <div class="row justify-content-center" id="lesson2-content" style="display:none;">
-            <div class="col-md-6">
-                <div id="lesson2-content" style="display:none;"></div>
-                <div class="card shadow-lg">
-                    <div class="card-body">
-                        <h2 class="card-title">Lesson 2:</h2>
-                        <p class="card-text">Extend the family model</p>
-                        <a href="#lesson3-content" class="btn btn-primary float-right">Next</a>
-                    </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-$(document).ready(function() {
-    // When the "View Lesson" button for Lesson 2 is clicked
-    $('#view-lesson2-btn').on('click', function() {
-        $('.container').hide();          // Hide the container with the lessons grid
-        $('#lesson2-content').show();    // Show the content for Lesson 2
-    });
-});
-</script>
-
-        
-
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-
-window.onload = function() {
-	getApiData();
-	
-}
-
-function getApiData()
-{
-//let user_id = sessionStorage.getItem("userId");
-//let user_id="14";
-let studentid=sessionStorage.getItem("studentid");
-//const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
-const teacher_url = "https://localhost:7155/api/Teacher/"+studentid+"/lessonprogress";
+						<a href="../jsp/lesson2.jsp" class="btn btn-primary">View Lesson</a>
+					</div>
+				</div>
+			</div>
 
 
-var response = null;
-$.get(teacher_url, function(data, status){
-response = data
-buildLessonList(response);
-});
-return response;
-}
+			<!-- End of block -->
+			<div class="col-md-3">
+				<div class="card">
+					<img src="../images/Lesson2.jpg" class="card-img-top" alt="Lesson Image">
+					<div class="card-body">
+						<h5 class="card-title">Variables and Queries</h5>
+						<p class="card-text">Lesson 3</p>
+						<a href="../jsp/lesson3.jsp" class="btn btn-primary">View Lesson</a>
 
-function buildLessonList(response){
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="card">
+					<img src="../images/puzzle.png" class="card-img-top" alt="Lesson Image">
+					<div class="card-body">
+						<h5 class="card-title">Modelling Dad using rules and variables</h5>
+						<p class="card-text">Lesson 4</p>
+						<a href="../jsp/lesson4.jsp" class="btn btn-primary">View Lesson</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="card">
+					<img src="../images/puzzle.png" class="card-img-top" alt="Lesson Image">
+					<div class="card-body">
+						<h5 class="card-title">Variables and Rules</h5>
+						<p class="card-text">Lesson 4.1</p>
+						<a href="../jsp/Lesson4.1.jsp" class="btn btn-primary">View Lesson</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="card">
+					<img src="../images/Lesson5.jpg" class="card-img-top" alt="Lesson Image">
+					<div class="card-body">
+						<h5 class="card-title">Model Periodic Table-Chemical Symbols</h5>
+						<p class="card-text">Lesson 5</p>
+						<a href="../jsp/lesson5.jsp" class="btn btn-primary">View Lesson</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="card">
+					<img src="../images/Lesson6.png" class="card-img-top" alt="Lesson Image">
+					<div class="card-body">
+						<h5 class="card-title">Model Periodic Table-Aromic Number</h5>
+						<p class="card-text">Lesson 6</p>
+						<a href="../jsp/lesson6.jsp" class="btn btn-primary">View Lesson</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="card">
+					<img src="../images/Lesson6.png" class="card-img-top" alt="Lesson Image">
+					<div class="card-body">
+						<h5 class="card-title">Model Periodic table - Atomic Number</h5>
+						<p class="card-text">Lesson 6.1</p>
+						<a href="../jsp/lesson6.1.jsp" class="btn btn-primary">View Lesson</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="card">
+					<img src="../images/Lesson7.jpg" class="card-img-top" alt="Lesson Image">
+					<div class="card-body">
+						<h5 class="card-title">Model Proton Numbers</h5>
+						<p class="card-text">Lesson 7</p>
+						<a href="../jsp/lesson7.jsp" class="btn btn-primary">View Lesson</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="card">
+					<img src="../images/white-Lesson8.png" class="card-img-top" alt="Lesson Image">
+					<div class="card-body">
+						<h5 class="card-title">Model Mass Numbers</h5>
+						<p class="card-text">Lesson 8</p>
+						<a href="../jsp/lesson8.jsp" class="btn btn-primary">View Lesson</a>
+					</div>
+				</div>
+			</div>
 
-let htmlTable = "<table class='table table-sm table-bordered table-hover'>";
-let headerRow = "<tr style='background-color:#275E9B;color:white'>";
 
-headerRow += "<th>" + "Lesson ID" + "</th>";
-headerRow += "<th>" + "Learning Outcome" + "</th>";
-headerRow += "<th>" + "Page Number" + "</th>";
-headerRow += "<th>" + "Activity time" + "</th>";
-htmlTable+= headerRow;
-for(let i=0; i<response.content.length;i++)
-{
-	let row = `<tr> `
-		+ `<td> ${response.content[i]?.lessonId}</td>`
-		+ `<td> ${response.content[i]?.learningOutcome} </td>`
-		+ `<td> ${response.content[i]?.pageNumber} </td>`
-		+ `<td> ${response.content[i]?.activityTime} </td>`
-		+ `</tr>`;
-htmlTable += row;
-}
-htmlTable += '</table>';
-$('#student-progress-table').html(htmlTable);
-}
+			<div class="col-md-3">
+				<div class="card">
+					<img src="../images/Lesson5.jpg" class="card-img-top" alt="Lesson Image">
+					<div class="card-body">
+						<h5 class="card-title">Modeling Periodic table</h5>
+						<p class="card-text">Lesson 10</p>
+						<a href="../jsp/lesson10.jsp" class="btn btn-primary">View Lesson</a>
+					</div>
+				</div>
+			</div>
 
-</script>
-    
+			<div class="col-md-3">
+				<div class="card">
+					<img src="../images/Lesson7.jpg" class="card-img-top" alt="Lesson Image">
+					<div class="card-body">
+						<h5 class="card-title">Modeling Proton Numbers</h5>
+						<p class="card-text">Lesson 11</p>
+						<a href="../jsp/lesson11.jsp" class="btn btn-primary">View Lesson</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="card">
+					<img src="../images/Lesson2.jpg" class="card-img-top" alt="Lesson Image">
+					<div class="card-body">
+						<h5 class="card-title">Variables and Queries</h5>
+						<p class="card-text">Lesson 12</p>
+						<a href="../jsp/lesson12.jsp" class="btn btn-primary">View Lesson</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="card">
+					<img src="../images/white-Lesson8.png" class="card-img-top" alt="Lesson Image">
+					<div class="card-body">
+						<h5 class="card-title">Modeling mass number</h5>
+						<p class="card-text">Lesson 18</p>
+						<a href="../jsp/lesson18.jsp" class="btn btn-primary">View Lesson</a>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+	<div class="container mt-5">
+		<div class="row justify-content-center" id="lesson2-content" style="display:none;">
+			<div class="col-md-6">
+				<div id="lesson2-content" style="display:none;"></div>
+				<div class="card shadow-lg">
+					<div class="card-body">
+						<h2 class="card-title">Lesson 2:</h2>
+						<p class="card-text">Extend the family model</p>
+						<a href="#lesson3-content" class="btn btn-primary float-right">Next</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			// When the "View Lesson" button for Lesson 2 is clicked
+			$('#view-lesson2-btn').on('click', function () {
+				$('.container').hide();          // Hide the container with the lessons grid
+				$('#lesson2-content').show();    // Show the content for Lesson 2
+			});
+		});
+	</script>
+
+
+
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+
+		window.onload = function () {
+			getApiData();
+
+		}
+
+		function getApiData() {
+			//let user_id = sessionStorage.getItem("userId");
+			//let user_id="14";
+			let studentid = sessionStorage.getItem("studentid");
+			//const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
+			const teacher_url = "https://localhost:7155/api/Teacher/" + studentid + "/lessonprogress";
+
+
+			var response = null;
+			$.get(teacher_url, function (data, status) {
+				response = data
+				buildLessonList(response);
+			});
+			return response;
+		}
+
+		function buildLessonList(response) {
+
+			let htmlTable = "<table class='table table-sm table-bordered table-hover'>";
+			let headerRow = "<tr style='background-color:#275E9B;color:white'>";
+
+			headerRow += "<th>" + "Lesson ID" + "</th>";
+			headerRow += "<th>" + "Learning Outcome" + "</th>";
+			headerRow += "<th>" + "Page Number" + "</th>";
+			headerRow += "<th>" + "Activity time" + "</th>";
+			htmlTable += headerRow;
+			for (let i = 0; i < response.content.length; i++) {
+				let row = `<tr> `
+					+ `<td> ${response.content[i]?.lessonId}</td>`
+					+ `<td> ${response.content[i]?.learningOutcome} </td>`
+					+ `<td> ${response.content[i]?.pageNumber} </td>`
+					+ `<td> ${response.content[i]?.activityTime} </td>`
+					+ `</tr>`;
+				htmlTable += row;
+			}
+			htmlTable += '</table>';
+			$('#student-progress-table').html(htmlTable);
+		}
+
+	</script>
+
 </body>
+
 </html>
