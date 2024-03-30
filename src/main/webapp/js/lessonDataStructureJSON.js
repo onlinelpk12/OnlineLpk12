@@ -693,7 +693,7 @@ const course =
 		            "pages": [
 		              {
 		                "pageId": "version-1-course-x-lesson-5-page-15",
-		                "previousPageId": "version-1-course-x-lesson-5-page-11",
+		                "previousPageId": "version-1-course-x-lesson-5-page-14",
 		                "nextPageId": "version-1-course-x-lesson-5-page-18",
 		                "pageType": "ContentPage"
 		              },
@@ -1495,21 +1495,21 @@ const course =
 		            "pageType": "ContentPage"
 		          },
 		          {
-					 "pageId": "version-1-course-x-lesson-11-page-9",
+					"pageId": "version-1-course-x-lesson-11-page-9",
 		            "previousPageId": "version-1-course-x-lesson-11-page-8",
 		            "nextPageId": "version-1-course-x-lesson-11-page-10",
 		            "pageType": "ContentPage"
 		          
 				  },
 				 {
-                                         "pageId": "version-1-course-x-lesson-11-page-10",
-                            "previousPageId": "version-1-course-x-lesson-11-page-9",
-                            "nextPageId": "version-1-course-x-lesson-12-page-1",
-                            "pageType": "ContentPage"
+                    "pageId": "version-1-course-x-lesson-11-page-10",
+                    "previousPageId": "version-1-course-x-lesson-11-page-9",
+                    "nextPageId": "version-1-course-x-lesson-12-page-1",
+                    "pageType": "ContentPage"
                           
-                                  },
-                                 {
-                                         "pageId": "version-1-course-x-lesson-11-page-10",
+                  },
+                  {
+                    "pageId": "version-1-course-x-lesson-11-page-10",
                             "previousPageId": "version-1-course-x-lesson-11-page-9",
                             "nextPageId": "version-1-course-x-lesson-12-page-1",
                             "pageType": "ContentPage"

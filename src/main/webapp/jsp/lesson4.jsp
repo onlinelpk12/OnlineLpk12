@@ -153,7 +153,7 @@
 		        <br>
 		         <div class="d-flex justify-content-between">
         			<button class="btn btn-lg btn-primary" style="background-color:#1b84f5" onclick="gotoPrevious(4, 0, 'version-1-course-x-lesson-4-page-3', false, -1)">Previous</button>
-        			<button class="btn btn-lg btn-primary" id="nextButton" style="background-color:#1b84f5" onclick="gotoNext(4, 0, 'version-1-course-x-lesson-4-page-3', true, 1)" disabled>Next</button>
+        			<button class="btn btn-lg btn-primary" id="nextButton" style="background-color:#1b84f5" onclick="gotoNext(4, 0, 'version-1-course-x-lesson-4-page-3', true, 1)" >Next</button>
     			</div>
             </div>
         </div>
@@ -243,7 +243,7 @@
 			</ul>
                 <div class="d-flex justify-content-between">
         			<button class="btn btn-lg btn-primary" style="background-color:#1b84f5" onclick="gotoPrevious(4, 1, 'version-1-course-x-lesson-4-page-10', false, -1)">Previous</button>
-        			<button class="btn btn-lg btn-primary" id="yBoxNextButton" disabled style="background-color:#1b84f5" onclick="gotoNext(4, 1, 'version-1-course-x-lesson-4-page-10', false, -1)">Next</button>
+        			<button class="btn btn-lg btn-primary" id="yBoxNextButton" style="background-color:#1b84f5" onclick="gotoNext(4, 1, 'version-1-course-x-lesson-4-page-10', false, -1)"disabled>Next</button>
     			</div>
             </div>
         </div>  
@@ -300,7 +300,7 @@
 				
 				<div class="d-flex justify-content-between">
         			<button class="btn btn-lg btn-primary" style="background-color:#1b84f5" onclick="gotoPrevious(4, 2, 'version-1-course-x-lesson-4-page-15', false, -1)">Previous</button>
-        			<button class="btn btn-lg btn-primary" disabled id="iBoxNextButton" style="background-color:#1b84f5" onclick="gotoNext(4, 2, 'version-1-course-x-lesson-4-page-15', false, -1)">Next</button>
+        			<button class="btn btn-lg btn-primary" id="iBoxNextButton" style="background-color:#1b84f5" onclick="gotoNext(4, 2, 'version-1-course-x-lesson-4-page-15', false, -1)">Next</button>
     			</div>
             </div>
         </div>

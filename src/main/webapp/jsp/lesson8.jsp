@@ -443,7 +443,7 @@ $(function(){
 			
                 <div class="d-flex justify-content-between">
         <button class="btn btn-primary" onclick="gotoPrevious(8, 1, 'version-1-course-x-lesson-8-page-14', false, -1)">Previous</button>
-        <button class="btn btn-primary" onclick="gotoNext(8, 1, 'version-1-course-x-lesson-8-page-14', false, -1)">Next</button>
+        <button class="btn btn-primary" onclick="gotoNext(8, 1, 'version-1-course-x-lesson-8-page-14', false, -1)"disabled>Next</button>
     </div>    
             <!-- <a class="btn btn-primary pull-left"
                 onclick="gotoPrevious(8, 1, 'version-1-course-x-lesson-8-page-14', false, -1)"> Previous </a>

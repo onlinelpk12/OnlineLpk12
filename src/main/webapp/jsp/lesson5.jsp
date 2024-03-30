@@ -274,7 +274,7 @@
 				<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
 				onclick="gotoPrevious(5, 2, 'version-1-course-x-lesson-5-page-11', false, -1)">Previous</button>
 				<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-				onclick="gotoNext(5, 2, 'version-1-course-x-lesson-5-page-11', false, -1">Next</button>
+				onclick="gotoNext(5, 2, 'version-1-course-x-lesson-5-page-11', false, -1)">Next</button>
 			</div> 
             </div>
         </div>
