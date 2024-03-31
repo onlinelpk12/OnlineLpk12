@@ -370,6 +370,7 @@
      <!-- learning outcome 4 -->
     <section id="version-1-course-x-lesson-5-page-20" hidden>
         <div class="row">
+        
             <div class="container">
    <h2>Learning outcome 3: A cell in a periodic table </h2>
             <ul class="lesson-list">

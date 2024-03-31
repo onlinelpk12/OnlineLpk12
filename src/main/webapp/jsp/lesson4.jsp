@@ -245,6 +245,7 @@
         			<button class="btn btn-lg btn-primary" style="background-color:#1b84f5" onclick="gotoPrevious(4, 1, 'version-1-course-x-lesson-4-page-10', false, -1)">Previous</button>
         			<button class="btn btn-lg btn-primary" id="yBoxNextButton" style="background-color:#1b84f5" onclick="gotoNext(4, 1, 'version-1-course-x-lesson-4-page-10', false, -1)"disabled>Next</button>
     			</div>
+    			
             </div>
         </div>  
     </section>
