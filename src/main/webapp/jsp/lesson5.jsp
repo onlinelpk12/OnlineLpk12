@@ -378,7 +378,7 @@
             		
             		<div id="elementSymbol" class="form-group">
 				  		<input id="elementBox" type="text" class="form-control" required>
-					</div>     
+					</div>      
 					    		
             		<div>
             			<img  id = "randomImageDisplay" class = "element" src="../images/lesson5/elements/17.png" alt="Image" width="105" height="120">

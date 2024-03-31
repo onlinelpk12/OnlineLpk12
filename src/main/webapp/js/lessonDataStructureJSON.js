@@ -1505,7 +1505,7 @@ const course =
                     "pageId": "version-1-course-x-lesson-11-page-10",
                     "previousPageId": "version-1-course-x-lesson-11-page-9",
                     "nextPageId": "version-1-course-x-lesson-12-page-1",
-                     "pageType": "ContentPage"
+                      "pageType": "ContentPage"
                           
                   },
                   {

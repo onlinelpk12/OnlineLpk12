@@ -500,7 +500,7 @@ atomicNumber(E, N) means the atomic number of element E is N.
                                 <button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(11, 0, 'version-1-course-x-lesson-11-page-10', false, -1)">Previous</button>
     
                                 <a class="btn btn-primary" href="../jsp/lesson12.jsp" onclick="reInitiateFreshPage()">Next</a>
-                            </div>
+                            </div> 
             </div>
         </div>
     </section>
