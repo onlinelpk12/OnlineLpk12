@@ -375,6 +375,7 @@
    <h2>Learning outcome 3: A cell in a periodic table </h2>
             <ul class="lesson-list">
             		<li class="main-point">Can you ask a question similar to our earlier ones?</li> 
+            		
             		<div id="elementSymbol" class="form-group">
 				  		<input id="elementBox" type="text" class="form-control" required>
 					</div>     
