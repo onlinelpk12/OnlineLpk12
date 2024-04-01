@@ -248,7 +248,7 @@
     			
     			 
             </div>
-        </div>  
+        </div>   
     </section>
 
     <section id="version-1-course-x-lesson-4-page-11" hidden>
