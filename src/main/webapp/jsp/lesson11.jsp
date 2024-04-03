@@ -508,7 +508,7 @@ atomicNumber(E, N) means the atomic number of element E is N.
   <%@ include file = "footer1.jsp" %>
      <script src="../js/lesson11/validation.js" type="text/javascript">  </script>
     
-      
+       
    </body>
    </html>
     

@@ -13,7 +13,7 @@
 
     <link rel="stylesheet" href="../styles/style.css">
     <script src="../js/lessonDataStructureJSON.js"></script>
-    <script src="../js/script.js"></script>  
+    <script src="../js/script.js"></script>   
     
      
     <!-- Bootstrap CSS -->

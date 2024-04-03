@@ -384,7 +384,7 @@
             			<img  id = "randomImageDisplay" class = "element" src="../images/lesson5/elements/17.png" alt="Image" width="105" height="120">
             		</div>
             </ul>
-              
+               
             <div>
             	<p>Would you like to try it out for another element 
             		<a href="#" onclick="changeImageRandomly(); return false;"><b><i>click here</i></b></a>
