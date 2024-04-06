@@ -3,6 +3,7 @@ using OnlineLpk12.Services.Interface;
 using System.Net;
 using OnlineLpk12.Data.Entities;
 using OnlineLpk12.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OnlineLpk12.Controllers
 {
@@ -29,6 +30,7 @@ namespace OnlineLpk12.Controllers
         [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(Response<LessonAndQuizProgressResponse>), (int)HttpStatusCode.OK)]
+        [AllowAnonymous]
         public async Task<IActionResult> GetLessons(int userId)
         {
             Response<LessonAndQuizProgressResponse> response = new();
