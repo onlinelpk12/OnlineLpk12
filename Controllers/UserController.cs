@@ -120,45 +120,72 @@ namespace OnlineLpk12.Controllers
             }
         }
 
-
-
-        [HttpPost("ForgotPassword")]
-        [ProducesResponseType(typeof(Response<LoginResponse>), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.InternalServerError)]
+ [HttpGet("SendOTP")]
         [AllowAnonymous]
-        public async Task<IActionResult> ForgotPassword([FromBody] LoginUser user)
+        public async Task<IActionResult> SendOTP([FromQuery] string userName)
         {
-            Response<EmptyResult> response = new();
+            if (userName == null)
+            {
+                return BadRequest("Enter valid User Id.");
+            }
+
+            //var response = new ContentResult();n
+
             try
             {
-                var validationMessages = Helper.ValidateUserWhileLogin(user);
-                if (validationMessages.Any())
+                var result = await _userService.SendOTP(userName);
+
+                if (result.Content != null && result.Content.Any())
                 {
-                    response.Errors = validationMessages;
-                    response.Message = "One or more validation errors occurred.";
-                    return BadRequest(response);
-                }   
-                var result = await _userService.ForgotPassword(user);
-                if (result.Success)
-                {
-                    response.Message = result.Message;
-                    return Ok(response);
+                    return Ok(result.Content);
                 }
-                else
-                {
-                    response.Message = "New Password should be different from Old Password.";  //error message added for a bug fix
-                    response.Errors.Add(result.Message);
-                    return BadRequest(response);
-                }
+
+                return NotFound("OTP not sent");
             }
             catch (Exception ex)
             {
-                 response.Message = "One or more validation errors occurred.";
-               response.Errors.Add("Error occurred while fetching the data.");
-               return StatusCode((int)HttpStatusCode.InternalServerError, response);
-           }
+
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Error occurred while fetching the data.");
+            }
         }
+
+        // [HttpPost("ForgotPassword")]
+        // [ProducesResponseType(typeof(Response<LoginResponse>), (int)HttpStatusCode.OK)]
+        // [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.BadRequest)]
+        // [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.InternalServerError)]
+        // [AllowAnonymous]
+        // public async Task<IActionResult> ForgotPassword([FromBody] LoginUser user)
+        // {
+        //     Response<EmptyResult> response = new();
+        //     try
+        //     {
+        //         var validationMessages = Helper.ValidateUserWhileLogin(user);
+        //         if (validationMessages.Any())
+        //         {
+        //             response.Errors = validationMessages;
+        //             response.Message = "One or more validation errors occurred.";
+        //             return BadRequest(response);
+        //         }   
+        //         var result = await _userService.ForgotPassword(user);
+        //         if (result.Success)
+        //         {
+        //             response.Message = result.Message;
+        //             return Ok(response);
+        //         }
+        //         else
+        //         {
+        //             response.Message = "New Password should be different from Old Password.";  //error message added for a bug fix
+        //             response.Errors.Add(result.Message);
+        //             return BadRequest(response);
+        //         }
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //          response.Message = "One or more validation errors occurred.";
+        //        response.Errors.Add("Error occurred while fetching the data.");
+        //        return StatusCode((int)HttpStatusCode.InternalServerError, response);
+        //    }
+        // }
         
         [HttpGet("{userId}/course/{courseId}")]
         [AllowAnonymous]

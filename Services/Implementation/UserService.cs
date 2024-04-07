@@ -12,6 +12,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Net;
+using System.Net.Mail;
 
 namespace OnlineLpk12.Services.Implementation
 {
@@ -20,6 +22,10 @@ namespace OnlineLpk12.Services.Implementation
         private readonly OnlineLpk12DbContext _context;
         private readonly IConfiguration _configuration;
         private readonly ILogService _logService;
+
+        private const string FromEmailAddress = "onlinelpk122024@gmail.com";
+        private const string GoogleAppPassword = "vbfwzantdganxhbh";
+        private const string Subject = "OTP for Password Reset";
 
         public UserService(OnlineLpk12DbContext context, ILogService logService, IConfiguration configuration)
         {
@@ -270,46 +276,104 @@ namespace OnlineLpk12.Services.Implementation
             }
         }
 
-        public async Task<Result<EmptyResult>> ForgotPassword(LoginUser user)
+
+        public async Task<Result<string>> SendOTP(string userName)
         {
-            Result<EmptyResult> result = new Result<EmptyResult>();
+            Result<string> result = new Result<string>();
+
+            // Assuming the result will contain a single string (email address)
+            var ToEmailAddress = await _context.Users
+                                            .Where(u => u.Username == userName)
+                                            .Select(u => u.EmailId)
+                                            .FirstOrDefaultAsync();
+
+            if (ToEmailAddress == null)
+            {
+                throw new Exception("User does not exists");
+            }
+
+            string otp = GenerateRandomOTP();
+
+            result.Content = otp;
+
+            // The HTML body of the email, including the OTP
+            string body = $"<h1>Hello</h1><p>Your OTP for password reset is: {otp}</p>";
+
+            var smtpClient = new SmtpClient("smtp.gmail.com")
+            {
+                Port = 587,
+                Credentials = new NetworkCredential(FromEmailAddress, GoogleAppPassword),
+                EnableSsl = true,
+            };
+            var mailMessage = new MailMessage
+            {
+                From = new MailAddress(FromEmailAddress),
+                Subject = Subject,
+                Body = body,
+                IsBodyHtml = true,
+            };
+            mailMessage.To.Add(ToEmailAddress);
+
             try
             {
-                var userFromDb = await Task.FromResult(_context.Users.FirstOrDefault(x => x.Username == user.UserName));
-                if (userFromDb != null)
-                {
-
-                    if (!Convert.ToBoolean(userFromDb.IsActive))
-                    {
-                        result.Success = false;
-                        result.Message = "User is inactive. Contact support for activation.";
-                    }
-                    //Validation to check if new and old passwords match.
-                    else if (BCrypt.Net.BCrypt.Verify(user.Password, userFromDb.Password))
-                    {
-                        result.Success = false;
-                        result.Message = "New password should not match old password.";
-                    }
-                    else
-                    {
-                        userFromDb.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, 8);
-                        await _context.SaveChangesAsync();
-                        result.Success = true;
-                        result.Message = "User password updated successfully!.";
-                    }
-                }
-                else
-                {
-                    result.Success = false;
-                    result.Message = "User Not found.";
-                }
+                smtpClient.Send(mailMessage);
+                Console.WriteLine("Email sent successfully!");
+                return result;
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                throw;
+                Console.WriteLine($"Failed to send email. Error: {e.Message}");
             }
+
             return result;
         }
+
+        private string GenerateRandomOTP()
+        {
+            Random random = new Random();
+            return random.Next(100000, 999999).ToString();
+        }
+
+        // public async Task<Result<EmptyResult>> ForgotPassword(LoginUser user)
+        // {
+        //     Result<EmptyResult> result = new Result<EmptyResult>();
+        //     try
+        //     {
+        //         var userFromDb = await Task.FromResult(_context.Users.FirstOrDefault(x => x.Username == user.UserName));
+        //         if (userFromDb != null)
+        //         {
+
+        //             if (!Convert.ToBoolean(userFromDb.IsActive))
+        //             {
+        //                 result.Success = false;
+        //                 result.Message = "User is inactive. Contact support for activation.";
+        //             }
+        //             //Validation to check if new and old passwords match.
+        //             else if (BCrypt.Net.BCrypt.Verify(user.Password, userFromDb.Password))
+        //             {
+        //                 result.Success = false;
+        //                 result.Message = "New password should not match old password.";
+        //             }
+        //             else
+        //             {
+        //                 userFromDb.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, 8);
+        //                 await _context.SaveChangesAsync();
+        //                 result.Success = true;
+        //                 result.Message = "User password updated successfully!.";
+        //             }
+        //         }
+        //         else
+        //         {
+        //             result.Success = false;
+        //             result.Message = "User Not found.";
+        //         }
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         throw;
+        //     }
+        //     return result;
+        // }
         public async Task<int> GetTeacherIdByCourseId(int courseId)
         {
             try
