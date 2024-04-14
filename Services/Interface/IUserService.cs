@@ -10,6 +10,7 @@ namespace OnlineLpk12.Services.Interface
         Task<Result<string>> RegisterUser(RegistrationUser user);
        // Task<Result<EmptyResult>> ForgotPassword(LoginUser user);
        Task<Result<string>> SendOTP(string userName);
+       Task<Result<string>> UpdatePassword(LoginUser request);
         Task<Result<Token>> Login(LoginUser user);
         public Data.Models.User GetUserDetailsByUserName(string username);
         Task<bool> IsEmailIdExists(string emailId);

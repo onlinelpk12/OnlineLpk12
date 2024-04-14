@@ -800,9 +800,9 @@ namespace OnlineLpk12.Data.Context
                     .HasMaxLength(255)
                     .HasColumnName("username");
 
-                entity.Property(e => e.EnrolledCourses)
-                    .HasMaxLength(255)
-                    .HasColumnName("enrolled_courses");
+             //   entity.Property(e => e.EnrolledCourses)
+              //      .HasMaxLength(255)
+               //     .HasColumnName("enrolled_courses");
             });
 
             modelBuilder.Entity<UserRole>(entity =>
