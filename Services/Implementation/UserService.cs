@@ -39,7 +39,9 @@ namespace OnlineLpk12.Services.Implementation
             Result<Token> result = new Result<Token>();
             try
             {
+
                 var userFromDb = await Task.FromResult(_context.Users.FirstOrDefault(x => x.Username == user.UserName));
+
                 if (userFromDb != null)
                 {
 
@@ -48,42 +50,62 @@ namespace OnlineLpk12.Services.Implementation
                         result.Success = false;
                         result.Message = "User is inactive. Contact support for activation.";
                     }
-                    else if(!BCrypt.Net.BCrypt.Verify(user.Password, userFromDb.Password))
+
+                    else if (!BCrypt.Net.BCrypt.Verify(user.Password, userFromDb.Password))
                     {
                         result.Success = false;
                         result.Message = "Invalid Password!";
                     }
                     else
                     {
-                        result.Success = true;
-                        result.Message = "User validation success.";
-                        var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("Key"));
-                        Response<string> response = new();
-                        var tokenDescriptor = new SecurityTokenDescriptor
+                        Data.Models.Role role = await _context.Roles.FirstOrDefaultAsync(r => r.Name == user.roleType);
+                        
+                        int userWithRoles = await (from u in _context.Users
+                                                   join ur in _context.UserRoles on u.Id equals ur.UserId
+                                                   where u.Username == user.UserName && ur.RoleId == role.Id
+                                                   select ur.RoleId).FirstOrDefaultAsync();
+
+                        if (userWithRoles == role.Id)
                         {
-                            Subject = new ClaimsIdentity(new[]
+
+                            result.Success = true;
+                            result.Message = "User validation success.";
+
+                            var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("Key"));
+                            Response<string> response = new();
+                            var tokenDescriptor = new SecurityTokenDescriptor
                             {
+                                Subject = new ClaimsIdentity(new[]
+                                {
                             new Claim("id", userFromDb.Id.ToString()),
                             new Claim(JwtRegisteredClaimNames.Email, user.UserName)
                             }),
-                            Expires = DateTime.UtcNow.AddHours(24),
-                            SigningCredentials = new SigningCredentials
-                            (new SymmetricSecurityKey(key),
-                            SecurityAlgorithms.HmacSha512Signature)
-                        };
-                        var tokenHandler = new JwtSecurityTokenHandler();
-                        var token = tokenHandler.CreateToken(tokenDescriptor);
-                         
+                                Expires = DateTime.UtcNow.AddHours(24),
+                                SigningCredentials = new SigningCredentials
+                                (new SymmetricSecurityKey(key),
+                                SecurityAlgorithms.HmacSha512Signature)
+                            };
+                            var tokenHandler = new JwtSecurityTokenHandler();
+                            var token = tokenHandler.CreateToken(tokenDescriptor);
 
-                        result.Content = new Token()
+
+                            result.Content = new Token()
+                            {
+                                accessToken = tokenHandler.WriteToken(token),
+                                email = userFromDb.EmailId,
+                                id = userFromDb.Id,
+                                username = userFromDb.Username,
+                                roles = role.Name,
+                            };
+
+                        }
+                        else
                         {
-                           accessToken = tokenHandler.WriteToken(token),
-                           email = userFromDb.EmailId,
-                           id = userFromDb.Id,
-                           username = userFromDb.Username,
-                           roles = userFromDb.UserType
-                        };
+                            result.Success = false;
+                            result.Message = "Role Not found.";
+                        }
                     }
+
                 }
                 else
                 {
@@ -125,25 +147,32 @@ namespace OnlineLpk12.Services.Implementation
                 for (int i = 0; i < roles.Length; i++)
                 {
 
-
-                    Data.Models.UserRole userRole = new Data.Models.UserRole()
+                    Data.Models.Role role = await _context.Roles.FirstOrDefaultAsync(r => r.Name.ToLower() == roles[i].ToLower());
+                    if (role is not null)
                     {
-                        UserId = user.Id,
-                        RoleId = Convert.ToInt32(roles[i])
-                    };
-                    await _context.UserRoles.AddAsync(userRole);
+                        Data.Models.UserRole userRole = new Data.Models.UserRole()
+                        {
+                            UserId = user.Id,
+                            RoleId = role.Id
+                        };
+                        await _context.UserRoles.AddAsync(userRole);
+                    }
+                    else
+                    {
+                        // Handle case where role with given name doesn't exist
+                        throw new Exception($"Role '{roles[i]}' not found.");
+                    }
+                   
 
                 }
                 await _context.SaveChangesAsync();
-
-
 
 
             }
             catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
             return result;
         }
