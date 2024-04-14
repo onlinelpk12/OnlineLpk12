@@ -149,6 +149,49 @@ namespace OnlineLpk12.Controllers
             }
         }
 
+        [HttpPost("UpdatePassword")]
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> UpdatePassword([FromBody] LoginUser request)
+        {
+            Response<string> response = new();
+            try
+            {
+                // Validate the request
+                var validationMessages = Helper.ValidateUserWhileLogin(request);
+                if (validationMessages.Any())
+                {
+                    response.Errors = validationMessages;
+                    response.Message = "One or more validation errors occurred.";
+                    return BadRequest(response);
+                }
+                var result = await _userService.UpdatePassword(request);
+                if (result.Success)
+                {
+                    response.Message = result.Message;
+                    response.Content = result.Content;
+                    return Ok(response);
+                }
+                else
+                {
+                    response.Message = "New Password should be different from Old Password.";  
+                    response.Errors.Add(result.Message);
+                    return BadRequest(response);
+                  
+
+                }
+            }
+            
+        catch (Exception ex)
+            {
+                response.Errors.Add("Error occurred while updating the password.");
+                response.Message = "An error occurred while updating the password.";
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
+            }
+        }
+
         // [HttpPost("ForgotPassword")]
         // [ProducesResponseType(typeof(Response<LoginResponse>), (int)HttpStatusCode.OK)]
         // [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.BadRequest)]

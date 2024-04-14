@@ -353,6 +353,49 @@ namespace OnlineLpk12.Services.Implementation
             return random.Next(100000, 999999).ToString();
         }
 
+        public async Task<Result<string>> UpdatePassword(LoginUser request)
+        {
+            Result<string> result = new Result<string>();
+            try
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.UserName);
+
+                if (user != null)
+                {
+                    // Validation to check if new and old passwords match.
+                    if (BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
+                    {
+                        result.Success = false;
+                        result.Message = "New password should not match old password.";
+                    }
+                    else
+                    {
+                        // Hash the new password
+                        user.Password = BCrypt.Net.BCrypt.HashPassword(request.Password, 8);
+
+                        // Save changes to the database
+                        await _context.SaveChangesAsync();
+
+                        result.Success = true;
+                        result.Message = "User password updated successfully.";
+                    }
+                }
+                else
+                {
+                    result.Success = false;
+                    result.Message = "User not found.";
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+
         // public async Task<Result<EmptyResult>> ForgotPassword(LoginUser user)
         // {
         //     Result<EmptyResult> result = new Result<EmptyResult>();
