@@ -81,8 +81,7 @@ namespace OnlineLpk12.Services.Implementation
                            email = userFromDb.EmailId,
                            id = userFromDb.Id,
                            username = userFromDb.Username,
-                           roles = userFromDb.UserType,
-                           enrolledCourses = userFromDb.EnrolledCourses
+                           roles = userFromDb.UserType
                         };
                     }
                 }
@@ -111,22 +110,42 @@ namespace OnlineLpk12.Services.Implementation
                     Password = BCrypt.Net.BCrypt.HashPassword(inputUser.Password, 8),
                     EmailId = inputUser.EmailId,
                     Username = inputUser.UserName,
-                    UserType = Helper.GetUserType(inputUser.IsStudent),
-                    IsActive = true,
-                    EnrolledCourses = inputUser.EnrolledCourses
+                    UserType = "",
+                    IsActive = true
                 };
+               
                 await _context.Users.AddAsync(DbUser);
                 await _context.SaveChangesAsync();
                 Data.Models.User user = GetUserDetailsByUserName(inputUser.UserName);
                 result.Content = user.Id.ToString();
                 result.Success = true;
                 result.Message = "User registered successfully.";
+
+                string[] roles = inputUser.Roles.Split(",");
+                for (int i = 0; i < roles.Length; i++)
+                {
+
+
+                    Data.Models.UserRole userRole = new Data.Models.UserRole()
+                    {
+                        UserId = user.Id,
+                        RoleId = Convert.ToInt32(roles[i])
+                    };
+                    await _context.UserRoles.AddAsync(userRole);
+
+                }
+                await _context.SaveChangesAsync();
+
+
+
+
             }
             catch (Exception ex)
             {
+
                 throw;
-                }
-           return result;
+            }
+            return result;
         }
         public async Task<Result<string>> CourseMap(int userId, int courseId)
         {

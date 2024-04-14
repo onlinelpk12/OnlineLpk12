@@ -799,10 +799,6 @@ namespace OnlineLpk12.Data.Context
                 entity.Property(e => e.Username)
                     .HasMaxLength(255)
                     .HasColumnName("username");
-
-                entity.Property(e => e.EnrolledCourses)
-                    .HasMaxLength(255)
-                    .HasColumnName("enrolled_courses");
             });
 
             modelBuilder.Entity<UserRole>(entity =>
@@ -813,23 +809,15 @@ namespace OnlineLpk12.Data.Context
 
                 entity.ToTable("user_roles");
 
-                entity.HasIndex(e => e.UserId, "userId");
+                entity.HasIndex(e => e.UserId, "user_id");
 
                 entity.Property(e => e.RoleId)
                     .HasColumnType("int(11)")
-                    .HasColumnName("roleId");
+                    .HasColumnName("roles_id");
 
                 entity.Property(e => e.UserId)
                     .HasColumnType("int(11)")
-                    .HasColumnName("userId");
-
-                entity.Property(e => e.CreatedAt)
-                    .HasColumnType("datetime")
-                    .HasColumnName("createdAt");
-
-                entity.Property(e => e.UpdatedAt)
-                    .HasColumnType("datetime")
-                    .HasColumnName("updatedAt");
+                    .HasColumnName("user_id");
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.UserRoles)
