@@ -39,7 +39,10 @@ namespace OnlineLpk12.Services.Implementation
             Result<Token> result = new Result<Token>();
             try
             {
+              
                 var userFromDb = await Task.FromResult(_context.Users.FirstOrDefault(x => x.Username == user.UserName));
+                
+            
                 if (userFromDb != null)
                 {
 
@@ -48,43 +51,87 @@ namespace OnlineLpk12.Services.Implementation
                         result.Success = false;
                         result.Message = "User is inactive. Contact support for activation.";
                     }
-                    else if(!BCrypt.Net.BCrypt.Verify(user.Password, userFromDb.Password))
+
+                    else if (!BCrypt.Net.BCrypt.Verify(user.Password, userFromDb.Password))
                     {
                         result.Success = false;
                         result.Message = "Invalid Password!";
                     }
                     else
                     {
-                        result.Success = true;
-                        result.Message = "User validation success.";
-                        var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("Key"));
-                        Response<string> response = new();
-                        var tokenDescriptor = new SecurityTokenDescriptor
+
+                        var roleSelected = "";
+                        int userWithRoles = await (from u in _context.Users
+                                                   join ur in _context.UserRoles on u.Id equals ur.UserId
+                                                   where u.Username == user.UserName && ur.RoleId == user.roleType
+                                                   select ur.RoleId).FirstOrDefaultAsync();
+
+
+
+
+                        if (userWithRoles == user.roleType)
                         {
-                            Subject = new ClaimsIdentity(new[]
+
+                            result.Success = true;
+                            result.Message = "User validation success.";
+
+                            switch (userWithRoles)
                             {
+                                case 1:
+                                    roleSelected = "Student";
+                                    break;
+                                case 2:
+                                    roleSelected = "Teacher";
+                                    break;
+                                case 3:
+                                    roleSelected = "Course Developer";
+                                    break;
+                                default:
+                                    roleSelected = "";
+                                    break;
+                            }
+
+
+                            var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("Key"));
+                            Response<string> response = new();
+                            var tokenDescriptor = new SecurityTokenDescriptor
+                            {
+                                Subject = new ClaimsIdentity(new[]
+                                {
                             new Claim("id", userFromDb.Id.ToString()),
                             new Claim(JwtRegisteredClaimNames.Email, user.UserName)
                             }),
-                            Expires = DateTime.UtcNow.AddHours(24),
-                            SigningCredentials = new SigningCredentials
-                            (new SymmetricSecurityKey(key),
-                            SecurityAlgorithms.HmacSha512Signature)
-                        };
-                        var tokenHandler = new JwtSecurityTokenHandler();
-                        var token = tokenHandler.CreateToken(tokenDescriptor);
-                         
+                                Expires = DateTime.UtcNow.AddHours(24),
+                                SigningCredentials = new SigningCredentials
+                                (new SymmetricSecurityKey(key),
+                                SecurityAlgorithms.HmacSha512Signature)
+                            };
+                            var tokenHandler = new JwtSecurityTokenHandler();
+                            var token = tokenHandler.CreateToken(tokenDescriptor);
 
-                        result.Content = new Token()
+
+                            result.Content = new Token()
+                            {
+                                accessToken = tokenHandler.WriteToken(token),
+                                email = userFromDb.EmailId,
+                                id = userFromDb.Id,
+                                username = userFromDb.Username,
+                                roles = roleSelected,
+                            };
+
+                        }
+
+                        else
                         {
-                           accessToken = tokenHandler.WriteToken(token),
-                           email = userFromDb.EmailId,
-                           id = userFromDb.Id,
-                           username = userFromDb.Username,
-                           roles = userFromDb.UserType
-                        };
+                            result.Success = false;
+                            result.Message = "Role Not found.";
+                        }
                     }
+
+
+
                 }
+
                 else
                 {
                     result.Success = false;
@@ -97,6 +144,7 @@ namespace OnlineLpk12.Services.Implementation
             }
             return result;
         }
+
 
         public async Task<Result<string>> RegisterUser(RegistrationUser inputUser)
         {
