@@ -107,6 +107,7 @@ namespace OnlineLpk12.Services.Implementation
                     }
 
                 }
+
                 else
                 {
                     result.Success = false;
@@ -119,6 +120,7 @@ namespace OnlineLpk12.Services.Implementation
             }
             return result;
         }
+
 
         public async Task<Result<string>> RegisterUser(RegistrationUser inputUser)
         {
