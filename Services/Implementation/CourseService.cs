@@ -97,6 +97,37 @@ namespace OnlineLpk12.Services.Implementation
                 return result;
             }
         }
+        public async Task<Result<List<Course>>> GetCoursesById(int userId)
+        {
+            var result = new Result<List<Course>>()
+            {
+                Content = new List<Course>()
+            };
+            try
+            {
+                var data = await (from cs in _context.Courses
+                                  where cs.CreatedBy == userId
+                                  select cs).ToListAsync();
+
+                foreach (var item in data)
+                {
+                    result.Content.Add(new Course()
+                    {
+                        CourseId = item.Id,
+                        CourseName = item.CourseName.Trim(),
+                        Semester = item.Semester.Trim(),
+                        Year = item.Year
+                    });
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                   Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
+                throw;
+            }
+        }
 
 
 

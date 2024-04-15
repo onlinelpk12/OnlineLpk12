@@ -42,16 +42,8 @@ namespace OnlineLpk12.Controllers
                     return BadRequest(response);
                 }
 
-                //Check if the user is teacher or not. If not throw bad request error
-               // bool isCourseDeveloper = await _userService.IsCourseDeveloper(userId);
-                //if (!isCourseDeveloper)
-               // {
-                //    response.Message = "One or more validation errors occurred.";
-                //    response.Errors.Add("Given user is not a teacher.");
-                  //  return BadRequest(response);
-                //}
-
-                //Get Courses for the teacher
+               
+                //Get Courses for the User
                 var result = await _courseService.GetCourses(userId);
 
                 //If there are any courses return them
@@ -62,7 +54,7 @@ namespace OnlineLpk12.Controllers
                 }
                 //If there are no courses return Not found error
                 response.Message = "One or more validation errors occurred.";
-                response.Errors.Add("No courses found for this teacher.");
+                response.Errors.Add("No courses found for this User.");
                 return NotFound(response);
             }
             catch (Exception ex)
@@ -75,7 +67,7 @@ namespace OnlineLpk12.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("CreateCourse")]
         [AllowAnonymous]
         public async Task<IActionResult> CreateCourse([FromBody] Course course)
         {
@@ -115,6 +107,51 @@ namespace OnlineLpk12.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }
+        [HttpGet("/GetCoursesById/{userId}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetCoursesById(int userId)
+        {
+            Response<List<Course>> response = new();
+            try
+            {
+                //If user Id is less than or equal to 0 -> throw bad request error
+                if (userId < 1)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Enter valid User Id.");
+                    return BadRequest(response);
+                }
+                bool isCourseDeveloper = await _userService.IsCourseDeveloper(userId);
+                if (!isCourseDeveloper)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Given user is not a Course Developer.");
+                    return BadRequest(response);
+                }
+
+                var result = await _courseService.GetCoursesById(userId);
+
+                //If there are any courses return them
+                if (result.Content != null && result.Content.Any())
+                {
+                    response.Content = result.Content;
+                    return Ok(response);
+                }
+                //If there are no courses return Not found error
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("No courses found for this Course Developer.");
+                return NotFound(response);
+            }
+            catch (Exception ex)
+            {
+                _logService.LogError(userId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("Error occurred while fetching the data.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
+            }
+        }
+
 
     }
 }
