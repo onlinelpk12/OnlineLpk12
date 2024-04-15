@@ -6,6 +6,9 @@ using System.Text;
 using System.Diagnostics;
 using System.Reflection;
 using OnlineLpk12.Helpers;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace OnlineLpk12.Services.Implementation
 {
@@ -13,6 +16,7 @@ namespace OnlineLpk12.Services.Implementation
     {
         private readonly OnlineLpk12DbContext _context;
         private readonly ILogService _logService;
+        
 
         public CourseService(OnlineLpk12DbContext context, ILogService logService)
         {
@@ -64,7 +68,7 @@ namespace OnlineLpk12.Services.Implementation
                     result.Success = false;
                     return result;
                 }
-                //check if user is a courseDeveloper then only he can create course
+                
 
                 // Add the course to the database context
                 Data.Models.Course course1 = new Data.Models.Course()
@@ -128,7 +132,34 @@ namespace OnlineLpk12.Services.Implementation
                 throw;
             }
         }
+        public async Task<Result<string>> DeleteCourse(int courseId)
+        {
+            var result = new Result<string>();
+            try
+            {
+                var course = await (from cs in _context.Courses
+                                    where cs.Id == courseId
+                                    select cs).FirstOrDefaultAsync();
+                if (course == null)
+                {
+                    result.Message = "Course not found.";
+                    return result;
+                }
 
+                _context.Courses.Remove(course);
+                await _context.SaveChangesAsync();
+
+                result.Success = true;
+                result.Content = "Course deleted successfully";
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logService.LogError(courseId, nameof(DeleteCourse), GetType().FullName, ex.Message, ex);
+                result.Message = "An error occurred while deleting the course.";
+                return result;
+            }
+        }
 
 
     }

@@ -1,6 +1,4 @@
-﻿
-
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineLpk12.Data.Entities;
 using OnlineLpk12.Services.Interface;
@@ -9,6 +7,8 @@ using System.Reflection;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using OnlineLpk12.Helpers;
+using MySqlX.XDevAPI.Common;
+using System.Security.Claims;
 
 namespace OnlineLpk12.Controllers
 {
@@ -19,12 +19,14 @@ namespace OnlineLpk12.Controllers
         private readonly ICourseService _courseService;
         private readonly IUserService _userService;
         private readonly ILogService _logService;
+       
 
         public CourseController(ICourseService courseService, IUserService userService, ILogService logService)
         {
             _courseService = courseService;
             _userService = userService;
             _logService = logService;
+           
         }
 
         [HttpGet("{userId}")]
@@ -33,8 +35,7 @@ namespace OnlineLpk12.Controllers
         {
             Response<List<Course>> response = new();
             try
-            {
-                //If user Id is less than or equal to 0 -> throw bad request error
+            { 
                 if (userId < 1)
                 {
                     response.Message = "One or more validation errors occurred.";
@@ -42,17 +43,15 @@ namespace OnlineLpk12.Controllers
                     return BadRequest(response);
                 }
 
-               
-                //Get Courses for the User
                 var result = await _courseService.GetCourses(userId);
 
-                //If there are any courses return them
+                
                 if (result.Content != null && result.Content.Any())
                 {
                     response.Content = result.Content;
                     return Ok(response);
                 }
-                //If there are no courses return Not found error
+                
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("No courses found for this User.");
                 return NotFound(response);
@@ -68,13 +67,13 @@ namespace OnlineLpk12.Controllers
         }
 
         [HttpPost("CreateCourse")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Course Developer")]
         public async Task<IActionResult> CreateCourse([FromBody] Course course)
         {
             Response<string> response = new();
             try
             {
-                // Validate the input course object
+                
                 var validationErrors = Helper.ValidateCourse(course);
                 if (validationErrors.Count > 0)
                 {
@@ -82,18 +81,16 @@ namespace OnlineLpk12.Controllers
                     response.Errors = validationErrors;
                     return BadRequest(response);
                 }
-
-                // Add the course to the database
+                                
                 var result = await _courseService.CreateCourse(course);
 
-                // Check if the course creation was successful
                 if (result.Success)
                 {
                     response.Content = result.Content;
                     return Ok(response);
                 }
 
-                // If there were errors during course creation, return bad request with error messages
+                
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add(result.Message);
                 return BadRequest(response);
@@ -101,7 +98,6 @@ namespace OnlineLpk12.Controllers
             catch (Exception ex)
             {
 
-                // Set the error response
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while creating the course.");
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
@@ -114,7 +110,7 @@ namespace OnlineLpk12.Controllers
             Response<List<Course>> response = new();
             try
             {
-                //If user Id is less than or equal to 0 -> throw bad request error
+                
                 if (userId < 1)
                 {
                     response.Message = "One or more validation errors occurred.";
@@ -131,13 +127,12 @@ namespace OnlineLpk12.Controllers
 
                 var result = await _courseService.GetCoursesById(userId);
 
-                //If there are any courses return them
                 if (result.Content != null && result.Content.Any())
                 {
                     response.Content = result.Content;
                     return Ok(response);
                 }
-                //If there are no courses return Not found error
+                
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("No courses found for this Course Developer.");
                 return NotFound(response);
@@ -149,6 +144,33 @@ namespace OnlineLpk12.Controllers
                 response.Message = "One or more validation errors occurred.";
                 response.Errors.Add("Error occurred while fetching the data.");
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
+            }
+        }
+        [HttpDelete("DeleteCourse/{courseId}")]
+        [Authorize(Roles = "Course Developer")]
+        public async Task<IActionResult> DeleteCourse( int courseId)
+        {
+            
+            try
+            {
+                
+                var deleteResult = await _courseService.DeleteCourse(courseId);
+
+                
+                if (deleteResult.Success)
+                {
+                    return Ok("Course deleted successfully");
+                }
+
+                
+                return BadRequest(deleteResult.Message);
+            }
+            catch (Exception ex)
+            {
+                
+                _logService.LogError(courseId, nameof(DeleteCourse), GetType().FullName, ex.Message, ex);
+
+                return StatusCode((int)HttpStatusCode.InternalServerError, "An error occurred while deleting the course.");
             }
         }
 

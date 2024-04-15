@@ -7,7 +7,8 @@ namespace OnlineLpk12.Services.Interface
         Task<Result<List<Course>>> GetCourses(int userId);
         Task<Result<string>> CreateCourse(Course course);
         Task<Result<List<Course>>> GetCoursesById(int userId);
-       
+        Task<Result<string>> DeleteCourse( int courseId);
+
 
     }
 }

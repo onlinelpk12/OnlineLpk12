@@ -79,8 +79,13 @@ namespace OnlineLpk12.Services.Implementation
                                 Subject = new ClaimsIdentity(new[]
                                 {
                             new Claim("id", userFromDb.Id.ToString()),
-                            new Claim(JwtRegisteredClaimNames.Email, user.UserName)
-                            }),
+                            new Claim(JwtRegisteredClaimNames.Email, user.UserName),
+                            new Claim(ClaimTypes.Role, userFromDb.UserType)
+
+
+                    
+               
+                        }),
                                 Expires = DateTime.UtcNow.AddHours(24),
                                 SigningCredentials = new SigningCredentials
                                 (new SymmetricSecurityKey(key),
@@ -88,6 +93,7 @@ namespace OnlineLpk12.Services.Implementation
                             };
                             var tokenHandler = new JwtSecurityTokenHandler();
                             var token = tokenHandler.CreateToken(tokenDescriptor);
+                            
 
 
                             result.Content = new Token()
