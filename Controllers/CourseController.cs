@@ -28,6 +28,7 @@ namespace OnlineLpk12.Controllers
         }
 
         [HttpGet("{userId}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetCourses(int userId)
         {
             Response<List<Course>> response = new();
@@ -42,13 +43,13 @@ namespace OnlineLpk12.Controllers
                 }
 
                 //Check if the user is teacher or not. If not throw bad request error
-                bool isCourseDeveloper = await _userService.IsCourseDeveloper(userId);
-                if (!isCourseDeveloper)
-                {
-                    response.Message = "One or more validation errors occurred.";
-                    response.Errors.Add("Given user is not a teacher.");
-                    return BadRequest(response);
-                }
+               // bool isCourseDeveloper = await _userService.IsCourseDeveloper(userId);
+                //if (!isCourseDeveloper)
+               // {
+                //    response.Message = "One or more validation errors occurred.";
+                //    response.Errors.Add("Given user is not a teacher.");
+                  //  return BadRequest(response);
+                //}
 
                 //Get Courses for the teacher
                 var result = await _courseService.GetCourses(userId);
@@ -75,6 +76,7 @@ namespace OnlineLpk12.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateCourse([FromBody] Course course)
         {
             Response<string> response = new();
