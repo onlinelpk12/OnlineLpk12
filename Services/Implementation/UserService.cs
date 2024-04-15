@@ -14,6 +14,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Net;
 using System.Net.Mail;
+using System.Data;
 
 namespace OnlineLpk12.Services.Implementation
 {
@@ -298,16 +299,39 @@ namespace OnlineLpk12.Services.Implementation
         {
             try
             {
-                var user = await (from usr in _context.Users
-                            where usr.Id == userId
-                            select usr).FirstOrDefaultAsync();
-                return user != null && !string.IsNullOrEmpty(user.UserType) && user.UserType.Trim().ToUpper() == "TEACHER";
+                Data.Models.Role role = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Teacher");
+
+                var user = await (from u in _context.Users
+                                  join ur in _context.UserRoles on u.Id equals ur.UserId
+                                  where u.Id == userId && ur.RoleId == role.Id
+                                  select ur.RoleId).FirstOrDefaultAsync();
+                return user != null ? true : false;
             }
             catch(Exception ex)
             {
                 _logService.LogError(userId, "IsUserTeacher", "UserService", ex.Message, ex);
                 return false;
             }
+        }
+
+        public async Task<bool> IsCourseDeveloper(int userId)
+        {
+            try
+            {
+                Data.Models.Role role = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Course Developer");
+
+                var user = await (from u in _context.Users
+                                  join ur in _context.UserRoles on u.Id equals ur.UserId
+                                  where u.Id == userId && ur.RoleId == role.Id
+                                  select ur.RoleId).FirstOrDefaultAsync();
+                return user==role.Id ? true : false;
+            }
+            catch (Exception ex)
+            {
+                _logService.LogError(userId, "IsCourseDeveloper", "UserService", ex.Message, ex);
+                return false;
+            }
+
         }
 
         public async Task<string> GetUserNameByUserId(int userId)

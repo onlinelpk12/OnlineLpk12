@@ -196,6 +196,25 @@ namespace OnlineLpk12.Data.Context
                 entity.Property(e => e.Year)
                     .HasColumnType("int(11)")
                     .HasColumnName("year");
+                entity.Property(e => e.CreatedBy)
+                .HasColumnType("int(11)")
+                .HasColumnName("created_by");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("created_at");
+
+                entity.Property(e => e.ModifiedBy)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("modified_by");
+
+                entity.Property(e => e.ModifiedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("modified_at");
+
+                entity.Property(e => e.IsCourseAvailable)
+                    .HasColumnType("tinyint(1)")
+                    .HasColumnName("is_course_available");
             });
 
             modelBuilder.Entity<SlideData>(entity =>

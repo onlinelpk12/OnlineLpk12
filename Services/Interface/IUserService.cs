@@ -20,5 +20,6 @@ namespace OnlineLpk12.Services.Interface
         Task<string> GetUserNameByUserId(int userId);
         Task<int> GetTeacherIdByCourseId(int courseId);
         Task<Result<string>> CourseMap(int userId, int courseId);
+        Task<bool> IsCourseDeveloper(int userId);
     }
 }
