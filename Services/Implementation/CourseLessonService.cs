@@ -15,14 +15,14 @@ namespace OnlineLpk12.Services.Implementation
             _logService = logService;
         }
 
-        public async Task<bool> AddLesson(int courseId, CourseLesson courseLesson)
+        public async Task<(bool, int)> AddLesson(int courseId, CourseLesson courseLesson)
         {
             try
             {
                 var course = await _context.Courses.FindAsync(courseId);
                 if (course == null)
                 {
-                    return false;
+                    return (false, 0);
                 }
 
                 var lesson = new CourseLesson
@@ -48,12 +48,12 @@ namespace OnlineLpk12.Services.Implementation
                 _context.CoursesLessonSlides.Add(coursesLessonSlide);
                 await _context.SaveChangesAsync();
 
-                return true;
+                return (true, lesson.Id);
             }
             catch (Exception ex)
             {
                 await _logService.LogError(courseLesson.CreatedBy, "AddLesson", "CourseLessonService", ex.Message, ex);
-                return false;
+                return (false, 0);
             }
         }
 

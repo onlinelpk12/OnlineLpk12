@@ -24,9 +24,9 @@ namespace OnlineLpk12.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> AddLesson([FromQuery]int courseId, [FromBody] CourseLesson courseLesson)
         {
-            var result = await _courseLessonService.AddLesson(courseId, courseLesson);
-            if (result)
-                return Ok(new { success = true, message = "Lesson added successfully" });
+            var (success, lessonId) = await _courseLessonService.AddLesson(courseId, courseLesson);
+            if (success)
+                return Ok(new { success = true, message = "Lesson added successfully", lessonId });
             else
                 return BadRequest(new { success = false, message = "Failed to add lesson" });
         }
