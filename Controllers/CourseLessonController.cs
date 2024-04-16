@@ -33,9 +33,9 @@ namespace OnlineLpk12.Controllers
 
         [HttpDelete("{lessonId}/delete")]
         [AllowAnonymous]
-        public async Task<IActionResult> DeleteLesson(int courseId, int lessonId)
+        public async Task<IActionResult> DeleteLesson(int userId, int lessonId)
         {
-            var result = await _courseLessonService.DeleteLesson(courseId, lessonId);
+            var result = await _courseLessonService.DeleteLesson(userId, lessonId);
             if (result)
                 return Ok(new { success = true, message = "Lesson deleted successfully" });
             else
@@ -44,9 +44,9 @@ namespace OnlineLpk12.Controllers
 
         [HttpPut("{lessonId}/update")]
         [AllowAnonymous]
-        public async Task<IActionResult> UpdateLesson(int courseId, int lessonId, [FromBody]CourseLesson courseLesson)
+        public async Task<IActionResult> UpdateLesson(int lessonId, [FromBody]CourseLesson courseLesson)
         {
-            var result = await _courseLessonService.UpdateLesson(courseId, lessonId, courseLesson);
+            var result = await _courseLessonService.UpdateLesson(lessonId, courseLesson);
             if (result)
                 return Ok(new { success = true, message = "Lesson updated successfully" });
             else

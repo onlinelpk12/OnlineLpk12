@@ -19,6 +19,12 @@ namespace OnlineLpk12.Services.Implementation
         {
             try
             {
+                var course = await _context.Courses.FindAsync(courseId);
+                if (course == null)
+                {
+                    return false;
+                }
+
                 var lesson = new CourseLesson
                 {
                     LessonName = courseLesson.LessonName,
@@ -46,16 +52,16 @@ namespace OnlineLpk12.Services.Implementation
             }
             catch (Exception ex)
             {
-                await _logService.LogError(0, "AddLesson", "CourseLessonService", ex.Message, ex);
+                await _logService.LogError(courseLesson.CreatedBy, "AddLesson", "CourseLessonService", ex.Message, ex);
                 return false;
             }
         }
 
-        public async Task<bool> DeleteLesson(int courseId, int lessonId)
+        public async Task<bool> DeleteLesson(int userId, int lessonId)
         {
             try
             {
-                var relatedEntries = _context.CoursesLessonSlides.Where(cls => cls.LessonId == lessonId && cls.CourseId == courseId);
+                var relatedEntries = _context.CoursesLessonSlides.Where(cls => cls.LessonId == lessonId);
                 _context.CoursesLessonSlides.RemoveRange(relatedEntries);
                 await _context.SaveChangesAsync();
 
@@ -70,12 +76,12 @@ namespace OnlineLpk12.Services.Implementation
             }
             catch (Exception ex)
             {
-                await _logService.LogError(0, "DeleteLesson", "CourseLessonService", ex.Message, ex);
+                await _logService.LogError(userId, "DeleteLesson", "CourseLessonService", ex.Message, ex);
                 return false;
             }
         }
 
-        public async Task<bool> UpdateLesson(int courseId, int lessonId, CourseLesson courseLesson)
+        public async Task<bool> UpdateLesson(int lessonId, CourseLesson courseLesson)
         {
             try
             {
@@ -94,7 +100,7 @@ namespace OnlineLpk12.Services.Implementation
             }
             catch (Exception ex)
             {
-                await _logService.LogError(0, "UpdateLesson", "CourseLessonService", ex.Message, ex);
+                await _logService.LogError(courseLesson.ModifiedBy, "UpdateLesson", "CourseLessonService", ex.Message, ex);
                 return false;
             }
         }
