@@ -22,7 +22,7 @@ namespace OnlineLpk12.Controllers
 
         [HttpPost("add")]
         [AllowAnonymous]
-        public async Task<IActionResult> AddLesson(int courseId, [FromBody]CourseLesson courseLesson)
+        public async Task<IActionResult> AddLesson([FromQuery]int courseId, [FromBody] CourseLesson courseLesson)
         {
             var result = await _courseLessonService.AddLesson(courseId, courseLesson);
             if (result)
@@ -31,9 +31,9 @@ namespace OnlineLpk12.Controllers
                 return BadRequest(new { success = false, message = "Failed to add lesson" });
         }
 
-        [HttpDelete("{lessonId}/delete")]
+        [HttpDelete("delete")]
         [AllowAnonymous]
-        public async Task<IActionResult> DeleteLesson(int userId, int lessonId)
+        public async Task<IActionResult> DeleteLesson([FromQuery] int userId, [FromQuery] int lessonId)
         {
             var result = await _courseLessonService.DeleteLesson(userId, lessonId);
             if (result)
@@ -42,9 +42,9 @@ namespace OnlineLpk12.Controllers
                 return BadRequest(new { success = false, message = "Failed to delete lesson" });
         }
 
-        [HttpPut("{lessonId}/update")]
+        [HttpPut("update")]
         [AllowAnonymous]
-        public async Task<IActionResult> UpdateLesson(int lessonId, [FromBody]CourseLesson courseLesson)
+        public async Task<IActionResult> UpdateLesson([FromQuery] int lessonId, [FromBody] CourseLesson courseLesson)
         {
             var result = await _courseLessonService.UpdateLesson(lessonId, courseLesson);
             if (result)
