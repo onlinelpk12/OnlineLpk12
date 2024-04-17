@@ -160,7 +160,65 @@ namespace OnlineLpk12.Services.Implementation
                 return result;
             }
         }
+        public async Task<Result<List<CourseLesson>>> GetLessonsToEditById(int courseId)
+        {
+            var result = new Result<List<CourseLesson>>()
+            {
+                Content = new List<CourseLesson>()
+            };
+            try
+            {
+                var data = await (from cls in _context.CoursesLessonSlides
+                                  join c in _context.Courses on cls.CourseId equals c.Id
+                                  join l in _context.CourseLessons on cls.LessonId equals l.Id
+                                  where cls.CourseId == courseId
+                                  select l).ToListAsync();
 
+                foreach (var item in data)
+                {
+                    result.Content.Add(new CourseLesson()
+                    {
+                        Id = item.Id,
+                        LessonName = item.LessonName,
+                        CreatedBy = item.CreatedBy,
+                        CreatedAt = DateTime.UtcNow,
+                        ModifiedBy = item.ModifiedBy,
+                        ModifiedAt = DateTime.UtcNow,
+                        IsLessonAvailable = item.IsLessonAvailable
+                    });
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _ = _logService.LogError(courseId, MethodBase.GetCurrentMethod().Name,
+                   Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
+                throw;
+            }
+        }
+        public async Task<bool> UpdateCourse(int courseId, Course course)
+        {
+            try
+            {
+                var course1 = await _context.Courses.FindAsync(courseId);
+                if (course1 == null)
+                    return false;
+
+                course1.CourseName = course.CourseName;
+                course1.ModifiedBy = course.ModifiedBy;
+                course1.ModifiedAt = DateTime.UtcNow;
+                course1.IsCourseAvailable = course.IsCourseAvailable;
+
+                _context.Update(course1);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await _logService.LogError(course.ModifiedBy, "UpdateCourse", "CourseService", ex.Message, ex);
+                return false;
+            }
+        }
 
     }
 }

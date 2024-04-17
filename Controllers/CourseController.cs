@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using OnlineLpk12.Helpers;
 using MySqlX.XDevAPI.Common;
 using System.Security.Claims;
+using OnlineLpk12.Services.Implementation;
 
 namespace OnlineLpk12.Controllers
 {
@@ -103,7 +104,7 @@ namespace OnlineLpk12.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }
-        [HttpGet("/GetCoursesById/{userId}")]
+        [HttpGet("GetCoursesById/{userId}")]
         [AllowAnonymous]
         public async Task<IActionResult> GetCoursesById(int userId)
         {
@@ -173,7 +174,53 @@ namespace OnlineLpk12.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, "An error occurred while deleting the course.");
             }
         }
+        [HttpGet("GetLessonsToEditById/{courseId}")]
+        [Authorize(Roles = "Course Developer")]
+        
+        public async Task<IActionResult> GetLessonsToEditById(int courseId)
+        {
+            Response<List<CourseLesson>> response = new();
+            try
+            {
 
+                if (courseId < 1)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Enter valid Course Id.");
+                    return BadRequest(response);
+                }
+
+                var result = await _courseService.GetLessonsToEditById(courseId);
+
+                if (result.Content != null && result.Content.Any())
+                {
+                    response.Content = result.Content;
+                    return Ok(response);
+                }
+
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("No Lessons found for this Course.");
+                return NotFound(response);
+            }
+            catch (Exception ex)
+            {
+                _logService.LogError(courseId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("Error occurred while fetching the data.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
+            }
+        }
+        [HttpPut("UpdateCourse")]
+        [Authorize(Roles = "Course Developer")]
+        public async Task<IActionResult> UpdateCourse([FromQuery] int courseId, [FromBody] Course course)
+        {
+            var result = await _courseService.UpdateCourse(courseId, course);
+            if (result)
+                return Ok(new { success = true, message = "CourseName updated successfully" });
+            else
+                return BadRequest(new { success = false, message = "Failed to update CourseName" });
+        }
 
     }
 }
