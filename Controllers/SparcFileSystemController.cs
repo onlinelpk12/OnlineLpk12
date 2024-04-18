@@ -666,6 +666,7 @@ namespace OnlineLpk12.Controllers
         }
 
         [HttpGet("getallfoldersfiles")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllFoldersFilesAccessible(int userId)
         {
             Response<string> response = new();
