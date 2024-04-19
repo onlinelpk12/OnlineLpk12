@@ -357,24 +357,24 @@ namespace OnlineLpk12.Services.Implementation
         }
 
 
-        public async Task<Result<string>> SendOTP(string userName)
+        public async Task<Result<(string Otp, string Username)>> SendOTP(string emailId)
         {
-            Result<string> result = new Result<string>();
+            Result<(string Otp, string Username)> result = new Result<(string Otp, string Username)>();
 
             // Assuming the result will contain a single string (email address)
-            var ToEmailAddress = await _context.Users
-                                            .Where(u => u.Username == userName)
-                                            .Select(u => u.EmailId)
+            var userName = await _context.Users
+                                            .Where(u => u.EmailId == emailId)
+                                            .Select(u => u.Username)
                                             .FirstOrDefaultAsync();
 
-            if (ToEmailAddress == null)
+            if (userName == null)
             {
                 throw new Exception("User does not exists");
             }
 
             string otp = GenerateRandomOTP();
 
-            result.Content = otp;
+            result.Content = (otp, userName);
 
             // The HTML body of the email, including the OTP
             string body = $"<h1>Hello</h1><p>Your OTP for password reset is: {otp}</p>";
@@ -392,7 +392,7 @@ namespace OnlineLpk12.Services.Implementation
                 Body = body,
                 IsBodyHtml = true,
             };
-            mailMessage.To.Add(ToEmailAddress);
+            mailMessage.To.Add(emailId);
 
             try
             {

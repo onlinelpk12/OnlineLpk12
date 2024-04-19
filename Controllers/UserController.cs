@@ -122,30 +122,41 @@ namespace OnlineLpk12.Controllers
 
  [HttpGet("SendOTP")]
         [AllowAnonymous]
-        public async Task<IActionResult> SendOTP([FromQuery] string userName)
+        public async Task<IActionResult> SendOTP([FromQuery] string emailId)
         {
-            if (userName == null)
+            if (emailId == null)
             {
-                return BadRequest("Enter valid User Id.");
+                return BadRequest("Enter valid User emailId.");
             }
 
             //var response = new ContentResult();n
 
             try
             {
-                var result = await _userService.SendOTP(userName);
+                var result = await _userService.SendOTP(emailId);
 
-                if (result.Content != null && result.Content.Any())
+                //if (result.Content.Otp != null )
+                //{
+                //    return Ok(result.Content.Otp,result.Content.Username);
+                //}
+
+                //return NotFound("OTP not sent");
+
+                var responseObj = new
                 {
-                    return Ok(result.Content);
-                }
+                    otp = result.Content.Otp ?? "", // If otp is null, set it to an empty string
+                    username = result.Content.Username ?? "" // If username is null, set it to an empty string
+                };
 
-                return NotFound("OTP not sent");
+                // Return the response as JSON
+                return Ok(responseObj);
             }
             catch (Exception ex)
             {
 
-                return StatusCode((int)HttpStatusCode.InternalServerError, "Error occurred while fetching the data.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, "An error occurred while sending OTP for email,user NOT FOUND");
+               
+
             }
         }
 
