@@ -61,13 +61,13 @@ namespace OnlineLpk12.Services.Implementation
         {
             try
             {
-                var relatedEntries = _context.CoursesLessonSlides.Where(cls => cls.LessonId == lessonId);
-                _context.CoursesLessonSlides.RemoveRange(relatedEntries);
-                await _context.SaveChangesAsync();
-
                 var lesson = await _context.CourseLessons.FindAsync(lessonId);
                 if (lesson == null)
                     return false;
+
+                var relatedEntries = _context.CoursesLessonSlides.Where(cls => cls.LessonId == lessonId);
+                _context.CoursesLessonSlides.RemoveRange(relatedEntries);
+                await _context.SaveChangesAsync();
 
                 _context.CourseLessons.Remove(lesson);
                 await _context.SaveChangesAsync();
