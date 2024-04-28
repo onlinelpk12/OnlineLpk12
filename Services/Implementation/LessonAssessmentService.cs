@@ -120,26 +120,6 @@ namespace OnlineLpk12.Services.Implementation
 
         }
 
-        public async Task<Result<List<AFAssessmentData>>> GetAllAssessments(int courseId, int lessonId)
-        {
-            Result<List<AFAssessmentData>> result = new Result<List<AFAssessmentData>>();
-            try
-            {
-                var AfassessmentData = await _context.AFAssessmentData.Where(y => y.CourseId == courseId && y.LessonId == lessonId).ToListAsync();
-                result.Content = AfassessmentData;
-                result.Message = "Lesson Data retrived.";
-                return result;
-            }
-            catch (Exception ex)
-            {
-                _logService.LogError(1, "Get Assessment", "LessonService", ex.Message, ex);
-                result.Message = ex.Message;
-                result.Success = false;
-                return result;
-            }
-
-        }
-
 
     }
 }
