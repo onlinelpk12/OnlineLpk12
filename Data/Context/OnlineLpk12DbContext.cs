@@ -48,6 +48,7 @@ namespace OnlineLpk12.Data.Context
         public virtual DbSet<CourseLesson> CourseLessons { get; set; } = null!;
         public virtual DbSet<LessonSlide> LessonSlides { get; set; } = null!;
         public virtual DbSet<CoursesLessonSlide> CoursesLessonSlides { get; set; } = null!;
+        public virtual DbSet<AFAssessmentData> AFAssessmentData { get; set; } = null!;
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
            if (!optionsBuilder.IsConfigured)
@@ -937,6 +938,53 @@ namespace OnlineLpk12.Data.Context
                     .WithMany(p => p.UserRoles)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("user_roles_ibfk_2");
+            });
+
+            modelBuilder.Entity<AFAssessmentData>(entity =>
+            {
+                entity.ToTable("AF_Assessment_Data");
+
+                entity.HasKey(e => e.AssessmentId);
+
+                entity.Property(e => e.AssessmentId)
+                   .HasColumnType("int(11)")
+                   .HasColumnName("assessment_id");
+
+                entity.Property(e => e.CourseId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("course_id");
+
+                entity.Property(e => e.LessonId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("lesson_id");
+
+                entity.Property(e => e.Question)
+                   .HasMaxLength(255)
+                   .HasColumnName("question");
+
+                entity.Property(e => e.Answer)
+                    .HasMaxLength(255)
+                    .HasColumnName("answer");
+
+                entity.Property(e => e.CreatedBy)
+                   .HasColumnType("int(11)")
+                   .HasColumnName("created_by");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("created_at");
+
+                entity.Property(e => e.ModifiedBy)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("modified_by");
+
+                entity.Property(e => e.ModifiedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("modified_at");
+
+                entity.Property(e => e.IsActive).HasColumnName("is_active");
+
+
             });
 
             OnModelCreatingPartial(modelBuilder);
