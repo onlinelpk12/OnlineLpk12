@@ -7,6 +7,7 @@
         public string Question { get; set; }
         public string Answer { get; set; }
         public int CreatedBy { get; set; }
+        public int ModifiedBy { get; set; }
     }
 }
 

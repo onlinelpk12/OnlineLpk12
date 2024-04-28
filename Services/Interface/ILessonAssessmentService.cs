@@ -7,8 +7,9 @@ namespace OnlineLpk12.Services.Interface
 	public interface ILessonAssessmentService
 	{
         Task<Result<string>> createAFAssessmentData(AFAssessment aFAssessment);
-        Task<Result<string>> deleteAFAssessmentData(int courseId, int lessonId, int assessmentId);
-        Task<Result<string>> updateAFAssessmentData(int courseId, int lessonId, int assessmentId);
+        Task<bool> deleteAFAssessmentData(int assessmentId);
+        Task<bool> updateAFAssessmentData(int assessmentId, AFAssessment aFAssessment);
+        Task<Result<List<AFAssessmentData>>> GetAllAssessments(int courseId, int lessonId);
 
     }
 }

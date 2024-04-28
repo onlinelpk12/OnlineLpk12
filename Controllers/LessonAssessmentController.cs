@@ -47,14 +47,28 @@ namespace OnlineLpk12.Controllers
         [HttpDelete("delete")]
         [Authorize(Roles = "Course Developer")]
         [AllowAnonymous]
-        public async Task<IActionResult> deleteAFAssessmentData([FromBody] int courseId, int lessonId, int assessmentId)
+        public async Task<IActionResult> deleteAFAssessmentData( [FromQuery]  int assessmentId)
+        {
+            var result = await _lessonAssessmentService.deleteAFAssessmentData(assessmentId);
+            if (result)
+                return Ok(new { success = true, message = "Assessment deleted successfully" });
+            else
+                return BadRequest(new { success = false, message = "Failed to delete assessment" });
+        }
+
+        [HttpPut("update")]
+        [Authorize(Roles = "Course Developer")]
+        [AllowAnonymous]
+        public async Task<IActionResult> updateAFAssessmentData([FromQuery] int assessmentId, [FromBody] AFAssessment aFAssessment)
         {
             Response<string> response = new();
             try
             {
-                var result = await _lessonAssessmentService.deleteAFAssessmentData(courseId, lessonId, assessmentId);
-                response.Message = result.Message;
-                return Ok(response);
+                var result = await _lessonAssessmentService.updateAFAssessmentData(assessmentId, aFAssessment);
+                if (result)
+                    return Ok(new { success = true, message = "Assessment updated successfully" });
+                else
+                    return BadRequest(new { success = false, message = "Failed to update assessment" });
             }
             catch (Exception ex)
             {
@@ -64,15 +78,15 @@ namespace OnlineLpk12.Controllers
             }
         }
 
-        [HttpPut("update")]
-        [Authorize(Roles = "Course Developer")]
+        [HttpGet("getAllAssessments")]
         [AllowAnonymous]
-        public async Task<IActionResult> updateAFAssessmentData([FromBody] int courseId, int lessonId, int assessmentId)
+        public async Task<IActionResult> GetAll(int courseId, int lessonId)
         {
-            Response<string> response = new();
+            Response<List<AFAssessmentData>> response = new();
             try
             {
-                var result = await _lessonAssessmentService.updateAFAssessmentData(courseId, lessonId, assessmentId);
+                Result<List<AFAssessmentData>> result = await _lessonAssessmentService.GetAllAssessments(courseId, lessonId);
+                response.Content = result.Content;
                 response.Message = result.Message;
                 return Ok(response);
             }
