@@ -97,6 +97,26 @@ namespace OnlineLpk12.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }
+
+        [HttpGet("getAllAssessments")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAll(int courseId, int lessonId)
+        {
+            Response<List<AFAssessmentData>> response = new();
+            try
+            {
+                Result<List<AFAssessmentData>> result = await _lessonAssessmentService.GetAllAssessments(courseId, lessonId);
+                response.Content = result.Content;
+                response.Message = result.Message;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response.Errors.Add("Error occurred while fetching the data.");
+                response.Message = "One or more errors occurred.";
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
+            }
+        }
     }
 }
 
