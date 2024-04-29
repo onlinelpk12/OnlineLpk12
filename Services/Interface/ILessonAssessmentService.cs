@@ -12,7 +12,7 @@ namespace OnlineLpk12.Services.Interface
         Task<bool> updateAFAssessmentData(int assessmentId, AFAssessment aFAssessment);
         Task<Result<List<AFAssessmentData>>> GetAllAssessments(int courseId, int lessonId);
         Task<Result<string>> AssessmentSubmission(int courseId,int lessonId,int studentId,int assessmentId, AFStudentAssessmentSubmission submission);
-        Task<Result<List<AFStudentAssessmentSubmission>>> GetAssessmentSubmissions(int courseId, int lessonId, int assessmnetId);
+        Task<Result<List<AFStudentAssessmentSubmission>>> GetAssessmentSubmissions(int courseId, int lessonId, int assessmnetId, int studentId);
     }
 }
 

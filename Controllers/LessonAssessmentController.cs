@@ -122,12 +122,12 @@ namespace OnlineLpk12.Controllers
 
         [HttpGet("GetAssessmentsubmissions")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetAssessmentSubmissions(int courseId, int lessonId, int assessmnetId)
+        public async Task<IActionResult> GetAssessmentSubmissions(int courseId, int lessonId, int assessmnetId, int studentId)
         {
             Response<List<AFStudentAssessmentSubmission>> response = new();
             try
             {
-                var result = await _lessonAssessmentService.GetAssessmentSubmissions(courseId, lessonId, assessmnetId);
+                var result = await _lessonAssessmentService.GetAssessmentSubmissions(courseId, lessonId, assessmnetId,studentId);
 
                 if (result.Content != null && result.Content.Any())
                 {

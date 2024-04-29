@@ -176,12 +176,12 @@ namespace OnlineLpk12.Services.Implementation
                 return result;
             }
         }
-        public async Task<Result<List<AFStudentAssessmentSubmission>>> GetAssessmentSubmissions(int courseId, int lessonId, int assessmentId)
+        public async Task<Result<List<AFStudentAssessmentSubmission>>> GetAssessmentSubmissions(int courseId, int lessonId, int assessmentId,int studentId)
         {
             Result<List<AFStudentAssessmentSubmission>> result = new Result<List<AFStudentAssessmentSubmission>>();
             try
             {
-                var Afassessmentsubmissionsdata = await _context.AFAssessmentSubmissions.Where(y => y.CourseId == courseId && y.LessonId == lessonId && y.AssessmentId==assessmentId).ToListAsync();
+                var Afassessmentsubmissionsdata = await _context.AFAssessmentSubmissions.Where(y => y.CourseId == courseId && y.LessonId == lessonId && y.AssessmentId==assessmentId && y.StudentId== studentId && y.IsUpdated == true && y.IsGraded == false).ToListAsync();
                 result.Content = Afassessmentsubmissionsdata;
                 result.Message = "Lesson Data retrived.";
                 return result;
