@@ -7,6 +7,8 @@ using OnlineLpk12.Data.Entities;
 using OnlineLpk12.Helpers;
 using OnlineLpk12.Services.Interface;
 using OnlineLpk12.Services.Implementation;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace OnlineLpk12.Controllers
 {
@@ -94,6 +96,55 @@ namespace OnlineLpk12.Controllers
             {
                 response.Errors.Add("Error occurred while fetching the data.");
                 response.Message = "One or more errors occurred.";
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
+            }
+        }
+
+        [HttpPost("AssessmentSubmission")]
+        [AllowAnonymous]
+        public async Task<IActionResult> AssessmentSubmission(int courseId, int lessonId, int studentId, int assessmentId, [FromBody] AFStudentAssessmentSubmission submission)
+        {
+            Response<string> response = new();
+            try
+            {
+                var result = await _lessonAssessmentService.AssessmentSubmission(courseId, lessonId, studentId, assessmentId, submission);
+                response.Message = result.Message;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response.Errors.Add("Error occurred while submission.");
+                response.Message = "One or more errors occurred.";
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
+            }
+        }
+        
+
+        [HttpGet("GetAssessmentsubmissions")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAssessmentSubmissions(int courseId, int lessonId, int assessmnetId)
+        {
+            Response<List<AFStudentAssessmentSubmission>> response = new();
+            try
+            {
+                var result = await _lessonAssessmentService.GetAssessmentSubmissions(courseId, lessonId, assessmnetId);
+
+                if (result.Content != null && result.Content.Any())
+                {
+                    response.Content = result.Content;
+                    return Ok(response);
+                }
+
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("No assessment submissions found for this Lesson.");
+                return NotFound(response);
+            }
+            catch (Exception ex)
+            {
+                _logService.LogError(lessonId, MethodBase.GetCurrentMethod().Name,
+                    Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("Error occurred while fetching the data.");
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }

@@ -49,6 +49,7 @@ namespace OnlineLpk12.Data.Context
         public virtual DbSet<LessonSlide> LessonSlides { get; set; } = null!;
         public virtual DbSet<CoursesLessonSlide> CoursesLessonSlides { get; set; } = null!;
         public virtual DbSet<AFAssessmentData> AFAssessmentData { get; set; } = null!;
+        public virtual DbSet<AFStudentAssessmentSubmission> AFAssessmentSubmissions { get; set; } = null!;
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
            if (!optionsBuilder.IsConfigured)
@@ -986,6 +987,53 @@ namespace OnlineLpk12.Data.Context
 
 
             });
+
+            modelBuilder.Entity<AFStudentAssessmentSubmission>(entity =>
+            {
+                entity.ToTable("AF_Student_AssessmentSubmission");
+
+                
+                entity.HasKey(e => e.SubmissionId);
+
+                entity.Property(e => e.SubmissionId)
+                   .HasColumnType("int(11)")
+                   .HasColumnName("submission_id");
+
+                entity.Property(e => e.AssessmentId)
+                   .HasColumnType("int(11)")
+                   .HasColumnName("assessmnet_id");
+
+                entity.Property(e => e.CourseId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("course_id");
+
+                entity.Property(e => e.LessonId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("lesson_id");
+
+                entity.Property(e => e.Question)
+                   .HasMaxLength(255)
+                   .HasColumnName("question");
+
+                entity.Property(e => e.Answer)
+                    .HasMaxLength(255)
+                    .HasColumnName("answer");
+
+                entity.Property(e => e.StudentId)
+                   .HasColumnType("int(11)")
+                   .HasColumnName("student_id");
+
+                entity.Property(e => e.SubmissionDateTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("submission_date_time");
+
+                entity.Property(e => e.IsUpdated).HasColumnName("is_updated");
+
+                entity.Property(e => e.IsGraded).HasColumnName("is_graded");
+
+
+            });
+
 
             OnModelCreatingPartial(modelBuilder);
         }

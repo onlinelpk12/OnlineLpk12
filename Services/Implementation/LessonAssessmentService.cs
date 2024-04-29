@@ -1,8 +1,10 @@
 ﻿using System;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MySqlX.XDevAPI;
+using MySqlX.XDevAPI.Common;
 using Newtonsoft.Json.Linq;
 using OnlineLpk12.Data.Context;
 using OnlineLpk12.Data.Entities;
@@ -119,8 +121,83 @@ namespace OnlineLpk12.Services.Implementation
             }
 
         }
+        public async Task<Result<string>> AssessmentSubmission(int courseId, int lessonId, int studentId,int assessmentId,AFStudentAssessmentSubmission submission)
+        {
+            Result<string> result = new Result<string>();
+            try
+            {
 
+                var existingSubmission = await (from cls in _context.AFAssessmentSubmissions
+                                                join c in _context.Courses on cls.CourseId equals c.Id
+                                                join l in _context.Users on cls.StudentId equals l.Id
+                                                join s in _context.CourseLessons on cls.LessonId equals s.Id
+                                                join a in _context.AFAssessmentData on cls.AssessmentId equals a.AssessmentId
+                                                where cls.CourseId == courseId && cls.LessonId == lessonId && cls.StudentId == studentId && cls.AssessmentId == assessmentId
+                                                select cls).FirstOrDefaultAsync();
+                if (existingSubmission != null)
+                {
+                    
+                    existingSubmission.IsUpdated = true;
+                    existingSubmission.Answer = submission.Answer;
+                    existingSubmission.SubmissionDateTime = submission.SubmissionDateTime;
+                    _context.AFAssessmentSubmissions.Update(existingSubmission);
+                }
+                else
+                {
+                    // Create a new assessment submission
+                    AFStudentAssessmentSubmission assessmentSubmission = new AFStudentAssessmentSubmission()
+                    {
+                        CourseId = courseId,
+                        LessonId = lessonId,
+                        StudentId = studentId,
+                        AssessmentId = assessmentId,
+                        Question = submission.Question,
+                        Answer = submission.Answer,
+                        SubmissionDateTime = DateTime.Now,
+                        IsUpdated = false,
+                        IsGraded = false,
 
+                    };
+                    await _context.AFAssessmentSubmissions.AddAsync(assessmentSubmission);
+
+                }
+
+                
+                await _context.SaveChangesAsync();
+                result.Success = true;
+                result.Message = "Assessment saved successfully.";
+                return result;
+            }
+            catch (Exception ex)
+            {
+                await _logService.LogError(studentId, "AssessmentSubmission", "LessonAssessmentService", ex.Message, ex);
+                result.Success = false;
+                result.Message = "Failed to save assessment submission.";
+                return result;
+            }
+        }
+        public async Task<Result<List<AFStudentAssessmentSubmission>>> GetAssessmentSubmissions(int courseId, int lessonId, int assessmentId)
+        {
+            Result<List<AFStudentAssessmentSubmission>> result = new Result<List<AFStudentAssessmentSubmission>>();
+            try
+            {
+                var Afassessmentsubmissionsdata = await _context.AFAssessmentSubmissions.Where(y => y.CourseId == courseId && y.LessonId == lessonId && y.AssessmentId==assessmentId).ToListAsync();
+                result.Content = Afassessmentsubmissionsdata;
+                result.Message = "Lesson Data retrived.";
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logService.LogError(1, "Get Assessment", "LessonService", ex.Message, ex);
+                result.Message = ex.Message;
+                result.Success = false;
+                return result;
+            }
+
+        }
     }
+
+
 }
+
 
