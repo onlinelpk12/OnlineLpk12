@@ -43,7 +43,8 @@ namespace OnlineLpk12.Services.Implementation
                         CourseId = item.Id,
                         CourseName = item.CourseName.Trim(),
                         Semester = item.Semester.Trim(),
-                        Year = item.Year
+                        Year = item.Year,
+                        IsCourseAvailable=item.IsCourseAvailable
                     });
                 }
                 return result;
@@ -120,7 +121,8 @@ namespace OnlineLpk12.Services.Implementation
                         CourseId = item.Id,
                         CourseName = item.CourseName.Trim(),
                         Semester = item.Semester.Trim(),
-                        Year = item.Year
+                        Year = item.Year,
+                        IsCourseAvailable=item.IsCourseAvailable
                     });
                 }
                 return result;
