@@ -15,6 +15,22 @@ namespace OnlineLpk12.Services.Implementation
             _logService = logService;
         }
 
+        public async Task<LessonSlide> GetSlideById(int slideId)
+        {
+            LessonSlide slide = null;
+
+            try
+            {
+                slide = await _context.LessonSlides.FindAsync(slideId);
+            }
+            catch (Exception ex)
+            {
+                await _logService.LogError(0, "GetSlideById", "LessonSlideService", ex.Message, ex);
+            }
+
+            return slide;
+        }
+
         public async Task<(bool, int)> AddSlide(int courseId, int lessonId, LessonSlide lessonSlide)
         {
             try

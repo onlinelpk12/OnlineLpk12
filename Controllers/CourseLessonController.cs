@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OnlineLpk12.Data.Models;
 using OnlineLpk12.Services.Implementation;
 using OnlineLpk12.Services.Interface;
@@ -18,6 +19,17 @@ namespace OnlineLpk12.Controllers
         {
             _courseLessonService = courseLessonService;
             _logService = logService;
+        }
+
+        [HttpGet("get")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetLesson([FromQuery]int lessonId)
+        {
+            var lesson = await _courseLessonService.GetLessonById(lessonId);
+            if (lesson == null)
+                return NotFound();
+
+            return Ok(lesson);
         }
 
         [HttpPost("add")]

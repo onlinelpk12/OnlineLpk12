@@ -15,6 +15,22 @@ namespace OnlineLpk12.Services.Implementation
             _logService = logService;
         }
 
+        public async Task<CourseLesson> GetLessonById(int lessonId)
+        {
+            CourseLesson lesson = null;
+
+            try
+            {
+                lesson = await _context.CourseLessons.FindAsync(lessonId);
+            }
+            catch (Exception ex)
+            {
+                await _logService.LogError(0, "GetLessonById", "CourseLessonService", ex.Message, ex);
+            }
+
+            return lesson;
+        }
+
         public async Task<(bool, int)> AddLesson(int courseId, CourseLesson courseLesson)
         {
             try

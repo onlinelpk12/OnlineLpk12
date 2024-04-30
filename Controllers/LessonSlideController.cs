@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineLpk12.Data.Models;
+using OnlineLpk12.Services.Implementation;
 using OnlineLpk12.Services.Interface;
 
 namespace OnlineLpk12.Controllers
@@ -17,6 +18,17 @@ namespace OnlineLpk12.Controllers
         {
             _lessonSlideService = lessonSlideService;
             _logService = logService;
+        }
+
+        [HttpGet("get")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetSlide([FromQuery] int slideId)
+        {
+            var slide = await _lessonSlideService.GetSlideById(slideId);
+            if (slide == null)
+                return NotFound();
+
+            return Ok(slide);
         }
 
         [HttpPost("add")]
