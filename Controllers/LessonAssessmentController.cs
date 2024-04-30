@@ -148,6 +148,46 @@ namespace OnlineLpk12.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }
+
+
+         [HttpPost("addGrade")]
+        [AllowAnonymous]
+        public async Task<IActionResult> createAFAssessmentGrade([FromQuery] int courseId, [FromQuery] int lessonId, [FromQuery] int studentId, [FromQuery] int assessmentId, [FromQuery] int submissionId, [FromBody] AFAssessmentGrading aFAssessmentGrading)
+        {
+            Response<string> response = new();
+            try
+            {
+                var result = await _lessonAssessmentService.createAFAssessmentGrade(courseId, lessonId, studentId, assessmentId, submissionId, aFAssessmentGrading);
+                response.Message = result.Message;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response.Errors.Add("Error occurred while saving the data.");
+                response.Message = "One or more errors occurred.";
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
+            }
+        }
+
+        [HttpGet("getAssessmentGrades")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAssessmentGrade(int courseId, int lessonId, int assessmentId)
+        {
+            Response<List<AFAssessmentGrade>> response = new();
+            try
+            {
+                Result<List<AFAssessmentGrade>> result = await _lessonAssessmentService.getAssessmentGrades(courseId, lessonId, assessmentId);
+                response.Content = result.Content;
+                response.Message = result.Message;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response.Errors.Add("Error occurred while fetching the data.");
+                response.Message = "One or more errors occurred.";
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
+            }
+        }
     }
 }
 

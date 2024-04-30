@@ -195,6 +195,93 @@ namespace OnlineLpk12.Services.Implementation
             }
 
         }
+
+
+
+         public async Task<Result<string>> createAFAssessmentGrade(int courseId, int lessonId, int studentId, int assessmentId, int submissionId, AFAssessmentGrading aFAssessmentGrade)
+        {
+            Result<string> result = new Result<string>();
+            try
+            {
+
+                var grade = await _context.AFAssessmentSubmissions.FindAsync(submissionId);
+                if (grade != null)
+                {
+
+                    grade.IsGraded = true;
+                    _context.Update(grade);
+                    await _context.SaveChangesAsync();
+
+                    AFAssessmentGrade assessmentGrade = new AFAssessmentGrade()
+                    {
+                        AssessmentId = assessmentId,
+                        StudentId = studentId,
+                        TeacherId = aFAssessmentGrade.teacherId,
+                        SubmissionId = submissionId,
+                        Grade = aFAssessmentGrade.grade,
+                        Comments = aFAssessmentGrade.comments,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now,
+                    };
+                    await _context.AFAssessmentGrade.AddAsync(assessmentGrade);
+                    await _context.SaveChangesAsync();
+                    result.Success = true;
+                    result.Content = Convert.ToString(assessmentGrade.GradeId);
+                    result.Message = "Assessement Grade saved successfully.";
+                }
+
+                else
+                {
+                    result.Success = false;
+                    result.Message = "Record Not Found";
+                    result.Content = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Success = false;
+            }
+            return result;
+        }
+
+        public async Task<Result<List<AFAssessmentGrade>>> getAssessmentGrades(int courseId, int lessonId, int assessmentId)
+        {
+            Result<List<AFAssessmentGrade>> result = new Result<List<AFAssessmentGrade>>();
+            try
+            {
+                //var AfassessmentData = await _context.AFAssessmentSubmissions.Where(y => y.CourseId == courseId && y.LessonId == lessonId && y.AssessmentId == assessmentId).ToListAsync();
+
+                var columnData = await _context.AFAssessmentSubmissions
+                               .Where(y => y.CourseId == courseId && y.LessonId == lessonId && y.AssessmentId == assessmentId)
+                               .Select(y => y.SubmissionId)
+                               .ToListAsync();
+
+                var gradesList = await _context.AFAssessmentGrade
+                            .Where(sg => columnData.Contains(sg.SubmissionId))
+                            .ToListAsync();
+
+                if (gradesList.Any())
+                {
+                    result.Content = gradesList;
+                    result.Message = "Grades retrieved.";
+                }
+                else
+                {
+                    result.Success = false;
+                    result.Message = "No Grades Found";
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logService.LogError(1, "Get Assessment", "LessonService", ex.Message, ex);
+                result.Message = ex.Message;
+                result.Success = false;
+                return result;
+            }
+
+        }
     }
 
 
