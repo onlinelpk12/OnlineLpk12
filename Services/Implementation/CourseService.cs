@@ -183,9 +183,9 @@ namespace OnlineLpk12.Services.Implementation
                         Id = item.Id,
                         LessonName = item.LessonName,
                         CreatedBy = item.CreatedBy,
-                        CreatedAt = DateTime.UtcNow,
+                        CreatedAt = item.CreatedAt,
                         ModifiedBy = item.ModifiedBy,
-                        ModifiedAt = DateTime.UtcNow,
+                        ModifiedAt = item.ModifiedAt,
                         IsLessonAvailable = item.IsLessonAvailable
                     });
                 }
@@ -208,7 +208,7 @@ namespace OnlineLpk12.Services.Implementation
 
                 course1.CourseName = course.CourseName;
                 course1.ModifiedBy = course.ModifiedBy;
-                course1.ModifiedAt = DateTime.UtcNow;
+                course1.ModifiedAt = DateTime.Now;
                 course1.IsCourseAvailable = course.IsCourseAvailable;
 
                 _context.Update(course1);
