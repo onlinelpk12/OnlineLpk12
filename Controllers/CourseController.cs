@@ -69,7 +69,7 @@ namespace OnlineLpk12.Controllers
 
         [HttpPost("CreateCourse")]
         [Authorize(Roles = "Course Developer")]
-        
+        [AllowAnonymous]
         public async Task<IActionResult> CreateCourse([FromBody] Course course)
         {
             Response<string> response = new();
@@ -150,7 +150,6 @@ namespace OnlineLpk12.Controllers
         }
         [HttpDelete("DeleteCourse/{courseId}")]
         [Authorize(Roles = "Course Developer")]
-        
         public async Task<IActionResult> DeleteCourse( int courseId)
         {
             
