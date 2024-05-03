@@ -183,9 +183,9 @@ namespace OnlineLpk12.Services.Implementation
                         Id = item.Id,
                         LessonName = item.LessonName,
                         CreatedBy = item.CreatedBy,
-                        CreatedAt = DateTime.UtcNow,
+                        CreatedAt = item.CreatedAt,
                         ModifiedBy = item.ModifiedBy,
-                        ModifiedAt = DateTime.UtcNow,
+                        ModifiedAt = item.ModifiedAt,
                         IsLessonAvailable = item.IsLessonAvailable
                     });
                 }
