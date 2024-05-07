@@ -2,9 +2,13 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using OnlineLpk12.Data.Entities;
 using OnlineLpk12.Data.Models;
 using OnlineLpk12.Services.Implementation;
 using OnlineLpk12.Services.Interface;
+using System.Diagnostics;
+using System.Net;
+using System.Reflection;
 
 namespace OnlineLpk12.Controllers
 {
@@ -34,7 +38,7 @@ namespace OnlineLpk12.Controllers
 
         [HttpPost("add")]
         [AllowAnonymous]
-        public async Task<IActionResult> AddLesson([FromQuery]int courseId, [FromBody] CourseLesson courseLesson)
+        public async Task<IActionResult> AddLesson([FromQuery]int courseId, [FromBody] Data.Models.CourseLesson courseLesson)
         {
             var (success, lessonId) = await _courseLessonService.AddLesson(courseId, courseLesson);
             if (success)
@@ -56,7 +60,7 @@ namespace OnlineLpk12.Controllers
 
         [HttpPut("update")]
         [AllowAnonymous]
-        public async Task<IActionResult> UpdateLesson([FromQuery] int lessonId, [FromBody] CourseLesson courseLesson)
+        public async Task<IActionResult> UpdateLesson([FromQuery] int lessonId, [FromBody] Data.Models.CourseLesson courseLesson)
         {
             var result = await _courseLessonService.UpdateLesson(lessonId, courseLesson);
             if (result)
@@ -64,5 +68,48 @@ namespace OnlineLpk12.Controllers
             else
                 return BadRequest(new { success = false, message = "Failed to update lesson" });
         }
+        [HttpGet("GetSlidesToEditById/{courseId}/{lessonId}")]
+        [Authorize(Roles = "Course Developer")]
+        
+
+        public async Task<IActionResult> GetSlidesToEditById(int courseId, int lessonId)
+        {
+            Response<List<Data.Entities.LessonSlide>> response = new();
+            try
+            {
+
+                if (courseId < 1)
+                {
+                    response.Message = "One or more validation errors occurred.";
+                    response.Errors.Add("Enter valid Course Id.");
+                    return BadRequest(response);
+                }
+                if(lessonId < 1)
+                {
+                    response.Message= "One or more validation errors occurred.";
+                    response.Errors.Add("Enter valid Lesson Id.");
+                    return BadRequest(response);
+                }
+
+                var result = await _courseLessonService.GetSlidesToEditById(courseId, lessonId);
+
+                if (result.Content != null && result.Content.Any())
+                {
+                    response.Content = result.Content;
+                    return Ok(response);
+                }
+
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("No Slides found for this Course.");
+                return NotFound(response);
+            }
+            catch (Exception ex)
+            {
+                response.Message = "One or more validation errors occurred.";
+                response.Errors.Add("Error occurred while fetching the data.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
+            }
+        }
+
     }
 }

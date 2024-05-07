@@ -1,6 +1,10 @@
 ﻿using OnlineLpk12.Data.Context;
 using OnlineLpk12.Data.Models;
+using OnlineLpk12.Data.Entities;
 using OnlineLpk12.Services.Interface;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace OnlineLpk12.Services.Implementation
 {
@@ -15,9 +19,9 @@ namespace OnlineLpk12.Services.Implementation
             _logService = logService;
         }
 
-        public async Task<CourseLesson> GetLessonById(int lessonId)
+        public async Task<Data.Models.CourseLesson> GetLessonById(int lessonId)
         {
-            CourseLesson lesson = null;
+            Data.Models.CourseLesson lesson = null;
 
             try
             {
@@ -31,7 +35,7 @@ namespace OnlineLpk12.Services.Implementation
             return lesson;
         }
 
-        public async Task<(bool, int)> AddLesson(int courseId, CourseLesson courseLesson)
+        public async Task<(bool, int)> AddLesson(int courseId, Data.Models.CourseLesson courseLesson)
         {
             try
             {
@@ -41,7 +45,7 @@ namespace OnlineLpk12.Services.Implementation
                     return (false, 0);
                 }
 
-                var lesson = new CourseLesson
+                var lesson = new Data.Models.CourseLesson
                 {
                     LessonName = courseLesson.LessonName,
                     CreatedBy = courseLesson.CreatedBy,
@@ -54,7 +58,7 @@ namespace OnlineLpk12.Services.Implementation
                 _context.CourseLessons.Add(lesson);
                 await _context.SaveChangesAsync();
 
-                var coursesLessonSlide = new CoursesLessonSlide
+                var coursesLessonSlide = new Data.Models.CoursesLessonSlide
                 {
                     CourseId = courseId,
                     LessonId = lesson.Id,
@@ -97,7 +101,7 @@ namespace OnlineLpk12.Services.Implementation
             }
         }
 
-        public async Task<bool> UpdateLesson(int lessonId, CourseLesson courseLesson)
+        public async Task<bool> UpdateLesson(int lessonId, Data.Models.CourseLesson courseLesson)
         {
             try
             {
@@ -120,5 +124,43 @@ namespace OnlineLpk12.Services.Implementation
                 return false;
             }
         }
+        public async Task<Result<List<Data.Entities.LessonSlide>>> GetSlidesToEditById(int courseId, int lessonId)
+        {
+            var result = new Result<List<Data.Entities.LessonSlide>>()
+            {
+                Content = new List<Data.Entities.LessonSlide>()
+            };
+            try
+            {
+                var data = await (from cls in _context.CoursesLessonSlides
+                                  join c in _context.Courses on cls.CourseId equals c.Id
+                                  join l in _context.CourseLessons on cls.LessonId equals l.Id
+                                  join s in _context.LessonSlides on cls.SlideId equals s.Id
+                                  where cls.CourseId == courseId && cls.LessonId == lessonId
+                                  select s).ToListAsync();
+
+                foreach (var item in data)
+                {
+                    result.Content.Add(new Data.Entities.LessonSlide()
+                    {
+                        Id = item.Id,
+                        SlideHtmlFormat = item.SlideHtmlFormat,
+                        SlideMarkdownFormat = item.SlideMarkdownFormat,
+                        CreatedBy = item.CreatedBy,
+                        CreatedAt = item.CreatedAt,
+                        ModifiedBy = item.ModifiedBy,
+                        ModifiedAt = item.ModifiedAt,
+                    });
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _ = _logService.LogError(courseId, MethodBase.GetCurrentMethod().Name,
+                   Process.GetCurrentProcess().MainModule.FileName, ex.Message, ex);
+                throw;
+            }
+        }
+
     }
 }
