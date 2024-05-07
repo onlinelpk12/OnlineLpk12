@@ -27,7 +27,7 @@ namespace OnlineLpk12.Controllers
 
         [HttpGet("get")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetLesson([FromQuery]int lessonId)
+        public async Task<IActionResult> GetLessonById([FromQuery]int lessonId)
         {
             var lesson = await _courseLessonService.GetLessonById(lessonId);
             if (lesson == null)
@@ -69,7 +69,7 @@ namespace OnlineLpk12.Controllers
                 return BadRequest(new { success = false, message = "Failed to update lesson" });
         }
         [HttpGet("GetSlidesToEditById/{courseId}/{lessonId}")]
-        [Authorize(Roles = "Course Developer")]
+        [AllowAnonymous]
         
 
         public async Task<IActionResult> GetSlidesToEditById(int courseId, int lessonId)

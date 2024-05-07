@@ -176,7 +176,7 @@ namespace OnlineLpk12.Controllers
             }
         }
         [HttpGet("GetLessonsToEditById/{courseId}")]
-        [Authorize(Roles = "Course Developer")]
+        [AllowAnonymous]
         
         public async Task<IActionResult> GetLessonsToEditById(int courseId)
         {
