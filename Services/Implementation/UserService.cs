@@ -141,7 +141,7 @@ namespace OnlineLpk12.Services.Implementation
                     Password = BCrypt.Net.BCrypt.HashPassword(inputUser.Password, 8),
                     EmailId = inputUser.EmailId,
                     Username = inputUser.UserName,
-                    UserType = "",
+                    UserType = inputUser.Roles,
                     IsActive = true
                 };
                
