@@ -142,6 +142,8 @@ namespace OnlineLpk12.Services.Implementation
                     EmailId = inputUser.EmailId,
                     Username = inputUser.UserName,
                     UserType = inputUser.Roles,
+                    CreatedAt= DateTime.UtcNow,
+                    UpdatedAt= DateTime.UtcNow,
                     IsActive = true
                 };
                
@@ -256,19 +258,14 @@ namespace OnlineLpk12.Services.Implementation
         }
         public async Task<bool> IsPasswordStrong(string password)
         {
-            // Require at least 8 characters
+            
             if (password.Length < 8)
             {
                 return false;
             }
 
-            // Require at least one uppercase letter
             bool hasUppercase = false;
-
-            // Require at least one lowercase letter
             bool hasLowercase = false;
-
-            // Require a combination of letters, numbers, and special characters
             bool hasLetter = false;
             bool hasDigit = false;
             bool hasSpecialCharacter = false;
@@ -433,6 +430,7 @@ namespace OnlineLpk12.Services.Implementation
                     {
                         // Hash the new password
                         user.Password = BCrypt.Net.BCrypt.HashPassword(request.Password, 8);
+                        user.UpdatedAt= DateTime.UtcNow;
 
                         // Save changes to the database
                         await _context.SaveChangesAsync();

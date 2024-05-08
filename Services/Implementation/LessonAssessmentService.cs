@@ -39,7 +39,7 @@ namespace OnlineLpk12.Services.Implementation
                     Answer = aFAssessment.Answer,
                     CreatedBy = aFAssessment.CreatedBy,
                     ModifiedBy = aFAssessment.CreatedBy,
-                    CreatedAt = DateTime.Now,
+                    CreatedAt = DateTime.UtcNow,
                     IsActive = 1
                 };
                 await _context.AFAssessmentData.AddAsync(assessmentData);
@@ -89,7 +89,7 @@ namespace OnlineLpk12.Services.Implementation
                 assessment.Question = aFAssessment.Question;
                 assessment.Answer = aFAssessment.Answer;
                 assessment.ModifiedBy = aFAssessment.ModifiedBy;
-                assessment.ModifiedAt = DateTime.Now;
+                assessment.ModifiedAt = DateTime.UtcNow;
 
                 _context.Update(assessment);
                 await _context.SaveChangesAsync();
@@ -153,7 +153,7 @@ namespace OnlineLpk12.Services.Implementation
                         AssessmentId = assessmentId,
                         Question = submission.Question,
                         Answer = submission.Answer,
-                        SubmissionDateTime = DateTime.Now,
+                        SubmissionDateTime = DateTime.UtcNow,
                         IsUpdated = false,
                         IsGraded = false,
 
@@ -220,8 +220,8 @@ namespace OnlineLpk12.Services.Implementation
                         SubmissionId = submissionId,
                         Grade = aFAssessmentGrade.grade,
                         Comments = aFAssessmentGrade.comments,
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now,
+                        CreatedAt = DateTime.UtcNow,
+                        UpdatedAt = DateTime.UtcNow,
                     };
                     await _context.AFAssessmentGrade.AddAsync(assessmentGrade);
                     await _context.SaveChangesAsync();

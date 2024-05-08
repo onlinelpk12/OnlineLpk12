@@ -78,9 +78,9 @@ namespace OnlineLpk12.Services.Implementation
                     Semester = course.Semester,
                     Year = course.Year,
                     CreatedBy = course.CreatedBy,
-                    CreatedAt = DateTime.Now,
+                    CreatedAt = DateTime.UtcNow,
                     ModifiedBy = course.ModifiedBy,
-                    ModifiedAt = DateTime.Now,
+                    ModifiedAt = DateTime.UtcNow,
                     IsCourseAvailable=true
     };
                 _context.Courses.Add(course1);
