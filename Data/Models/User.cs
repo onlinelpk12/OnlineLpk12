@@ -19,7 +19,7 @@ namespace OnlineLpk12.Data.Models
         public string? Password { get; set; }
         public bool? IsActive { get; set; }
         public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; } 
 
         public virtual ICollection<UserRole> UserRoles { get; set; }
     }

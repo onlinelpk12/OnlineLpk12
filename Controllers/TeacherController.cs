@@ -5,6 +5,7 @@ using OnlineLpk12.Services.Interface;
 using System.Net;
 using System.Reflection;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OnlineLpk12.Controllers
 {
@@ -248,6 +249,7 @@ namespace OnlineLpk12.Controllers
         /// <param name="userId"></param>
         /// <returns></returns>
         [HttpGet("{userId}/lessonprogress")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetLessonProgressList(int userId)
         {
             Response<List<LessonProgress>> response = new();

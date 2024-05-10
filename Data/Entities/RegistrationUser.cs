@@ -20,12 +20,15 @@ namespace OnlineLpk12.Data.Entities
         public string LastName { get; set; }
 
 
-        [Required(ErrorMessage ="Enter valid Password.")]
+        [Required(ErrorMessage = "Enter valid Password.")]
         [DataType(DataType.Password)]
         [StringLength(100, ErrorMessage = "Enter password greater than 8 characters.", MinimumLength = 8)]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=]).{8,}$", ErrorMessage = "Passwords must be at least 8 characters and contain at least 3 of the following: uppercase letter, lowercase letter, number, and special character.")]
+
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Enter valid data.")]
-        public bool IsStudent { get; set; }
+        [Required(ErrorMessage = "Select valid role.")]
+        public string Roles { get; set; }
+
     }
 }

@@ -7,6 +7,7 @@ using System.Net;
 using System.Reflection;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OnlineLpk12.Controllers
 {
@@ -191,6 +192,7 @@ namespace OnlineLpk12.Controllers
         /// <returns></returns>
         [HttpPost("submitgrade")]
         [Consumes("application/x-www-form-urlencoded")]
+        [AllowAnonymous]
         public async Task<IActionResult> SubmitSparcGrade([FromForm] Sparc request)
         {
             Response<string> response = new();

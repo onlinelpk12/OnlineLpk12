@@ -36,6 +36,10 @@ builder.Services.AddTransient<ITeacherService, TeacherService>();
 builder.Services.AddTransient<IStudentService, StudentService>();
 builder.Services.AddTransient<ISparcFileSystemService, SparcFileSystemService>();
 builder.Services.AddTransient<ILessonService, LessonService>();
+builder.Services.AddScoped<ICourseService, CourseService>();
+builder.Services.AddScoped<ICourseLessonService, CourseLessonService>();
+builder.Services.AddScoped<ILessonSlideService, LessonSlideService>();
+builder.Services.AddTransient<ILessonAssessmentService, LessonAssessmentService>();
 
 builder.Services.AddCors(options =>
 {

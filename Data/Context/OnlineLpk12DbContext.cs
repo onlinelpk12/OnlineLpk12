@@ -45,6 +45,12 @@ namespace OnlineLpk12.Data.Context
         public virtual DbSet<UserRole> UserRoles { get; set; } = null!;
         public virtual DbSet<SlideData> SlideData { get; set; } = null!;
         public virtual DbSet<AssessmentData> AssessmentData { get; set; } = null!;
+        public virtual DbSet<CourseLesson> CourseLessons { get; set; } = null!;
+        public virtual DbSet<LessonSlide> LessonSlides { get; set; } = null!;
+        public virtual DbSet<CoursesLessonSlide> CoursesLessonSlides { get; set; } = null!;
+        public virtual DbSet<AFAssessmentData> AFAssessmentData { get; set; } = null!;
+        public virtual DbSet<AFStudentAssessmentSubmission> AFAssessmentSubmissions { get; set; } = null!;
+        public virtual DbSet<AFAssessmentGrade> AFAssessmentGrade { get; set; } = null!;
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
            if (!optionsBuilder.IsConfigured)
@@ -196,9 +202,115 @@ namespace OnlineLpk12.Data.Context
                 entity.Property(e => e.Year)
                     .HasColumnType("int(11)")
                     .HasColumnName("year");
+                entity.Property(e => e.CreatedBy)
+                .HasColumnType("int(11)")
+                .HasColumnName("created_by");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("created_at");
+
+                entity.Property(e => e.ModifiedBy)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("modified_by");
+
+                entity.Property(e => e.ModifiedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("modified_at");
+
+                entity.Property(e => e.IsCourseAvailable)
+                    .HasColumnType("tinyint(1)")
+                    .HasColumnName("is_course_available");
             });
 
-            modelBuilder.Entity<SlideData>(entity =>
+            modelBuilder.Entity<CourseLesson>(entity =>
+            {
+                entity.ToTable("courselessons");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.LessonName)
+                    .HasMaxLength(255)
+                    .HasColumnName("lesson_name");
+
+                entity.Property(e => e.CreatedBy)
+                .HasColumnType("int(11)")
+                .HasColumnName("created_by");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("created_at");
+
+                entity.Property(e => e.ModifiedBy)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("modified_by");
+
+                entity.Property(e => e.ModifiedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("modified_at");
+
+                entity.Property(e => e.IsLessonAvailable)
+                    .HasColumnType("tinyint(1)")
+                    .HasColumnName("is_lesson_available");
+            });
+
+            modelBuilder.Entity<LessonSlide>(entity =>
+            {
+                entity.ToTable("lessonslides");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.SlideHtmlFormat)
+                    .HasMaxLength(255)
+                    .HasColumnName("slide_html_format");
+
+                entity.Property(e => e.SlideMarkdownFormat)
+                    .HasMaxLength(255)
+                    .HasColumnName("slide_markdown_format");
+
+                entity.Property(e => e.CreatedBy)
+                .HasColumnType("int(11)")
+                .HasColumnName("created_by");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("created_at");
+
+                entity.Property(e => e.ModifiedBy)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("modified_by");
+
+                entity.Property(e => e.ModifiedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("modified_at");
+            });
+
+            modelBuilder.Entity<CoursesLessonSlide>(entity =>
+            {
+                entity.ToTable("courses_lesson_slide");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.CourseId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("course_id");
+
+                entity.Property(e => e.LessonId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("lesson_id");
+
+                entity.Property(e => e.SlideId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("slide_id");
+            });
+
+                modelBuilder.Entity<SlideData>(entity =>
             {
                 entity.ToTable("slide_data");
 
@@ -809,23 +921,15 @@ namespace OnlineLpk12.Data.Context
 
                 entity.ToTable("user_roles");
 
-                entity.HasIndex(e => e.UserId, "userId");
+                entity.HasIndex(e => e.UserId, "user_id");
 
                 entity.Property(e => e.RoleId)
                     .HasColumnType("int(11)")
-                    .HasColumnName("roleId");
+                    .HasColumnName("roles_id");
 
                 entity.Property(e => e.UserId)
                     .HasColumnType("int(11)")
-                    .HasColumnName("userId");
-
-                entity.Property(e => e.CreatedAt)
-                    .HasColumnType("datetime")
-                    .HasColumnName("createdAt");
-
-                entity.Property(e => e.UpdatedAt)
-                    .HasColumnType("datetime")
-                    .HasColumnName("updatedAt");
+                    .HasColumnName("user_id");
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.UserRoles)
@@ -837,6 +941,150 @@ namespace OnlineLpk12.Data.Context
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("user_roles_ibfk_2");
             });
+
+            modelBuilder.Entity<AFAssessmentData>(entity =>
+            {
+                entity.ToTable("AF_Assessment_Data");
+
+                entity.HasKey(e => e.AssessmentId);
+
+                entity.Property(e => e.AssessmentId)
+                   .HasColumnType("int(11)")
+                   .HasColumnName("assessment_id");
+
+                entity.Property(e => e.CourseId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("course_id");
+
+                entity.Property(e => e.LessonId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("lesson_id");
+
+                entity.Property(e => e.Question)
+                   .HasMaxLength(255)
+                   .HasColumnName("question");
+
+                entity.Property(e => e.Answer)
+                    .HasMaxLength(255)
+                    .HasColumnName("answer");
+
+                entity.Property(e => e.CreatedBy)
+                   .HasColumnType("int(11)")
+                   .HasColumnName("created_by");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("created_at");
+
+                entity.Property(e => e.ModifiedBy)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("modified_by");
+
+                entity.Property(e => e.ModifiedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("modified_at");
+
+                entity.Property(e => e.IsActive).HasColumnName("is_active");
+
+
+            });
+
+            modelBuilder.Entity<AFStudentAssessmentSubmission>(entity =>
+            {
+                entity.ToTable("AF_Student_AssessmentSubmission");
+
+                
+                entity.HasKey(e => e.SubmissionId);
+
+                entity.Property(e => e.SubmissionId)
+                   .HasColumnType("int(11)")
+                   .HasColumnName("submission_id");
+
+                entity.Property(e => e.AssessmentId)
+                   .HasColumnType("int(11)")
+                   .HasColumnName("assessmnet_id");
+
+                entity.Property(e => e.CourseId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("course_id");
+
+                entity.Property(e => e.LessonId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("lesson_id");
+
+                entity.Property(e => e.Question)
+                   .HasMaxLength(255)
+                   .HasColumnName("question");
+
+                entity.Property(e => e.Answer)
+                    .HasMaxLength(255)
+                    .HasColumnName("answer");
+
+                entity.Property(e => e.StudentId)
+                   .HasColumnType("int(11)")
+                   .HasColumnName("student_id");
+
+                entity.Property(e => e.SubmissionDateTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("submission_date_time");
+
+                entity.Property(e => e.IsUpdated).HasColumnName("is_updated");
+
+                entity.Property(e => e.IsGraded).HasColumnName("is_graded");
+
+
+            });
+
+              modelBuilder.Entity<AFAssessmentGrade>(entity =>
+            {
+                entity.ToTable("AF_Assessment_Grading");
+
+                entity.HasKey(e => e.GradeId);
+
+                entity.Property(e => e.GradeId)
+                   .HasColumnType("int(11)")
+                   .HasColumnName("grade_id");
+
+                entity.Property(e => e.AssessmentId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("assessmnet_id");
+
+                entity.Property(e => e.StudentId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("student_id");
+
+                entity.Property(e => e.TeacherId)
+                   .HasColumnType("int(11)")
+                   .HasColumnName("teacher_id");
+
+                entity.Property(e => e.SubmissionId)
+                   .HasColumnType("int(11)")
+                   .HasColumnName("submission_id");
+
+
+                entity.Property(e => e.Grade)
+                    .HasMaxLength(30)
+                    .HasColumnName("grade");
+
+                entity.Property(e => e.Comments)
+                    .HasMaxLength(255)
+                    .HasColumnName("comments");
+
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("created_at");
+
+
+                entity.Property(e => e.UpdatedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("updated_at");
+
+
+
+
+            });
+
 
             OnModelCreatingPartial(modelBuilder);
         }

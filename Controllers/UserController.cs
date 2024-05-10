@@ -45,6 +45,8 @@ namespace OnlineLpk12.Controllers
                 }
                 var isUsernameExists = await _userService.IsUserNameExists(user.UserName);
                 var isEmailIdExists = await _userService.IsEmailIdExists(user.EmailId);
+
+                var ispasswordstrong = await _userService.IsPasswordStrong(user.Password);
                 if (isUsernameExists)
                 {
                     validationMessages.Add("UserName already exists.");
@@ -53,6 +55,12 @@ namespace OnlineLpk12.Controllers
                 {
                     validationMessages.Add("Email Address already exists.");
                 }
+
+                if (!ispasswordstrong)
+                {
+                    validationMessages.Add("Password should be at least 8 characters long and include atleast one Upper case and one lowercase combination of letters, numbers, and special characters.");
+                }
+
                 if (validationMessages.Any())
                 {
                     response.Errors = validationMessages;
@@ -72,7 +80,6 @@ namespace OnlineLpk12.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }
-
 
         [HttpPost("Login")]
         [ProducesResponseType(typeof(Response<LoginResponse>), (int)HttpStatusCode.OK)]
@@ -113,45 +120,126 @@ namespace OnlineLpk12.Controllers
             }
         }
 
-
-
-        [HttpPost("ForgotPassword")]
-        [ProducesResponseType(typeof(Response<LoginResponse>), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.InternalServerError)]
+ [HttpGet("SendOTP")]
         [AllowAnonymous]
-        public async Task<IActionResult> ForgotPassword([FromBody] LoginUser user)
+        public async Task<IActionResult> SendOTP([FromQuery] string emailId)
         {
-            Response<EmptyResult> response = new();
+            if (emailId == null)
+            {
+                return BadRequest("Enter valid User emailId.");
+            }
+
+            //var response = new ContentResult();n
+
             try
             {
-                var validationMessages = Helper.ValidateUserWhileLogin(user);
+                var result = await _userService.SendOTP(emailId);
+
+                //if (result.Content.Otp != null )
+                //{
+                //    return Ok(result.Content.Otp,result.Content.Username);
+                //}
+
+                //return NotFound("OTP not sent");
+
+                var responseObj = new
+                {
+                    otp = result.Content.Otp ?? "", // If otp is null, set it to an empty string
+                    username = result.Content.Username ?? "" // If username is null, set it to an empty string
+                };
+
+                // Return the response as JSON
+                return Ok(responseObj);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode((int)HttpStatusCode.InternalServerError, "An error occurred while sending OTP for email,user NOT FOUND");
+               
+
+            }
+        }
+
+        [HttpPost("UpdatePassword")]
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> UpdatePassword([FromBody] LoginUser request)
+        {
+            Response<string> response = new();
+            try
+            {
+                // Validate the request
+                var validationMessages = Helper.ValidateUserWhileLogin(request);
                 if (validationMessages.Any())
                 {
                     response.Errors = validationMessages;
                     response.Message = "One or more validation errors occurred.";
                     return BadRequest(response);
                 }
-                var result = await _userService.ForgotPassword(user);
+                var result = await _userService.UpdatePassword(request);
                 if (result.Success)
                 {
                     response.Message = result.Message;
+                    response.Content = result.Content;
                     return Ok(response);
                 }
                 else
                 {
-                    response.Message = "One or more validation errors occurred.";
+                    response.Message = "New Password should be different from Old Password.";  
                     response.Errors.Add(result.Message);
                     return BadRequest(response);
+                  
+
                 }
             }
-            catch (Exception ex)
+            
+        catch (Exception ex)
             {
-                 response.Message = "One or more validation errors occurred.";
-               response.Errors.Add("Error occurred while fetching the data.");
-               return StatusCode((int)HttpStatusCode.InternalServerError, response);
-           }
+                response.Errors.Add("Error occurred while updating the password.");
+                response.Message = "An error occurred while updating the password.";
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
+            }
         }
+
+        // [HttpPost("ForgotPassword")]
+        // [ProducesResponseType(typeof(Response<LoginResponse>), (int)HttpStatusCode.OK)]
+        // [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.BadRequest)]
+        // [ProducesResponseType(typeof(Response<EmptyResult>), (int)HttpStatusCode.InternalServerError)]
+        // [AllowAnonymous]
+        // public async Task<IActionResult> ForgotPassword([FromBody] LoginUser user)
+        // {
+        //     Response<EmptyResult> response = new();
+        //     try
+        //     {
+        //         var validationMessages = Helper.ValidateUserWhileLogin(user);
+        //         if (validationMessages.Any())
+        //         {
+        //             response.Errors = validationMessages;
+        //             response.Message = "One or more validation errors occurred.";
+        //             return BadRequest(response);
+        //         }   
+        //         var result = await _userService.ForgotPassword(user);
+        //         if (result.Success)
+        //         {
+        //             response.Message = result.Message;
+        //             return Ok(response);
+        //         }
+        //         else
+        //         {
+        //             response.Message = "New Password should be different from Old Password.";  //error message added for a bug fix
+        //             response.Errors.Add(result.Message);
+        //             return BadRequest(response);
+        //         }
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //          response.Message = "One or more validation errors occurred.";
+        //        response.Errors.Add("Error occurred while fetching the data.");
+        //        return StatusCode((int)HttpStatusCode.InternalServerError, response);
+        //    }
+        // }
         
         [HttpGet("{userId}/course/{courseId}")]
         [AllowAnonymous]

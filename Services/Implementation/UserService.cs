@@ -12,6 +12,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Net;
+using System.Net.Mail;
+using System.Data;
 
 namespace OnlineLpk12.Services.Implementation
 {
@@ -20,6 +23,10 @@ namespace OnlineLpk12.Services.Implementation
         private readonly OnlineLpk12DbContext _context;
         private readonly IConfiguration _configuration;
         private readonly ILogService _logService;
+
+        private const string FromEmailAddress = "onlinelpk122024@gmail.com";
+        private const string GoogleAppPassword = "vbfwzantdganxhbh";
+        private const string Subject = "OTP for Password Reset";
 
         public UserService(OnlineLpk12DbContext context, ILogService logService, IConfiguration configuration)
         {
@@ -33,7 +40,9 @@ namespace OnlineLpk12.Services.Implementation
             Result<Token> result = new Result<Token>();
             try
             {
+
                 var userFromDb = await Task.FromResult(_context.Users.FirstOrDefault(x => x.Username == user.UserName));
+
                 if (userFromDb != null)
                 {
 
@@ -42,44 +51,70 @@ namespace OnlineLpk12.Services.Implementation
                         result.Success = false;
                         result.Message = "User is inactive. Contact support for activation.";
                     }
-                    else if(!BCrypt.Net.BCrypt.Verify(user.Password, userFromDb.Password))
+
+                    else if (!BCrypt.Net.BCrypt.Verify(user.Password, userFromDb.Password))
                     {
                         result.Success = false;
                         result.Message = "Invalid Password!";
                     }
                     else
                     {
-                        result.Success = true;
-                        result.Message = "User validation success.";
-                        var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("Key"));
-                        Response<string> response = new();
-                        var tokenDescriptor = new SecurityTokenDescriptor
+                        Data.Models.Role role = await _context.Roles.FirstOrDefaultAsync(r => r.Name == user.roleType);
+                        
+                        int userWithRoles = await (from u in _context.Users
+                                                   join ur in _context.UserRoles on u.Id equals ur.UserId
+                                                   where u.Username == user.UserName && ur.RoleId == role.Id
+                                                   select ur.RoleId).FirstOrDefaultAsync();
+
+                        if (userWithRoles == role.Id)
                         {
-                            Subject = new ClaimsIdentity(new[]
+
+                            result.Success = true;
+                            result.Message = "User validation success.";
+
+                            var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("Key"));
+                            Response<string> response = new();
+                            var tokenDescriptor = new SecurityTokenDescriptor
                             {
+                                Subject = new ClaimsIdentity(new[]
+                                {
                             new Claim("id", userFromDb.Id.ToString()),
-                            new Claim(JwtRegisteredClaimNames.Email, user.UserName)
-                            }),
-                            Expires = DateTime.UtcNow.AddHours(24),
-                            SigningCredentials = new SigningCredentials
-                            (new SymmetricSecurityKey(key),
-                            SecurityAlgorithms.HmacSha512Signature)
-                        };
-                        var tokenHandler = new JwtSecurityTokenHandler();
-                        var token = tokenHandler.CreateToken(tokenDescriptor);
-                         
+                            new Claim(JwtRegisteredClaimNames.Email, user.UserName),
+                            new Claim(ClaimTypes.Role, userFromDb.UserType)
 
-                        result.Content = new Token()
+
+                    
+               
+                        }),
+                                Expires = DateTime.UtcNow.AddHours(24),
+                                SigningCredentials = new SigningCredentials
+                                (new SymmetricSecurityKey(key),
+                                SecurityAlgorithms.HmacSha512Signature)
+                            };
+                            var tokenHandler = new JwtSecurityTokenHandler();
+                            var token = tokenHandler.CreateToken(tokenDescriptor);
+                            
+
+
+                            result.Content = new Token()
+                            {
+                                accessToken = tokenHandler.WriteToken(token),
+                                email = userFromDb.EmailId,
+                                id = userFromDb.Id,
+                                username = userFromDb.Username,
+                                roles = role.Name,
+                            };
+
+                        }
+                        else
                         {
-                           accessToken = tokenHandler.WriteToken(token),
-                           email = userFromDb.EmailId,
-                           id = userFromDb.Id,
-                           username = userFromDb.Username,
-                           roles = userFromDb.UserType
-
-                        };
+                            result.Success = false;
+                            result.Message = "Role Not found.";
+                        }
                     }
+
                 }
+
                 else
                 {
                     result.Success = false;
@@ -93,6 +128,7 @@ namespace OnlineLpk12.Services.Implementation
             return result;
         }
 
+
         public async Task<Result<string>> RegisterUser(RegistrationUser inputUser)
         {
             Result<string> result = new Result<string>();
@@ -105,21 +141,51 @@ namespace OnlineLpk12.Services.Implementation
                     Password = BCrypt.Net.BCrypt.HashPassword(inputUser.Password, 8),
                     EmailId = inputUser.EmailId,
                     Username = inputUser.UserName,
-                    UserType = Helper.GetUserType(inputUser.IsStudent),
+                    UserType = inputUser.Roles,
+                    CreatedAt= DateTime.UtcNow,
+                    UpdatedAt= DateTime.UtcNow,
                     IsActive = true
                 };
+               
                 await _context.Users.AddAsync(DbUser);
                 await _context.SaveChangesAsync();
                 Data.Models.User user = GetUserDetailsByUserName(inputUser.UserName);
                 result.Content = user.Id.ToString();
                 result.Success = true;
                 result.Message = "User registered successfully.";
+
+                string[] roles = inputUser.Roles.Split(",");
+                for (int i = 0; i < roles.Length; i++)
+                {
+
+                    Data.Models.Role role = await _context.Roles.FirstOrDefaultAsync(r => r.Name.ToLower() == roles[i].ToLower());
+                    if (role is not null)
+                    {
+                        Data.Models.UserRole userRole = new Data.Models.UserRole()
+                        {
+                            UserId = user.Id,
+                            RoleId = role.Id
+                        };
+                        await _context.UserRoles.AddAsync(userRole);
+                    }
+                    else
+                    {
+                        // Handle case where role with given name doesn't exist
+                        throw new Exception($"Role '{roles[i]}' not found.");
+                    }
+                   
+
+                }
+                await _context.SaveChangesAsync();
+
+
             }
             catch (Exception ex)
             {
-                throw;
-                }
-           return result;
+
+                throw ex;
+            }
+            return result;
         }
         public async Task<Result<string>> CourseMap(int userId, int courseId)
         {
@@ -190,21 +256,85 @@ namespace OnlineLpk12.Services.Implementation
                 return false;
             }
         }
+        public async Task<bool> IsPasswordStrong(string password)
+        {
+            
+            if (password.Length < 8)
+            {
+                return false;
+            }
 
+            bool hasUppercase = false;
+            bool hasLowercase = false;
+            bool hasLetter = false;
+            bool hasDigit = false;
+            bool hasSpecialCharacter = false;
+
+            foreach (char character in password)
+            {
+                if (char.IsLetter(character))
+                {
+                    hasLetter = true;
+
+                    if (char.IsUpper(character))
+                    {
+                        hasUppercase = true;
+                    }
+                    else if (char.IsLower(character))
+                    {
+                        hasLowercase = true;
+                    }
+                }
+                else if (char.IsDigit(character))
+                {
+                    hasDigit = true;
+                }
+                else if (char.IsSymbol(character) || char.IsPunctuation(character))
+                {
+                    hasSpecialCharacter = true;
+                }
+            }
+
+            // Check if the password meets all criteria
+            return hasLetter && hasDigit && hasSpecialCharacter && hasUppercase && hasLowercase;
+        }
         public async Task<bool> IsUserTeacher(int userId)
         {
             try
             {
-                var user = await (from usr in _context.Users
-                            where usr.Id == userId
-                            select usr).FirstOrDefaultAsync();
-                return user != null && !string.IsNullOrEmpty(user.UserType) && user.UserType.Trim().ToUpper() == "TEACHER";
+                Data.Models.Role role = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Teacher");
+
+                var user = await (from u in _context.Users
+                                  join ur in _context.UserRoles on u.Id equals ur.UserId
+                                  where u.Id == userId && ur.RoleId == role.Id
+                                  select ur.RoleId).FirstOrDefaultAsync();
+                return user != null ? true : false;
             }
             catch(Exception ex)
             {
                 _logService.LogError(userId, "IsUserTeacher", "UserService", ex.Message, ex);
                 return false;
             }
+        }
+
+        public async Task<bool> IsCourseDeveloper(int userId)
+        {
+            try
+            {
+                Data.Models.Role role = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Course Developer");
+
+                var user = await (from u in _context.Users
+                                  join ur in _context.UserRoles on u.Id equals ur.UserId
+                                  where u.Id == userId && ur.RoleId == role.Id
+                                  select ur.RoleId).FirstOrDefaultAsync();
+                return user==role.Id ? true : false;
+            }
+            catch (Exception ex)
+            {
+                _logService.LogError(userId, "IsCourseDeveloper", "UserService", ex.Message, ex);
+                return false;
+            }
+
         }
 
         public async Task<string> GetUserNameByUserId(int userId)
@@ -223,41 +353,148 @@ namespace OnlineLpk12.Services.Implementation
             }
         }
 
-        public async Task<Result<EmptyResult>> ForgotPassword(LoginUser user)
+
+        public async Task<Result<(string Otp, string Username)>> SendOTP(string emailId)
         {
-            Result<EmptyResult> result = new Result<EmptyResult>();
+            Result<(string Otp, string Username)> result = new Result<(string Otp, string Username)>();
+
+            // Assuming the result will contain a single string (email address)
+            var userName = await _context.Users
+                                            .Where(u => u.EmailId == emailId)
+                                            .Select(u => u.Username)
+                                            .FirstOrDefaultAsync();
+
+            if (userName == null)
+            {
+                throw new Exception("User does not exists");
+            }
+
+            string otp = GenerateRandomOTP();
+
+            result.Content = (otp, userName);
+
+            // The HTML body of the email, including the OTP
+            string body = $"<h1>Hello</h1><p>Your OTP for password reset is: {otp}</p>";
+
+            var smtpClient = new SmtpClient("smtp.gmail.com")
+            {
+                Port = 587,
+                Credentials = new NetworkCredential(FromEmailAddress, GoogleAppPassword),
+                EnableSsl = true,
+            };
+            var mailMessage = new MailMessage
+            {
+                From = new MailAddress(FromEmailAddress),
+                Subject = Subject,
+                Body = body,
+                IsBodyHtml = true,
+            };
+            mailMessage.To.Add(emailId);
+
             try
             {
-                var userFromDb = await Task.FromResult(_context.Users.FirstOrDefault(x => x.Username == user.UserName));
-                if (userFromDb != null)
-                {
+                smtpClient.Send(mailMessage);
+                Console.WriteLine("Email sent successfully!");
+                return result;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Failed to send email. Error: {e.Message}");
+            }
 
-                    if (!Convert.ToBoolean(userFromDb.IsActive))
+            return result;
+        }
+
+        private string GenerateRandomOTP()
+        {
+            Random random = new Random();
+            return random.Next(100000, 999999).ToString();
+        }
+
+        public async Task<Result<string>> UpdatePassword(LoginUser request)
+        {
+            Result<string> result = new Result<string>();
+            try
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.UserName);
+
+                if (user != null)
+                {
+                    // Validation to check if new and old passwords match.
+                    if (BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
                     {
                         result.Success = false;
-                        result.Message = "User is inactive. Contact support for activation.";
+                        result.Message = "New password should not match old password.";
                     }
-
                     else
                     {
-                        userFromDb.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, 8);
+                        // Hash the new password
+                        user.Password = BCrypt.Net.BCrypt.HashPassword(request.Password, 8);
+                        user.UpdatedAt= DateTime.UtcNow;
+
+                        // Save changes to the database
                         await _context.SaveChangesAsync();
+
                         result.Success = true;
-                        result.Message = "User password updated successfully!.";
+                        result.Message = "User password updated successfully.";
                     }
                 }
                 else
                 {
                     result.Success = false;
-                    result.Message = "User Not found.";
+                    result.Message = "User not found.";
                 }
             }
             catch (Exception ex)
             {
-                throw;
+                // Handle the exception
+                result.Success = false;
+                result.Message = ex.Message;
             }
             return result;
         }
+
+
+        // public async Task<Result<EmptyResult>> ForgotPassword(LoginUser user)
+        // {
+        //     Result<EmptyResult> result = new Result<EmptyResult>();
+        //     try
+        //     {
+        //         var userFromDb = await Task.FromResult(_context.Users.FirstOrDefault(x => x.Username == user.UserName));
+        //         if (userFromDb != null)
+        //         {
+
+        //             if (!Convert.ToBoolean(userFromDb.IsActive))
+        //             {
+        //                 result.Success = false;
+        //                 result.Message = "User is inactive. Contact support for activation.";
+        //             }
+        //             //Validation to check if new and old passwords match.
+        //             else if (BCrypt.Net.BCrypt.Verify(user.Password, userFromDb.Password))
+        //             {
+        //                 result.Success = false;
+        //                 result.Message = "New password should not match old password.";
+        //             }
+        //             else
+        //             {
+        //                 userFromDb.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, 8);
+        //                 await _context.SaveChangesAsync();
+        //                 result.Success = true;
+        //                 result.Message = "User password updated successfully!.";
+        //             }
+        //         }
+        //         else
+        //         {
+        //             result.Success = false;
+        //             result.Message = "User Not found.";
+        //         }
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         throw;
+        //     }
+        //     return result;
+        // }
         public async Task<int> GetTeacherIdByCourseId(int courseId)
         {
             try
@@ -273,5 +510,6 @@ namespace OnlineLpk12.Services.Implementation
                 return 0;
             }
         }
+
     }
 }

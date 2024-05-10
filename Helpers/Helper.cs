@@ -106,6 +106,35 @@ namespace OnlineLpk12.Helpers
             return errors;
         }
 
+        public static List<string> ValidateCourse(Course course)
+        {
+            List<string> errors = new List<string>();
+
+            if (course == null)
+            {
+                errors.Add("Enter valid course details");
+                return errors;
+            }
+
+            if (string.IsNullOrEmpty(course.CourseName))
+            {
+                errors.Add("Enter valid Course Name");
+            }
+
+            if (string.IsNullOrEmpty(course.Semester))
+            {
+                errors.Add("Enter valid Semester");
+            }
+
+            if (course.Year <= 0)
+            {
+                errors.Add("Enter valid Year");
+            }
+
+            return errors;
+        }
+
+
         public static List<string> ValidateUserWhileLogin(LoginUser user)
         {
             List<string> errors = new List<string>();
